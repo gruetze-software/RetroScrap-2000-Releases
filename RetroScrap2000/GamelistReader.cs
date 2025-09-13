@@ -10,7 +10,7 @@ public class GameManager
 	public Dictionary<string, GameList> SystemList { get; set; } = new Dictionary<string, GameList>();
 	public string? RomPath { get; set; }
 	public GameManager() { }
-
+	
 	public void	Load(string rompath, RetroSystems systems)
 	{
 		if (string.IsNullOrEmpty(rompath))
@@ -67,11 +67,156 @@ public class GameManager
 
 public static class GameListLoader
 {
-	public static GameList Load(string xmlPath, RetroSystem system)
+	private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
+
+	/// <summary>
+	/// Löscht einen Eintrag aus der gamelist.xml basierend auf dem relativen Pfad der ROM-Datei.
+	/// </summary>
+	/// <param name="xmlPath">Der vollständige Pfad zur gamelist.xml-Datei.</param>
+	/// <param name="romPath">Der relative Pfad der ROM-Datei, wie in <path> gespeichert.</param>
+	/// <returns>True bei Erfolg, andernfalls false.</returns>
+	public static bool DeleteGameByPath(string xmlPath, string romRelPath)
+	{
+		// Sicherstellen, dass die XML-Datei existiert.
+		if (!File.Exists(xmlPath))
+		{
+			return false;
+		}
+
+		// Stellen Sie sicher, dass das Lock-Objekt verfügbar ist.
+		// Falls es in einer anderen Klasse liegt, muss es entsprechend referenziert werden.
+		lock (_xmlFileLock)
+		{
+			try
+			{
+				// XML-Dokument laden.
+				XDocument doc = XDocument.Load(xmlPath);
+				var root = doc.Element("gameList");
+				if (root == null)
+				{
+					return false;
+				}
+
+				//// Finden Sie das <game>-Element mit dem passenden <path>-Tag.
+				var gameToDelete = root.Elements("game")
+															 .FirstOrDefault(g => g.Element("path")?.Value == romRelPath);
+
+				if (gameToDelete != null)
+				{
+					// Das Element aus dem Baum entfernen.
+					gameToDelete.Remove();
+
+					// Die Änderungen in der XML-Datei speichern.
+					doc.Save(xmlPath);
+					return true;
+				}
+				else
+				{
+					// Eintrag wurde nicht gefunden.
+					return false;
+				}
+			}
+			catch
+			{
+				// Fehler beim Laden oder Speichern.
+				return false;
+			}
+		}
+	}
+
+	public static List<IGrouping<string, XElement>>? GetDuplicates(string xmlPath)
+	{
+		if (!File.Exists(xmlPath))
+		{
+			return null;
+		}
+
+		try
+		{
+			// XML-Dokument laden
+			XDocument doc = XDocument.Load(xmlPath);
+			var root = doc.Element("gameList");
+			if (root == null)
+			{
+				return null;
+			}
+
+			// Alle '<game>'-Elemente laden
+			var games = root.Elements("game");
+
+			// Duplikate finden basierend auf dem 'id'-Attribut
+			// Ignoriere Elemente, deren ID 0 oder leer ist
+			var duplicates = games.Where(x => (string?)x.Attribute("id")?.Value != "0"
+																		&& !string.IsNullOrEmpty((string?)x.Attribute("id")?.Value))
+						.GroupBy(x => (string)x.Attribute("id")!.Value) 
+						.Where(g => g.Count() > 1)
+						.ToList();
+
+			return duplicates;
+		}
+		catch (Exception ex)
+		{
+			// Fehlerbehandlung, falls das Laden der XML fehlschlägt
+			// Sie können hier eine Meldung loggen
+			Trace.WriteLine($"Fehler beim Prüfen der XML-Datei: {Utils.GetExcMsg(ex)}");
+			return null;
+		}
+	}
+
+	public static bool CleanGamelistXml(string xmlPath)
+	{
+		if (!File.Exists(xmlPath) )
+		{
+			return false;
+		}
+
+		var duplicates = GetDuplicates(xmlPath);
+		if ( duplicates == null || duplicates.Count == 0)
+			return false;
+
+		try
+		{
+			// XML-Dokument laden
+			XDocument doc = XDocument.Load(xmlPath);
+			var root = doc.Element("gameList");
+			if (root == null)
+			{
+				return false;
+			}
+
+			// Alle doppelten Einträge entfernen und nur den ersten behalten
+			foreach (var group in duplicates)
+			{
+				// Alle doppelten Einträge entfernen
+				foreach (var element in group.Skip(1))
+				{
+					element.Remove();
+				}
+			}
+
+			// Die bereinigte XML-Datei speichern
+			doc.Save(xmlPath);
+			return true;
+		}
+		catch (Exception ex)
+		{
+			// Fehlerbehandlung, falls das Laden der XML fehlschlägt
+			// Sie können hier eine Meldung loggen
+			Trace.WriteLine($"Fehler beim Bereinigen der XML-Datei: {Utils.GetExcMsg(ex)}");
+			return false;
+		}
+	}
+	public static GameList Load(string? xmlPath, RetroSystem? system)
 	{
 		try
 		{
+			if ( string.IsNullOrEmpty(xmlPath) || system == null || !File.Exists(xmlPath) )
+				return new GameList();
+
 			Trace.WriteLine($"{system}: Read {xmlPath}");
+
+			//CleanGamelistXml(xmlPath);
+
 			var serializer = new XmlSerializer(typeof(GameList));
 			using var fs = new FileStream(xmlPath, FileMode.Open);
 			GameList liste = (GameList)serializer.Deserialize(fs)!;

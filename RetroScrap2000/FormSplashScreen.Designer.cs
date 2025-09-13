@@ -51,9 +51,11 @@
 			// 
 			labelStatus.Dock = DockStyle.Fill;
 			labelStatus.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			labelStatus.Location = new Point(3, 0);
+			labelStatus.Location = new Point(12, 8);
+			labelStatus.Margin = new Padding(12, 8, 24, 8);
 			labelStatus.Name = "labelStatus";
-			labelStatus.Size = new Size(359, 93);
+			labelStatus.Padding = new Padding(8);
+			labelStatus.Size = new Size(329, 77);
 			labelStatus.TabIndex = 1;
 			labelStatus.Text = "Status";
 			labelStatus.TextAlign = ContentAlignment.MiddleCenter;

@@ -310,7 +310,7 @@
     <value>Name</value>
   </data>
   <data name="colRomsName.Width" type="System.Int32, mscorlib">
-    <value>160</value>
+    <value>170</value>
   </data>
   <data name="colRomsRelease.Text" xml:space="preserve">
     <value>Release</value>
@@ -322,7 +322,7 @@
     <value>Genre</value>
   </data>
   <data name="colRomsGenre.Width" type="System.Int32, mscorlib">
-    <value>100</value>
+    <value>110</value>
   </data>
   <data name="colRomsAnzPlayer.Text" xml:space="preserve">
     <value>Player</value>
@@ -333,23 +333,38 @@
   <data name="colRomsRating.Text" xml:space="preserve">
     <value>Rating</value>
   </data>
+  <data name="colRomsFile.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="colRomsFile.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
   <metadata name="contextMenuStripRoms.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>377, 8</value>
   </metadata>
-  <data name="alleRomsAktualisierenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>241, 24</value>
-  </data>
-  <data name="alleRomsAktualisierenToolStripMenuItem.Text" xml:space="preserve">
-    <value>Alle Roms aktualisieren...</value>
-  </data>
   <data name="detailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>241, 24</value>
   </data>
   <data name="detailsToolStripMenuItem.Text" xml:space="preserve">
     <value>Details...</value>
   </data>
+  <data name="löschenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>241, 24</value>
+  </data>
+  <data name="löschenToolStripMenuItem.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 6</value>
+  </data>
+  <data name="alleRomsAktualisierenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>241, 24</value>
+  </data>
+  <data name="alleRomsAktualisierenToolStripMenuItem.Text" xml:space="preserve">
+    <value>Alle Roms aktualisieren...</value>
+  </data>
   <data name="contextMenuStripRoms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 52</value>
+    <value>242, 82</value>
   </data>
   <data name="&gt;&gt;contextMenuStripRoms.Name" xml:space="preserve">
     <value>contextMenuStripRoms</value>
@@ -2640,16 +2655,34 @@
   <data name="&gt;&gt;colRomsRating.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;alleRomsAktualisierenToolStripMenuItem.Name" xml:space="preserve">
-    <value>alleRomsAktualisierenToolStripMenuItem</value>
+  <data name="&gt;&gt;colRomsFile.Name" xml:space="preserve">
+    <value>colRomsFile</value>
   </data>
-  <data name="&gt;&gt;alleRomsAktualisierenToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;colRomsFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;detailsToolStripMenuItem.Name" xml:space="preserve">
     <value>detailsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;detailsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;löschenToolStripMenuItem.Name" xml:space="preserve">
+    <value>löschenToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;löschenToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;alleRomsAktualisierenToolStripMenuItem.Name" xml:space="preserve">
+    <value>alleRomsAktualisierenToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;alleRomsAktualisierenToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripStatusLabelMain.Name" xml:space="preserve">

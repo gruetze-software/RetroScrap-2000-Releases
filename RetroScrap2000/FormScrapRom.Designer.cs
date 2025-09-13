@@ -324,31 +324,37 @@
 			// 
 			resources.ApplyResources(textBoxRomOldRelease, "textBoxRomOldRelease");
 			textBoxRomOldRelease.Name = "textBoxRomOldRelease";
+			textBoxRomOldRelease.ReadOnly = true;
 			// 
 			// textBoxRomOldPub
 			// 
 			resources.ApplyResources(textBoxRomOldPub, "textBoxRomOldPub");
 			textBoxRomOldPub.Name = "textBoxRomOldPub";
+			textBoxRomOldPub.ReadOnly = true;
 			// 
 			// textBoxRomOldDev
 			// 
 			resources.ApplyResources(textBoxRomOldDev, "textBoxRomOldDev");
 			textBoxRomOldDev.Name = "textBoxRomOldDev";
+			textBoxRomOldDev.ReadOnly = true;
 			// 
 			// textBoxRomOldPlayers
 			// 
 			resources.ApplyResources(textBoxRomOldPlayers, "textBoxRomOldPlayers");
 			textBoxRomOldPlayers.Name = "textBoxRomOldPlayers";
+			textBoxRomOldPlayers.ReadOnly = true;
 			// 
 			// textBoxRomOldGenre
 			// 
 			resources.ApplyResources(textBoxRomOldGenre, "textBoxRomOldGenre");
 			textBoxRomOldGenre.Name = "textBoxRomOldGenre";
+			textBoxRomOldGenre.ReadOnly = true;
 			// 
 			// textBoxRomOldDesc
 			// 
 			resources.ApplyResources(textBoxRomOldDesc, "textBoxRomOldDesc");
 			textBoxRomOldDesc.Name = "textBoxRomOldDesc";
+			textBoxRomOldDesc.ReadOnly = true;
 			// 
 			// label1
 			// 
@@ -409,6 +415,7 @@
 			// 
 			resources.ApplyResources(textBoxRomOldName, "textBoxRomOldName");
 			textBoxRomOldName.Name = "textBoxRomOldName";
+			textBoxRomOldName.ReadOnly = true;
 			// 
 			// starRatingControlRomOld
 			// 

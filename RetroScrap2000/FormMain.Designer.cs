@@ -48,9 +48,12 @@
 			colRomsGenre = new ColumnHeader();
 			colRomsAnzPlayer = new ColumnHeader();
 			colRomsRating = new ColumnHeader();
+			colRomsFile = new ColumnHeader();
 			contextMenuStripRoms = new ContextMenuStrip(components);
-			alleRomsAktualisierenToolStripMenuItem = new ToolStripMenuItem();
 			detailsToolStripMenuItem = new ToolStripMenuItem();
+			löschenToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator1 = new ToolStripSeparator();
+			alleRomsAktualisierenToolStripMenuItem = new ToolStripMenuItem();
 			splitContainerRight = new SplitContainer();
 			tableLayoutPanelRightInnen = new TableLayoutPanel();
 			textBoxRomName = new TextBox();
@@ -195,7 +198,7 @@
 			// listViewRoms
 			// 
 			listViewRoms.Activation = ItemActivation.OneClick;
-			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating });
+			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile });
 			listViewRoms.ContextMenuStrip = contextMenuStripRoms;
 			resources.ApplyResources(listViewRoms, "listViewRoms");
 			listViewRoms.FullRowSelect = true;
@@ -227,24 +230,39 @@
 			// 
 			resources.ApplyResources(colRomsRating, "colRomsRating");
 			// 
+			// colRomsFile
+			// 
+			resources.ApplyResources(colRomsFile, "colRomsFile");
+			// 
 			// contextMenuStripRoms
 			// 
 			contextMenuStripRoms.ImageScalingSize = new Size(20, 20);
-			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { alleRomsAktualisierenToolStripMenuItem, detailsToolStripMenuItem });
+			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { detailsToolStripMenuItem, löschenToolStripMenuItem, toolStripSeparator1, alleRomsAktualisierenToolStripMenuItem });
 			contextMenuStripRoms.Name = "contextMenuStripRoms";
 			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
-			// 
-			// alleRomsAktualisierenToolStripMenuItem
-			// 
-			alleRomsAktualisierenToolStripMenuItem.Name = "alleRomsAktualisierenToolStripMenuItem";
-			resources.ApplyResources(alleRomsAktualisierenToolStripMenuItem, "alleRomsAktualisierenToolStripMenuItem");
-			alleRomsAktualisierenToolStripMenuItem.Click += alleRomsAktualisierenToolStripMenuItem_Click;
 			// 
 			// detailsToolStripMenuItem
 			// 
 			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
 			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
 			detailsToolStripMenuItem.Click += detailsToolStripMenuItem_Click;
+			// 
+			// löschenToolStripMenuItem
+			// 
+			löschenToolStripMenuItem.Name = "löschenToolStripMenuItem";
+			resources.ApplyResources(löschenToolStripMenuItem, "löschenToolStripMenuItem");
+			löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
+			// 
+			// toolStripSeparator1
+			// 
+			toolStripSeparator1.Name = "toolStripSeparator1";
+			resources.ApplyResources(toolStripSeparator1, "toolStripSeparator1");
+			// 
+			// alleRomsAktualisierenToolStripMenuItem
+			// 
+			alleRomsAktualisierenToolStripMenuItem.Name = "alleRomsAktualisierenToolStripMenuItem";
+			resources.ApplyResources(alleRomsAktualisierenToolStripMenuItem, "alleRomsAktualisierenToolStripMenuItem");
+			alleRomsAktualisierenToolStripMenuItem.Click += alleRomsAktualisierenToolStripMenuItem_Click;
 			// 
 			// splitContainerRight
 			// 
@@ -560,5 +578,8 @@
 		private ToolStripMenuItem alleRomsAktualisierenToolStripMenuItem;
 		private Button buttonOptions;
 		private ToolStripMenuItem detailsToolStripMenuItem;
+		private ColumnHeader colRomsFile;
+		private ToolStripMenuItem löschenToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator1;
 	}
 }
