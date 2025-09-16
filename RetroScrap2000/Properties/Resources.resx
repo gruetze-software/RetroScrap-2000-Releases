@@ -197,13 +197,13 @@
     <value>Cancellation has been requested. Please wait.</value>
   </data>
   <data name="Txt_Log_Scrap_NoDataFoundFor" xml:space="preserve">
-    <value>No data found for \"{0}\".</value>
+    <value>No data found for</value>
   </data>
   <data name="Txt_Log_Scrap_CheckDataFrom" xml:space="preserve">
-    <value>Check the data from \"{0}\".</value>
+    <value>Check the data from</value>
   </data>
-  <data name="Txt_Log_Scrap_GetImage" xml:space="preserve">
-    <value>Download image</value>
+  <data name="Txt_Log_Scrap_Loading" xml:space="preserve">
+    <value>Download</value>
   </data>
   <data name="Txt_Log_Scrap_SaveGameList" xml:space="preserve">
     <value>Save Gamelist.xml...</value>
@@ -214,8 +214,8 @@
   <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
     <value>Error saving Gamelist.xml!</value>
   </data>
-  <data name="Txt_Scrap_Auto_Title" xml:space="preserve">
-    <value>Scraping {0} ROMs from system \"{1}\""</value>
+  <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
+    <value>Scraping {0} ROMs from system</value>
   </data>
   <data name="Txt_Api_SsUser_Name" xml:space="preserve">
     <value>User: {0}</value>
@@ -264,5 +264,8 @@
   </data>
   <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
     <value>Loading Settings...</value>
+  </data>
+  <data name="Txt_Msg_Scrap_NoDataFound" xml:space="preserve">
+    <value>No Data found for the Rom.</value>
   </data>
 </root>

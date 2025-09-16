@@ -10,7 +10,26 @@ public class GameManager
 	public Dictionary<string, GameList> SystemList { get; set; } = new Dictionary<string, GameList>();
 	public string? RomPath { get; set; }
 	public GameManager() { }
-	
+
+	private void LoadSystem(string xmlpath, RetroSystems systems, RetroSystem sys)
+	{
+		if ( string.IsNullOrEmpty(RomPath) )
+			throw new ApplicationException("RomPath is null!");
+
+		var key = Directory.GetParent(xmlpath).Name;
+		// Die Load-Methode liefert immer eine GameList zurück, auch wenn die XML-Datei nicht existiert oder leer ist.
+		var loadresult = GameListLoader.Load(xmlpath, sys);
+		GameList gl = loadresult.Games;
+		if (gl.Games.Count > 0)
+			SystemList.Add(key, gl);
+		if (loadresult.HasChanges && gl.Games.Count > 0)
+		{
+			Trace.WriteLine("" + sys.Name + ": Änderungen in der gamelist.xml erkannt. Save...");
+			// Es gab Änderungen, also speichern wir die aktualisierte Liste zurück in die XML-Datei.
+			systems.SaveAllRomsToGamelistXml(RomPath, gl.Games);
+		}
+	}
+
 	public void	Load(string rompath, RetroSystems systems)
 	{
 		if (string.IsNullOrEmpty(rompath))
@@ -20,46 +39,23 @@ public class GameManager
 		RomPath = rompath;
 		if (!rompath.ToLower().EndsWith("roms"))
 		{
-			RomPath = Directory.GetParent(rompath)?.FullName;
-			var key = Path.GetFileName(rompath);
-			RetroSystem? system = systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == key.ToLower());
-			if (system == null)
-			{
-				Debug.Assert(false);
-				return;
-			}
-
-			var xmlfile = Path.Combine(rompath, "gamelist.xml");
-			if (File.Exists(xmlfile))
-			{
-				var l = GameListLoader.Load(xmlfile, system);
-				if (l != null && l.Games.Count > 0)
-				{
-					l.RetroSys = system;
-					SystemList.Add(key, l);
-				}
-			}
+			RomPath = Directory.GetParent(rompath).FullName;
+			LoadSystem(Path.Combine(RomPath, "gamelist.xml"), systems,
+				systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == Path.GetFileName(RomPath).ToLower())!);
 		}
 		else
 		{
-			foreach (var sysDir in Directory.EnumerateDirectories(rompath))
+			foreach (var sysDir in Directory.EnumerateDirectories(RomPath))
 			{
 				var key = Path.GetFileName(sysDir);
 				RetroSystem? system = systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == key.ToLower());
 				if (system == null)
 				{
+					Trace.WriteLine($"Warnung: Kein System für den Ordner '{key}' gefunden. Überspringe...");
 					continue;
 				}
-				var xmlfile = Path.Combine(rompath, sysDir, "gamelist.xml");
-				if (File.Exists(xmlfile))
-				{
-					var l = GameListLoader.Load(xmlfile, system);
-					if (l != null && l.Games.Count > 0)
-					{
-						l.RetroSys = system;
-						SystemList.Add(key, l);
-					}
-				}
+				var xmlfile = Path.Combine(RomPath, sysDir, "gamelist.xml");
+				LoadSystem(xmlfile, systems, system);
 			}
 		}
 	}
@@ -206,32 +202,94 @@ public static class GameListLoader
 			return false;
 		}
 	}
-	public static GameList Load(string? xmlPath, RetroSystem? system)
+	public static (GameList Games, bool HasChanges) Load(string? xmlPath, RetroSystem? system)
 	{
+		if (string.IsNullOrEmpty(xmlPath) || system == null)
+			return (new GameList(), false);
+
+		// Die ROMs werden typischerweise im selben Ordner wie die XML-Datei gespeichert.
+		var romDirectory = Path.GetDirectoryName(xmlPath);
+		if (string.IsNullOrEmpty(romDirectory) || !Directory.Exists(romDirectory))
+		{
+			Trace.WriteLine("ROM-Verzeichnis nicht gefunden.");
+			return (new GameList(), false);
+		}
+
+		// Die Liste, die wir aufbauen werden. Starten mit einer leeren Liste.
+		GameList loadedList = new GameList { RetroSys = system };
+
+		bool hasChanges = false;
+		// Schritt 1: Versuchen, die gamelist.xml zu laden
 		try
 		{
-			if ( string.IsNullOrEmpty(xmlPath) || system == null || !File.Exists(xmlPath) )
-				return new GameList();
-
-			Trace.WriteLine($"{system}: Read {xmlPath}");
-
-			//CleanGamelistXml(xmlPath);
-
-			var serializer = new XmlSerializer(typeof(GameList));
-			using var fs = new FileStream(xmlPath, FileMode.Open);
-			GameList liste = (GameList)serializer.Deserialize(fs)!;
-			liste.RetroSys = system;
-			foreach (var g in liste.Games)
-				g.RetroSystemId = system.Id;
-			return liste;
+			if (File.Exists(xmlPath))
+			{
+				var serializer = new XmlSerializer(typeof(GameList));
+				using var fs = new FileStream(xmlPath, FileMode.Open);
+				loadedList = (GameList)serializer.Deserialize(fs)!;
+				loadedList.RetroSys = system;
+				foreach (var g in loadedList.Games)
+				{
+					g.RetroSystemId = system.Id;
+				}
+			}
+			else
+			{
+				hasChanges = true;
+				Trace.WriteLine($"XML-Datei nicht gefunden, erstelle neue Liste für {system.Name}.");
+			}
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine(ex.Message);
-			if (ex.InnerException != null)
-				Trace.WriteLine(ex.InnerException.Message);
-			return new GameList();
+			Trace.WriteLine($"Fehler beim Laden der XML: {ex.Message}");
+			loadedList = new GameList { RetroSys = system }; // Leere Liste bei Fehler
 		}
+
+		// Definieren der Dateierweiterungen, die ausgeschlossen werden 
+		var excludedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+		{
+				".db", ".xml", ".bak", ".sav", ".cfg", ".p2k", ".tmp", ".temp", ".txt", ".nfo", ".jpg", ".png", ".bmp",
+				".jpeg", ".avi", ".mp4", ".mkv", ".m3u", ".cue", ".doc", ".pdf", ".keep"
+		};
+
+		// Schritt 2: Scannen des Dateisystems und Ausschließen von Dateien
+		var existingRomsOnDisk = Directory.EnumerateFiles(romDirectory, "*.*", SearchOption.AllDirectories)
+				.Where(filePath => !excludedExtensions.Contains(Path.GetExtension(filePath)))
+				.ToList();
+
+		var pathsInXml = new HashSet<string>(
+				loadedList.Games
+						.Select(g => g.Path)
+						.Where(p => p != null)
+						.Cast<string>(),
+				StringComparer.OrdinalIgnoreCase
+		);
+
+		foreach (var romFile in existingRomsOnDisk)
+		{
+			var relativePath = "./" + Path.GetRelativePath(romDirectory, romFile).Replace('\\', '/');
+
+			if (!pathsInXml.Contains(relativePath))
+			{
+				if (!string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(romFile)))
+				{
+					var newEntry = new GameEntry
+					{
+						Path = relativePath,
+						Name = Path.GetFileNameWithoutExtension(romFile),
+						RetroSystemId = system.Id
+					};
+					loadedList.Games.Add(newEntry);
+					hasChanges = true;
+					Trace.WriteLine($"{system.Name}: Neuen Eintrag hinzugefügt: \"{newEntry.Name}\"");
+				}
+			}
+		}
+
+		// Sortieren Sie die gesamte Liste nach dem Dateinamen
+		loadedList.Games.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
+		Trace.WriteLine("Load success " + system.Name + ": Gesamtanzahl der Einträge in der gamelist.xml: " + loadedList.Games.Count);
+		return (loadedList, hasChanges);
 	}
 }
 
@@ -243,6 +301,7 @@ public class GameList
 
 	[XmlElement("game")]
 	public List<GameEntry> Games { get; set; } = new();
+	
 }
 
 [XmlRoot("game")]

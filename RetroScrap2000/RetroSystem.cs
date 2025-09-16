@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -124,6 +125,8 @@ namespace RetroScrap2000
 
 		private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
 
+		
+
 		public bool SaveRomToGamelistXml(string romRoot, string systemFolder, GameEntry rom)
 		{
 			// Pfade
@@ -161,47 +164,21 @@ namespace RetroScrap2000
 				var gameEl = root.Elements("game")
 												 .FirstOrDefault(x => string.Equals((string?)x.Element("path"), relPath, StringComparison.OrdinalIgnoreCase));
 
+				// Das game-Element nur erstellen, wenn es nicht existiert
 				if (gameEl == null)
 				{
 					gameEl = new XElement("game");
-					// path zuerst anlegen
-					gameEl.Add(new XElement("path", relPath));
 					root.Add(gameEl);
-					if (doc.Root == null) doc.Add(root);
 				}
 
-				// Felder setzen/entfernen
-				SetEl(gameEl, "name", NullIfEmpty(rom.Name));
-				SetEl(gameEl, "desc", NullIfEmpty(rom.Description));
-				SetEl(gameEl, "genre", NullIfEmpty(rom.Genre));
-				SetEl(gameEl, "players", NullIfEmpty(rom.Players));
-				SetEl(gameEl, "developer", NullIfEmpty(rom.Developer));
-				SetEl(gameEl, "publisher", NullIfEmpty(rom.Publisher));
-
-				// Rating 0..1 (Punkt als Dezimaltrenner!)
-				SetEl(gameEl, "rating", rom.ReleaseDate.HasValue
-						? rom.ReleaseDate.Value.ToString("0.00", CultureInfo.InvariantCulture)
-						: null);
-
-				// Releasedate in Batocera/EmulationStation-Format: yyyyMMdd'T'HHmmss
-				SetEl(gameEl, "releasedate", rom.ReleaseDateRaw);
-
-				// Medien: relative Pfade (behalte deine bereits relativen Werte bei)
-				// Falls du hier etwas anpasst/umbenennst: mit EnsureRelativeMedia(...)
-				SetEl(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
-				SetEl(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
-				SetEl(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
-				// ggf. weitere:
-				// SetEl(gameEl, "marquee", EnsureRelativeMedia(sysDir, rom.Marquee));
-				// SetEl(gameEl, "boxart",  EnsureRelativeMedia(sysDir, rom.Box2D));
+				SetRomToXml(gameEl, relPath, sysDir, rom);
 
 				try
 				{
-					// Speichern (UTF-8, Einrückung)
 					var xmlWriterSettings = new System.Xml.XmlWriterSettings
 					{
 						Indent = true,
-						IndentChars = "  ",
+						IndentChars = "  ", // Normales Leerzeichen verwenden
 						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
 						NewLineChars = Environment.NewLine,
 						NewLineHandling = System.Xml.NewLineHandling.Replace,
@@ -217,24 +194,6 @@ namespace RetroScrap2000
 					throw; // aufrufende Funktion fängt das ab
 				}
 			}
-
-			// --- lokale Hilfsfunktionen ---
-
-			static void SetEl(XElement parent, string name, string? value)
-			{
-				var el = parent.Element(name);
-				if (string.IsNullOrWhiteSpace(value))
-				{
-					el?.Remove();
-				}
-				else
-				{
-					if (el == null) parent.Add(new XElement(name, value));
-					else el.Value = value;
-				}
-			}
-
-			static string? NullIfEmpty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
 		}
 
 		public bool SaveAllRomsToGamelistXml(string baseDir, IEnumerable<GameEntry> roms)
@@ -261,22 +220,8 @@ namespace RetroScrap2000
 				{
 					// relative <path> bestimmen – Primärschlüssel
 					var relPath = GetRomPathForXml(sysDir, rom);
-					Trace.WriteLine("[RetroSystem::SaveAllRomsToGamelistXml] Adding rom " + relPath);
 					var gameEl = new XElement("game");
-					gameEl.Add(new XElement("path", relPath));
-					SetEl(gameEl, "name", NullIfEmpty(rom.Name));
-					SetEl(gameEl, "desc", NullIfEmpty(rom.Description));
-					SetEl(gameEl, "genre", NullIfEmpty(rom.Genre));
-					SetEl(gameEl, "players", NullIfEmpty(rom.Players));
-					SetEl(gameEl, "developer", NullIfEmpty(rom.Developer));
-					SetEl(gameEl, "publisher", NullIfEmpty(rom.Publisher));
-					SetEl(gameEl, "rating", rom.Rating > 0 ? rom.Rating.ToString("0.00", CultureInfo.InvariantCulture) : null);
-					SetEl(gameEl, "releasedate", rom.ReleaseDateRaw);
-					SetEl(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
-					SetEl(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
-					SetEl(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
-					// ggf. weitere Felder wie "marquee", "boxart" etc.
-
+					SetRomToXml(gameEl, relPath, sysDir, rom);
 					root.Add(gameEl);
 				}
 
@@ -285,7 +230,7 @@ namespace RetroScrap2000
 					var xmlWriterSettings = new System.Xml.XmlWriterSettings
 					{
 						Indent = true,
-						IndentChars = "  ",
+						IndentChars = "  ", // Normales Leerzeichen verwenden
 						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
 						NewLineChars = Environment.NewLine,
 						NewLineHandling = System.Xml.NewLineHandling.Replace,
@@ -302,17 +247,68 @@ namespace RetroScrap2000
 					return false;
 				}
 			}
-
-			// --- lokale Hilfsfunktionen ---
-			static void SetEl(XElement parent, string name, string? value)
-			{
-				if (string.IsNullOrWhiteSpace(value))
-					return;
-				parent.Add(new XElement(name, value));
-			}
-
-			static string? NullIfEmpty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
 		}
+
+		private static void SetRomToXml(XElement gameEl, string relPath, string sysDir, GameEntry rom)
+		{
+			Trace.WriteLine("[RetroSystem::SetRomToXml] Adding rom " + relPath);
+			// Hilfsmethode, um ein Element zu setzen oder zu entfernen
+			void SetElementValue(XElement parent, string name, string? value)
+			{
+				var element = parent.Element(name);
+				if (string.IsNullOrEmpty(value))
+				{
+					// Wenn der Wert null oder leer ist, Element entfernen
+					element?.Remove();
+				}
+				else
+				{
+					if (element == null)
+					{
+						// Wenn das Element nicht existiert, neues hinzufügen
+						parent.Add(new XElement(name, value));
+					}
+					else
+					{
+						// Wenn das Element existiert, Wert aktualisieren
+						element.Value = value;
+					}
+				}
+			}
+			void SetAttribute(XElement element, string attributeName, string? value)
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					element.Attribute(attributeName)?.Remove();
+				}
+				else
+				{
+					element.SetAttributeValue(attributeName, value);
+				}
+			}
+			
+			// Setzen Sie zuerst das path-Element
+			SetElementValue(gameEl, "path", relPath);
+
+			// Setzen Sie alle anderen Elemente mit der Hilfsmethode
+			SetElementValue(gameEl, "name", NullIfEmpty(rom.Name));
+			SetElementValue(gameEl, "desc", NullIfEmpty(rom.Description));
+			SetElementValue(gameEl, "genre", NullIfEmpty(rom.Genre));
+			SetElementValue(gameEl, "players", NullIfEmpty(rom.Players));
+			SetElementValue(gameEl, "developer", NullIfEmpty(rom.Developer));
+			SetElementValue(gameEl, "publisher", NullIfEmpty(rom.Publisher));
+			SetElementValue(gameEl, "rating", rom.Rating > 0 ? rom.Rating.ToString("0.00", CultureInfo.InvariantCulture) : null);
+			SetElementValue(gameEl, "releasedate", rom.ReleaseDateRaw);
+			SetElementValue(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
+			SetElementValue(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
+			SetElementValue(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
+
+			// Attribute setzen
+			SetAttribute(gameEl, "id", rom.Id.ToString());
+			SetAttribute(gameEl, "source", rom.Source ?? "");
+		}
+
+		static string? NullIfEmpty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
 
 		/// Primärschlüssel in der XML: <path> (relativ zum Systemordner)
 		private string GetRomPathForXml(string systemDir, GameEntry rom)
@@ -334,7 +330,7 @@ namespace RetroScrap2000
 		}
 
 		/// Medien relativ machen (./media/…); wenn schon relativ: unverändert
-		private string? EnsureRelativeMedia(string systemDir, string? mediaFromModel)
+		private static string? EnsureRelativeMedia(string systemDir, string? mediaFromModel)
 		{
 			if (string.IsNullOrWhiteSpace(mediaFromModel))
 				return null;

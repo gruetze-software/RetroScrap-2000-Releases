@@ -260,7 +260,7 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check the data from \&quot;{0}\&quot;..
+        ///   Looks up a localized string similar to Check the data from.
         /// </summary>
         internal static string Txt_Log_Scrap_CheckDataFrom {
             get {
@@ -269,16 +269,16 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download image.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        internal static string Txt_Log_Scrap_GetImage {
+        internal static string Txt_Log_Scrap_Loading {
             get {
-                return ResourceManager.GetString("Txt_Log_Scrap_GetImage", resourceCulture);
+                return ResourceManager.GetString("Txt_Log_Scrap_Loading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No data found for \&quot;{0}\&quot;..
+        ///   Looks up a localized string similar to No data found for.
         /// </summary>
         internal static string Txt_Log_Scrap_NoDataFoundFor {
             get {
@@ -368,6 +368,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Data found for the Rom..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_NoDataFound {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_NoDataFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Rom selected..
         /// </summary>
         internal static string Txt_Msg_Scrap_NoRom {
@@ -413,11 +422,11 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scraping {0} ROMs from system \&quot;{1}\&quot;&quot;.
+        ///   Looks up a localized string similar to Scraping {0} ROMs from system.
         /// </summary>
-        internal static string Txt_Scrap_Auto_Title {
+        internal static string Txt_Scrap_Auto_Title_FromSystem {
             get {
-                return ResourceManager.GetString("Txt_Scrap_Auto_Title", resourceCulture);
+                return ResourceManager.GetString("Txt_Scrap_Auto_Title_FromSystem", resourceCulture);
             }
         }
         

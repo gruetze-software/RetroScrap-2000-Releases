@@ -217,6 +217,8 @@ namespace RetroScrap2000
 			if (jeu == null) return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
 
 			var sg = new ScrapeGame();
+			sg.Id = jeu.romid;
+			
 			// Name 
 			if (jeu.noms != null && jeu.noms.Length > 0)
 			{
@@ -323,18 +325,19 @@ namespace RetroScrap2000
 			for( int i = 0; i < iGesamt; ++i)
 			{
 				GameEntry game = gameList.Games[i];
-				
-				string progText = $"{i + 1}/{iGesamt}";
 				dPerc = (double)(i + 1) / iGesamt * 100;
 				iPerc = (int)Math.Round(dPerc);
 
 				if (ct.IsCancellationRequested)
 				{
-					progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+					progress.Report(new ProgressObj( ProgressObj.eTyp.Warning, iPerc, 
+						Properties.Resources.Txt_Log_Scrap_CancelRequest));
 					break;
 				}
 
-				progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Status_Label_Scrap_Running));
+				progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, Properties.Resources.Txt_Status_Label_Scrap_Running));
+
 				try
 				{
 					// Rom scrappen
@@ -342,22 +345,26 @@ namespace RetroScrap2000
 					// Ergebnis prüfen
 					if (!result.ok)
 					{
-						ProgressObj err = new ProgressObj(iPerc, progText, $"{result.error}.");
+						ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+							game.Name!, $"{result.error}.");
 						err.Typ = ProgressObj.eTyp.Error;
 						progress.Report(err);
 						continue;
 					}
 					if (result.data == null)
 					{
-						ProgressObj warning = new ProgressObj(iPerc, progText, string.Format(
-							Properties.Resources.Txt_Log_Scrap_NoDataFoundFor, game.Name));
+						ProgressObj warning = new ProgressObj(iPerc, iGesamt, i + 1,
+							game.Name!, $"{Properties.Resources.Txt_Log_Scrap_NoDataFoundFor} \"{game.Name}\".");
 						warning.Typ = ProgressObj.eTyp.Warning;
 						progress.Report(warning);
 						continue;
 					}
 					// Daten prüfen und übernehmen
-					progress.Report(new ProgressObj(iPerc, progText, string.Format(
-					Properties.Resources.Txt_Log_Scrap_CheckDataFrom, game.Name)));
+					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
+					if (!string.IsNullOrEmpty(result.data.Id) && int.TryParse(result.data.Id, out int id) && id > 0)
+						game.Id = id;
+					game.Source = result.data.Source ?? "screenscraper.fr";
 					if (!string.IsNullOrEmpty(result.data.Description))
 						game.Description = Utils.DecodeTextFromApi(result.data.Description);
 					if (!string.IsNullOrEmpty(result.data.Developer))
@@ -376,28 +383,34 @@ namespace RetroScrap2000
 						game.ReleaseDate = result.data.ReleaseDate;
 
 					// Images vom Scraped-Objekt temporär laden
-					progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_GetImage + " Box2D..."));
+					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Box2D..."));
 					var coverTasksc = await ImageTools.LoadImageFromUrlCachedAsync(result.data.Box2DUrl, ct);
 					if (ct.IsCancellationRequested)
 					{
-						progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+						progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
 						break;
 					}
 					var coverscPath = FileTools.SaveImageToTempFile(coverTasksc);
-					progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_GetImage + " Screenshot..."));
+					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Screenshot..."));
 					if (ct.IsCancellationRequested)
 					{
-						progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+						progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
 						break;
 					}
 					var shotTasksc = await ImageTools.LoadImageFromUrlCachedAsync(result.data.ImageUrl, ct);
 					var shotscPath = FileTools.SaveImageToTempFile(shotTasksc);
-					progress.Report(new ProgressObj(iPerc, progText, "Video..."));
+					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Video..."));
 					var prevTasksc = await VideoTools.LoadVideoPreviewFromUrlAsync(result.data.VideoUrl, ct);
 
 					if (ct.IsCancellationRequested)
 					{
-						progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+						progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
 						break;
 					}
 
@@ -408,8 +421,13 @@ namespace RetroScrap2000
 						&& game.MediaCoverPath == game.MediaScreenshotPath)
 						forceimage = true;
 
-					if ( forceimage || ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaCoverPath), coverscPath) )
+					if (coverscPath != null && (forceimage
+						|| string.IsNullOrEmpty(game.MediaCoverPath)
+						|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaCoverPath), coverscPath)) )
 					{
+						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+								game.Name!, "Set Box2D..."));
+
 						var res = FileTools.MoveScrapFileRom(game.Name,
 							coverscPath,
 							baseDir,
@@ -422,7 +440,8 @@ namespace RetroScrap2000
 						}
 						else
 						{
-							ProgressObj err = new ProgressObj(iPerc, progText, $"Fail to move Box2D!");
+							ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+								game.Name!, "Fail to move Box2D!");
 							err.Typ = ProgressObj.eTyp.Error;
 							progress.Report(err);
 						}
@@ -430,13 +449,17 @@ namespace RetroScrap2000
 
 					if (ct.IsCancellationRequested)
 					{
-						progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+						progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
 						break;
 					}
 
-					if ( forceimage || ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaScreenshotPath), shotscPath))
+					if (shotscPath != null && (forceimage
+					|| string.IsNullOrEmpty(game.MediaScreenshotPath)
+					|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaScreenshotPath), shotscPath)))
 					{
-						progress.Report(new ProgressObj(iPerc, progText, $"\"{game.Name}\": Set Screenshot..."));
+						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+							game.Name!, "Set Screenshot..."));
 						var res = FileTools.MoveScrapFileRom(game.Name,
 							shotscPath,
 							baseDir,
@@ -449,7 +472,8 @@ namespace RetroScrap2000
 						}
 						else
 						{
-							ProgressObj err = new ProgressObj(iPerc, progText, $"Fail to move Screenshot!");
+							ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+								game.Name!, $"Fail to move Screenshot!");
 							err.Typ = ProgressObj.eTyp.Error;
 							progress.Report(err);
 						}
@@ -457,13 +481,19 @@ namespace RetroScrap2000
 
 					if (ct.IsCancellationRequested)
 					{
-						progress.Report(new ProgressObj(iPerc, progText, Properties.Resources.Txt_Log_Scrap_CancelRequest));
+						progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
 						break;
 					}
 
-					if (ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaVideoPreviewImagePath), prevTasksc.Value.videoPreviewAbsPath))
+					if (prevTasksc != null && !string.IsNullOrEmpty(prevTasksc.Value.videoAbsPath) 
+					&& ( string.IsNullOrEmpty(game.MediaVideoPath )
+						|| string.IsNullOrEmpty(game.MediaVideoPreviewImagePath)
+						|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, 
+							game.MediaVideoPreviewImagePath), prevTasksc.Value.videoPreviewAbsPath)))
 					{
-						progress.Report(new ProgressObj(iPerc, progText, $"\"{game.Name}\": Video is newer..."));
+						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+							game.Name!, "Set Video..."));
 						var res = FileTools.MoveScrapFileRom(game.Name,
 							prevTasksc.Value.videoAbsPath,
 							baseDir,
@@ -476,13 +506,14 @@ namespace RetroScrap2000
 				}
 				catch (Exception e)
 				{
-					ProgressObj err = new ProgressObj(iPerc, progText, $"Error! {Utils.GetExcMsg(e)}");
+					ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+						game.Name!, $"Error! {Utils.GetExcMsg(e)}");
 					err.Typ = ProgressObj.eTyp.Error;
 					progress.Report(err);
 					continue;
 				}
 			}
-			progress.Report(new ProgressObj(0, "", "End of Scraping."));
+			progress.Report(new ProgressObj(0, "End of Scraping."));
 		}
 	}
 }
@@ -782,6 +813,8 @@ namespace RetroScrap2000
 public sealed class ScrapeGame
 {
 	public string? Name { get; set; }
+	public string? Id { get; set; }
+	public string? Source { get; set; }
 	public string? Description { get; set; }
 	public string? Genre { get; set; }
 	public string? Players { get; set; }
@@ -824,6 +857,8 @@ file sealed class GameResponse
 }
 file sealed class GameData
 {
+	public string? id { get; set; }
+	public string? romid { get; set; }
 	public RegTxtObj[]? noms { get; set; }
 	public LangTextObj[]? synopsis { get; set; }
 	public Genre[]? genres { get; set; }

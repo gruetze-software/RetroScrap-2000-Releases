@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Runtime.Intrinsics.Arm;
@@ -169,8 +170,37 @@ namespace RetroScrap2000
 			UiTools.OpenPicBoxTagFile((PictureBox)sender);
 		}
 
+		private string? ConvertDateFormat(string dt)
+		{
+			// Parsen des Eingabe-Strings mit dem Format "dd.mm.yyyy"
+			if ( string.IsNullOrEmpty(dt))
+				return null;
+
+			if ( DateTime.TryParseExact(dt, "dd.MM.yyyy", CultureInfo.InvariantCulture, 
+				DateTimeStyles.None, out var parsedDate))
+			{
+				// Formatieren des DateTime-Objekts in das Zielformat "yyyyMMddT000000"
+				return parsedDate.ToString("yyyyMMdd'T'000000");
+			}
+			else
+			{
+				// Ungültiges Format
+				return null;
+			}
+		}
+
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
+			// GUI -Werte in Selection packen
+			_scraped.Description = textBoxRomNewDesc.Text.Trim();
+			_scraped.Genre = textBoxRomNewGenre.Text.Trim();
+			_scraped.Name = textBoxRomNewName.Text.Trim();
+			_scraped.Players = textBoxRomNewPlayers.Text.Trim();
+			_scraped.Developer = textBoxRomNewDev.Text.Trim();
+			_scraped.Publisher = textBoxRomNewPub.Text.Trim();
+			_scraped.ReleaseDateRaw = ConvertDateFormat(textBoxRomNewRelease.Text.Trim());
+			_scraped.RatingNormalized = starRatingControlRomNew.Rating > 0.0 ? starRatingControlRomNew.Rating / 5.0 : 0.0;
+			
 			Selection.NewData = _scraped;
 			Selection.TakeName = checkBoxName.Checked;
 			Selection.TakeDesc = checkBoxDesc.Checked;
@@ -183,6 +213,7 @@ namespace RetroScrap2000
 			Selection.TakeMediaBox = checkBoxMediaFront.Checked;
 			Selection.TakeMediaScreen = checkBoxMediaScreen.Checked;
 			Selection.TakeMediaVideo = checkBoxMediaVideo.Checked;
+
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}

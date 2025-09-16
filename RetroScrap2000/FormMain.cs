@@ -216,7 +216,7 @@ namespace RetroScrap2000
 			await LoadRomsAsync();
 		}
 
-		private void alleRomsAktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void alleRomsAktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_selectedRom == null)
 				return;
@@ -229,6 +229,15 @@ namespace RetroScrap2000
 
 			FormScrapAuto frm = new FormScrapAuto(gamelist, _scrapper, baseDir, _systems, _options);
 			frm.ShowDialog();
+			if ( frm.ScrapWasStarting == false )
+				return;
+
+			await SetRomListFromSelectedSystem();
+			if (listViewRoms.Items.Count > 0)
+			{
+				listViewRoms.Items[0].Selected = true;
+				listViewRoms.SelectedItems[0].EnsureVisible();
+			}
 		}
 
 		private void OpenOptionsFrm()
@@ -396,6 +405,8 @@ namespace RetroScrap2000
 				if (!ok || data == null)
 				{
 					Splash.CloseSplashScreen();
+					if (err == "HTTP 404: Erreur : Rom/Iso/Dossier non trouvée !  ") 
+						err = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
 					MyMsgBox.ShowErr($"\"{romFileName}\": " + Properties.Resources.Txt_Msg_Scrap_Fail + "\r\n\r\n" + err);
 					SetStatusToolStripLabel($"\"{_selectedRom.Name}\": {err}.");
 					return;
@@ -403,6 +414,7 @@ namespace RetroScrap2000
 
 				var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
 				var baseDir = Path.Combine(_gameManager.RomPath!, systemFolder);
+				data.Source = "ScreenScraper.fr";
 
 				// Dialog zum Übernehmen der Daten
 				Splash.CloseSplashScreen();
@@ -415,6 +427,10 @@ namespace RetroScrap2000
 				var sel = dlg.Selection;
 				var d = sel.NewData!;
 				// Felder übernehmen
+				if (!string.IsNullOrEmpty(d.Id) && int.TryParse(d.Id, out int id ) && id != _selectedRom.Id )
+					_selectedRom.Id = id;
+				if ( string.IsNullOrEmpty(d.Source) || d.Source != _selectedRom.Source)
+					_selectedRom.Source = d.Source;
 				if (sel.TakeName) _selectedRom.Name = d.Name;
 				if (sel.TakeDesc) _selectedRom.Description = d.Description;
 				if (sel.TakeGenre) _selectedRom.Genre = d.Genre;
@@ -498,9 +514,21 @@ namespace RetroScrap2000
 						)
 				);
 				if (ok)
+				{
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomSave);
+					var selitem = listViewRoms.SelectedItems[0];
+					selitem.SubItems[0].Text = _selectedRom.Name ?? Path.GetFileName(_selectedRom.Path ?? "");
+					selitem.SubItems[1].Text = _selectedRom.ReleaseDate?.ToString("yyyy") ?? "";
+					selitem.SubItems[2].Text = _selectedRom.Genre;
+					selitem.SubItems[3].Text = _selectedRom.Players;
+					selitem.SubItems[4].Text = _selectedRom.RatingStars.ToString("0.0");
+					selitem.SubItems[5].Text = Path.GetFileName(_selectedRom.Path ?? "");
+					selitem.Tag = _selectedRom;
+				}
 				else
+				{
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
+				}
 
 			}
 			catch (Exception ex)
@@ -770,10 +798,10 @@ namespace RetroScrap2000
 				Trace.WriteLine("... Gamelist.xml upgedated.");
 				// Liste neu laden
 				GetSeletedGameList()?.Games.Remove(_selectedRom);
-				var games = GameListLoader.Load(Path.Combine(baseDir, "gamelist.xml"),
+				var loadres = GameListLoader.Load(Path.Combine(baseDir, "gamelist.xml"),
 					GetSeletedGameList()?.RetroSys);
 				// Liste neu setzen
-				GetSeletedGameList()?.Games.AddRange( games?.Games);
+				GetSeletedGameList()?.Games.AddRange( loadres.Games.Games);
 				// UI neu setzen
 				await SetRomListFromSelectedSystem();
 			}

@@ -41,9 +41,10 @@
 			// pictureBoxAnimation
 			// 
 			pictureBoxAnimation.Dock = DockStyle.Fill;
-			pictureBoxAnimation.Location = new Point(6, 6);
+			pictureBoxAnimation.Location = new Point(13, 13);
+			pictureBoxAnimation.Margin = new Padding(10);
 			pictureBoxAnimation.Name = "pictureBoxAnimation";
-			pictureBoxAnimation.Size = new Size(147, 134);
+			pictureBoxAnimation.Size = new Size(133, 120);
 			pictureBoxAnimation.TabIndex = 0;
 			pictureBoxAnimation.TabStop = false;
 			// 
@@ -75,8 +76,8 @@
 			tableLayoutPanel1.ColumnCount = 2;
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-			tableLayoutPanel1.Controls.Add(pictureBoxAnimation, 0, 0);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 0);
+			tableLayoutPanel1.Controls.Add(pictureBoxAnimation, 0, 0);
 			tableLayoutPanel1.Location = new Point(2, 2);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.Padding = new Padding(3);

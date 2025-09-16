@@ -17,36 +17,41 @@ namespace RetroScrap2000
 
 		public eTyp Typ { get; set; } = eTyp.Info;
 
-		public int? progressPerc;
-		public string? progressText { get; set; }
+		public int ProgressPerc { get; set; }
+		public string RomName { get; set; }
+		public string? RomNumberAndTotal { get; set; }
 		public string? MessageText { get; set; }
 		public ProgressObj() 
 		{
-			progressPerc = -1;
-			progressText = string.Empty;
+			Typ = eTyp.Info;
+			ProgressPerc = -1;
+			RomName = string.Empty;
+			RomNumberAndTotal = string.Empty;
 			MessageText = "";
 		}
 
-		public ProgressObj(int perc, string progText) : this()
-		{
-			progressPerc = perc;
-			progressText = progText;
-		}
-
-		public ProgressObj(int perc, string progText, string messageText) : this(perc, progText)
-		{
-			MessageText = messageText;	
-		}
-
-		public ProgressObj(eTyp typ, string message) : this()
+		public ProgressObj(eTyp typ, int perc, string messageText) : this()
 		{
 			Typ = typ;
-			MessageText = message;
+			ProgressPerc = perc;
+			MessageText = messageText;
 		}
+
+		public ProgressObj(int progressPerc, string messageText) : this(
+			eTyp.Info, progressPerc, messageText)
+		{	}
+
+		public ProgressObj(int progressPerc, int romtotal, int romnr,
+			string romName, string messageText) : this(progressPerc, messageText)
+		{
+			RomNumberAndTotal = $"({romnr}/{romtotal})";
+			RomName = romName;
+		}
+		
 
 		public override string ToString()
 		{
-			return $"{Typ}: {progressText} {MessageText}";
+			return $"{Typ}: {MessageText}";
 		}
 	}
 }

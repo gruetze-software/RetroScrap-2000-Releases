@@ -81,6 +81,7 @@
 			StartPosition = FormStartPosition.CenterParent;
 			Text = "FormRomDetails";
 			Load += FormRomDetails_Load;
+			Resize += FormRomDetails_Resize;
 			ResumeLayout(false);
 		}
 

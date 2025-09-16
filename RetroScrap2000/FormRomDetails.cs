@@ -24,10 +24,61 @@ namespace RetroScrap2000
 		private void FormRomDetails_Load(object sender, EventArgs e)
 		{
 			FileInfo f = new FileInfo(_romFile);
-			
+
 			ListViewItem item = new ListViewItem("Name:");
 			item.SubItems.Add(f.FullName);
 			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Id:");
+			item.SubItems.Add(_rom.Id.ToString());
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Source:");
+			item.SubItems.Add(_rom.Source);
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Path Cover:");
+			item.SubItems.Add(_rom.MediaCoverPath);
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Path Screen:");
+			item.SubItems.Add(_rom.MediaScreenshotPath);
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Path Video:");
+			item.SubItems.Add(_rom.MediaVideoPath);
+			listViewDetails.Items.Add(item);
+
+			ResizeListView();
+		}
+
+		private void ResizeListView()
+		{
+			// Sicherstellen, dass die Spalten im Detailmodus existieren.
+			if (listViewDetails.View == View.Details && listViewDetails.Columns.Count > 0)
+			{
+				// Setze eine Basisbreite für alle Spalten außer der letzten.
+				int totalWidthExcludingLastColumn = 0;
+				for (int i = 0; i < listViewDetails.Columns.Count - 1; i++)
+				{
+					totalWidthExcludingLastColumn += listViewDetails.Columns[i].Width;
+				}
+
+				// Berechne die neue Breite der letzten Spalte, indem du den verbleibenden Platz nimmst.
+				// Der '- 4' am Ende ist für den Scrollbar-Bereich.
+				int newWidth = listViewDetails.ClientSize.Width - totalWidthExcludingLastColumn - 4;
+
+				// Wenn die neue Breite positiv ist, setze sie.
+				if (newWidth > 0)
+				{
+					listViewDetails.Columns[listViewDetails.Columns.Count - 1].Width = newWidth;
+				}
+			}
+		}
+
+		private void FormRomDetails_Resize(object sender, EventArgs e)
+		{
+			ResizeListView();
 		}
 	}
 }
