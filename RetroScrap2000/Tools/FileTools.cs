@@ -57,19 +57,16 @@ namespace RetroScrap2000.Tools
 			return Path.Combine(systemDir, rel);
 		}
 
-		public static (bool ok, string? file) MoveScrapFileRom(string? romname,
+		public static (bool ok, string? file) MoveOrCopyScrapFileRom(bool move, string? romname,
 			string? sourcefile,
 			string destbasedir,
-			string destrelpath,
-			string? destfileend)
+			string destrelpath)
 		{
 			if (!string.IsNullOrEmpty(romname)
 				&& !string.IsNullOrEmpty(sourcefile)
 				&& File.Exists(sourcefile))
 			{
-				if (string.IsNullOrEmpty(destfileend)
-					|| Path.GetExtension(sourcefile).ToLower() != destfileend.ToLower())
-					destfileend = Path.GetExtension(sourcefile).ToLower();
+				string destfileend = Path.GetExtension(sourcefile).ToLower();
 
 				if (string.IsNullOrEmpty(destrelpath))
 					throw new ApplicationException("Relative Path not set for " + romname + ".");
@@ -82,8 +79,17 @@ namespace RetroScrap2000.Tools
 
 					string destfilename = MakeSafeFileName(romname) + destfileend;
 					string destfile = Path.Combine(abspath, destfilename);
-					Trace.WriteLine($"FileMove: \"{sourcefile}\" -> \"{destfile}\"");
-					File.Move(sourcefile, destfile, overwrite: true);
+					if (move)
+					{
+						Trace.WriteLine($"FileMove: \"{sourcefile}\" -> \"{destfile}\"");
+						File.Move(sourcefile, destfile, overwrite: true);
+					}
+					else
+					{
+						Trace.WriteLine($"FileCopy: \"{sourcefile}\" -> \"{destfile}\"");
+						File.Copy(sourcefile, destfile, overwrite: true);
+					}
+						
 					return (true, Path.Combine(destrelpath, destfilename));
 				}
 			}

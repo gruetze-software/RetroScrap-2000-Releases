@@ -180,7 +180,7 @@ namespace RetroScrap2000
 				DateTimeStyles.None, out var parsedDate))
 			{
 				// Formatieren des DateTime-Objekts in das Zielformat "yyyyMMddT000000"
-				return parsedDate.ToString("yyyyMMdd'T'000000");
+				return parsedDate.ToString("yyyy-MM-dd");
 			}
 			else
 			{

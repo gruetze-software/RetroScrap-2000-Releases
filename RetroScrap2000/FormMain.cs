@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 using System.Runtime.Intrinsics.Arm;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.Design.AxImporter;
 
@@ -48,10 +49,7 @@ namespace RetroScrap2000
 					?.SetValue(listViewRoms, true);
 		}
 
-		// Change the event handler signature for System.Timers.Timer.Elapsed to match the expected delegate type.
-		// The Elapsed event expects a method with the following signature:
-		// void Handler(object? sender, System.Timers.ElapsedEventArgs e)
-
+		#region Form-Events
 		private void LoadTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
 		{
 			_loadTimer.Enabled = false;
@@ -127,6 +125,18 @@ namespace RetroScrap2000
 			this.Text = this.Text += "    Roms: \"" + _options.RomPath + "\"";
 		}
 
+		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			// Image Cache aufräumen
+			foreach (var kv in _imageCache)
+			{
+				kv.Value.Dispose(); // gibt Ressourcen frei
+			}
+			_imageCache.Clear();
+		}
+
+		#endregion
+
 		private void buttonRomPath_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog fldFrm = new FolderBrowserDialog();
@@ -143,7 +153,491 @@ namespace RetroScrap2000
 			}
 		}
 
-		// Diese Methode ist asynchron und gibt einen Task zurück
+		private async void buttonRomsRead_Click(object sender, EventArgs e)
+		{
+			if (!Directory.Exists(_options.RomPath))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Rom_WrongPath);
+				return;
+			}
+
+			await LoadRomsAsync();
+		}
+
+		private void buttonOptions_Click(object sender, EventArgs e)
+		{
+			OpenOptionsFrm();
+		}
+		
+		private CancellationTokenSource? _sysSelCts;
+		
+		private async void listViewSystems_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			await SetRomListSync();
+		}
+
+		private CancellationTokenSource? _romSelCts;
+		private async void listViewRoms_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Selektion auslesen
+			var rom = (listViewRoms.SelectedItems.Count == 1)
+					? listViewRoms.SelectedItems[0].Tag as GameEntry
+					: null;
+
+			// laufende Jobs abbrechen & neuen Token erzeugen
+			_romSelCts?.Cancel();
+			_romSelCts = new CancellationTokenSource();
+			var ct = _romSelCts.Token;
+
+			_selectedRom = rom;
+
+			try
+			{
+				// alles weitere (Busy, Bilder/Videos laden, Textfelder setzen)
+				// passiert in SetRomOnGuiAsync
+				await SetRomOnGuiAsync(rom, ct);
+			}
+			catch (OperationCanceledException)
+			{
+				// ok – Auswahl wurde schnell gewechselt
+			}
+		}
+
+		private void listViewSystems_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			SortListview(listViewSystems, e.Column, ref _systemSortCol, ref _systemSortOrder);
+		}
+
+		private void listViewRoms_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			SortListview(listViewRoms, e.Column, ref _romSortCol, ref _romSortOrder);
+		}
+
+		private void pictureBoxImgVideo_Click(object sender, EventArgs e)
+		{
+			PictureBox pb = (PictureBox)sender;
+			if (pb.Image == null || pb.Tag == null)
+				NewMediaAsync(pb);
+			else
+				OpenMedia(pb);
+		}
+
+		private async void buttonRomScrap_Click(object sender, EventArgs e)
+		{
+			var sysFolder = GetSelectedRomPath();
+			if (_selectedRom == null || string.IsNullOrEmpty(sysFolder))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
+				return;
+			}
+
+			// Rom-Basisname als romnom
+			var romFileName = Path.GetFileName(_selectedRom.Name ?? _selectedRom.Path ?? "");
+			if (string.IsNullOrWhiteSpace(romFileName))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_WrongRomFile);
+				return;
+			}
+
+			buttonRomScrap.Enabled = false;
+			try
+			{
+				Splash.ShowSplashScreen();
+				await Splash.WaitForSplashScreenAsync();
+
+				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Scrap_Running);
+				await Splash.ShowStatusWithDelayAsync(string.Format(
+					Properties.Resources.Txt_Status_Label_Scrap_Running, _selectedRom.Name), 300);
+
+				var (ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options.GetLanguageShortCode());
+				if (!ok || data == null)
+				{
+					Splash.CloseSplashScreen();
+					if (err == "HTTP 404: Erreur : Rom/Iso/Dossier non trouvée !  ")
+						err = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
+					MyMsgBox.ShowErr($"\"{romFileName}\": " + Properties.Resources.Txt_Msg_Scrap_Fail + "\r\n\r\n" + err);
+					SetStatusToolStripLabel($"\"{_selectedRom.Name}\": {err}.");
+					return;
+				}
+
+				
+				data.Source = "ScreenScraper.fr";
+
+				// Dialog zum Übernehmen der Daten
+				Splash.CloseSplashScreen();
+				using var dlg = new FormScrapRom(sysFolder, _selectedRom, data);
+				if (dlg.ShowDialog(this) != DialogResult.OK)
+				{
+					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
+					return;
+				}
+				var sel = dlg.Selection;
+				var d = sel.NewData!;
+				// Felder übernehmen
+				if (!string.IsNullOrEmpty(d.Id) && int.TryParse(d.Id, out int id) && id != _selectedRom.Id)
+					_selectedRom.Id = id;
+				if (string.IsNullOrEmpty(d.Source) || d.Source != _selectedRom.Source)
+					_selectedRom.Source = d.Source;
+				if (sel.TakeName) _selectedRom.Name = d.Name;
+				if (sel.TakeDesc) _selectedRom.Description = d.Description;
+				if (sel.TakeGenre) _selectedRom.Genre = d.Genre;
+				if (sel.TakePlayers) _selectedRom.Players = d.Players;
+				if (sel.TakeDev) _selectedRom.Developer = d.Developer;
+				if (sel.TakePub) _selectedRom.Publisher = d.Publisher;
+				if (sel.TakeRelease) _selectedRom.ReleaseDate = d.ReleaseDate;
+				if (sel.TakeRating) _selectedRom.Rating = d.RatingNormalized.HasValue ? d.RatingNormalized.Value : 0.0;
+
+
+				if (sel.TakeMediaBox && !string.IsNullOrEmpty(sel.MediaBoxTempPath))
+				{
+					MoveOrCopyScrapImageCoverRom(true, sel.MediaBoxTempPath, sysFolder);
+				}
+				if (sel.TakeMediaScreen && !string.IsNullOrEmpty(sel.MediaScreenTempPath))
+				{
+					MoveOrCopyScrapImageScreenshotRom(true, sel.MediaScreenTempPath, sysFolder);
+				}
+				if (sel.TakeMediaVideo && !string.IsNullOrEmpty(sel.MediaVideoTempPath))
+				{
+					MoveOrCopyScrapVideoRom(true, sel.MediaVideoTempPath, sysFolder);
+				}
+
+				// UI aktualisieren
+				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
+				await SaveRomAsync();
+			}
+			catch (Exception ex)
+			{
+				Splash.CloseSplashScreen();
+				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
+				SetStatusToolStripLabel(Properties.Resources.Txt_Msg_Scrap_Fail);
+			}
+			finally
+			{
+				Splash.CloseSplashScreen();
+				buttonRomScrap.Enabled = true;
+			}
+		}
+
+		private async void buttonRomSave_Click(object sender, EventArgs e)
+		{
+			await SaveRomAsync();
+		}
+
+		private async void RomAlleAktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedRom == null)
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if ( string.IsNullOrEmpty(baseDir))
+				return;
+
+			var gamelist = GetSeletedGameList();
+			if (gamelist == null)
+				return;
+
+			FormScrapAuto frm = new FormScrapAuto(gamelist, _scrapper, baseDir, _systems, _options);
+			frm.ShowDialog();
+			if (frm.ScrapWasStarting == false)
+				return;
+
+			await SetRomListSync();
+			if (listViewRoms.Items.Count > 0)
+			{
+				listViewRoms.Items[0].Selected = true;
+				listViewRoms.SelectedItems[0].EnsureVisible();
+			}
+		}
+
+		private void RomDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedRom == null)
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
+
+			var romFileName = Path.GetFileName(_selectedRom.Path ?? _selectedRom.Name ?? "");
+			if (string.IsNullOrEmpty(romFileName))
+				return;
+
+			FormRomDetails frm = new FormRomDetails(_selectedRom, Path.Combine(baseDir, romFileName));
+			frm.ShowDialog();
+		}
+
+		private async void RomLöschenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedRom == null)
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
+
+			var romFileName = Path.GetFileName(_selectedRom.Path ?? _selectedRom.Name ?? "");
+			if (string.IsNullOrEmpty(romFileName))
+				return;
+
+			var file = Path.Combine(baseDir, romFileName);
+			if (MyMsgBox.ShowQuestion(string.Format(
+				"Soll die Datei \"{0}\" mit allen Informationen dazu wirklich gelöscht werden?",
+				file)) != DialogResult.Yes)
+				return;
+
+			try
+			{
+				Trace.WriteLine($"Lösche Rom-Datei \"{file}\" ...");
+				File.Delete(file);
+				Trace.WriteLine("... Rom-Datei gelöscht.");
+				Trace.WriteLine("Gamelist.xml updaten ...");
+				GameListLoader.DeleteGameByPath(
+					xmlPath: Path.Combine(baseDir, "gamelist.xml"),
+					romRelPath: _selectedRom.Path ?? romFileName
+					);
+				Trace.WriteLine("... Gamelist.xml upgedated.");
+				// Liste neu laden
+				GetSeletedGameList()?.Games.Remove(_selectedRom);
+				var loadres = GameListLoader.Load(Path.Combine(baseDir, "gamelist.xml"),
+					GetSeletedGameList()?.RetroSys);
+				// Liste neu setzen
+				GetSeletedGameList()?.Games.AddRange(loadres.Games.Games);
+				// UI neu setzen
+				await SetRomListSync();
+			}
+			catch (Exception ex)
+			{
+				MyMsgBox.ShowErr("Fehler beim Löschen der Rom-Datei:\r\n\r\n" + Utils.GetExcMsg(ex));
+			}
+		}
+
+		private void RomScrapToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private PictureBox? GetPictureBoxFromMenuItem(object sender)
+		{
+			var menuItem = sender as ToolStripMenuItem;
+			if (menuItem?.Owner is ContextMenuStrip contextMenu)
+			{
+				// Die SourceControl-Eigenschaft enthält die Picturebox
+				return contextMenu.SourceControl as PictureBox;
+			}
+			return null;
+		}
+
+		private void MediaAnzeigenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var pictureBox = GetPictureBoxFromMenuItem(sender);
+			if (pictureBox != null)
+				OpenMedia(pictureBox);
+		}
+
+		public void OpenMedia(PictureBox pb)
+		{
+			if (pb.Image == null || pb.Tag == null)
+				return;
+			UiTools.OpenPicBoxTagFile(pb);
+		}
+
+		public async void NewMediaAsync(PictureBox pb)
+		{
+			bool video = pb == pictureBoxImgVideo;
+			OpenFileDialog ofd = new OpenFileDialog();
+			if (video)
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
+				ofd.Filter = "MP4 (*.mp4)|*.mp4";
+			}
+			else
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
+				ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
+			}
+			if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null )
+			{
+				var baseDir = GetSelectedRomPath();
+				if (string.IsNullOrEmpty(baseDir))
+					return;
+
+				if (pb == pictureBoxImgBox)
+				{
+					MoveOrCopyScrapImageCoverRom(false, ofd.FileName, baseDir);
+					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaCoverPath);
+				}
+				else if (pb == pictureBoxImgScreenshot)
+				{
+					MoveOrCopyScrapImageScreenshotRom(false, ofd.FileName, baseDir);
+					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaScreenshotPath);
+				}
+				else if (pb == pictureBoxImgVideo)
+				{
+					MoveOrCopyScrapVideoRom(false, ofd.FileName, baseDir);
+					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaVideoPath);
+				}
+				else
+					Debug.Assert(false);
+
+				await SaveRomAsync();
+				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
+			}
+		}
+		
+		private void MediaNeuToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var pictureBox = GetPictureBoxFromMenuItem(sender);
+			if (pictureBox != null)
+				NewMediaAsync(pictureBox);
+		}
+
+		private void MediaLöschenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+		
+		private void OpenOptionsFrm()
+		{
+			FormOptions frm = new FormOptions(_options, _scrapper);
+			if (frm.ShowDialog() == DialogResult.OK)
+			{
+				_options.Save();
+			}
+		}
+
+		private GameList? GetSeletedGameList()
+		{
+			return (listViewSystems.SelectedItems.Count == 1)
+						? listViewSystems.SelectedItems[0].Tag as GameList
+						: null;
+		}
+
+		private async Task SetRomListSync()
+		{
+			// Selektion lesen: GameList des Systems aus Tag
+			var roms = GetSeletedGameList();
+			var system = roms?.RetroSys;
+
+			// laufende System-Ladevorgänge abbrechen
+			_sysSelCts?.Cancel();
+			_sysSelCts = new CancellationTokenSource();
+			var sysCt = _sysSelCts.Token;
+
+			// UI: Systemanzeige aktualisieren (Banner + Infos)
+			try
+			{
+				await SetSystemOnGuiAsync(system, sysCt);
+			}
+			catch (OperationCanceledException) { /* ok */ }
+
+			// ROM-Liste neu füllen (gebatcht, kein Async nötig – nur UI)
+			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem, system?.Name));
+			listViewRoms.BeginUpdate();
+			try
+			{
+				listViewRoms.Items.Clear();
+				_selectedRom = null;
+				await SetRomOnGuiAsync(null, CancellationToken.None); // Details rechts leeren
+
+				if (roms == null) return;
+
+				var items = new List<ListViewItem>(roms.Games.Count);
+				foreach (var g in roms.Games)
+				{
+					var it = new ListViewItem(g.Name ?? Path.GetFileName(g.Path ?? ""));
+					it.SubItems.Add(g.ReleaseDate?.ToString("yyyy") ?? "");
+					it.SubItems.Add(g.Genre);
+					it.SubItems.Add(g.Players);
+					it.SubItems.Add(g.RatingStars.ToString("0.0"));
+					it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
+					it.Tag = g;
+					items.Add(it);
+				}
+				listViewRoms.Items.AddRange(items.ToArray());
+			}
+			finally
+			{
+				listViewRoms.EndUpdate();
+				// **Hier wird der erste Eintrag der Rom-Liste ausgewählt**
+				// Warten Sie, bis die Liste gefüllt wurde
+				if (listViewRoms.Items.Count > 0)
+				{
+					listViewRoms.Items[0].Selected = true;
+					listViewRoms.Items[0].Focused = true;
+				}
+				SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_AnzRomsLoad,
+					roms?.Games.Count));
+			}
+		}
+
+		private async Task SaveRomAsync()
+		{
+			if (_selectedRom == null)
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
+				return;
+			}
+
+			var sysFolder = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(sysFolder))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
+				return;
+			}
+
+			// GUI -> Model (nur Felder, die du im UI editieren lässt)
+			_selectedRom.Name = textBoxRomName.Text?.Trim();
+			_selectedRom.Description = textBoxRomDesc.Text?.Trim();
+			_selectedRom.Genre = textBoxRomDetailsGenre.Text?.Trim();
+			_selectedRom.Players = textBoxRomDetailsAnzPlayer.Text?.Trim();
+			_selectedRom.Developer = textBoxRomDetailsDeveloper.Text?.Trim();
+			_selectedRom.Publisher = textBoxRomDetailsPublisher.Text?.Trim();
+			// RatingStars ist read-only? Falls editierbar: (0..5) -> 0..1
+			_selectedRom.Rating = Math.Clamp(starRatingControlRom.Rating / 5.0, 0.0, 1.0);
+
+			// Releasedate: nimm, was in der GUI steht (optional)
+			if (DateTime.TryParse(textBoxRomDetailsReleaseDate.Text, out var rd))
+				_selectedRom.ReleaseDate = rd;
+
+			try
+			{
+				buttonRomSave.Enabled = false;
+
+				bool ok = await Task.Run(() =>
+						_systems.SaveRomToGamelistXml(
+								romPath: sysFolder,
+								rom: _selectedRom
+						)
+				);
+				if (ok)
+				{
+					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomSave);
+					var selitem = listViewRoms.SelectedItems[0];
+					selitem.SubItems[0].Text = _selectedRom.Name ?? Path.GetFileName(_selectedRom.Path ?? "");
+					selitem.SubItems[1].Text = _selectedRom.ReleaseDate?.ToString("yyyy") ?? "";
+					selitem.SubItems[2].Text = _selectedRom.Genre;
+					selitem.SubItems[3].Text = _selectedRom.Players;
+					selitem.SubItems[4].Text = _selectedRom.RatingStars.ToString("0.0");
+					selitem.SubItems[5].Text = Path.GetFileName(_selectedRom.Path ?? "");
+					selitem.Tag = _selectedRom;
+				}
+				else
+				{
+					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Status_Label_RomNotSaved + "\r\n\r\n" + Utils.GetExcMsg(ex));
+				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
+			}
+			finally
+			{
+				buttonRomSave.Enabled = true;
+			}
+		}
+
 		private async Task LoadRomsAsync()
 		{
 			if (!Directory.Exists(_options.RomPath))
@@ -205,401 +699,46 @@ namespace RetroScrap2000
 			}
 		}
 
-		private async void buttonRomsRead_Click(object sender, EventArgs e)
+		private (bool ok, string? file) CopyOrMoveMediaFileToRom(bool movefile, string sourcefile,
+			string relMediaRomPath, string basedir)
 		{
-			if (!Directory.Exists(_options.RomPath))
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Rom_WrongPath);
-				return;
-			}
+			(bool ok, string? file) result = (false, null);
 
-			await LoadRomsAsync();
+			if (_selectedRom != null && !string.IsNullOrEmpty(sourcefile) && File.Exists(sourcefile))
+			{
+				result = FileTools.MoveOrCopyScrapFileRom(
+					move: movefile,
+					romname: _selectedRom.Name,
+					sourcefile: sourcefile,
+					destbasedir: basedir,
+					destrelpath: relMediaRomPath);
+			}
+			return result;
+
 		}
 
-		private async void alleRomsAktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
+		private void MoveOrCopyScrapImageCoverRom(bool movefile, string sourceFile, string basedir)
 		{
-			if (_selectedRom == null)
-				return;
+			var result = CopyOrMoveMediaFileToRom(movefile, sourceFile, "./media/box2dfront/", basedir);
 
-			var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-			var baseDir = Path.Combine(_gameManager.RomPath!, systemFolder);
-			var gamelist = GetSeletedGameList();
-			if (gamelist == null)
-				return;
-
-			FormScrapAuto frm = new FormScrapAuto(gamelist, _scrapper, baseDir, _systems, _options);
-			frm.ShowDialog();
-			if ( frm.ScrapWasStarting == false )
-				return;
-
-			await SetRomListFromSelectedSystem();
-			if (listViewRoms.Items.Count > 0)
-			{
-				listViewRoms.Items[0].Selected = true;
-				listViewRoms.SelectedItems[0].EnsureVisible();
-			}
+			if (result.ok && !string.IsNullOrEmpty(result.file))
+				_selectedRom!.MediaCoverPath = result.file;
 		}
 
-		private void OpenOptionsFrm()
+		private void MoveOrCopyScrapImageScreenshotRom(bool movefile, string sourceFile, string basedir)
 		{
-			FormOptions frm = new FormOptions(_options, _scrapper);
-			if (frm.ShowDialog() == DialogResult.OK)
-			{
-				_options.Save();
-			}
+			var result = CopyOrMoveMediaFileToRom(movefile, sourceFile, "./media/images/", basedir);
+
+			if (result.ok && !string.IsNullOrEmpty(result.file))
+				_selectedRom!.MediaScreenshotPath = result.file;
 		}
 
-		private void buttonOptions_Click(object sender, EventArgs e)
+		private void MoveOrCopyScrapVideoRom(bool movefile, string sourceFile, string basedir)
 		{
-			OpenOptionsFrm();
-		}
+			var result = CopyOrMoveMediaFileToRom(movefile, sourceFile, "./media/videos/", basedir);
 
-		private GameList? GetSeletedGameList()
-		{
-			return (listViewSystems.SelectedItems.Count == 1)
-						? listViewSystems.SelectedItems[0].Tag as GameList
-						: null;
-		}
-		
-		private CancellationTokenSource? _sysSelCts;
-		private async Task SetRomListFromSelectedSystem()
-		{
-			// Selektion lesen: GameList des Systems aus Tag
-			var roms = GetSeletedGameList();
-			var system = roms?.RetroSys;
-
-			// laufende System-Ladevorgänge abbrechen
-			_sysSelCts?.Cancel();
-			_sysSelCts = new CancellationTokenSource();
-			var sysCt = _sysSelCts.Token;
-
-			// UI: Systemanzeige aktualisieren (Banner + Infos)
-			try
-			{
-				await SetSystemOnGuiAsync(system, sysCt);
-			}
-			catch (OperationCanceledException) { /* ok */ }
-
-			// ROM-Liste neu füllen (gebatcht, kein Async nötig – nur UI)
-			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem, system?.Name));
-			listViewRoms.BeginUpdate();
-			try
-			{
-				listViewRoms.Items.Clear();
-				_selectedRom = null;
-				await SetRomOnGuiAsync(null, CancellationToken.None); // Details rechts leeren
-
-				if (roms == null) return;
-
-				var items = new List<ListViewItem>(roms.Games.Count);
-				foreach (var g in roms.Games)
-				{
-					var it = new ListViewItem(g.Name ?? Path.GetFileName(g.Path ?? ""));
-					it.SubItems.Add(g.ReleaseDate?.ToString("yyyy") ?? "");
-					it.SubItems.Add(g.Genre);
-					it.SubItems.Add(g.Players);
-					it.SubItems.Add(g.RatingStars.ToString("0.0"));
-					it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
-					it.Tag = g;
-					items.Add(it);
-				}
-				listViewRoms.Items.AddRange(items.ToArray());
-			}
-			finally
-			{
-				listViewRoms.EndUpdate();
-				// **Hier wird der erste Eintrag der Rom-Liste ausgewählt**
-				// Warten Sie, bis die Liste gefüllt wurde
-				if (listViewRoms.Items.Count > 0)
-				{
-					listViewRoms.Items[0].Selected = true;
-					listViewRoms.Items[0].Focused = true;
-				}
-				SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_AnzRomsLoad,
-					roms?.Games.Count));
-			}
-		}
-
-		
-		private async void listViewSystems_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			await SetRomListFromSelectedSystem();
-		}
-
-		private CancellationTokenSource? _romSelCts;
-		private async void listViewRoms_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Selektion auslesen
-			var rom = (listViewRoms.SelectedItems.Count == 1)
-					? listViewRoms.SelectedItems[0].Tag as GameEntry
-					: null;
-
-			// laufende Jobs abbrechen & neuen Token erzeugen
-			_romSelCts?.Cancel();
-			_romSelCts = new CancellationTokenSource();
-			var ct = _romSelCts.Token;
-
-			_selectedRom = rom;
-
-			try
-			{
-				// alles weitere (Busy, Bilder/Videos laden, Textfelder setzen)
-				// passiert in SetRomOnGuiAsync
-				await SetRomOnGuiAsync(rom, ct);
-			}
-			catch (OperationCanceledException)
-			{
-				// ok – Auswahl wurde schnell gewechselt
-			}
-		}
-
-		private void listViewSystems_ColumnClick(object sender, ColumnClickEventArgs e)
-		{
-			SortListview(listViewSystems, e.Column, ref _systemSortCol, ref _systemSortOrder);
-		}
-
-		private void listViewRoms_ColumnClick(object sender, ColumnClickEventArgs e)
-		{
-			SortListview(listViewRoms, e.Column, ref _romSortCol, ref _romSortOrder);
-		}
-
-		private void pictureBoxImgVideo_Click(object sender, EventArgs e)
-		{
-			UiTools.OpenPicBoxTagFile((PictureBox)sender);
-		}
-
-		private async void buttonRomScrap_Click(object sender, EventArgs e)
-		{
-			if (_selectedRom == null)
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
-				return;
-			}
-
-			var sysFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-			if (string.IsNullOrEmpty(sysFolder))
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoSystem);
-				return;
-			}
-
-			// Rom-Basisname als romnom
-			var romFileName = Path.GetFileName(_selectedRom.Name ?? _selectedRom.Path ?? "");
-			if (string.IsNullOrWhiteSpace(romFileName))
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_WrongRomFile);
-				return;
-			}
-
-			buttonRomScrap.Enabled = false;
-			try
-			{
-				Splash.ShowSplashScreen();
-				await Splash.WaitForSplashScreenAsync();
-
-				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Scrap_Running);
-				await Splash.ShowStatusWithDelayAsync(string.Format(
-					Properties.Resources.Txt_Status_Label_Scrap_Running, _selectedRom.Name), 300);
-
-				var (ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options.GetLanguageShortCode());
-				if (!ok || data == null)
-				{
-					Splash.CloseSplashScreen();
-					if (err == "HTTP 404: Erreur : Rom/Iso/Dossier non trouvée !  ") 
-						err = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
-					MyMsgBox.ShowErr($"\"{romFileName}\": " + Properties.Resources.Txt_Msg_Scrap_Fail + "\r\n\r\n" + err);
-					SetStatusToolStripLabel($"\"{_selectedRom.Name}\": {err}.");
-					return;
-				}
-
-				var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-				var baseDir = Path.Combine(_gameManager.RomPath!, systemFolder);
-				data.Source = "ScreenScraper.fr";
-
-				// Dialog zum Übernehmen der Daten
-				Splash.CloseSplashScreen();
-				using var dlg = new FormScrapRom(baseDir, _selectedRom, data);
-				if (dlg.ShowDialog(this) != DialogResult.OK)
-				{
-					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
-					return;
-				}
-				var sel = dlg.Selection;
-				var d = sel.NewData!;
-				// Felder übernehmen
-				if (!string.IsNullOrEmpty(d.Id) && int.TryParse(d.Id, out int id ) && id != _selectedRom.Id )
-					_selectedRom.Id = id;
-				if ( string.IsNullOrEmpty(d.Source) || d.Source != _selectedRom.Source)
-					_selectedRom.Source = d.Source;
-				if (sel.TakeName) _selectedRom.Name = d.Name;
-				if (sel.TakeDesc) _selectedRom.Description = d.Description;
-				if (sel.TakeGenre) _selectedRom.Genre = d.Genre;
-				if (sel.TakePlayers) _selectedRom.Players = d.Players;
-				if (sel.TakeDev) _selectedRom.Developer = d.Developer;
-				if (sel.TakePub) _selectedRom.Publisher = d.Publisher;
-				if (sel.TakeRelease) _selectedRom.ReleaseDate = d.ReleaseDate;
-				if (sel.TakeRating) _selectedRom.Rating = d.RatingNormalized.HasValue ? d.RatingNormalized.Value : 0.0;
-
-
-				if (sel.TakeMediaBox)
-				{
-					MoveScrapImageCoverRom(sel, baseDir);
-				}
-				if (sel.TakeMediaScreen)
-				{
-					MoveScrapImageScreenshotRom(sel, baseDir);
-				}
-				if (sel.TakeMediaVideo)
-				{
-					MoveScrapVideoRom(sel, baseDir);
-				}
-
-				// UI aktualisieren
-				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
-				await SaveRom();
-			}
-			catch (Exception ex)
-			{
-				Splash.CloseSplashScreen();
-				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
-				SetStatusToolStripLabel(Properties.Resources.Txt_Msg_Scrap_Fail);
-			}
-			finally
-			{
-				Splash.CloseSplashScreen();
-				buttonRomScrap.Enabled = true;
-			}
-		}
-
-		private async Task SaveRom()
-		{
-			if (_selectedRom == null)
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
-				return;
-			}
-
-			// System-Folder ermitteln (z. B. "amiga500")
-			var sysFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-
-			if (string.IsNullOrEmpty(sysFolder))
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoSystem);
-				return;
-			}
-
-			// GUI -> Model (nur Felder, die du im UI editieren lässt)
-			_selectedRom.Name = textBoxRomName.Text?.Trim();
-			_selectedRom.Description = textBoxRomDesc.Text?.Trim();
-			_selectedRom.Genre = textBoxRomDetailsGenre.Text?.Trim();
-			_selectedRom.Players = textBoxRomDetailsAnzPlayer.Text?.Trim();
-			_selectedRom.Developer = textBoxRomDetailsDeveloper.Text?.Trim();
-			_selectedRom.Publisher = textBoxRomDetailsPublisher.Text?.Trim();
-			// RatingStars ist read-only? Falls editierbar: (0..5) -> 0..1
-			_selectedRom.Rating = Math.Clamp(starRatingControlRom.Rating / 5.0, 0.0, 1.0);
-
-			// Releasedate: nimm, was in der GUI steht (optional)
-			if (DateTime.TryParse(textBoxRomDetailsReleaseDate.Text, out var rd))
-				_selectedRom.ReleaseDate = rd;
-
-			try
-			{
-				buttonRomSave.Enabled = false;
-
-				bool ok = await Task.Run(() =>
-						_systems.SaveRomToGamelistXml(
-								romRoot: _gameManager.RomPath!,
-								systemFolder: sysFolder,
-								rom: _selectedRom
-						)
-				);
-				if (ok)
-				{
-					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomSave);
-					var selitem = listViewRoms.SelectedItems[0];
-					selitem.SubItems[0].Text = _selectedRom.Name ?? Path.GetFileName(_selectedRom.Path ?? "");
-					selitem.SubItems[1].Text = _selectedRom.ReleaseDate?.ToString("yyyy") ?? "";
-					selitem.SubItems[2].Text = _selectedRom.Genre;
-					selitem.SubItems[3].Text = _selectedRom.Players;
-					selitem.SubItems[4].Text = _selectedRom.RatingStars.ToString("0.0");
-					selitem.SubItems[5].Text = Path.GetFileName(_selectedRom.Path ?? "");
-					selitem.Tag = _selectedRom;
-				}
-				else
-				{
-					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
-				}
-
-			}
-			catch (Exception ex)
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Status_Label_RomNotSaved + "\r\n\r\n" + Utils.GetExcMsg(ex));
-				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
-			}
-			finally
-			{
-				buttonRomSave.Enabled = true;
-			}
-		}
-
-		private async void buttonRomSave_Click(object sender, EventArgs e)
-		{
-			await SaveRom();
-		}
-
-		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			// Image Cache aufräumen
-			foreach (var kv in _imageCache)
-			{
-				kv.Value.Dispose(); // gibt Ressourcen frei
-			}
-			_imageCache.Clear();
-		}
-
-		private void MoveScrapImageCoverRom(ScrapeSelection sel, string basedir)
-		{
-			if (_selectedRom != null && sel != null)
-			{
-				var result = FileTools.MoveScrapFileRom(_selectedRom.Name,
-					sel.MediaBoxTempPath,
-					basedir,
-					"./media/box2dfront/",
-					".png");
-
-				if (result.ok && !string.IsNullOrEmpty(result.file))
-					_selectedRom.MediaCoverPath = result.file;
-			}
-		}
-
-		private void MoveScrapImageScreenshotRom(ScrapeSelection sel, string basedir)
-		{
-			if (_selectedRom != null && sel != null)
-			{
-				var result = FileTools.MoveScrapFileRom(_selectedRom.Name,
-					sel.MediaScreenTempPath,
-					basedir,
-					"./media/images/",
-					".png");
-
-				if (result.ok && !string.IsNullOrEmpty(result.file))
-					_selectedRom.MediaScreenshotPath = result.file;
-			}
-		}
-
-		private void MoveScrapVideoRom(ScrapeSelection sel, string basedir)
-		{
-			if (_selectedRom != null && sel != null)
-			{
-				var result = FileTools.MoveScrapFileRom(_selectedRom.Name,
-					sel.MediaVideoTempPath,
-					basedir,
-					"./media/videos/",
-					".mp4");
-
-				if (result.ok && !string.IsNullOrEmpty(result.file))
-					_selectedRom.MediaVideoPath = result.file;
-			}
+			if (result.ok && !string.IsNullOrEmpty(result.file))
+				_selectedRom!.MediaVideoPath = result.file;
 		}
 
 		private void SortListview(ListView lst, int newsortcolumn, ref int aktsortcolumn,
@@ -699,10 +838,11 @@ namespace RetroScrap2000
 			// Busy-Platzhalter anzeigen
 			UiTools.ShowBusyPreview(pictureBoxImgBox, "Cover …");
 			UiTools.ShowBusyPreview(pictureBoxImgScreenshot, "Screenshot …");
-			UiTools.ShowBusyPreview(pictureBoxImgVideo, "Video-Vorschau …");
+			UiTools.ShowBusyPreview(pictureBoxImgVideo, "Video …");
 
-			var systemFolder = _systems.GetRomFolder(rom.RetroSystemId);
-			var baseDir = Path.Combine(_gameManager.RomPath!, systemFolder);
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
 
 			try
 			{
@@ -748,67 +888,16 @@ namespace RetroScrap2000
 			this.toolStripStatusLabelMain.Text = text;
 		}
 
-		private void detailsToolStripMenuItem_Click(object sender, EventArgs e)
+		private string? GetSelectedRomPath()
 		{
-			if (_selectedRom == null)
-				return;
-			var sysFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-			if (string.IsNullOrEmpty(sysFolder))
-				return;
+			if ( _selectedRom == null || string.IsNullOrEmpty(_gameManager.RomPath))
+				return null;
 
-			var baseDir = Path.Combine(_gameManager.RomPath!, sysFolder);
-			var romFileName = Path.GetFileName(_selectedRom.Path ?? _selectedRom.Name ?? "");
-			if (string.IsNullOrEmpty(romFileName))
-				return;
+			var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
+			var baseDir = Path.Combine(_gameManager.RomPath, systemFolder);
 
-			FormRomDetails frm = new FormRomDetails(_selectedRom, Path.Combine(baseDir, romFileName));
-			frm.ShowDialog();
+			return baseDir;
 		}
-
-		private async void löschenToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (_selectedRom == null)
-				return;
-
-			var sysFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-			if (string.IsNullOrEmpty(sysFolder))
-				return;
-
-			var baseDir = Path.Combine(_gameManager.RomPath!, sysFolder);
-			var romFileName = Path.GetFileName(_selectedRom.Path ?? _selectedRom.Name ?? "");
-			if (string.IsNullOrEmpty(romFileName))
-				return;
-
-			var file = Path.Combine(baseDir, romFileName);
-			if (MyMsgBox.ShowQuestion(string.Format(
-				"Soll die Datei \"{0}\" mit allen Informationen dazu wirklich gelöscht werden?",
-				file)) != DialogResult.Yes)
-				return;
-
-			try
-			{
-				Trace.WriteLine($"Lösche Rom-Datei \"{file}\" ...");
-				File.Delete(file);
-				Trace.WriteLine("... Rom-Datei gelöscht.");
-				Trace.WriteLine("Gamelist.xml updaten ...");
-				GameListLoader.DeleteGameByPath(
-					xmlPath: Path.Combine(baseDir, "gamelist.xml"),
-					romRelPath: _selectedRom.Path ?? romFileName
-					);
-				Trace.WriteLine("... Gamelist.xml upgedated.");
-				// Liste neu laden
-				GetSeletedGameList()?.Games.Remove(_selectedRom);
-				var loadres = GameListLoader.Load(Path.Combine(baseDir, "gamelist.xml"),
-					GetSeletedGameList()?.RetroSys);
-				// Liste neu setzen
-				GetSeletedGameList()?.Games.AddRange( loadres.Games.Games);
-				// UI neu setzen
-				await SetRomListFromSelectedSystem();
-			}
-			catch (Exception ex)
-			{
-				MyMsgBox.ShowErr("Fehler beim Löschen der Rom-Datei:\r\n\r\n" + Utils.GetExcMsg(ex));
-			}
-		}
+		
 	}
 }

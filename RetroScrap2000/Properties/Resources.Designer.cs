@@ -251,6 +251,24 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select a Image for Rom..
+        /// </summary>
+        internal static string Txt_Dlg_Select_Image {
+            get {
+                return ResourceManager.GetString("Txt_Dlg_Select_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a Video-File for Rom..
+        /// </summary>
+        internal static string Txt_Dlg_Select_Video {
+            get {
+                return ResourceManager.GetString("Txt_Dlg_Select_Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancellation has been requested. Please wait..
         /// </summary>
         internal static string Txt_Log_Scrap_CancelRequest {

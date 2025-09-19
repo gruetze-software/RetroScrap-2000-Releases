@@ -237,4 +237,10 @@
   <data name="Txt_Msg_Scrap_NoDataFound" xml:space="preserve">
     <value>Keine Daten zu dem Rom gefunden.</value>
   </data>
+  <data name="Txt_Dlg_Select_Image" xml:space="preserve">
+    <value>Please select a Image for Rom.</value>
+  </data>
+  <data name="Txt_Dlg_Select_Video" xml:space="preserve">
+    <value>Please select a Video-File for Rom.</value>
+  </data>
 </root>

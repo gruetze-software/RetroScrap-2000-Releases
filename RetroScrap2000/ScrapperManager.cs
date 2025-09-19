@@ -428,11 +428,10 @@ namespace RetroScrap2000
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 								game.Name!, "Set Box2D..."));
 
-						var res = FileTools.MoveScrapFileRom(game.Name,
+						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
 							coverscPath,
 							baseDir,
-							"./media/box2dfront/",
-							".png");
+							"./media/box2dfront/");
 
 						if (res.ok && !string.IsNullOrEmpty(res.file))
 						{
@@ -460,11 +459,10 @@ namespace RetroScrap2000
 					{
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 							game.Name!, "Set Screenshot..."));
-						var res = FileTools.MoveScrapFileRom(game.Name,
+						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
 							shotscPath,
 							baseDir,
-							"./media/images/",
-							".png");
+							"./media/images/" );
 
 						if (res.ok && !string.IsNullOrEmpty(res.file))
 						{
@@ -494,11 +492,10 @@ namespace RetroScrap2000
 					{
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 							game.Name!, "Set Video..."));
-						var res = FileTools.MoveScrapFileRom(game.Name,
+						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
 							prevTasksc.Value.videoAbsPath,
 							baseDir,
-							"./media/videos/",
-							".mp4");
+							"./media/videos/" );
 
 						if (res.ok && !string.IsNullOrEmpty(res.file))
 							game.MediaVideoPath = res.file;
