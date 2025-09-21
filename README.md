@@ -10,6 +10,7 @@ RetroScrap 2000 is the definitive tool for retro gaming enthusiasts. Easily mana
 -   🧹 Keeps your digital collection clean and organized
 -   🔍 Easy search and filtering capabilities
 -   🕹️ Simple and intuitive user interface
+-   🌐 Multilingual support for English, German, French and Spanish
 
 <img width="986" height="593" alt="image" src="https://github.com/user-attachments/assets/2269a947-74e4-40bc-a41d-7e4ad2da2848" />
 
