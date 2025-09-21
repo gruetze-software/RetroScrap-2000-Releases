@@ -51,6 +51,9 @@ Run: Launch the application by double-clicking the RetroScrap2000.exe file.
 
 Note: The first time you run the application, Windows may display a security warning because it's a newly downloaded app. You can safely ignore this warning and run the application.
 
+### ⚠️ Important Note on Scraping
+For full access to the scraping functionality, you will need a valid screenscraper.fr account. You can create a free account on their website to use all of the app's features.
+
 ### 📜 Disclaimer
 RetroScrap 2000 is provided "as is," without warranty of any kind, express or implied. The author is not liable for any damages or losses arising from the use or inability to use the software.
 
