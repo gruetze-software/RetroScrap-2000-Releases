@@ -43,7 +43,7 @@ Storage: 50 MB of free disk space
 ### 📝 Installation Instructions
 Installing RetroScrap 2000 is quick and easy.
 
-Download: Download the latest version of the application from our official GitHub Releases page.
+Download: Download the latest version of the application from my official [GitHub Releases page](https://github.com/gruetze-software/RetroScrap-2000-Releases/releases).
 
 Extract: Unzip the downloaded file into a folder of your choice (e.g., on your Desktop or in your Programs folder).
 
