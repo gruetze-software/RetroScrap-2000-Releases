@@ -134,7 +134,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -191,7 +191,7 @@
     <value>161, 62</value>
   </data>
   <data name="labelHelpLang.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="labelHelpLang.Text" xml:space="preserve">
     <value>Setting the language of the application and the data to be fetched during scraping.</value>
@@ -218,7 +218,7 @@
     <value>162, 23</value>
   </data>
   <data name="comboBoxLanguage.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;comboBoxLanguage.Name" xml:space="preserve">
     <value>comboBoxLanguage</value>
@@ -245,7 +245,7 @@
     <value>199, 129</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Language</value>
@@ -362,7 +362,7 @@
     <value>154, 23</value>
   </data>
   <data name="textBoxApiLogin.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;textBoxApiLogin.Name" xml:space="preserve">
     <value>textBoxApiLogin</value>
@@ -386,7 +386,7 @@
     <value>60, 15</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Password:</value>
@@ -443,7 +443,7 @@
     <value>518, 223</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Screenscraper Login</value>
@@ -463,28 +463,31 @@
   <data name="tabControlOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="linkLabel5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 69</value>
+  <data name="linkLabelDonate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
-  <data name="linkLabel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 23</value>
+  <data name="linkLabelDonate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 69</value>
   </data>
-  <data name="linkLabel5.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="linkLabelDonate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 23</value>
   </data>
-  <data name="linkLabel5.Text" xml:space="preserve">
+  <data name="linkLabelDonate.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="linkLabelDonate.Text" xml:space="preserve">
     <value>https://ko-fi.com/gruetzesoftware</value>
   </data>
-  <data name="&gt;&gt;linkLabel5.Name" xml:space="preserve">
-    <value>linkLabel5</value>
+  <data name="&gt;&gt;linkLabelDonate.Name" xml:space="preserve">
+    <value>linkLabelDonate</value>
   </data>
-  <data name="&gt;&gt;linkLabel5.Type" xml:space="preserve">
+  <data name="&gt;&gt;linkLabelDonate.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;linkLabel5.Parent" xml:space="preserve">
+  <data name="&gt;&gt;linkLabelDonate.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
-  <data name="&gt;&gt;linkLabel5.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;linkLabelDonate.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="labelDonText.Location" type="System.Drawing.Point, System.Drawing">
@@ -494,7 +497,7 @@
     <value>434, 50</value>
   </data>
   <data name="labelDonText.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="labelDonText.Text" xml:space="preserve">
     <value>RetroScrap 2000 is a passion project of mine. I appreciate every small donation that helps me invest more personal time in the development of the app. Follow the link for a small donation:</value>
@@ -539,7 +542,7 @@
     <value>518, 98</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="groupBox4.Text" xml:space="preserve">
     <value>Support</value>
@@ -566,7 +569,7 @@
     <value>174, 15</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>RetroArch (under Construction)</value>
@@ -590,7 +593,7 @@
     <value>153, 30</value>
   </data>
   <data name="buttonInfoRetroPie.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="buttonInfoRetroPie.Text" xml:space="preserve">
     <value>Info for RetroPie-User</value>
@@ -671,7 +674,7 @@
     <value>313, 128</value>
   </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="groupBox3.Text" xml:space="preserve">
     <value>Retro-Gaming-Distribution</value>
@@ -851,7 +854,7 @@
     <value>200, 130</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
     <value>tableLayoutPanel1</value>
@@ -881,7 +884,7 @@
     <value>206, 227</value>
   </data>
   <data name="tableLayoutPanelIcons.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelIcons.Name" xml:space="preserve">
     <value>tableLayoutPanelIcons</value>
@@ -917,7 +920,7 @@
     <value>237, 26</value>
   </data>
   <data name="linkLabel4.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>15</value>
   </data>
   <data name="linkLabel4.Text" xml:space="preserve">
     <value>linkLabel4</value>
@@ -950,7 +953,7 @@
     <value>237, 26</value>
   </data>
   <data name="linkLabel3.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>13</value>
   </data>
   <data name="linkLabel3.Text" xml:space="preserve">
     <value>linkLabel3</value>
@@ -983,7 +986,7 @@
     <value>237, 26</value>
   </data>
   <data name="linkLabel2.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>11</value>
   </data>
   <data name="linkLabel2.Text" xml:space="preserve">
     <value>linkLabel2</value>
@@ -1385,7 +1388,7 @@
     <value>237, 26</value>
   </data>
   <data name="linkLabel1.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>9</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>linkLabel1</value>
@@ -1496,7 +1499,7 @@
     <value>538, 261</value>
   </data>
   <data name="tabControlOptions.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;tabControlOptions.Name" xml:space="preserve">
     <value>tabControlOptions</value>

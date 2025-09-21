@@ -45,13 +45,14 @@ namespace RetroScrap2000
 
 		private void FormOptions_Load(object sender, EventArgs e)
 		{
-			// Language
+			// Allgemein
 			var l = _languages.FindIndex(x => x.CultureCode == Options.Language);
 			if (l >= 0)
 				comboBoxLanguage.SelectedIndex = l;
 			else
 				comboBoxLanguage.SelectedIndex = 0; // Default to first language if not found
-
+			pictureBoxDonation.Image = Properties.Resources.donate48;
+			linkLabelDonate.LinkClicked += LinkLabelInfo_LinkClicked;
 			// Scrap
 			textBoxApiLogin.Text = Options.ApiUser ?? "";
 			if (Options.Secret != null)
@@ -64,7 +65,7 @@ namespace RetroScrap2000
 			pictureBoxAppIcon.Image = Properties.Resources.RetroScrap2000_256;
 			pictureBoxCompany.Image = Properties.Resources.grützesoftware_icon;
 			pictureBoxScrap.Image = Properties.Resources.screenscraper_banner;
-			pictureBoxDonation.Image = Properties.Resources.tip32;
+
 			var info = Utils.GetAppInfo();
 			labelInfoProduct.Text = info.product + " - Freeware";
 			labelInfoVersion.Text = info.version;
@@ -91,27 +92,15 @@ namespace RetroScrap2000
 		private void LinkLabelInfo_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			// Link im Standard-Browser öffnen
-			if ( sender == null || e.Link == null) 
+			if (sender == null || e.Link == null)
 				return;
 
-			try
-			{
-				LinkLabel? clickedLabel = sender as LinkLabel;
-				if ( clickedLabel == null )
-					return;
+			LinkLabel? clickedLabel = sender as LinkLabel;
+			if (clickedLabel == null)
+				return;
 
-				string linkUrl = clickedLabel.Text.Substring(e.Link.Start, e.Link.Length);
-				ProcessStartInfo psi = new ProcessStartInfo
-				{
-					FileName = linkUrl,
-					UseShellExecute = true // Wichtig: Hiermit wird der Standard-Browser verwendet
-				};
-				Process.Start(psi);
-			}
-			catch (Exception ex)
-			{
-				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
-			}
+			string linkUrl = clickedLabel.Text.Substring(e.Link.Start, e.Link.Length);
+			StartProc(linkUrl);
 		}
 
 		private void ComboBoxLanguage_DrawItem(object? sender, DrawItemEventArgs e)
@@ -227,54 +216,42 @@ namespace RetroScrap2000
 
 		private void pictureBoxCompany_Click(object sender, EventArgs e)
 		{
-			Process.Start("https://github.com/gruetze-software");
+			StartProc("https://github.com/gruetze-software");
 		}
 
 		private void pictureBoxAppIcon_Click(object sender, EventArgs e)
 		{
-			Process.Start("https://github.com/gruetze-software/RetroScrap-2000-Releases");
+			StartProc("https://github.com/gruetze-software/RetroScrap-2000-Releases");
 		}
 
 		private void pictureBoxScrap_Click(object sender, EventArgs e)
 		{
-			Process.Start("https://www.screenscraper.fr/");
+			StartProc("https://www.screenscraper.fr/");
+		}
+		
+		private void buttonInfoRetroPie_Click(object sender, EventArgs e)
+		{
+			MyMsgBox.Show(
+				Properties.Resources.Txt_Msg_Opt_RetroPie_Info1 + "\r\n\r\n" +
+				Properties.Resources.Txt_Msg_Opt_RetroPie_Info2 + "\r\n\r\n" +
+				Properties.Resources.Txt_Msg_Opt_RetroPie_Info3);
 		}
 
-		private void buttonDonations_Click(object sender, EventArgs e)
+		private void StartProc(string file)
 		{
-			// Ihr Ko-fi-Link
-			string url = "https://ko-fi.com/gruetzesoftware";
-
-			// Öffnet den Standard-Webbrowser
 			try
 			{
-				Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+				ProcessStartInfo psi = new ProcessStartInfo
+				{
+					FileName = file,
+					UseShellExecute = true // Wichtig: Hiermit wird der Standard-Browser verwendet
+				};
+				Process.Start(psi);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show($"Der Spenden-Link konnte nicht geöffnet werden: {Utils.GetExcMsg(ex)}",
-												"Fehler",
-												MessageBoxButtons.OK,
-												MessageBoxIcon.Error);
+				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 			}
-		}
-
-		private void SetRetroDist()
-		{
-			// Dateistruktur und Pfade
-
-			//								Batocera																RetroArch
-			// Roms						/userdata/roms/<systemname>/						
-			// Gamelist.xml		/userdata/system/<systemname>/					Nein, lpl-Files
-			// Relative Path?	Yes
-			// Box-Image			/userdata/roms/<systemname>/images/			/opt/retropie/configs/all/emulationstation/downloaded_media/<systemname>/boxart
-			// Marquees-Image	/userdata/roms/<systemname>/Marquees/		/opt/retropie/configs/all/emulationstation/downloaded_media/<systemname>/marquee
-			// Videos					/userdata/roms/<systemname>/videos/			/opt/retropie/configs/all/emulationstation/downloaded_media/<systemname>/video
-		}
-
-		private void buttonInfoRetroPie_Click(object sender, EventArgs e)
-		{
-			MyMsgBox.Show(Properties.Resources.Txt_Msg_Opt_RetroPie_Info);
 		}
 	}
 }

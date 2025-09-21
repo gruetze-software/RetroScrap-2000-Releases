@@ -33,7 +33,7 @@ namespace RetroScrap2000
 			string company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? "Grütze-Soft";
 
 			// Abrufen der Product-Information
-			string product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "RetroScrap2000";
+			string product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "RetroScrap 2000";
 
 			// Abrufen der Copyright-Information
 			string copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? "Copyright © 2025 Grütze-Soft";

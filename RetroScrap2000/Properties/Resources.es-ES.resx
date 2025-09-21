@@ -121,7 +121,7 @@
     <value>La búsqueda en línea a través de screenscraper.fr está en curso...</value>
   </data>
   <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
-    <value>Lade Einstellungen...</value>
+    <value>Cargando configuraciones...</value>
   </data>
   <data name="Txt_Status_Label_ReadRoms" xml:space="preserve">
     <value>Se están cargando los sistemas retro...</value>
@@ -133,7 +133,7 @@
     <value>Último acceso: {0}</value>
   </data>
   <data name="Txt_Dlg_Select_Image" xml:space="preserve">
-    <value>Please select a Image for Rom.</value>
+    <value>Por favor, selecciona una imagen para Rom.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoRom" xml:space="preserve">
     <value>Ninguna ROM seleccionada.</value>
@@ -148,7 +148,7 @@
     <value>Solicitudes por día: {0}/{1} ({2}%)</value>
   </data>
   <data name="Txt_Splash_Initializing" xml:space="preserve">
-    <value>Starte RetroScrap2000....</value>
+    <value>Inicializando RetroScrap 2000....</value>
   </data>
   <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
     <value>Gamelist.xml guardado correctamente.</value>
@@ -169,7 +169,7 @@
     <value>Error: no hay respuesta del servidor.</value>
   </data>
   <data name="Txt_Dlg_Select_Video" xml:space="preserve">
-    <value>Please select a Video-File for Rom.</value>
+    <value>Por favor, selecciona un video para Rom.</value>
   </data>
   <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
     <value>{0} ROM cargadas.</value>
@@ -243,7 +243,37 @@
   <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
     <value>Extracción de {0} ROM del sistema</value>
   </data>
-  <data name="Txt_Msg_Opt_RetroPie_Info" xml:space="preserve">
-    <value>Información importante para usuarios de RetroPie:\r\n\r\nLa herramienta crea el gamelist.xml y los archivos multimedia directamente en las respectivas carpetas de ROM. Para que EmulationStation pueda cargar esto correctamente, solo se requiere un pequeño ajuste:\r\n\r\nAbre el menú principal en EmulationStation y ve a "Configuraciones de UI".Configura la opción "Parse Gamelists Only" en DESACTIVADO. Después de este ajuste, EmulationStation mostrará los datos creados por esta herramienta como de costumbre.</value>
+  <data name="Txt_Msg_Opt_RetroPie_Info1" xml:space="preserve">
+    <value>Información importante para usuarios de RetroPie:</value>
+  </data>
+  <data name="Txt_Log_Scrap_End" xml:space="preserve">
+    <value>Proceso de chatarra completado.</value>
+  </data>
+  <data name="Txt_Api_Err_UserFail" xml:space="preserve">
+    <value>Error de inicio de sesión o falta de información del usuario.</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info2" xml:space="preserve">
+    <value>La herramienta crea el gamelist.xml y los archivos multimedia directamente en las respectivas carpetas de ROM. Para que EmulationStation pueda cargar esto correctamente, solo se requiere un pequeño ajuste:</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info3" xml:space="preserve">
+    <value>Abre el menú principal en EmulationStation y ve a 'Configuraciones de UI'.Configura la opción 'Parse Gamelists Only' en DESACTIVADO. Después de este ajuste, EmulationStation mostrará los datos creados por esta herramienta como de costumbre.</value>
+  </data>
+  <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
+    <value>¿Realmente se debería eliminar el archivo '{0}' con la información relacionada de Rom?</value>
+  </data>
+  <data name="Txt_Splash_Loading" xml:space="preserve">
+    <value>Cargando</value>
+  </data>
+  <data name="Txt_Splash_LoadingSystems" xml:space="preserve">
+    <value>Sistemas de carga...</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Message" xml:space="preserve">
+    <value>Mensaje</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Time" xml:space="preserve">
+    <value>Marca de tiempo</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Type" xml:space="preserve">
+    <value>Tipo</value>
   </data>
 </root>

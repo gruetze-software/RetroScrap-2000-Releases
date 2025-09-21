@@ -63,6 +63,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap donate48 {
+            get {
+                object obj = ResourceManager.GetObject("donate48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap flag_de {
             get {
                 object obj = ResourceManager.GetObject("flag_de", resourceCulture);
@@ -201,26 +211,6 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap tip24 {
-            get {
-                object obj = ResourceManager.GetObject("tip24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap tip32 {
-            get {
-                object obj = ResourceManager.GetObject("tip32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Check your login and internet connection..
         /// </summary>
         internal static string Txt_Api_Err_CheckInternet {
@@ -235,6 +225,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Api_Err_NoResponse {
             get {
                 return ResourceManager.GetString("Txt_Api_Err_NoResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login failed or user information is missing..
+        /// </summary>
+        internal static string Txt_Api_Err_UserFail {
+            get {
+                return ResourceManager.GetString("Txt_Api_Err_UserFail", resourceCulture);
             }
         }
         
@@ -311,6 +310,33 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        internal static string Txt_Column_ScrapAuto_Message {
+            get {
+                return ResourceManager.GetString("Txt_Column_ScrapAuto_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timestamp.
+        /// </summary>
+        internal static string Txt_Column_ScrapAuto_Time {
+            get {
+                return ResourceManager.GetString("Txt_Column_ScrapAuto_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string Txt_Column_ScrapAuto_Type {
+            get {
+                return ResourceManager.GetString("Txt_Column_ScrapAuto_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select a Image for Rom..
         /// </summary>
         internal static string Txt_Dlg_Select_Image {
@@ -343,6 +369,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Log_Scrap_CheckDataFrom {
             get {
                 return ResourceManager.GetString("Txt_Log_Scrap_CheckDataFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scrap process completed..
+        /// </summary>
+        internal static string Txt_Log_Scrap_End {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_End", resourceCulture);
             }
         }
         
@@ -428,11 +463,38 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Important info for RetroPie users:\r\n\r\nThe tool creates the gamelist.xml and media files directly in the respective ROM folders. To ensure that EmulationStation can load them correctly, only a small adjustment is required:\r\n\r\nOpen the main menu in EmulationStation and go to &quot;UI Settings.&quot; Set the option &quot;Parse Gamelists Only&quot; to OFF. After this setting, EmulationStation will display the data created by this tool as usual..
+        ///   Looks up a localized string similar to Important info for RetroPie users:.
         /// </summary>
-        internal static string Txt_Msg_Opt_RetroPie_Info {
+        internal static string Txt_Msg_Opt_RetroPie_Info1 {
             get {
-                return ResourceManager.GetString("Txt_Msg_Opt_RetroPie_Info", resourceCulture);
+                return ResourceManager.GetString("Txt_Msg_Opt_RetroPie_Info1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tool creates the gamelist.xml and media files directly in the respective ROM folders. To ensure that EmulationStation can load them correctly, only a small adjustment is required:.
+        /// </summary>
+        internal static string Txt_Msg_Opt_RetroPie_Info2 {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_RetroPie_Info2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the main menu in EmulationStation and go to &apos;UI Settings.&apos; Set the option &apos;Parse Gamelists Only&apos; to OFF. After this setting, EmulationStation will display the data created by this tool as usual..
+        /// </summary>
+        internal static string Txt_Msg_Opt_RetroPie_Info3 {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_RetroPie_Info3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Should the file &apos;{0}&apos; with the associated ROM information really be deleted?.
+        /// </summary>
+        internal static string Txt_Msg_Qestion_DeleteRom {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Qestion_DeleteRom", resourceCulture);
             }
         }
         
@@ -518,11 +580,20 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Initializing RetroScrap2000.....
+        ///   Looks up a localized string similar to Initializing RetroScrap 2000.....
         /// </summary>
         internal static string Txt_Splash_Initializing {
             get {
                 return ResourceManager.GetString("Txt_Splash_Initializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        internal static string Txt_Splash_Loading {
+            get {
+                return ResourceManager.GetString("Txt_Splash_Loading", resourceCulture);
             }
         }
         
@@ -532,6 +603,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Splash_LoadingSettings {
             get {
                 return ResourceManager.GetString("Txt_Splash_LoadingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Systems....
+        /// </summary>
+        internal static string Txt_Splash_LoadingSystems {
+            get {
+                return ResourceManager.GetString("Txt_Splash_LoadingSystems", resourceCulture);
             }
         }
         

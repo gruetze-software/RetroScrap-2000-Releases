@@ -10,22 +10,22 @@ namespace RetroScrap2000
 	{
 		public static void Show(string msg)
 		{
-			MessageBox.Show(msg, "RetroScrap2000", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(msg, Utils.GetAppInfo().product, MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		public static void ShowErr(string msg)
 		{
-			MessageBox.Show(msg, "RetroScrap2000", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			MessageBox.Show(msg, Utils.GetAppInfo().product, MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
 		public static void ShowWarn(string msg)
 		{
-			MessageBox.Show(msg, "RetroScrap2000", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			MessageBox.Show(msg, Utils.GetAppInfo().product, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
 
 		public static DialogResult ShowQuestion(string msg)
 		{
-			return MessageBox.Show(msg, "RetroScrap2000", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+			return MessageBox.Show(msg, Utils.GetAppInfo().product, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 		}
 	}
 }

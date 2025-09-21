@@ -191,8 +191,8 @@
 			// 
 			// detailsToolStripMenuItem
 			// 
-			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
 			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
+			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
 			// 
 			// tableLayoutPanelRomsControls
 			// 
@@ -396,8 +396,8 @@
 			// 
 			// deleteToolStripMenuItem
 			// 
-			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
 			resources.ApplyResources(deleteToolStripMenuItem, "deleteToolStripMenuItem");
+			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
 			deleteToolStripMenuItem.Click += MediaLöschenToolStripMenuItem_Click;
 			// 
 			// label6
@@ -642,7 +642,6 @@
 		private Button buttonOptions;
 		private ColumnHeader colRomsFile;
 		private SplitContainer splitContainerRightRom;
-		private StarRatingControl starRatingControlRom;
 		private ContextMenuStrip contextMenuStripSystems;
 		private ToolStripMenuItem alleRomsScrapenToolStripMenuItem;
 		private ToolStripMenuItem detailsToolStripMenuItem;
@@ -654,5 +653,6 @@
 		private ToolStripMenuItem showToolStripMenuItem;
 		private ToolStripMenuItem deleteToolStripMenuItem;
 		private ToolStripMenuItem addToolStripMenuItem;
+		private StarRatingControl starRatingControlRom;
 	}
 }

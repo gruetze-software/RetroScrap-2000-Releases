@@ -62,7 +62,7 @@ namespace RetroScrap2000
 				// Warte, bis der Splashscreen vollständig initialisiert ist
 				await Splash.WaitForSplashScreenAsync();
 				// Statusmeldungen mit Wartezeit
-				await Splash.ShowStatusWithDelayAsync("Lade Einstellungen...", 1000);
+				await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 1000);
 				if (_options != null && _options.Secret != null
 				 && _options!.Secret!.TryLoad(out string? pwd)
 				 && !string.IsNullOrEmpty(pwd)
@@ -384,9 +384,8 @@ namespace RetroScrap2000
 				return;
 
 			var file = Path.Combine(baseDir, romFileName);
-			if (MyMsgBox.ShowQuestion(string.Format(
-				"Soll die Datei \"{0}\" mit allen Informationen dazu wirklich gelöscht werden?",
-				file)) != DialogResult.Yes)
+			if (MyMsgBox.ShowQuestion(string.Format( Properties.Resources.Txt_Msg_Qestion_DeleteRom, file)) 
+				!= DialogResult.Yes)
 				return;
 
 			try
@@ -411,7 +410,7 @@ namespace RetroScrap2000
 			}
 			catch (Exception ex)
 			{
-				MyMsgBox.ShowErr("Fehler beim Löschen der Rom-Datei:\r\n\r\n" + Utils.GetExcMsg(ex));
+				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 			}
 		}
 
@@ -657,7 +656,7 @@ namespace RetroScrap2000
 
 			Splash.ShowSplashScreen();
 			await Splash.WaitForSplashScreenAsync();
-			await Splash.ShowStatusWithDelayAsync("Lade Systeme...", 500);
+			await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSystems, 500);
 			try
 			{
 				await Task.Run(() => _gameManager.Load(_options.RomPath, _systems));
@@ -667,7 +666,7 @@ namespace RetroScrap2000
 				for (int i = 0; i < total; i++)
 				{
 					var kv = _gameManager.SystemList.ElementAt(i);
-					Splash.UpdateSplashScreenStatus($"Lade \"{kv.Key.ToUpper()}\"... ({i + 1}/{total})");
+					Splash.UpdateSplashScreenStatus($"{Properties.Resources.Txt_Splash_Loading} \"{kv.Key.ToUpper()}\"... ({i + 1}/{total})");
 					Splash.UpdateSplashScreenProgress(Utils.CalculatePercentage(i + 1, total));
 					Thread.Sleep(100);
 

@@ -126,7 +126,22 @@
   <data name="labelHelpLang.Text" xml:space="preserve">
     <value>Paramétrage de la langue de l'application et des données à extraire.</value>
   </data>
+  <data name="labelDonText.Text" xml:space="preserve">
+    <value>RetroScrap 2000 est un projet passion pour moi. J'apprécie chaque petit don qui m'aide à investir plus de temps personnel dans le développement de l'application. Suivez le lien pour faire un petit don :</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 15</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>RetroArch (en construcción)</value>
+  </data>
+  <data name="buttonInfoRetroPie.Size" type="System.Drawing.Size, System.Drawing">
+    <value>273, 30</value>
+  </data>
+  <data name="buttonInfoRetroPie.Text" xml:space="preserve">
+    <value>Información para usuarios de RetroPie</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAAAIABVAwAAZgAAACAgAAAAACAAwAgAALsDAAAwMAAAAAAgAI0PAAB7DAAAQEAAAAAA

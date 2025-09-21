@@ -133,7 +133,7 @@
     <value>Letzter Besuch: {0}</value>
   </data>
   <data name="Txt_Dlg_Select_Image" xml:space="preserve">
-    <value>Please select a Image for Rom.</value>
+    <value>Bitte ein Bild für Rom auswählen.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoRom" xml:space="preserve">
     <value>Es wurde kein Rom ausgewählt.</value>
@@ -148,7 +148,7 @@
     <value>Requests  pro Tag: {0}/{1} ({2}%)</value>
   </data>
   <data name="Txt_Splash_Initializing" xml:space="preserve">
-    <value>Starte RetroScrap2000....</value>
+    <value>Starte RetroScrap 2000....</value>
   </data>
   <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
     <value>Gamelist.xml erfolgreich gespeichert.</value>
@@ -169,7 +169,7 @@
     <value>Fehler: Keine Antwort vom Server.</value>
   </data>
   <data name="Txt_Dlg_Select_Video" xml:space="preserve">
-    <value>Please select a Video-File for Rom.</value>
+    <value>Bitte ein Video für Rom auswählen.</value>
   </data>
   <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
     <value>{0} Roms wurden eingelesen.</value>
@@ -243,7 +243,37 @@
   <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
     <value>Scrape {0} Roms vom System</value>
   </data>
-  <data name="Txt_Msg_Opt_RetroPie_Info" xml:space="preserve">
-    <value>Wichtige Info für RetroPie-Benutzer:\r\n\r\nDas Tool erstellt die gamelist.xml und die Mediendateien direkt in den jeweiligen ROM-Ordnern. Damit EmulationStation diese korrekt laden kann, ist nur eine kleine Anpassung erforderlich:\r\n\r\nÖffne in EmulationStation das Hauptmenü und gehen zu \"UI Settings\". Setze die Option \"Parse Gamelists Only\" auf AUS. Nach dieser Einstellung wird EmulationStation die von diesem Tool erstellten Daten wie gewohnt anzeigen.</value>
+  <data name="Txt_Msg_Opt_RetroPie_Info1" xml:space="preserve">
+    <value>Wichtige Info für RetroPie-Benutzer:</value>
+  </data>
+  <data name="Txt_Log_Scrap_End" xml:space="preserve">
+    <value>Scrap-Vorgang beendet.</value>
+  </data>
+  <data name="Txt_Api_Err_UserFail" xml:space="preserve">
+    <value>Login fehlgeschlagen oder Benutzerinfo fehlt.</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info2" xml:space="preserve">
+    <value>Das Tool erstellt die gamelist.xml und die Mediendateien direkt in den jeweiligen ROM-Ordnern. Damit EmulationStation diese korrekt laden kann, ist nur eine kleine Anpassung erforderlich:</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info3" xml:space="preserve">
+    <value>Öffne in EmulationStation das Hauptmenü und gehen zu 'UI Settings'. Setze die Option 'Parse Gamelists Only' auf AUS. Nach dieser Einstellung wird EmulationStation die von diesem Tool erstellten Daten wie gewohnt anzeigen.</value>
+  </data>
+  <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
+    <value>Soll die Datei '{0}' mit den dazugehörigen Rom-Informationen wirklich gelöscht werden?</value>
+  </data>
+  <data name="Txt_Splash_Loading" xml:space="preserve">
+    <value>Lade</value>
+  </data>
+  <data name="Txt_Splash_LoadingSystems" xml:space="preserve">
+    <value>Lade Systeme...</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Message" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Time" xml:space="preserve">
+    <value>Zeitpunkt</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Type" xml:space="preserve">
+    <value>Typ</value>
   </data>
 </root>

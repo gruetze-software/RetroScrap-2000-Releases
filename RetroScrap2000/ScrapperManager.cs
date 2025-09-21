@@ -70,7 +70,7 @@ namespace RetroScrap2000
 
 			// Minimalvalidierung
 			if (obj?.response is null || obj.response.ssuser is null)
-				throw new ScreenScraperApiException(0, "Login fehlgeschlagen oder Benutzerinfo fehlt.");
+				throw new ScreenScraperApiException(0, Properties.Resources.Txt_Api_Err_UserFail);
 
 			return obj;
 		}
@@ -510,7 +510,7 @@ namespace RetroScrap2000
 					continue;
 				}
 			}
-			progress.Report(new ProgressObj(0, "End of Scraping."));
+			progress.Report(new ProgressObj(0, Properties.Resources.Txt_Log_Scrap_End));
 		}
 	}
 }

@@ -44,7 +44,7 @@
 			tabControlOptions = new TabControl();
 			tabPageLang = new TabPage();
 			groupBox4 = new GroupBox();
-			linkLabel5 = new LinkLabel();
+			linkLabelDonate = new LinkLabel();
 			labelDonText = new Label();
 			pictureBoxDonation = new PictureBox();
 			groupBox3 = new GroupBox();
@@ -197,18 +197,18 @@
 			// 
 			// groupBox4
 			// 
-			groupBox4.Controls.Add(linkLabel5);
+			groupBox4.Controls.Add(linkLabelDonate);
 			groupBox4.Controls.Add(labelDonText);
 			groupBox4.Controls.Add(pictureBoxDonation);
 			resources.ApplyResources(groupBox4, "groupBox4");
 			groupBox4.Name = "groupBox4";
 			groupBox4.TabStop = false;
 			// 
-			// linkLabel5
+			// linkLabelDonate
 			// 
-			resources.ApplyResources(linkLabel5, "linkLabel5");
-			linkLabel5.Name = "linkLabel5";
-			linkLabel5.TabStop = true;
+			resources.ApplyResources(linkLabelDonate, "linkLabelDonate");
+			linkLabelDonate.Name = "linkLabelDonate";
+			linkLabelDonate.TabStop = true;
 			// 
 			// labelDonText
 			// 
@@ -503,6 +503,6 @@
 		private LinkLabel linkLabel1;
 		private GroupBox groupBox4;
 		private PictureBox pictureBoxDonation;
-		private LinkLabel linkLabel5;
+		private LinkLabel linkLabelDonate;
 	}
 }

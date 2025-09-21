@@ -117,6 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tableLayoutPanelRomMedia.Size" type="System.Drawing.Size, System.Drawing">
+    <value>490, 210</value>
+  </data>
+  <data name="splitContainerRightRom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 415</value>
+  </data>
+  <data name="tableLayoutPanelRomDetails.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 117</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainerRight.SplitterDistance" type="System.Int32, mscorlib">
+    <value>415</value>
+  </data>
+  <data name="contextMenuStripSystems.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 48</value>
+  </data>
+  <data name="alleRomsScrapenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="alleRomsScrapenToolStripMenuItem.Text" xml:space="preserve">
+    <value>Actualiza todas las Roms...</value>
+  </data>
+  <data name="detailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="detailsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Detalles...</value>
+  </data>
   <data name="buttonRomPath.Text" xml:space="preserve">
     <value>ROM Ruta...</value>
   </data>
@@ -126,31 +155,150 @@
   <data name="buttonOptions.Text" xml:space="preserve">
     <value>Opciones...</value>
   </data>
+  <data name="contextMenuStripRoms.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 70</value>
+  </data>
+  <data name="scrapToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="detailsToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="detailsToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Detalles...</value>
+  </data>
+  <data name="löschenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="löschenToolStripMenuItem.Text" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="contextMenuStripMedia.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 70</value>
+  </data>
+  <data name="pictureBoxImgBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 191</value>
+  </data>
+  <data name="showToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 22</value>
+  </data>
+  <data name="showToolStripMenuItem.Text" xml:space="preserve">
+    <value>Abre...</value>
+  </data>
+  <data name="addToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 22</value>
+  </data>
+  <data name="addToolStripMenuItem.Text" xml:space="preserve">
+    <value>Nuevo...</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 22</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="pictureBoxImgScreenshot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 191</value>
+  </data>
   <data name="label7.Text" xml:space="preserve">
     <value>Captura de pantalla</value>
+  </data>
+  <data name="pictureBoxImgVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 191</value>
+  </data>
+  <data name="textBoxRomDetailsAnzPlayer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 52</value>
+  </data>
+  <data name="textBoxRomDetailsAnzPlayer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 23</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>251, 50</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 25</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>Jugador:</value>
   </data>
+  <data name="textBoxRomDetailsGenre.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 52</value>
+  </data>
+  <data name="textBoxRomDetailsGenre.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 23</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Género:</value>
+  </data>
+  <data name="textBoxRomDetailsPublisher.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 27</value>
+  </data>
+  <data name="textBoxRomDetailsPublisher.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 23</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>251, 25</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 25</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Editor:</value>
   </data>
+  <data name="textBoxRomDetailsDeveloper.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 27</value>
+  </data>
+  <data name="textBoxRomDetailsDeveloper.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 23</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Desarrollador:</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>251, 0</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 25</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Clasificación:</value>
   </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Fecha:</value>
+  </data>
+  <data name="textBoxRomDetailsReleaseDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 2</value>
+  </data>
+  <data name="textBoxRomDetailsReleaseDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 23</value>
+  </data>
+  <data name="buttonRomSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 77</value>
+  </data>
+  <data name="buttonRomSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 38</value>
   </data>
   <data name="buttonRomSave.Text" xml:space="preserve">
     <value>Guardar</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonRomScrap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 77</value>
+  </data>
+  <data name="buttonRomScrap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 38</value>
+  </data>
+  <data name="starRatingControlRom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 2</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAAAIABVAwAAZgAAACAgAAAAACAAwAgAALsDAAAwMAAAAAAgAI0PAAB7DAAAQEAAAAAA

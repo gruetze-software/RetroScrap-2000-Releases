@@ -47,10 +47,12 @@
 			// 
 			groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			groupBox1.Controls.Add(listViewMonitor);
-			groupBox1.Location = new Point(12, 80);
+			groupBox1.Location = new Point(10, 60);
+			groupBox1.Margin = new Padding(3, 2, 3, 2);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new Size(874, 411);
-			groupBox1.TabIndex = 0;
+			groupBox1.Padding = new Padding(3, 2, 3, 2);
+			groupBox1.Size = new Size(765, 308);
+			groupBox1.TabIndex = 2;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Monitor";
 			// 
@@ -60,10 +62,11 @@
 			listViewMonitor.Dock = DockStyle.Fill;
 			listViewMonitor.FullRowSelect = true;
 			listViewMonitor.GridLines = true;
-			listViewMonitor.Location = new Point(3, 23);
+			listViewMonitor.Location = new Point(3, 18);
+			listViewMonitor.Margin = new Padding(3, 2, 3, 2);
 			listViewMonitor.Name = "listViewMonitor";
 			listViewMonitor.ShowGroups = false;
-			listViewMonitor.Size = new Size(868, 385);
+			listViewMonitor.Size = new Size(759, 288);
 			listViewMonitor.TabIndex = 0;
 			listViewMonitor.UseCompatibleStateImageBehavior = false;
 			listViewMonitor.View = View.Details;
@@ -95,10 +98,11 @@
 			// 
 			// buttonStart
 			// 
-			buttonStart.Location = new Point(12, 12);
+			buttonStart.Location = new Point(10, 9);
+			buttonStart.Margin = new Padding(3, 2, 3, 2);
 			buttonStart.Name = "buttonStart";
-			buttonStart.Size = new Size(185, 62);
-			buttonStart.TabIndex = 2;
+			buttonStart.Size = new Size(162, 46);
+			buttonStart.TabIndex = 0;
 			buttonStart.Text = "Start";
 			buttonStart.UseVisualStyleBackColor = true;
 			buttonStart.Click += buttonStart_Click;
@@ -106,30 +110,33 @@
 			// progressBarScrap
 			// 
 			progressBarScrap.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			progressBarScrap.Location = new Point(203, 12);
+			progressBarScrap.Location = new Point(178, 9);
+			progressBarScrap.Margin = new Padding(3, 2, 3, 2);
 			progressBarScrap.Name = "progressBarScrap";
-			progressBarScrap.Size = new Size(599, 62);
-			progressBarScrap.TabIndex = 4;
+			progressBarScrap.Size = new Size(524, 46);
+			progressBarScrap.TabIndex = 1;
 			// 
 			// pictureBox1
 			// 
-			pictureBox1.Location = new Point(808, 12);
+			pictureBox1.Location = new Point(707, 9);
+			pictureBox1.Margin = new Padding(3, 2, 3, 2);
 			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(75, 62);
+			pictureBox1.Size = new Size(66, 46);
 			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 			pictureBox1.TabIndex = 6;
 			pictureBox1.TabStop = false;
 			// 
 			// FormScrapAuto
 			// 
-			AutoScaleDimensions = new SizeF(8F, 20F);
+			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(898, 503);
+			ClientSize = new Size(786, 377);
 			Controls.Add(pictureBox1);
 			Controls.Add(progressBarScrap);
 			Controls.Add(buttonStart);
 			Controls.Add(groupBox1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
+			Margin = new Padding(3, 2, 3, 2);
 			Name = "FormScrapAuto";
 			StartPosition = FormStartPosition.CenterParent;
 			Text = "FormScrapAuto";

@@ -121,7 +121,7 @@
     <value>La recherche en ligne via screenscraper.fr est en cours...</value>
   </data>
   <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
-    <value>Lade Einstellungen...</value>
+    <value>Chargement des paramètres...</value>
   </data>
   <data name="Txt_Status_Label_ReadRoms" xml:space="preserve">
     <value>Chargement des systèmes rétro...</value>
@@ -133,7 +133,7 @@
     <value>Dernière connexion : {0}</value>
   </data>
   <data name="Txt_Dlg_Select_Image" xml:space="preserve">
-    <value>Please select a Image for Rom.</value>
+    <value>Veuillez sélectionner une image pour Rom.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoRom" xml:space="preserve">
     <value>Aucune ROM sélectionnée.</value>
@@ -148,7 +148,7 @@
     <value>Requêtes par jour : {0}/{1} ({2}%)</value>
   </data>
   <data name="Txt_Splash_Initializing" xml:space="preserve">
-    <value>Starte RetroScrap2000....</value>
+    <value>Initialisation de RetroScrap 2000....</value>
   </data>
   <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
     <value>Gamelist.xml enregistré avec succès.</value>
@@ -169,7 +169,7 @@
     <value>Erreur : aucune réponse du serveur.</value>
   </data>
   <data name="Txt_Dlg_Select_Video" xml:space="preserve">
-    <value>Please select a Video-File for Rom.</value>
+    <value>Veuillez sélectionner une vidéo pour Rom.</value>
   </data>
   <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
     <value>{0} ROM chargées.</value>
@@ -243,7 +243,37 @@
   <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
     <value>Extraction de {0} ROM du système</value>
   </data>
-  <data name="Txt_Msg_Opt_RetroPie_Info" xml:space="preserve">
-    <value>Information importante pour les utilisateurs de RetroPie :\r\n\r\nL'outil crée le fichier gamelist.xml et les fichiers multimédias directement dans les dossiers ROM respectifs. Pour que EmulationStation puisse les charger correctement, une petite modification est nécessaire :\r\n\r\nOuvrez le menu principal dans EmulationStation et allez dans "Paramètres de l'interface utilisateur". Définissez l'option "Parse Gamelists Only" sur OFF. Après ce réglage, EmulationStation affichera les données créées par cet outil comme d'habitude.</value>
+  <data name="Txt_Msg_Opt_RetroPie_Info1" xml:space="preserve">
+    <value>Information importante pour les utilisateurs de RetroPie :</value>
+  </data>
+  <data name="Txt_Log_Scrap_End" xml:space="preserve">
+    <value>Processus de récupération terminé.</value>
+  </data>
+  <data name="Txt_Api_Err_UserFail" xml:space="preserve">
+    <value>Échec de la connexion ou informations de l'utilisateur manquantes.</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info2" xml:space="preserve">
+    <value>L'outil crée le fichier gamelist.xml et les fichiers multimédias directement dans les dossiers ROM respectifs. Pour que EmulationStation puisse les charger correctement, une petite modification est nécessaire :</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info3" xml:space="preserve">
+    <value>Ouvrez le menu principal dans EmulationStation et allez dans 'Paramètres de l'interface utilisateur'. Définissez l'option 'Parse Gamelists Only' sur OFF. Après ce réglage, EmulationStation affichera les données créées par cet outil comme d'habitude.</value>
+  </data>
+  <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer le fichier '{0}' avec les informations de Rome qui lui sont associées ?</value>
+  </data>
+  <data name="Txt_Splash_Loading" xml:space="preserve">
+    <value>Chargement</value>
+  </data>
+  <data name="Txt_Splash_LoadingSystems" xml:space="preserve">
+    <value>Systèmes de chargement...</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Time" xml:space="preserve">
+    <value>Horodatage</value>
+  </data>
+  <data name="Txt_Column_ScrapAuto_Type" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>

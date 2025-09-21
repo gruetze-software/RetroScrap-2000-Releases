@@ -36,6 +36,10 @@ namespace RetroScrap2000
 		{
 			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem,
 				Roms.Games.Count) + $" \"{Roms.RetroSys.Name}\".";
+
+				colMsg.Text = Properties.Resources.Txt_Column_ScrapAuto_Message;
+				colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
+				colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
