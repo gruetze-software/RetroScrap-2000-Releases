@@ -117,12 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="joystick_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\joystick_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Txt_Status_Label_Scrap_Running" xml:space="preserve">
+    <value>The online search via screenscraper.fr is running...</value>
   </data>
-  <data name="scanrom_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scanrom_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="joystickani" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\joystick.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
+    <value>Loading Settings...</value>
+  </data>
+  <data name="Txt_Status_Label_ReadRoms" xml:space="preserve">
+    <value>The retrosystems are being loaded...</value>
+  </data>
+  <data name="Txt_Log_Scrap_CancelRequest" xml:space="preserve">
+    <value>Cancellation has been requested. Please wait.</value>
   </data>
   <data name="options_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\options_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,53 +139,20 @@
   <data name="folderopen32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folderopen32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Txt_Api_SsUser_LastLogin" xml:space="preserve">
+    <value>Last Login: {0}</value>
   </data>
-  <data name="flag_de" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\de.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Txt_Dlg_Select_Image" xml:space="preserve">
+    <value>Please select a Image for Rom.</value>
   </data>
-  <data name="flag_en" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\en.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="flag_fr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="flag_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\es.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Txt_Status_Label_Ready" xml:space="preserve">
-    <value>Ready.</value>
-  </data>
-  <data name="Txt_Msg_Rom_WrongPath" xml:space="preserve">
-    <value>Please select a valid path.</value>
-  </data>
-  <data name="Txt_Status_Label_ReadRoms" xml:space="preserve">
-    <value>The retrosystems are being loaded...</value>
-  </data>
-  <data name="Txt_Status_Label_ReadSystem" xml:space="preserve">
-    <value>Loading Roms from {0}...</value>
-  </data>
-  <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
-    <value>{0} Roms loaded.</value>
+  <data name="screenscraper_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\screenscraper_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Txt_Msg_Scrap_NoRom" xml:space="preserve">
     <value>No Rom selected.</value>
   </data>
-  <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
-    <value>No suitable system could be found for the ROM.</value>
-  </data>
-  <data name="Txt_Msg_Scrap_WrongRomFile" xml:space="preserve">
-    <value>The ROM file could not be determined.</value>
-  </data>
-  <data name="Txt_Status_Label_Scrap_Running" xml:space="preserve">
-    <value>The online search via screenscraper.fr is running...</value>
-  </data>
-  <data name="Txt_Msg_Scrap_Fail" xml:space="preserve">
-    <value>The scrap process has failed.</value>
-  </data>
-  <data name="Txt_Status_Label_RomSave" xml:space="preserve">
-    <value>Rom was successfully saved.</value>
+  <data name="RetroScrap2000_256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RetroScrap2000_256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Txt_Status_Label_RomNotSaved" xml:space="preserve">
     <value>Rome could not be saved.</value>
@@ -184,94 +160,139 @@
   <data name="Txt_System_Manufacturer" xml:space="preserve">
     <value>Manufacturer</value>
   </data>
-  <data name="Txt_Log_Scrap_NoName" xml:space="preserve">
-    <value>No name provided.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoJson" xml:space="preserve">
-    <value>The answer is not JSON Format.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>No game found.</value>
-  </data>
-  <data name="Txt_Log_Scrap_CancelRequest" xml:space="preserve">
-    <value>Cancellation has been requested. Please wait.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoDataFoundFor" xml:space="preserve">
-    <value>No data found for</value>
-  </data>
-  <data name="Txt_Log_Scrap_CheckDataFrom" xml:space="preserve">
-    <value>Check the data from</value>
-  </data>
-  <data name="Txt_Log_Scrap_Loading" xml:space="preserve">
-    <value>Download</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGameList" xml:space="preserve">
-    <value>Save Gamelist.xml...</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
-    <value>Gamelist.xml successfully saved.</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
-    <value>Error saving Gamelist.xml!</value>
-  </data>
-  <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
-    <value>Scraping {0} ROMs from system</value>
-  </data>
-  <data name="Txt_Api_SsUser_Name" xml:space="preserve">
-    <value>User: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_DownloadKBS" xml:space="preserve">
-    <value>Max. Download: {0} KB/s</value>
-  </data>
-  <data name="Txt_Api_SsUser_Level" xml:space="preserve">
-    <value>Level: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_LastLogin" xml:space="preserve">
-    <value>Last Login: {0}</value>
-  </data>
   <data name="Txt_Api_SsUser_RequestPerDay" xml:space="preserve">
     <value>Requests per Day: {0}/{1} ({2}%)</value>
-  </data>
-  <data name="Txt_Api_SsUser_Region" xml:space="preserve">
-    <value>Region: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_Visits" xml:space="preserve">
-    <value>Visits: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_MaxThreads" xml:space="preserve">
-    <value>Max. Threads: {0}</value>
-  </data>
-  <data name="Txt_PleaseWait" xml:space="preserve">
-    <value>Please wait...</value>
-  </data>
-  <data name="Txt_Api_Err_NoResponse" xml:space="preserve">
-    <value>Error: No response from server.</value>
-  </data>
-  <data name="Txt_Api_Err_CheckInternet" xml:space="preserve">
-    <value>Check your login and internet connection.</value>
-  </data>
-  <data name="Txt_Msg_LanguageChange" xml:space="preserve">
-    <value>The language will be fully adopted after a restart. Would you like to restart the application now?</value>
-  </data>
-  <data name="Txt_Msg_StartAppNoSsUser" xml:space="preserve">
-    <value>To fully utilize the application, the username and password for screenscraper.fr must be entered under options.</value>
   </data>
   <data name="Txt_Splash_Initializing" xml:space="preserve">
     <value>Initializing RetroScrap2000....</value>
   </data>
-  <data name="joystickani" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\joystick.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
+    <value>Gamelist.xml successfully saved.</value>
   </data>
-  <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
-    <value>Loading Settings...</value>
+  <data name="Txt_Log_Scrap_NoName" xml:space="preserve">
+    <value>No name provided.</value>
+  </data>
+  <data name="Txt_Api_SsUser_Name" xml:space="preserve">
+    <value>User: {0}</value>
+  </data>
+  <data name="Txt_Status_Label_RomSave" xml:space="preserve">
+    <value>Rom was successfully saved.</value>
+  </data>
+  <data name="save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Log_Scrap_SaveGameList" xml:space="preserve">
+    <value>Save Gamelist.xml...</value>
+  </data>
+  <data name="Txt_Api_Err_NoResponse" xml:space="preserve">
+    <value>Error: No response from server.</value>
+  </data>
+  <data name="Txt_Dlg_Select_Video" xml:space="preserve">
+    <value>Please select a Video-File for Rom.</value>
+  </data>
+  <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
+    <value>{0} Roms loaded.</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoDataFoundFor" xml:space="preserve">
+    <value>No data found for</value>
   </data>
   <data name="Txt_Msg_Scrap_NoDataFound" xml:space="preserve">
     <value>No Data found for the Rom.</value>
   </data>
-  <data name="Txt_Dlg_Select_Image" xml:space="preserve">
-    <value>Please select a Image for Rom.</value>
+  <data name="Txt_Msg_Opt_Language_Change" xml:space="preserve">
+    <value>The language will be fully adopted after a restart. Would you like to restart the application now?</value>
   </data>
-  <data name="Txt_Dlg_Select_Video" xml:space="preserve">
-    <value>Please select a Video-File for Rom.</value>
+  <data name="scanrom_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scanrom_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="joystick_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\joystick_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Msg_Scrap_WrongRomFile" xml:space="preserve">
+    <value>The ROM file could not be determined.</value>
+  </data>
+  <data name="Txt_Api_Err_CheckInternet" xml:space="preserve">
+    <value>Check your login and internet connection.</value>
+  </data>
+  <data name="grützesoftware_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grützesoftware_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Status_Label_ReadSystem" xml:space="preserve">
+    <value>Loading Roms from {0}...</value>
+  </data>
+  <data name="Txt_Api_SsUser_Region" xml:space="preserve">
+    <value>Region: {0}</value>
+  </data>
+  <data name="Txt_Api_SsUser_MaxThreads" xml:space="preserve">
+    <value>Max. Threads: {0}</value>
+  </data>
+  <data name="Txt_Log_Scrap_Loading" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Txt_Msg_Rom_WrongPath" xml:space="preserve">
+    <value>Please select a valid path.</value>
+  </data>
+  <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
+    <value>Error saving Gamelist.xml!</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
+    <value>No game found.</value>
+  </data>
+  <data name="flag_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\es.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
+    <value>No suitable system could be found for the ROM.</value>
+  </data>
+  <data name="Txt_Log_Scrap_CheckDataFrom" xml:space="preserve">
+    <value>Check the data from</value>
+  </data>
+  <data name="Txt_Api_SsUser_Visits" xml:space="preserve">
+    <value>Visits: {0}</value>
+  </data>
+  <data name="screenscraper_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\screenscraper_banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Status_Label_Ready" xml:space="preserve">
+    <value>Ready.</value>
+  </data>
+  <data name="flag_de" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\de.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Fail" xml:space="preserve">
+    <value>The scrap process has failed.</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoJson" xml:space="preserve">
+    <value>The answer is not JSON Format.</value>
+  </data>
+  <data name="Txt_PleaseWait" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
+  <data name="Txt_Api_SsUser_Level" xml:space="preserve">
+    <value>Level: {0}</value>
+  </data>
+  <data name="Txt_Api_SsUser_DownloadKBS" xml:space="preserve">
+    <value>Max. Download: {0} KB/s</value>
+  </data>
+  <data name="Txt_Msg_StartAppNoSsUser" xml:space="preserve">
+    <value>To fully utilize the application, the username and password for screenscraper.fr must be entered under options.</value>
+  </data>
+  <data name="flag_en" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\en.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="flag_fr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
+    <value>Scraping {0} ROMs from system</value>
+  </data>
+  <data name="tip32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tip32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info" xml:space="preserve">
+    <value>Important info for RetroPie users:\r\n\r\nThe tool creates the gamelist.xml and media files directly in the respective ROM folders. To ensure that EmulationStation can load them correctly, only a small adjustment is required:\r\n\r\nOpen the main menu in EmulationStation and go to "UI Settings." Set the option "Parse Gamelists Only" to OFF. After this setting, EmulationStation will display the data created by this tool as usual.</value>
+  </data>
+  <data name="tip24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\donation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

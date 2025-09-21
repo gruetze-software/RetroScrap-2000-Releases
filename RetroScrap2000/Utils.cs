@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,6 +22,30 @@ namespace RetroScrap2000
 			if (ex.InnerException != null)
 				msg += "\r\n" + GetExcMsg(ex.InnerException);
 			return msg;
+		}
+
+		public static (string product, string company, string version, string copyright) GetAppInfo()
+		{
+			// Abrufen des Assembly-Objekts
+			Assembly assembly = Assembly.GetExecutingAssembly();
+
+			// Abrufen der Company-Information
+			string company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? "Grütze-Soft";
+
+			// Abrufen der Product-Information
+			string product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "RetroScrap2000";
+
+			// Abrufen der Copyright-Information
+			string copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? "Copyright © 2025 Grütze-Soft";
+
+			// Abrufen der Informationsversion (InformationalVersion)
+			string version = assembly.GetName().Version?.ToString() ?? "1.0.0";
+
+			// Beispiel-Nutzung
+			string appInfo = $"{product} by {company}\nVersion: {assembly.GetName().Version}\nCopyright: {copyright}";
+			Trace.WriteLine(appInfo);
+
+			return (product, company, version, copyright);
 		}
 
 		public static string DecodeTextFromApi(string? raw)

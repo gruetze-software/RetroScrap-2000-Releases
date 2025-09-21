@@ -119,10 +119,9 @@ namespace RetroScrap2000
 
 		private void SetTitleMainForm()
 		{
-			this.Text = Assembly.GetExecutingAssembly().GetName().Name + String.Format(" - Version: {0}",
-					Assembly.GetExecutingAssembly().GetName().Version);
-
-			this.Text = this.Text += "    Roms: \"" + _options.RomPath + "\"";
+			var info = Utils.GetAppInfo();
+			this.Text = $"{info.product} by {info.company} - Version {info.version}";
+			this.Text += "    Roms: \"" + _options.RomPath + "\"";
 		}
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -222,7 +221,7 @@ namespace RetroScrap2000
 				OpenMedia(pb);
 		}
 
-		private async void buttonRomScrap_Click(object sender, EventArgs e)
+		private async Task ScrapRomAsync()
 		{
 			var sysFolder = GetSelectedRomPath();
 			if (_selectedRom == null || string.IsNullOrEmpty(sysFolder))
@@ -260,7 +259,7 @@ namespace RetroScrap2000
 					return;
 				}
 
-				
+
 				data.Source = "ScreenScraper.fr";
 
 				// Dialog zum Übernehmen der Daten
@@ -318,12 +317,17 @@ namespace RetroScrap2000
 			}
 		}
 
+		private async void buttonRomScrap_Click(object sender, EventArgs e)
+		{
+			await ScrapRomAsync();
+		}
+
 		private async void buttonRomSave_Click(object sender, EventArgs e)
 		{
 			await SaveRomAsync();
 		}
 
-		private async void RomAlleAktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void SystemAllRomsScrapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_selectedRom == null)
 				return;
@@ -411,9 +415,9 @@ namespace RetroScrap2000
 			}
 		}
 
-		private void RomScrapToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void RomScrapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			await ScrapRomAsync();
 		}
 
 		private PictureBox? GetPictureBoxFromMenuItem(object sender)

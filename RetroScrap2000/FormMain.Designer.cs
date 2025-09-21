@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
 			splitContainerMain = new SplitContainer();
 			tableLayoutPanelMainLeft = new TableLayoutPanel();
@@ -37,6 +38,9 @@
 			colSystemVon = new ColumnHeader();
 			colSystemBis = new ColumnHeader();
 			colSystemAnzRoms = new ColumnHeader();
+			contextMenuStripSystems = new ContextMenuStrip(components);
+			alleRomsScrapenToolStripMenuItem = new ToolStripMenuItem();
+			detailsToolStripMenuItem = new ToolStripMenuItem();
 			tableLayoutPanelRomsControls = new TableLayoutPanel();
 			buttonRomPath = new Button();
 			buttonRomsRead = new Button();
@@ -48,6 +52,10 @@
 			colRomsAnzPlayer = new ColumnHeader();
 			colRomsRating = new ColumnHeader();
 			colRomsFile = new ColumnHeader();
+			contextMenuStripRoms = new ContextMenuStrip(components);
+			scrapToolStripMenuItem = new ToolStripMenuItem();
+			detailsToolStripMenuItem1 = new ToolStripMenuItem();
+			löschenToolStripMenuItem = new ToolStripMenuItem();
 			splitContainerRight = new SplitContainer();
 			splitContainerRightRom = new SplitContainer();
 			tableLayoutPanelRightInnen = new TableLayoutPanel();
@@ -58,6 +66,10 @@
 			textBoxRomDesc = new TextBox();
 			tableLayoutPanelRomMedia = new TableLayoutPanel();
 			pictureBoxImgBox = new PictureBox();
+			contextMenuStripMedia = new ContextMenuStrip(components);
+			showToolStripMenuItem = new ToolStripMenuItem();
+			addToolStripMenuItem = new ToolStripMenuItem();
+			deleteToolStripMenuItem = new ToolStripMenuItem();
 			label6 = new Label();
 			pictureBoxImgScreenshot = new PictureBox();
 			label7 = new Label();
@@ -78,15 +90,16 @@
 			buttonRomSave = new Button();
 			buttonRomScrap = new Button();
 			starRatingControlRom = new StarRatingControl();
-			statusStrip1 = new StatusStrip();
+			statusStripMain = new StatusStrip();
 			toolStripStatusLabelMain = new ToolStripStatusLabel();
-			backgroundWorkerRoms = new System.ComponentModel.BackgroundWorker();
 			((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
 			splitContainerMain.Panel1.SuspendLayout();
 			splitContainerMain.Panel2.SuspendLayout();
 			splitContainerMain.SuspendLayout();
 			tableLayoutPanelMainLeft.SuspendLayout();
+			contextMenuStripSystems.SuspendLayout();
 			tableLayoutPanelRomsControls.SuspendLayout();
+			contextMenuStripRoms.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)splitContainerRight).BeginInit();
 			splitContainerRight.Panel1.SuspendLayout();
 			splitContainerRight.Panel2.SuspendLayout();
@@ -100,10 +113,11 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxRomSystem).BeginInit();
 			tableLayoutPanelRomMedia.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgBox).BeginInit();
+			contextMenuStripMedia.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgScreenshot).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgVideo).BeginInit();
 			tableLayoutPanelRomDetails.SuspendLayout();
-			statusStrip1.SuspendLayout();
+			statusStripMain.SuspendLayout();
 			SuspendLayout();
 			// 
 			// splitContainerMain
@@ -132,6 +146,7 @@
 			// 
 			listViewSystems.Activation = ItemActivation.OneClick;
 			listViewSystems.Columns.AddRange(new ColumnHeader[] { colSystemName, colSystemHersteller, colSystemVon, colSystemBis, colSystemAnzRoms });
+			listViewSystems.ContextMenuStrip = contextMenuStripSystems;
 			resources.ApplyResources(listViewSystems, "listViewSystems");
 			listViewSystems.FullRowSelect = true;
 			listViewSystems.GridLines = true;
@@ -161,6 +176,23 @@
 			// colSystemAnzRoms
 			// 
 			resources.ApplyResources(colSystemAnzRoms, "colSystemAnzRoms");
+			// 
+			// contextMenuStripSystems
+			// 
+			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { alleRomsScrapenToolStripMenuItem, detailsToolStripMenuItem });
+			contextMenuStripSystems.Name = "contextMenuStripSystems";
+			resources.ApplyResources(contextMenuStripSystems, "contextMenuStripSystems");
+			// 
+			// alleRomsScrapenToolStripMenuItem
+			// 
+			alleRomsScrapenToolStripMenuItem.Name = "alleRomsScrapenToolStripMenuItem";
+			resources.ApplyResources(alleRomsScrapenToolStripMenuItem, "alleRomsScrapenToolStripMenuItem");
+			alleRomsScrapenToolStripMenuItem.Click += SystemAllRomsScrapToolStripMenuItem_Click;
+			// 
+			// detailsToolStripMenuItem
+			// 
+			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
+			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
 			// 
 			// tableLayoutPanelRomsControls
 			// 
@@ -198,6 +230,7 @@
 			// 
 			listViewRoms.Activation = ItemActivation.OneClick;
 			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile });
+			listViewRoms.ContextMenuStrip = contextMenuStripRoms;
 			resources.ApplyResources(listViewRoms, "listViewRoms");
 			listViewRoms.FullRowSelect = true;
 			listViewRoms.GridLines = true;
@@ -231,6 +264,30 @@
 			// colRomsFile
 			// 
 			resources.ApplyResources(colRomsFile, "colRomsFile");
+			// 
+			// contextMenuStripRoms
+			// 
+			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { scrapToolStripMenuItem, detailsToolStripMenuItem1, löschenToolStripMenuItem });
+			contextMenuStripRoms.Name = "contextMenuStripRoms";
+			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
+			// 
+			// scrapToolStripMenuItem
+			// 
+			scrapToolStripMenuItem.Name = "scrapToolStripMenuItem";
+			resources.ApplyResources(scrapToolStripMenuItem, "scrapToolStripMenuItem");
+			scrapToolStripMenuItem.Click += RomScrapToolStripMenuItem_Click;
+			// 
+			// detailsToolStripMenuItem1
+			// 
+			detailsToolStripMenuItem1.Name = "detailsToolStripMenuItem1";
+			resources.ApplyResources(detailsToolStripMenuItem1, "detailsToolStripMenuItem1");
+			detailsToolStripMenuItem1.Click += RomDetailsToolStripMenuItem_Click;
+			// 
+			// löschenToolStripMenuItem
+			// 
+			löschenToolStripMenuItem.Name = "löschenToolStripMenuItem";
+			resources.ApplyResources(löschenToolStripMenuItem, "löschenToolStripMenuItem");
+			löschenToolStripMenuItem.Click += RomLöschenToolStripMenuItem_Click;
 			// 
 			// splitContainerRight
 			// 
@@ -313,10 +370,35 @@
 			// pictureBoxImgBox
 			// 
 			pictureBoxImgBox.BackColor = SystemColors.ControlLight;
+			pictureBoxImgBox.ContextMenuStrip = contextMenuStripMedia;
 			resources.ApplyResources(pictureBoxImgBox, "pictureBoxImgBox");
 			pictureBoxImgBox.Name = "pictureBoxImgBox";
 			pictureBoxImgBox.TabStop = false;
 			pictureBoxImgBox.Click += pictureBoxImgVideo_Click;
+			// 
+			// contextMenuStripMedia
+			// 
+			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { showToolStripMenuItem, addToolStripMenuItem, deleteToolStripMenuItem });
+			contextMenuStripMedia.Name = "contextMenuStripMedia";
+			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");
+			// 
+			// showToolStripMenuItem
+			// 
+			showToolStripMenuItem.Name = "showToolStripMenuItem";
+			resources.ApplyResources(showToolStripMenuItem, "showToolStripMenuItem");
+			showToolStripMenuItem.Click += MediaAnzeigenToolStripMenuItem_Click;
+			// 
+			// addToolStripMenuItem
+			// 
+			addToolStripMenuItem.Name = "addToolStripMenuItem";
+			resources.ApplyResources(addToolStripMenuItem, "addToolStripMenuItem");
+			addToolStripMenuItem.Click += MediaNeuToolStripMenuItem_Click;
+			// 
+			// deleteToolStripMenuItem
+			// 
+			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+			resources.ApplyResources(deleteToolStripMenuItem, "deleteToolStripMenuItem");
+			deleteToolStripMenuItem.Click += MediaLöschenToolStripMenuItem_Click;
 			// 
 			// label6
 			// 
@@ -326,6 +408,7 @@
 			// pictureBoxImgScreenshot
 			// 
 			pictureBoxImgScreenshot.BackColor = SystemColors.ControlLight;
+			pictureBoxImgScreenshot.ContextMenuStrip = contextMenuStripMedia;
 			resources.ApplyResources(pictureBoxImgScreenshot, "pictureBoxImgScreenshot");
 			pictureBoxImgScreenshot.Name = "pictureBoxImgScreenshot";
 			pictureBoxImgScreenshot.TabStop = false;
@@ -339,6 +422,7 @@
 			// pictureBoxImgVideo
 			// 
 			pictureBoxImgVideo.BackColor = SystemColors.ControlLight;
+			pictureBoxImgVideo.ContextMenuStrip = contextMenuStripMedia;
 			resources.ApplyResources(pictureBoxImgVideo, "pictureBoxImgVideo");
 			pictureBoxImgVideo.Name = "pictureBoxImgVideo";
 			pictureBoxImgVideo.TabStop = false;
@@ -451,29 +535,24 @@
 			starRatingControlRom.StarCount = 5;
 			starRatingControlRom.StarSpacing = 4;
 			// 
-			// statusStrip1
+			// statusStripMain
 			// 
-			statusStrip1.ImageScalingSize = new Size(20, 20);
-			statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelMain });
-			resources.ApplyResources(statusStrip1, "statusStrip1");
-			statusStrip1.Name = "statusStrip1";
+			statusStripMain.ImageScalingSize = new Size(20, 20);
+			statusStripMain.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelMain });
+			resources.ApplyResources(statusStripMain, "statusStripMain");
+			statusStripMain.Name = "statusStripMain";
 			// 
 			// toolStripStatusLabelMain
 			// 
 			toolStripStatusLabelMain.Name = "toolStripStatusLabelMain";
 			resources.ApplyResources(toolStripStatusLabelMain, "toolStripStatusLabelMain");
 			// 
-			// backgroundWorkerRoms
-			// 
-			backgroundWorkerRoms.WorkerReportsProgress = true;
-			backgroundWorkerRoms.WorkerSupportsCancellation = true;
-			// 
 			// FormMain
 			// 
 			resources.ApplyResources(this, "$this");
 			AutoScaleMode = AutoScaleMode.Font;
 			Controls.Add(splitContainerMain);
-			Controls.Add(statusStrip1);
+			Controls.Add(statusStripMain);
 			Name = "FormMain";
 			FormClosed += FormMain_FormClosed;
 			Load += FormMain_Load;
@@ -482,7 +561,9 @@
 			((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
 			splitContainerMain.ResumeLayout(false);
 			tableLayoutPanelMainLeft.ResumeLayout(false);
+			contextMenuStripSystems.ResumeLayout(false);
 			tableLayoutPanelRomsControls.ResumeLayout(false);
+			contextMenuStripRoms.ResumeLayout(false);
 			splitContainerRight.Panel1.ResumeLayout(false);
 			splitContainerRight.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)splitContainerRight).EndInit();
@@ -498,19 +579,20 @@
 			tableLayoutPanelRomMedia.ResumeLayout(false);
 			tableLayoutPanelRomMedia.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgBox).EndInit();
+			contextMenuStripMedia.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgScreenshot).EndInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxImgVideo).EndInit();
 			tableLayoutPanelRomDetails.ResumeLayout(false);
 			tableLayoutPanelRomDetails.PerformLayout();
-			statusStrip1.ResumeLayout(false);
-			statusStrip1.PerformLayout();
+			statusStripMain.ResumeLayout(false);
+			statusStripMain.PerformLayout();
 			ResumeLayout(false);
 			PerformLayout();
 		}
 
 		#endregion
 
-		private StatusStrip statusStrip1;
+		private StatusStrip statusStripMain;
 		private SplitContainer splitContainerMain;
 		private TableLayoutPanel tableLayoutPanelMainLeft;
 		private ListView listViewRoms;
@@ -518,7 +600,6 @@
 		private Button buttonRomsRead;
 		private ColumnHeader colRomsName;
 		private Button buttonRomPath;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerRoms;
 		private TableLayoutPanel tableLayoutPanelRightInnen;
 		private TextBox textBoxRomName;
 		private TextBox textBoxRomDesc;
@@ -562,5 +643,16 @@
 		private ColumnHeader colRomsFile;
 		private SplitContainer splitContainerRightRom;
 		private StarRatingControl starRatingControlRom;
+		private ContextMenuStrip contextMenuStripSystems;
+		private ToolStripMenuItem alleRomsScrapenToolStripMenuItem;
+		private ToolStripMenuItem detailsToolStripMenuItem;
+		private ContextMenuStrip contextMenuStripRoms;
+		private ToolStripMenuItem scrapToolStripMenuItem;
+		private ToolStripMenuItem detailsToolStripMenuItem1;
+		private ToolStripMenuItem löschenToolStripMenuItem;
+		private ContextMenuStrip contextMenuStripMedia;
+		private ToolStripMenuItem showToolStripMenuItem;
+		private ToolStripMenuItem deleteToolStripMenuItem;
+		private ToolStripMenuItem addToolStripMenuItem;
 	}
 }

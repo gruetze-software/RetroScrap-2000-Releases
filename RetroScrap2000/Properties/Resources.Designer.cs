@@ -113,6 +113,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap grützesoftware_icon {
+            get {
+                object obj = ResourceManager.GetObject("grützesoftware_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap joystick_32 {
             get {
                 object obj = ResourceManager.GetObject("joystick_32", resourceCulture);
@@ -143,6 +153,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RetroScrap2000_256 {
+            get {
+                object obj = ResourceManager.GetObject("RetroScrap2000_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap save_32 {
             get {
                 object obj = ResourceManager.GetObject("save_32", resourceCulture);
@@ -156,6 +176,46 @@ namespace RetroScrap2000.Properties {
         internal static System.Drawing.Bitmap scanrom_32 {
             get {
                 object obj = ResourceManager.GetObject("scanrom_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap screenscraper_banner {
+            get {
+                object obj = ResourceManager.GetObject("screenscraper_banner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap screenscraper_ico {
+            get {
+                object obj = ResourceManager.GetObject("screenscraper_ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tip24 {
+            get {
+                object obj = ResourceManager.GetObject("tip24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tip32 {
+            get {
+                object obj = ResourceManager.GetObject("tip32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -361,9 +421,18 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The language will be fully adopted after a restart. Would you like to restart the application now?.
         /// </summary>
-        internal static string Txt_Msg_LanguageChange {
+        internal static string Txt_Msg_Opt_Language_Change {
             get {
-                return ResourceManager.GetString("Txt_Msg_LanguageChange", resourceCulture);
+                return ResourceManager.GetString("Txt_Msg_Opt_Language_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important info for RetroPie users:\r\n\r\nThe tool creates the gamelist.xml and media files directly in the respective ROM folders. To ensure that EmulationStation can load them correctly, only a small adjustment is required:\r\n\r\nOpen the main menu in EmulationStation and go to &quot;UI Settings.&quot; Set the option &quot;Parse Gamelists Only&quot; to OFF. After this setting, EmulationStation will display the data created by this tool as usual..
+        /// </summary>
+        internal static string Txt_Msg_Opt_RetroPie_Info {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_RetroPie_Info", resourceCulture);
             }
         }
         

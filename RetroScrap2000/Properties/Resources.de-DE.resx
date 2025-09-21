@@ -117,38 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Txt_Status_Label_Ready" xml:space="preserve">
-    <value>Bereit.</value>
+  <data name="Txt_Status_Label_Scrap_Running" xml:space="preserve">
+    <value>Die Online-Suche über screenscraper.fr läuft...</value>
   </data>
-  <data name="Txt_Msg_Rom_WrongPath" xml:space="preserve">
-    <value>Bitte einen gültigen Pfad auswählen.</value>
+  <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
+    <value>Lade Einstellungen...</value>
   </data>
   <data name="Txt_Status_Label_ReadRoms" xml:space="preserve">
     <value>Die Retrosysteme werden eingelesen...</value>
   </data>
-  <data name="Txt_Status_Label_ReadSystem" xml:space="preserve">
-    <value>Die Roms von {0} werden geladen...</value>
+  <data name="Txt_Log_Scrap_CancelRequest" xml:space="preserve">
+    <value>Abbruch wurde angefordert. Bitte warten.</value>
   </data>
-  <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
-    <value>{0} Roms wurden eingelesen.</value>
+  <data name="Txt_Api_SsUser_LastLogin" xml:space="preserve">
+    <value>Letzter Besuch: {0}</value>
+  </data>
+  <data name="Txt_Dlg_Select_Image" xml:space="preserve">
+    <value>Please select a Image for Rom.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoRom" xml:space="preserve">
     <value>Es wurde kein Rom ausgewählt.</value>
-  </data>
-  <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
-    <value>Es konnte kein passendes System zu dem ROM gefunden werden.</value>
-  </data>
-  <data name="Txt_Msg_Scrap_WrongRomFile" xml:space="preserve">
-    <value>Die ROM-Datei konnte nicht bestimmt werden.</value>
-  </data>
-  <data name="Txt_Status_Label_Scrap_Running" xml:space="preserve">
-    <value>Die Online-Suche über screenscraper.fr läuft...</value>
-  </data>
-  <data name="Txt_Msg_Scrap_Fail" xml:space="preserve">
-    <value>Der Scrap-Vorgang ist fehlgeschlagen</value>
-  </data>
-  <data name="Txt_Status_Label_RomSave" xml:space="preserve">
-    <value>Rom wurde erfolgreich gespeichert.</value>
   </data>
   <data name="Txt_Status_Label_RomNotSaved" xml:space="preserve">
     <value>Rom konnte nicht gespeichert werden.</value>
@@ -156,91 +144,106 @@
   <data name="Txt_System_Manufacturer" xml:space="preserve">
     <value>Hersteller</value>
   </data>
-  <data name="Txt_Log_Scrap_NoName" xml:space="preserve">
-    <value>Kein Name angegeben.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoJson" xml:space="preserve">
-    <value>Die Antwort ist nicht im Json-Format.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>Kein Spiel gefunden.</value>
-  </data>
-  <data name="Txt_Log_Scrap_CancelRequest" xml:space="preserve">
-    <value>Abbruch wurde angefordert. Bitte warten.</value>
-  </data>
-  <data name="Txt_Log_Scrap_NoDataFoundFor" xml:space="preserve">
-    <value>Keine Daten gefunden für</value>
-  </data>
-  <data name="Txt_Log_Scrap_CheckDataFrom" xml:space="preserve">
-    <value>Überprüfe die Daten von</value>
-  </data>
-  <data name="Txt_Log_Scrap_Loading" xml:space="preserve">
-    <value>Lade</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGameList" xml:space="preserve">
-    <value>Speichere Gamelist.xml...</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
-    <value>Gamelist.xml erfolgreich gespeichert.</value>
-  </data>
-  <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
-    <value>Fehler beim Speichern von Gamelist.xml!</value>
-  </data>
-  <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
-    <value>Scrape {0} Roms vom System</value>
-  </data>
-  <data name="Txt_Api_SsUser_Name" xml:space="preserve">
-    <value>Name: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_DownloadKBS" xml:space="preserve">
-    <value>Max. Download: {0} KB/s</value>
-  </data>
-  <data name="Txt_Api_SsUser_Level" xml:space="preserve">
-    <value>Level: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_LastLogin" xml:space="preserve">
-    <value>Letzter Besuch: {0}</value>
-  </data>
   <data name="Txt_Api_SsUser_RequestPerDay" xml:space="preserve">
     <value>Requests  pro Tag: {0}/{1} ({2}%)</value>
-  </data>
-  <data name="Txt_Api_SsUser_Region" xml:space="preserve">
-    <value>Region: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_Visits" xml:space="preserve">
-    <value>Anz. Besuche: {0}</value>
-  </data>
-  <data name="Txt_Api_SsUser_MaxThreads" xml:space="preserve">
-    <value>Max. Threads: {0}</value>
-  </data>
-  <data name="Txt_PleaseWait" xml:space="preserve">
-    <value>Bitte warten...</value>
-  </data>
-  <data name="Txt_Api_Err_NoResponse" xml:space="preserve">
-    <value>Fehler: Keine Antwort vom Server.</value>
-  </data>
-  <data name="Txt_Api_Err_CheckInternet" xml:space="preserve">
-    <value>Prüfe die Login-Daten und die Internetverbindung.</value>
-  </data>
-  <data name="Txt_Msg_LanguageChange" xml:space="preserve">
-    <value>Die Sprache wird nach einem Neustart vollständig übernommen. Möchten Sie die Anwendung jetzt neu starten?</value>
-  </data>
-  <data name="Txt_Msg_StartAppNoSsUser" xml:space="preserve">
-    <value>Um die Anwendung vollständig nutzen zu können, müssen unter Optionen der Benutzername und das Passwort für screenscraper.fr eingegeben werden.</value>
   </data>
   <data name="Txt_Splash_Initializing" xml:space="preserve">
     <value>Starte RetroScrap2000....</value>
   </data>
-  <data name="Txt_Splash_LoadingSettings" xml:space="preserve">
-    <value>Lade Einstellungen...</value>
+  <data name="Txt_Log_Scrap_SaveGamelist_success" xml:space="preserve">
+    <value>Gamelist.xml erfolgreich gespeichert.</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoName" xml:space="preserve">
+    <value>Kein Name angegeben.</value>
+  </data>
+  <data name="Txt_Api_SsUser_Name" xml:space="preserve">
+    <value>Name: {0}</value>
+  </data>
+  <data name="Txt_Status_Label_RomSave" xml:space="preserve">
+    <value>Rom wurde erfolgreich gespeichert.</value>
+  </data>
+  <data name="Txt_Log_Scrap_SaveGameList" xml:space="preserve">
+    <value>Speichere Gamelist.xml...</value>
+  </data>
+  <data name="Txt_Api_Err_NoResponse" xml:space="preserve">
+    <value>Fehler: Keine Antwort vom Server.</value>
+  </data>
+  <data name="Txt_Dlg_Select_Video" xml:space="preserve">
+    <value>Please select a Video-File for Rom.</value>
+  </data>
+  <data name="Txt_Status_Label_AnzRomsLoad" xml:space="preserve">
+    <value>{0} Roms wurden eingelesen.</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoDataFoundFor" xml:space="preserve">
+    <value>Keine Daten gefunden für</value>
   </data>
   <data name="Txt_Msg_Scrap_NoDataFound" xml:space="preserve">
     <value>Keine Daten zu dem Rom gefunden.</value>
   </data>
-  <data name="Txt_Dlg_Select_Image" xml:space="preserve">
-    <value>Please select a Image for Rom.</value>
+  <data name="Txt_Msg_Opt_Language_Change" xml:space="preserve">
+    <value>Die Sprache wird nach einem Neustart vollständig übernommen. Möchten Sie die Anwendung jetzt neu starten?</value>
   </data>
-  <data name="Txt_Dlg_Select_Video" xml:space="preserve">
-    <value>Please select a Video-File for Rom.</value>
+  <data name="Txt_Msg_Scrap_WrongRomFile" xml:space="preserve">
+    <value>Die ROM-Datei konnte nicht bestimmt werden.</value>
+  </data>
+  <data name="Txt_Api_Err_CheckInternet" xml:space="preserve">
+    <value>Prüfe die Login-Daten und die Internetverbindung.</value>
+  </data>
+  <data name="Txt_Status_Label_ReadSystem" xml:space="preserve">
+    <value>Die Roms von {0} werden geladen...</value>
+  </data>
+  <data name="Txt_Api_SsUser_Region" xml:space="preserve">
+    <value>Region: {0}</value>
+  </data>
+  <data name="Txt_Api_SsUser_MaxThreads" xml:space="preserve">
+    <value>Max. Threads: {0}</value>
+  </data>
+  <data name="Txt_Log_Scrap_Loading" xml:space="preserve">
+    <value>Lade</value>
+  </data>
+  <data name="Txt_Msg_Rom_WrongPath" xml:space="preserve">
+    <value>Bitte einen gültigen Pfad auswählen.</value>
+  </data>
+  <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
+    <value>Fehler beim Speichern von Gamelist.xml!</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
+    <value>Kein Spiel gefunden.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
+    <value>Es konnte kein passendes System zu dem ROM gefunden werden.</value>
+  </data>
+  <data name="Txt_Log_Scrap_CheckDataFrom" xml:space="preserve">
+    <value>Überprüfe die Daten von</value>
+  </data>
+  <data name="Txt_Api_SsUser_Visits" xml:space="preserve">
+    <value>Anz. Besuche: {0}</value>
+  </data>
+  <data name="Txt_Status_Label_Ready" xml:space="preserve">
+    <value>Bereit.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Fail" xml:space="preserve">
+    <value>Der Scrap-Vorgang ist fehlgeschlagen</value>
+  </data>
+  <data name="Txt_Log_Scrap_NoJson" xml:space="preserve">
+    <value>Die Antwort ist nicht im Json-Format.</value>
+  </data>
+  <data name="Txt_PleaseWait" xml:space="preserve">
+    <value>Bitte warten...</value>
+  </data>
+  <data name="Txt_Api_SsUser_Level" xml:space="preserve">
+    <value>Level: {0}</value>
+  </data>
+  <data name="Txt_Api_SsUser_DownloadKBS" xml:space="preserve">
+    <value>Max. Download: {0} KB/s</value>
+  </data>
+  <data name="Txt_Msg_StartAppNoSsUser" xml:space="preserve">
+    <value>Um die Anwendung vollständig nutzen zu können, müssen unter Optionen der Benutzername und das Passwort für screenscraper.fr eingegeben werden.</value>
+  </data>
+  <data name="Txt_Scrap_Auto_Title_FromSystem" xml:space="preserve">
+    <value>Scrape {0} Roms vom System</value>
+  </data>
+  <data name="Txt_Msg_Opt_RetroPie_Info" xml:space="preserve">
+    <value>Wichtige Info für RetroPie-Benutzer:\r\n\r\nDas Tool erstellt die gamelist.xml und die Mediendateien direkt in den jeweiligen ROM-Ordnern. Damit EmulationStation diese korrekt laden kann, ist nur eine kleine Anpassung erforderlich:\r\n\r\nÖffne in EmulationStation das Hauptmenü und gehen zu \"UI Settings\". Setze die Option \"Parse Gamelists Only\" auf AUS. Nach dieser Einstellung wird EmulationStation die von diesem Tool erstellten Daten wie gewohnt anzeigen.</value>
   </data>
 </root>
