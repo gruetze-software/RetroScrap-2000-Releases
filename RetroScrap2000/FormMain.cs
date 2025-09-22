@@ -90,7 +90,7 @@ namespace RetroScrap2000
 			}));
 		}
 
-		private async void FormMain_Load(object sender, EventArgs e)
+		private void FormMain_Load(object sender, EventArgs e)
 		{
 			SetTitleMainForm();
 			SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
