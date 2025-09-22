@@ -61,6 +61,14 @@ namespace RetroScrap2000
 				Splash.ShowSplashScreen();
 				// Warte, bis der Splashscreen vollständig initialisiert ist
 				await Splash.WaitForSplashScreenAsync();
+				
+				_systems = RetroSystems.Load();
+				if (_systems.SystemList.Count == 0)
+				{
+					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 500);
+					await _systems.SetSystemsFromApiAsync(_scrapper);
+					_systems.Save();
+				}
 				// Statusmeldungen mit Wartezeit
 				await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 1000);
 				if (_options != null && _options.Secret != null
@@ -82,7 +90,7 @@ namespace RetroScrap2000
 			}));
 		}
 
-		private void FormMain_Load(object sender, EventArgs e)
+		private async void FormMain_Load(object sender, EventArgs e)
 		{
 			SetTitleMainForm();
 			SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
@@ -95,10 +103,7 @@ namespace RetroScrap2000
 			//{
 			//	await ScrapperManager.DownloadSystemImagesAsync(l.data);
 			//}
-			_systems = RetroSystems.Load();
-			//await _systems.SetSystemsFromApiAsync(_scrapper);
-			//_systems.Save();
-
+			
 			var imgList = new ImageList { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			var baseDir = RetroSystems.FolderIcons;
 			if (Directory.Exists(baseDir))
