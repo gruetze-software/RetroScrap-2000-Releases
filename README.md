@@ -1,8 +1,15 @@
 <img width="64" height="64" alt="RetroScrap2000_64" src="https://github.com/user-attachments/assets/51fae2f6-7ae8-4050-ae2e-042110241424" />
 
-# RetroScrap 2000 by Grütze-Software 
+# RetroScrap 2000 
 --------------------------------
-RetroScrap 2000 is the definitive tool for retro gaming enthusiasts. Easily manage, organize, and update your entire ROM collection for various systems with powerful scraping features.
+
+![License](https://img.shields.io/github/license/gruetze-software/RetroScrap-2000-Releases)
+![.NET](https://img.shields.io/badge/.NET-8.0-blue)
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
+![Releases](https://img.shields.io/github/v/release/gruetze-software/RetroScrap-2000-Releases)
+
+🎮 **RetroScrap 2000** is a modern ROM scraper for Windows (.NET WinForms), powered by [ScreenScraper.fr](https://www.screenscraper.fr).  
+With just a few clicks you can automatically enrich your retro game library with **covers, descriptions, and metadata** – perfect for Batocera, Recalbox, or LaunchBox.  
 
 ### ✨ Features
 -   💾 Automatic metadata scraping for your ROM library
