@@ -192,8 +192,9 @@
 			// 
 			// detailsToolStripMenuItem
 			// 
-			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
 			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
+			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
+			detailsToolStripMenuItem.Click += SystemDetailsToolStripMenuItem_Click;
 			// 
 			// tableLayoutPanelRomsControls
 			// 
@@ -529,9 +530,9 @@
 			// starRatingControlRom
 			// 
 			starRatingControlRom.AllowHalfStars = true;
-			starRatingControlRom.EmptyColor = Color.LightGray;
-			starRatingControlRom.FilledColor = Color.Gold;
 			resources.ApplyResources(starRatingControlRom, "starRatingControlRom");
+			starRatingControlRom.EmptyColor = Color.LightGray;
+			starRatingControlRom.FilledColor = Color.Red;
 			starRatingControlRom.Name = "starRatingControlRom";
 			starRatingControlRom.OutlineColor = Color.Black;
 			starRatingControlRom.Rating = 0D;

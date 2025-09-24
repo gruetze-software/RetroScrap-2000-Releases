@@ -38,7 +38,7 @@
 			// 
 			buttonOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 			buttonOK.DialogResult = DialogResult.OK;
-			buttonOK.Location = new Point(286, 250);
+			buttonOK.Location = new Point(544, 250);
 			buttonOK.Name = "buttonOK";
 			buttonOK.Size = new Size(94, 29);
 			buttonOK.TabIndex = 0;
@@ -53,7 +53,7 @@
 			listViewDetails.GridLines = true;
 			listViewDetails.Location = new Point(12, 12);
 			listViewDetails.Name = "listViewDetails";
-			listViewDetails.Size = new Size(368, 230);
+			listViewDetails.Size = new Size(626, 230);
 			listViewDetails.TabIndex = 1;
 			listViewDetails.UseCompatibleStateImageBehavior = false;
 			listViewDetails.View = View.Details;
@@ -72,14 +72,14 @@
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(392, 291);
+			ClientSize = new Size(650, 291);
 			Controls.Add(listViewDetails);
 			Controls.Add(buttonOK);
 			MaximizeBox = false;
 			MinimizeBox = false;
 			Name = "FormRomDetails";
 			StartPosition = FormStartPosition.CenterParent;
-			Text = "FormRomDetails";
+			Text = "Details";
 			Load += FormRomDetails_Load;
 			Resize += FormRomDetails_Resize;
 			ResumeLayout(false);

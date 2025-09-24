@@ -61,7 +61,7 @@ namespace RetroScrap2000
 				Splash.ShowSplashScreen();
 				// Warte, bis der Splashscreen vollständig initialisiert ist
 				await Splash.WaitForSplashScreenAsync();
-				
+
 				_systems = RetroSystems.Load();
 				if (_systems.SystemList.Count == 0)
 				{
@@ -103,7 +103,7 @@ namespace RetroScrap2000
 			//{
 			//	await ScrapperManager.DownloadSystemImagesAsync(l.data);
 			//}
-			
+
 			var imgList = new ImageList { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			var baseDir = RetroSystems.FolderIcons;
 			if (Directory.Exists(baseDir))
@@ -126,7 +126,7 @@ namespace RetroScrap2000
 		{
 			var info = Utils.GetAppInfo();
 			this.Text = $"{info.product} by {info.company} - Version {info.version}";
-			if ( !string.IsNullOrEmpty(_options.RomPath))
+			if (!string.IsNullOrEmpty(_options.RomPath))
 				this.Text += "    Roms: \"" + _options.RomPath + "\"";
 		}
 
@@ -173,9 +173,9 @@ namespace RetroScrap2000
 		{
 			OpenOptionsFrm();
 		}
-		
+
 		private CancellationTokenSource? _sysSelCts;
-		
+
 		private async void listViewSystems_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			await SetRomListSync();
@@ -333,13 +333,25 @@ namespace RetroScrap2000
 			await SaveRomAsync();
 		}
 
+		private void SystemDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (GetSeletedGameList() != null)
+			{
+				FormSystemDetails frm = new FormSystemDetails(GetSeletedGameList().RetroSys);
+				if (frm.ShowDialog() == DialogResult.OK)
+				{
+					// TODO Save System
+				}
+			}
+		}
+
 		private async void SystemAllRomsScrapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_selectedRom == null)
 				return;
 
 			var baseDir = GetSelectedRomPath();
-			if ( string.IsNullOrEmpty(baseDir))
+			if (string.IsNullOrEmpty(baseDir))
 				return;
 
 			var gamelist = GetSeletedGameList();
@@ -390,7 +402,7 @@ namespace RetroScrap2000
 				return;
 
 			var file = Path.Combine(baseDir, romFileName);
-			if (MyMsgBox.ShowQuestion(string.Format( Properties.Resources.Txt_Msg_Qestion_DeleteRom, file)) 
+			if (MyMsgBox.ShowQuestion(string.Format(Properties.Resources.Txt_Msg_Qestion_DeleteRom, file))
 				!= DialogResult.Yes)
 				return;
 
@@ -464,7 +476,7 @@ namespace RetroScrap2000
 				ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
 				ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
 			}
-			if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null )
+			if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null)
 			{
 				var baseDir = GetSelectedRomPath();
 				if (string.IsNullOrEmpty(baseDir))
@@ -492,7 +504,7 @@ namespace RetroScrap2000
 				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
 			}
 		}
-		
+
 		private void MediaNeuToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var pictureBox = GetPictureBoxFromMenuItem(sender);
@@ -504,7 +516,7 @@ namespace RetroScrap2000
 		{
 
 		}
-		
+
 		private void OpenOptionsFrm(int tabpageindex = 0)
 		{
 			FormOptions frm = new FormOptions(_options, _scrapper, tabpageindex);
@@ -899,7 +911,7 @@ namespace RetroScrap2000
 
 		private string? GetSelectedRomPath()
 		{
-			if ( _selectedRom == null || string.IsNullOrEmpty(_gameManager.RomPath))
+			if (_selectedRom == null || string.IsNullOrEmpty(_gameManager.RomPath))
 				return null;
 
 			var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
@@ -907,6 +919,7 @@ namespace RetroScrap2000
 
 			return baseDir;
 		}
+
 		
 	}
 }
