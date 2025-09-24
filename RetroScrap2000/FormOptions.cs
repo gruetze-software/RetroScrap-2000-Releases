@@ -25,9 +25,10 @@ namespace RetroScrap2000
 
 		private readonly ScrapperManager? _manager;
 		public RetroScrapOptions Options { get; set; }
-		public FormOptions(RetroScrapOptions opt, ScrapperManager man)
+		public FormOptions(RetroScrapOptions opt, ScrapperManager man, int tabpageindex)
 		{
 			InitializeComponent();
+			tabControlOptions.SelectedIndex = tabpageindex;
 
 			_manager = man;
 			Options = opt;

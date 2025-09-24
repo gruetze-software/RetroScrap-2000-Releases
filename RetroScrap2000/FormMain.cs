@@ -65,7 +65,7 @@ namespace RetroScrap2000
 				_systems = RetroSystems.Load();
 				if (_systems.SystemList.Count == 0)
 				{
-					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 500);
+					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 100);
 					await _systems.SetSystemsFromApiAsync(_scrapper);
 					_systems.Save();
 				}
@@ -85,7 +85,7 @@ namespace RetroScrap2000
 				{
 					Splash.CloseSplashScreen();
 					MyMsgBox.Show(Properties.Resources.Txt_Msg_StartAppNoSsUser);
-					OpenOptionsFrm();
+					OpenOptionsFrm(1);
 				}
 			}));
 		}
@@ -126,7 +126,8 @@ namespace RetroScrap2000
 		{
 			var info = Utils.GetAppInfo();
 			this.Text = $"{info.product} by {info.company} - Version {info.version}";
-			this.Text += "    Roms: \"" + _options.RomPath + "\"";
+			if ( !string.IsNullOrEmpty(_options.RomPath))
+				this.Text += "    Roms: \"" + _options.RomPath + "\"";
 		}
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -504,9 +505,9 @@ namespace RetroScrap2000
 
 		}
 		
-		private void OpenOptionsFrm()
+		private void OpenOptionsFrm(int tabpageindex = 0)
 		{
-			FormOptions frm = new FormOptions(_options, _scrapper);
+			FormOptions frm = new FormOptions(_options, _scrapper, tabpageindex);
 			if (frm.ShowDialog() == DialogResult.OK)
 			{
 				_options.Save();

@@ -13,7 +13,6 @@ namespace RetroScrap2000
 	{
 		public string? RomPath { get; set; }
 		public string? Language { get; set; }
-		public List<RetroSystem> RetroSysteme { get; set; } = new List<RetroSystem>();
 		public string? ApiUser { get; set; }
 		[JsonIgnore]
 		public PasswordVault? Secret { get; set; }

@@ -179,6 +179,7 @@
 			// 
 			// contextMenuStripSystems
 			// 
+			contextMenuStripSystems.ImageScalingSize = new Size(20, 20);
 			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { alleRomsScrapenToolStripMenuItem, detailsToolStripMenuItem });
 			contextMenuStripSystems.Name = "contextMenuStripSystems";
 			resources.ApplyResources(contextMenuStripSystems, "contextMenuStripSystems");
@@ -267,6 +268,7 @@
 			// 
 			// contextMenuStripRoms
 			// 
+			contextMenuStripRoms.ImageScalingSize = new Size(20, 20);
 			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { scrapToolStripMenuItem, detailsToolStripMenuItem1, löschenToolStripMenuItem });
 			contextMenuStripRoms.Name = "contextMenuStripRoms";
 			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
@@ -378,6 +380,7 @@
 			// 
 			// contextMenuStripMedia
 			// 
+			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
 			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { showToolStripMenuItem, addToolStripMenuItem, deleteToolStripMenuItem });
 			contextMenuStripMedia.Name = "contextMenuStripMedia";
 			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");

@@ -14,7 +14,8 @@ namespace RetroScrap2000
       // Wenn diese leer ist (erster Start), wird der Standardwert "en-US" verwendet.
       var options = RetroScrapOptions.Load();
       string? language = options.Language;
-      if (string.IsNullOrEmpty(language))
+      
+			if (string.IsNullOrEmpty(language))
       {
         language = CultureInfo.CurrentCulture.ToString();
         options.Language = language;
