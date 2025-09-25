@@ -21,7 +21,8 @@ With just a few clicks you can automatically enrich your retro game library with
 
 <img width="986" height="593" alt="image" src="https://github.com/user-attachments/assets/2269a947-74e4-40bc-a41d-7e4ad2da2848" />
 
-Youtube-Video Tutorial first run:
+### Youtube-Video - Tutorial:
+
 [![RetroScrap 2000 - First run](https://img.youtube.com/vi/uuLpVGSMswA/hqdefault.jpg)](https://www.youtube.com/watch?v=uuLpVGSMswA)
 
 ### ☕ Support
