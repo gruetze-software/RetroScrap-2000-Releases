@@ -59,13 +59,13 @@ stages:
       displayName: 'Push Tag/Source to GitHub'
       env:
         # Verwende hier den PAT, den du in Azure DevOps gespeichert hast
-        GitHubPAT: $(MyGitHubServiceConnection) # ACHTUNG: Das PAT muss hier als Variable oder Secret hinterlegt sein!
+        GitHubPAT: $(GitHubConnectionForRetroScrap2000) # ACHTUNG: Das PAT muss hier als Variable oder Secret hinterlegt sein!
 
     # 5. GitHub Release erstellen (mit Zip-Datei als Asset)
     - task: GitHubRelease@1
       displayName: 'Create GitHub Release'
       inputs:
-        gitHubConnection: 'MyGitHubServiceConnection' # Name deiner Service Connection
+        gitHubConnection: 'GitHubConnectionForRetroScrap2000' # Name deiner Service Connection
         repositoryName: 'gruetze-software/RetroScrap-2000-Releases' 
         action: 'create'
         target: '$(Build.SourceVersion)' # Der Commit-Hash, auf dem das Tag sitzt
