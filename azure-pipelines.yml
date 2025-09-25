@@ -54,7 +54,7 @@ stages:
     # Da die Pipeline durch das Tag ausgelöst wird, existiert der Tag bereits lokal 
     # im Pipeline-Agenten. Wir pushen diesen Tag nun zu GitHub.
     - bash: |
-        git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases.git
+        git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
         git push github-release refs/tags/$(Build.SourceBranchName)
       displayName: 'Push Tag/Source to GitHub'
       env:
