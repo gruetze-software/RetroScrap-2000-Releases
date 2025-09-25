@@ -23,6 +23,10 @@ stages:
   jobs:
   - job: Release
     steps:
+    # 🌟 NEU: Dieser Schritt muss die gesamte Historie abrufen (fetchDepth: 0) 🌟
+    - checkout: self
+      fetchDepth: 0 
+      
     # 1. .NET Projekt bauen
     - task: DotNetCoreCLI@2
       displayName: 'Build Project'
@@ -49,22 +53,16 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(zipFileName)'
         replaceExistingArchive: true
-
-    # 4. Quelle (Source Code) nach GitHub pushen 
-    # Da die Pipeline durch das Tag ausgelöst wird, existiert der Tag bereits lokal 
-    # im Pipeline-Agenten. Wir pushen diesen Tag nun zu GitHub.
+    ## 4. Quelle (Source Code) nach GitHub pushen (nur der Tag)
     - bash: |
-        # Schritt 1: Füge Remote hinzu
         git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
-        # Schritt 2: PUSH ALLER REFERENZEN (MIRROR-Push)
-        # Dies stellt sicher, dass alle Commits, die zum Tag gehören, übertragen werden.
-        git push github-release --mirror
-        # git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
-        # git push github-release refs/tags/$(Build.SourceBranchName) --force
+        
+        # Der korrekte Push-Befehl für zukünftige Tags
+        git push github-release refs/tags/$(Build.SourceBranchName)
+    
       displayName: 'Push Tag/Source to GitHub'
       env:
-        # Verwende hier den PAT, den du in Azure DevOps gespeichert hast
-        GitHubPAT: $(GitHubCon) # ACHTUNG: Das PAT muss hier als Variable oder Secret hinterlegt sein!
+        GitHubPAT: $(GitHubCon)
 
     # 5. GitHub Release erstellen (mit Zip-Datei als Asset)
     - task: GitHubRelease@1
