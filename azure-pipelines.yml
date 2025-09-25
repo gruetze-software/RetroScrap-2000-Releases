@@ -50,12 +50,17 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(zipFileName)'
         replaceExistingArchive: true
 
-    # 4. Quelle (Source Code) nach GitHub pushen (optional, aber gut für Transparenz)
+    # 4. Quelle (Source Code) nach GitHub pushen 
     # Da die Pipeline durch das Tag ausgelöst wird, existiert der Tag bereits lokal 
     # im Pipeline-Agenten. Wir pushen diesen Tag nun zu GitHub.
     - bash: |
+        # Schritt 1: Füge Remote hinzu
         git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
-        git push github-release refs/tags/$(Build.SourceBranchName) --force
+        # Schritt 2: PUSH ALLER REFERENZEN (MIRROR-Push)
+        # Dies stellt sicher, dass alle Commits, die zum Tag gehören, übertragen werden.
+        git push github-release --mirror
+        # git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
+        # git push github-release refs/tags/$(Build.SourceBranchName) --force
       displayName: 'Push Tag/Source to GitHub'
       env:
         # Verwende hier den PAT, den du in Azure DevOps gespeichert hast
