@@ -75,6 +75,8 @@ stages:
         tagSource: 'userSpecifiedTag'
         tag: '$(Build.SourceBranchName)' # Das Tag (z.B. v1.0)
         title: 'Release $(Build.SourceBranchName)'
+        releaseNotesSource: 'inline'
+        releaseNotesInline: 'Release Notes for Tag $(Build.SourceBranchName): $(Build.SourceVersionMessage)'
         assets: '$(Build.ArtifactStagingDirectory)/$(zipFileName)'
         isDraft: false
         isPrerelease: false
