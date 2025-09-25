@@ -57,6 +57,9 @@ stages:
     - bash: |
         git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
         
+        # einmal pushen
+        git push github-release $(Build.SourceBranchName)
+
         # Der korrekte Push-Befehl für zukünftige Tags
         git push github-release refs/tags/$(Build.SourceBranchName)
     
