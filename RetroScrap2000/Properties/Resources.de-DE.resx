@@ -276,4 +276,7 @@
   <data name="Txt_Column_ScrapAuto_Type" xml:space="preserve">
     <value>Typ</value>
   </data>
+  <data name="Txt_Msg_UpdateV1toV2" xml:space="preserve">
+    <value>Es steht eine neuere Version  zur Verfügung. Aktualisiere deine alte Version {0} mit der neuen Version {1}. Verwende den Link für den Download. </value>
+  </data>
 </root>

@@ -68,10 +68,10 @@ namespace RetroScrap2000
 			pictureBoxScrap.Image = Properties.Resources.screenscraper_banner;
 
 			var info = Utils.GetAppInfo();
-			labelInfoProduct.Text = info.product + " - Freeware";
-			labelInfoVersion.Text = info.version;
-			labelInfoCompany.Text = info.company;
-			labelInfoCopyright.Text = info.copyright;
+			labelInfoProduct.Text = info.ProductName + " - Freeware";
+			labelInfoVersion.Text = info.ProductVersion;
+			labelInfoCompany.Text = info.Company;
+			labelInfoCopyright.Text = info.Copyright;
 
 			linkLabel1.Text = "API from https://www.screenscraper.fr/";
 			linkLabel1.LinkArea = new LinkArea(9, linkLabel1.Text.Length - 9);

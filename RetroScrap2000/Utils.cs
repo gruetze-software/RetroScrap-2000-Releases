@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 
 namespace RetroScrap2000
 {
+	public struct AppInfo
+	{
+		public string ProductName, ProductVersion, Company, Copyright;
+	}
+
 	public static class Utils
 	{
 		public static string GetExcMsg(Exception ex)
@@ -24,28 +29,26 @@ namespace RetroScrap2000
 			return msg;
 		}
 
-		public static (string product, string company, string version, string copyright) GetAppInfo()
+		public static AppInfo GetAppInfo()
 		{
+			AppInfo retVal = new AppInfo();
+
 			// Abrufen des Assembly-Objekts
 			Assembly assembly = Assembly.GetExecutingAssembly();
 
 			// Abrufen der Company-Information
-			string company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? "Grütze-Soft";
+			retVal.Company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? "Grütze-Soft";
 
 			// Abrufen der Product-Information
-			string product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "RetroScrap 2000";
+			retVal.ProductName = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "RetroScrap 2000";
 
 			// Abrufen der Copyright-Information
-			string copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? "Copyright © 2025 Grütze-Soft";
+			retVal.Copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? "Copyright © 2025 Grütze-Soft";
 
 			// Abrufen der Informationsversion (InformationalVersion)
-			string version = assembly.GetName().Version?.ToString() ?? "1.0.0";
+			retVal.ProductVersion = assembly.GetName().Version?.ToString() ?? "1.0.0";
 
-			// Beispiel-Nutzung
-			string appInfo = $"{product} by {company}\nVersion: {assembly.GetName().Version}\nCopyright: {copyright}";
-			Trace.WriteLine(appInfo);
-
-			return (product, company, version, copyright);
+			return retVal;
 		}
 
 		public static string DecodeTextFromApi(string? raw)
@@ -69,5 +72,7 @@ namespace RetroScrap2000
 			// Vermeide Ganzzahldivision durch die Multiplikation mit 100.0 (einem double)
 			return (int)((current / (double)total) * 100);
 		}
+
+
 	}
 }

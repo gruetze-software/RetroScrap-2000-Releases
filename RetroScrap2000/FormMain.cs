@@ -21,6 +21,8 @@ namespace RetroScrap2000
 		GameEntry? _selectedRom = null;
 
 		private System.Timers.Timer _loadTimer = new();
+		private int _loadTimerTicks = 0;
+
 		private int _romSortCol = -1;
 		private SortOrder _romSortOrder = SortOrder.None;
 
@@ -38,6 +40,7 @@ namespace RetroScrap2000
 			_loadTimer.Interval = 500;
 			_loadTimer.Elapsed += LoadTimer_Elapsed;
 			_loadTimer.Enabled = false;
+			
 
 			// DoubleBuffering für flüssiges Zeichnen
 			typeof(ListView).GetProperty("DoubleBuffered",
@@ -52,42 +55,66 @@ namespace RetroScrap2000
 		#region Form-Events
 		private void LoadTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
 		{
-			_loadTimer.Enabled = false;
-			_loadTimer.Stop();
+			_loadTimerTicks++;
 
-			// Den gesamten UI-Code-Block auf dem Haupt-UI-Thread ausführen
-			this.Invoke(new Action(async () =>
+			if (_loadTimerTicks == 20)
 			{
-				Splash.ShowSplashScreen();
-				// Warte, bis der Splashscreen vollständig initialisiert ist
-				await Splash.WaitForSplashScreenAsync();
+				_loadTimer.Enabled = false;
+				_loadTimer.Stop();
+				CheckForUpdate();
+			}
+			else if (_loadTimerTicks == 1 )
+			{
+				// Den gesamten UI-Code-Block auf dem Haupt-UI-Thread ausführen
+				this.Invoke(new Action(async () =>
+				{
+					Splash.ShowSplashScreen();
+					// Warte, bis der Splashscreen vollständig initialisiert ist
+					await Splash.WaitForSplashScreenAsync();
 
-				_systems = RetroSystems.Load();
-				if (_systems.SystemList.Count == 0)
-				{
-					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 100);
-					await _systems.SetSystemsFromApiAsync(_scrapper);
-					_systems.Save();
-				}
-				// Statusmeldungen mit Wartezeit
-				await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 1000);
-				if (_options != null && _options.Secret != null
-				 && _options!.Secret!.TryLoad(out string? pwd)
-				 && !string.IsNullOrEmpty(pwd)
-				 && !string.IsNullOrEmpty(_options.ApiUser))
-				{
-					_scrapper.RefreshSecrets(_options!.ApiUser!, pwd!);
-					if (!string.IsNullOrEmpty(_options.RomPath)
-					&& Directory.Exists(_options.RomPath))
-						await LoadRomsAsync();
-				}
-				else
-				{
-					Splash.CloseSplashScreen();
-					MyMsgBox.Show(Properties.Resources.Txt_Msg_StartAppNoSsUser);
-					OpenOptionsFrm(1);
-				}
-			}));
+					_systems = RetroSystems.Load();
+					if (_systems.SystemList.Count == 0)
+					{
+						await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 100);
+						await _systems.SetSystemsFromApiAsync(_scrapper);
+						_systems.Save();
+					}
+					// Statusmeldungen mit Wartezeit
+					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 500);
+					if (_options != null && _options.Secret != null
+					 && _options!.Secret!.TryLoad(out string? pwd)
+					 && !string.IsNullOrEmpty(pwd)
+					 && !string.IsNullOrEmpty(_options.ApiUser))
+					{
+						_scrapper.RefreshSecrets(_options!.ApiUser!, pwd!);
+						if (!string.IsNullOrEmpty(_options.RomPath)
+						&& Directory.Exists(_options.RomPath))
+							await LoadRomsAsync();
+					}
+					else
+					{
+						Splash.CloseSplashScreen();
+						MyMsgBox.Show(Properties.Resources.Txt_Msg_StartAppNoSsUser);
+						OpenOptionsFrm(1);
+					}
+				}));
+			}
+		}
+
+		private async void CheckForUpdate()
+		{
+			UpdateChecker check = new UpdateChecker();
+			var checkUpd = await check.CheckForNewVersion();
+			checkUpd.update = true;
+			checkUpd.newversion = "1.0.0";
+			if (checkUpd.update)
+			{
+				FormUpdate frm = new FormUpdate(
+					checkUpd.newversion!, 
+					Utils.GetAppInfo().ProductVersion, 
+					check.DownloadUrl);
+				frm.ShowDialog();
+			}
 		}
 
 		private void FormMain_Load(object sender, EventArgs e)
@@ -125,7 +152,7 @@ namespace RetroScrap2000
 		private void SetTitleMainForm()
 		{
 			var info = Utils.GetAppInfo();
-			this.Text = $"{info.product} by {info.company} - Version {info.version}";
+			this.Text = $"{info.ProductName} by {info.Company} - Version {info.ProductVersion}";
 			if (!string.IsNullOrEmpty(_options.RomPath))
 				this.Text += "    Roms: \"" + _options.RomPath + "\"";
 		}
@@ -335,9 +362,10 @@ namespace RetroScrap2000
 
 		private void SystemDetailsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (GetSeletedGameList() != null)
+			var gamelist = GetSeletedGameList();
+			if (gamelist != null)
 			{
-				FormSystemDetails frm = new FormSystemDetails(GetSeletedGameList().RetroSys);
+				FormSystemDetails frm = new FormSystemDetails(gamelist.RetroSys);
 				if (frm.ShowDialog() == DialogResult.OK)
 				{
 					// TODO Save System

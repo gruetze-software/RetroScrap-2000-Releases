@@ -562,6 +562,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A newer version is available. Update your old version {0} to the new version {1}. Use the link for the download..
+        /// </summary>
+        internal static string Txt_Msg_UpdateV1toV2 {
+            get {
+                return ResourceManager.GetString("Txt_Msg_UpdateV1toV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please wait....
         /// </summary>
         internal static string Txt_PleaseWait {
