@@ -21,10 +21,8 @@ With just a few clicks you can automatically enrich your retro game library with
 
 <img width="986" height="593" alt="image" src="https://github.com/user-attachments/assets/2269a947-74e4-40bc-a41d-7e4ad2da2848" />
 
-<img width="563" height="341" alt="image" src="https://github.com/user-attachments/assets/479b32a3-1db8-4372-b8ba-62144c289ddd" />
-
-<img width="788" height="409" alt="image" src="https://github.com/user-attachments/assets/0b65d980-bd9f-43da-9f9a-d0881918808f" />
-
+Youtube-Video Tutorial first run:
+[![RetroScrap 2000 - First run](https://img.youtube.com/vi/uuLpVGSMswA/hqdefault.jpg)](https://www.youtube.com/watch?v=uuLpVGSMswA)
 
 ### ☕ Support
 This software is a passion project by a private developer. If you find it useful, your support is greatly appreciated!
