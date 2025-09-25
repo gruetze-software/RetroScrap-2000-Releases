@@ -55,7 +55,7 @@ stages:
     # im Pipeline-Agenten. Wir pushen diesen Tag nun zu GitHub.
     - bash: |
         git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
-        git push github-release refs/tags/$(Build.SourceBranchName)
+        git push github-release refs/tags/$(Build.SourceBranchName) --force
       displayName: 'Push Tag/Source to GitHub'
       env:
         # Verwende hier den PAT, den du in Azure DevOps gespeichert hast
