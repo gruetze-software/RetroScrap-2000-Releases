@@ -1,0 +1,77 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+  tags:
+    include:
+    - v*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  zipFileName: 'RetroScrap2000-$(Build.SourceBranchName).zip'
+
+stages:
+- stage: BuildAndRelease
+  displayName: 'Build, Zip und GitHub Release'
+  jobs:
+  - job: Release
+    steps:
+    # 1. .NET Projekt bauen
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Project'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+    # 2. Dateien zum Packen sammeln
+    - task: CopyFiles@2
+      displayName: 'Copy Files for Zipping'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: |
+          **\bin\$(buildConfiguration)\**\*
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/App'
+        
+    # 3. Zip-Archiv der kompilierten Anwendung erstellen
+    - task: ArchiveFiles@2
+      displayName: 'Create Zip Archive'
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/App'
+        includeRootFolder: false 
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(zipFileName)'
+        replaceExistingArchive: true
+
+    # 4. Quelle (Source Code) nach GitHub pushen (optional, aber gut für Transparenz)
+    # Da die Pipeline durch das Tag ausgelöst wird, existiert der Tag bereits lokal 
+    # im Pipeline-Agenten. Wir pushen diesen Tag nun zu GitHub.
+    - bash: |
+        git remote add github https://oauth2:$(GitHubPAT)@github.com/gruetze-software/RetroScrap-2000-Releases.git
+        git push github $(Build.SourceBranchName)
+      displayName: 'Push Tag/Source to GitHub'
+      env:
+        # Verwende hier den PAT, den du in Azure DevOps gespeichert hast
+        GitHubPAT: $(MyGitHubServiceConnection) # ACHTUNG: Das PAT muss hier als Variable oder Secret hinterlegt sein!
+
+    # 5. GitHub Release erstellen (mit Zip-Datei als Asset)
+    - task: GitHubRelease@1
+      displayName: 'Create GitHub Release'
+      inputs:
+        gitHubConnection: 'MyGitHubServiceConnection' # Name deiner Service Connection
+        repositoryName: 'gruetze-software/RetroScrap-2000-Releases' 
+        action: 'create'
+        target: '$(Build.SourceVersion)' # Der Commit-Hash, auf dem das Tag sitzt
+        tagSource: 'userSpecifiedTag'
+        tag: '$(Build.SourceBranchName)' # Das Tag (z.B. v1.0)
+        title: 'Release $(Build.SourceBranchName)'
+        assets: '$(Build.ArtifactStagingDirectory)/$(zipFileName)'
+        isDraft: false
+        isPrerelease: false
