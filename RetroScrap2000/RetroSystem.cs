@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -15,14 +16,16 @@ namespace RetroScrap2000
 	{
 		public int Id { get; set; } = -1;
 		public string Name { get; set; } = "Unknown System";
-		public string? RomFolderName { get; set; }
+		public string RomFolderName { get; set; } = "romsystem";
 		public string? Hersteller { get; set; }
 		public string? Typ { get; set; }
 		public string? Description { get; set; }
 		public int Debut { get; set; } = 0;
 		public int Ende { get; set; } = 0;
-		public string? FileIcon { get; set; }
-		public string? FileBanner { get; set; }
+		[JsonIgnore]
+		public string? FileIcon { get { return Path.Combine(RetroSystems.FolderIcons, RomFolderName.ToLower() + ".png"); } }
+		[JsonIgnore]
+		public string? FileBanner { get { return Path.Combine(RetroSystems.FolderBanner, RomFolderName.ToLower() + ".png"); } }
 
 		public RetroSystem() { }
 
@@ -72,18 +75,7 @@ namespace RetroScrap2000
 						Typ = s.type,
 						RomFolderName = BatoceraFolders.MapToBatoceraFolder(s.noms)
 					};
-
-					if (!string.IsNullOrEmpty(retroSystem.RomFolderName))
-					{
-						FileInfo ico = new FileInfo(Path.Combine(FolderIcons, retroSystem.RomFolderName + ".png"));
-						FileInfo banner = new FileInfo(Path.Combine(FolderBanner, retroSystem.RomFolderName + ".png"));
-
-						if (ico.Exists)
-							retroSystem.FileIcon = ico.FullName;
-						if (banner.Exists)
-							retroSystem.FileBanner = banner.FullName;
-					}
-
+					
 					SystemList.Add(retroSystem);
 				}
 			}
@@ -116,15 +108,22 @@ namespace RetroScrap2000
 		/// </summary>
 		public static RetroSystems Load()
 		{
-			if (!File.Exists(GetRetroSystemsFile()))
+			var systemjsonfile = GetRetroSystemsFile();
+			if (!File.Exists(systemjsonfile))
+			{
 				return new RetroSystems();
-
+			}
+				
 			var json = File.ReadAllText(GetRetroSystemsFile());
-			var retVal = JsonSerializer.Deserialize<RetroSystems>(json) ?? new RetroSystems();
+			var retVal = JsonSerializer.Deserialize<RetroSystems>(json);
+			if (retVal == null)
+			{
+				return new RetroSystems();
+			}
 
 			// TODO Einmalig zum Füllen der Beschreibung: 
 			//fillDescription(retVal);
-					
+
 			return retVal;
 		}
 
