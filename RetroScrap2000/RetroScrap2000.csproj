@@ -10,12 +10,23 @@
 	<Company>Grütze-Software</Company>
     <Product>RetroScrap 2000</Product>
     <Copyright>Copyright © 2025 Grütze-Software</Copyright>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <InformationalVersion>1.0.2-20250925</InformationalVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
+    <InformationalVersion>1.0.3-20250926</InformationalVersion>
+	<PublishSingleFile>true</PublishSingleFile> 
+    <PublishReadyToRun>false</PublishReadyToRun> 
+	<SelfContained>false</SelfContained>
+    <Description>RetroScrap 2000 is a modern ROM scraper for Windows (.NET WinForms), powered by ScreenScraper.fr. With just a few clicks you can automatically enrich your retro game library with covers, descriptions, and metadata – perfect for Batocera, Recalbox, or LaunchBox.</Description> 
+    <PackageProjectUrl>https://github.com/gruetze-software/RetroScrap-2000-Releases</PackageProjectUrl> 
+    <PackageIcon>RetroScrap2000_128.png</PackageIcon> 
+    <RepositoryType>git</RepositoryType> 
+    <Title>RetroScrap 2000</Title> 
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  
   <ItemGroup>
     <None Remove="Properties\Resources\defaultscrapper.png" />
     <None Remove="Tools\ffmpeg\win-x64\ffmpeg.exe" />
@@ -54,6 +65,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\RetroScrap2000_128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Resources\systemsicons32\3do.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
