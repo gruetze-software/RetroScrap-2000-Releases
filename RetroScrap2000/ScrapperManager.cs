@@ -10,6 +10,7 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -186,6 +187,7 @@ namespace RetroScrap2000
 			}
 		}
 
+		private static int _countScrapGame = 0;
 		/// <summary>
 		/// Scrapt ein Spiel
 		/// </summary>
@@ -205,8 +207,23 @@ namespace RetroScrap2000
 			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
 
 			if (!resp.IsSuccessStatusCode)
-				return (false, null, $"HTTP {(int)resp.StatusCode}: {body}");
-
+			{
+				if (((int)resp.StatusCode) == 404 && body == "Erreur : Rom/Iso/Dossier non trouvée !  ")
+				{
+					_countScrapGame++;
+					if (_countScrapGame >= 2)
+					{
+						_countScrapGame = 0;
+						return (false, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+					}
+					else
+					{
+						Trace.WriteLine("Unter dem Namen \"" + romFileName + "\" wurde kein Spiel gefunden. Versuche anderen Namen...");
+						string romname = CleanPrefix(romFileName);
+						return await GetGameAsync(romname, systemId, languageShortCode, ct);
+					}
+				}
+			}
 			// JSON?
 			var head = body.TrimStart();
 			if (!(head.StartsWith("{") || head.StartsWith("[")))
@@ -313,6 +330,26 @@ namespace RetroScrap2000
 			}
 
 			return (true, sg, null);
+		}
+
+		public string CleanPrefix(string gameTitle)
+		{
+			// *** 1. Entferne führende Ziffern, Leerzeichen, Punkte und Bindestriche ***
+			// Muster: ^[\d\s\.\-–]+
+			// Erkl.: Startet am Stringanfang (^) und matcht eine oder mehrere (+) Ziffern (\d), 
+			//        Leerzeichen (\s), Punkte (\.), Bindestriche (\-) und Gedankenstriche (–).
+			string step1_NoPrefix = Regex.Replace(gameTitle, @"^[\d\s\.\-–]+", "");
+
+			// *** 2. Entferne alle Inhalte in runden, eckigen oder geschweiften Klammern ***
+			// Muster: [\(\[\{].*?[\)\]\}]
+			// Erkl.: Matcht alles, was zwischen Klammernpaaren liegt.
+			string step2_NoBrackets = Regex.Replace(step1_NoPrefix, @"[\(\[\{].*?[\)\]\}]", "");
+
+			// *** 3. Bereinige unnötige Leerzeichen ***
+			// Entferne doppelte Leerzeichen und trimme den String am Ende.
+			string step3_Final = Regex.Replace(step2_NoBrackets, @"\s+", " ").Trim();
+
+			return step3_Final;
 		}
 
 		public async Task ScrapGamesAsync(GameList gameList, int systemid, string baseDir,

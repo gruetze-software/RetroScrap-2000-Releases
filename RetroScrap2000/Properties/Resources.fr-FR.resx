@@ -208,7 +208,7 @@
     <value>Erreur lors de l’enregistrement de Gamelist.xml !</value>
   </data>
   <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>Aucun jeu trouvé.</value>
+    <value>Cela peut être dû au fait que le nom ne correspond pas à l'orthographe anglaise dans la base de données. Modifiez le nom manuellement, enregistrez et réessayez.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
     <value>Aucun système approprié n’a pu être trouvé pour la ROM.</value>

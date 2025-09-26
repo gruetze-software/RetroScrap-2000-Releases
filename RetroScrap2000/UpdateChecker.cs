@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace RetroScrap2000
@@ -12,21 +15,28 @@ namespace RetroScrap2000
 	{
 		private static string _githuburl = "https://api.github.com/repos/gruetze-software";
 		private static string _githubrepo = "RetroScrap-2000-Releases";
-		public UpdateChecker() { }
+		public UpdateChecker() 
+		{
+			
+		}
 
-		public string DownloadUrl { get { return $"https://github.com/gruetze-software/{_githubrepo}"; } }
+		public string? DownloadUrl { get; private set; }
 
 		public async Task<(bool update, string? newversion)> CheckForNewVersion()
 		{
 			var resp = await GetLatestGitHubVersion();
+
 			if (resp == null)
 				return (false, null);
 
-			var gitVersion = ParseTagName(resp);
-			if (string.IsNullOrEmpty(gitVersion))
+			var gitInfo = ParseTagName(resp);
+			if (string.IsNullOrEmpty(gitInfo.version))
 				return (false, null);
+			
+			DownloadUrl = gitInfo.zipurl;
 
 			// 1. Unnötige Präfixe und Suffixe entfernen
+			string gitVersion = gitInfo.version!;
 			string cleanedVersion = gitVersion.TrimStart("Release_".ToCharArray());
 			cleanedVersion = cleanedVersion.TrimEnd("_beta".ToCharArray());
 
@@ -81,20 +91,45 @@ namespace RetroScrap2000
 			}
 		}
 
-		private string? ParseTagName(string jsonResponse)
+		private (string? version, string? zipurl) ParseTagName(string jsonResponse)
 		{
 			if (string.IsNullOrEmpty(jsonResponse))
-				return null;
+				return (null, null);
+
+			string? version = null;
+			string? zipurl = null;
 
 			using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
 			{
+				
 				JsonElement root = doc.RootElement;
+				// Tag-Name enthält die Versionsnummer
 				if (root.TryGetProperty("tag_name", out JsonElement tagNameElement))
 				{
-					return tagNameElement.GetString();
+					version = tagNameElement.GetString();
+				}
+				// Unter assets finden wir den Download-Link
+				if (root.TryGetProperty("assets", out JsonElement assets) && assets.ValueKind == JsonValueKind.Array)
+				{
+					foreach (JsonElement asset in assets.EnumerateArray())
+					{
+						// 1. Prüfen, ob das Element 'name' existiert und unseren Dateinamen enthält
+						if (asset.TryGetProperty("name", out JsonElement nameElement) &&
+								nameElement.GetString() != null && nameElement.GetString().EndsWith("zip") )
+						{
+							// 2. Das korrekte Asset wurde gefunden: Jetzt die Download-URL extrahieren
+							if (asset.TryGetProperty("browser_download_url", out JsonElement urlElement) &&
+									urlElement.ValueKind == JsonValueKind.String)
+							{
+								zipurl = urlElement.GetString();
+								// Wenn die URL gefunden wurde, beenden wir die Schleife
+								break;
+							}
+						}
+					}
 				}
 			}
-			return null;
+			return (version, zipurl);
 		}
 	}
 }

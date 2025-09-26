@@ -39,7 +39,6 @@ public class GameManager
 		RomPath = rompath;
 		if (!rompath.ToLower().EndsWith("roms"))
 		{
-			RomPath = Directory.GetParent(rompath).FullName;
 			LoadSystem(Path.Combine(RomPath, "gamelist.xml"), systems,
 				systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == Path.GetFileName(RomPath).ToLower())!);
 		}

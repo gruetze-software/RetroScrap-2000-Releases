@@ -123,7 +123,7 @@ namespace RetroScrap2000
 			var retVal = JsonSerializer.Deserialize<RetroSystems>(json) ?? new RetroSystems();
 
 			// TODO Einmalig zum Füllen der Beschreibung: 
-			fillDescription(retVal);
+			//fillDescription(retVal);
 					
 			return retVal;
 		}
@@ -225,8 +225,6 @@ namespace RetroScrap2000
 		}
 
 		private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
-
-		
 
 		public bool SaveRomToGamelistXml(string romPath, GameEntry rom)
 		{

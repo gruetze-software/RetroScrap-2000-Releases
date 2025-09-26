@@ -208,7 +208,7 @@
     <value>Fehler beim Speichern von Gamelist.xml!</value>
   </data>
   <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>Kein Spiel gefunden.</value>
+    <value>Die Ursache könnte sein, dass der Name nicht der englischen Schreibweise in der Datenbank entspricht. Passe den Namen manuell an, speichere und versuche es erneut.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
     <value>Es konnte kein passendes System zu dem ROM gefunden werden.</value>

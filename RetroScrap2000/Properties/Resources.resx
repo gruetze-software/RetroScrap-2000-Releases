@@ -236,7 +236,7 @@
     <value>Error saving Gamelist.xml!</value>
   </data>
   <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>No game found.</value>
+    <value>This could be because the name doesn't match the English spelling in the database. Adjust the name manually, save, and try again.</value>
   </data>
   <data name="flag_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\es.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -105,14 +105,12 @@ namespace RetroScrap2000
 		{
 			UpdateChecker check = new UpdateChecker();
 			var checkUpd = await check.CheckForNewVersion();
-			checkUpd.update = true;
-			checkUpd.newversion = "1.0.0";
 			if (checkUpd.update)
 			{
 				FormUpdate frm = new FormUpdate(
 					checkUpd.newversion!, 
 					Utils.GetAppInfo().ProductVersion, 
-					check.DownloadUrl);
+					check.DownloadUrl!);
 				frm.ShowDialog();
 			}
 		}
@@ -285,9 +283,12 @@ namespace RetroScrap2000
 				if (!ok || data == null)
 				{
 					Splash.CloseSplashScreen();
-					if (err == "HTTP 404: Erreur : Rom/Iso/Dossier non trouvée !  ")
-						err = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
-					MyMsgBox.ShowErr($"\"{romFileName}\": " + Properties.Resources.Txt_Msg_Scrap_Fail + "\r\n\r\n" + err);
+					string errMsg = string.IsNullOrEmpty(err)
+						? Properties.Resources.Txt_Msg_Scrap_Fail
+						: err;
+					if ( err == Properties.Resources.Txt_Msg_Scrap_NoDataFound )
+						errMsg += "\r\n\r\n" + Properties.Resources.Txt_Log_Scrap_NoGameFound;
+					MyMsgBox.ShowErr($"\"{romFileName}\": {errMsg}");
 					SetStatusToolStripLabel($"\"{_selectedRom.Name}\": {err}.");
 					return;
 				}
@@ -943,8 +944,10 @@ namespace RetroScrap2000
 				return null;
 
 			var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
-			var baseDir = Path.Combine(_gameManager.RomPath, systemFolder);
+			if (_gameManager.RomPath.ToLower().EndsWith(systemFolder.ToLower()))
+				return _gameManager.RomPath;
 
+			var baseDir = Path.Combine(_gameManager.RomPath, systemFolder);
 			return baseDir;
 		}
 

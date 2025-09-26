@@ -400,7 +400,7 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No game found..
+        ///   Looks up a localized string similar to This could be because the name doesn&apos;t match the English spelling in the database. Adjust the name manually, save, and try again..
         /// </summary>
         internal static string Txt_Log_Scrap_NoGameFound {
             get {

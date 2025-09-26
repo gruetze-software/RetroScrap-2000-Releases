@@ -208,7 +208,7 @@
     <value>¡Error al guardar Gamelist.xml!</value>
   </data>
   <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>No se encontró ningún juego.</value>
+    <value>Esto podría deberse a que el nombre no coincide con la ortografía en inglés de la base de datos. Ajústelo manualmente, guárdelo y vuelva a intentarlo.</value>
   </data>
   <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
     <value>No se encontró ningún sistema adecuado para la ROM.</value>
