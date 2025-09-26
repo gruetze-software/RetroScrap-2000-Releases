@@ -55,15 +55,17 @@ stages:
         replaceExistingArchive: true
     ## 4. Quelle (Source Code) nach GitHub pushen (nur der Tag)
     - bash: |
+        # 1. Remote hinzufügen
         git remote add github-release https://oauth2:$GitHubPAT@github.com/gruetze-software/RetroScrap-2000-Releases
         
-        # einmal pushen
-        git push github-release HEAD:refs/heads/release-source --force
-
-        # Der korrekte Push-Befehl für zukünftige Tags
+        # 2. Den aktuellen Commit (HEAD) auf den Branch 'release-source' pushen.
+        #    Dies stellt sicher, dass der Branch immer den Code des aktuellen Tags anzeigt.
+        git push github-release HEAD:refs/heads/release-source
+    
+        # 3. Den Tag pushen (für den GitHub Release Task)
         git push github-release refs/tags/$(Build.SourceBranchName)
     
-      displayName: 'Push Tag/Source to GitHub'
+      displayName: 'Update Source Branch and Push Tag GitHub'
       env:
         GitHubPAT: $(GitHubCon)
 
