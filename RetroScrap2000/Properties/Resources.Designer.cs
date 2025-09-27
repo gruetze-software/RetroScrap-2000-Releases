@@ -454,6 +454,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The entry could not be removed from the &apos;gamelist.xml&apos;..
+        /// </summary>
+        internal static string Txt_Msg_Err_DeleteRomXml {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Err_DeleteRomXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The language will be fully adopted after a restart. Would you like to restart the application now?.
         /// </summary>
         internal static string Txt_Msg_Opt_Language_Change {
@@ -495,6 +504,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Msg_Qestion_DeleteRom {
             get {
                 return ResourceManager.GetString("Txt_Msg_Qestion_DeleteRom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are multiple entries for this ROM in the &apos;gamelist.xml&apos;. Press &apos;Yes&apos; to remove all entries and the ROM file. Press &apos;No&apos; to remove only the single entry from the &apos;gamelist.xml&apos; without deleting the file..
+        /// </summary>
+        internal static string Txt_Msg_Question_DeleteRomMultipleEntries {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_DeleteRomMultipleEntries", resourceCulture);
             }
         }
         

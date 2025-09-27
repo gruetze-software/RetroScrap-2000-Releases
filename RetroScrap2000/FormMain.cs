@@ -437,17 +437,63 @@ namespace RetroScrap2000
 
 			try
 			{
-				Trace.WriteLine($"Lösche Rom-Datei \"{file}\" ...");
-				File.Delete(file);
-				Trace.WriteLine("... Rom-Datei gelöscht.");
-				Trace.WriteLine("Gamelist.xml updaten ...");
-				GameListLoader.DeleteGameByPath(
-					xmlPath: Path.Combine(baseDir, "gamelist.xml"),
-					romRelPath: _selectedRom.Path ?? romFileName
-					);
-				Trace.WriteLine("... Gamelist.xml upgedated.");
+				bool deletefile = true;
+				bool deletefromxml = true;
+				bool deleteAllRefs = false;
+				int numberofentries = GameListLoader.GetNumbersOfEntriesInXml(Path.Combine(baseDir, "gamelist.xml"), _selectedRom);
+				if (numberofentries > 1)
+				{
+					var decision = MyMsgBox.ShowQuestion(string.Format(Properties.Resources.Txt_Msg_Question_DeleteRomMultipleEntries, numberofentries));
+					if (decision == DialogResult.Yes)
+					{
+						// Alles löschen
+						deletefile = true;
+						deletefromxml = true;
+						deleteAllRefs = true;
+					}
+					else if (decision == DialogResult.No)
+					{
+						// Nur den Eintrag löschen
+						deletefile = false;
+						deletefromxml = true;
+						deleteAllRefs = false;
+					}
+					else
+					{
+						// Nichts löschen
+						deletefile = false;
+						deletefromxml = false;
+						deleteAllRefs = false;
+					}
+				}
+
+				if (deletefromxml)
+				{
+					if ( !GameListLoader.DeleteGame(
+						xmlPath: Path.Combine(baseDir, "gamelist.xml"),
+						rom: _selectedRom,
+						deleteAllReferences: deleteAllRefs ) )
+					{
+						MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Err_DeleteRomXml);
+						return;
+					}
+				}
+			
+				if (deletefile)
+				{
+					if (File.Exists(file))
+					{
+						Trace.WriteLine($"Lösche Rom-Datei \"{file}\" ...");
+						File.Delete(file);
+						Trace.WriteLine("... Rom-Datei gelöscht.");
+					}
+					else
+					{
+					}
+				}
+
 				// Liste neu laden
-				GetSeletedGameList()?.Games.Remove(_selectedRom);
+				GetSeletedGameList()?.Games.Clear();
 				var loadres = GameListLoader.Load(Path.Combine(baseDir, "gamelist.xml"),
 					GetSeletedGameList()?.RetroSys);
 				// Liste neu setzen

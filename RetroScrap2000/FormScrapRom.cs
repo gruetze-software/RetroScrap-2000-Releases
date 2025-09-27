@@ -141,14 +141,26 @@ namespace RetroScrap2000
 				checkBoxRating.Checked = _scraped.RatingNormalized.HasValue && _current.Rating != _scraped.RatingNormalized;
 				checkBoxRelease.Checked = _scraped.ReleaseDate != _current.ReleaseDate;
 
-				checkBoxMediaFront.Checked = (!string.IsNullOrEmpty(Selection.MediaBoxTempPath) && string.IsNullOrEmpty(_current.MediaCoverPath))
-					|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(_systemRomPath, _current.MediaCoverPath), Selection.MediaBoxTempPath);
+				string? currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaCoverPath);
+				checkBoxMediaFront.Checked = ( 
+					!string.IsNullOrEmpty(Selection.MediaBoxTempPath) 
+					&& ( string.IsNullOrEmpty(_current.MediaCoverPath) 
+						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
+					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaBoxTempPath);
 
-				checkBoxMediaScreen.Checked = (!string.IsNullOrEmpty(Selection.MediaScreenTempPath) && string.IsNullOrEmpty(_current.MediaScreenshotPath))
-				|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(_systemRomPath, _current.MediaScreenshotPath), Selection.MediaScreenTempPath);
+				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaScreenshotPath);
+				checkBoxMediaScreen.Checked = (
+					!string.IsNullOrEmpty(Selection.MediaScreenTempPath) 
+					&& ( string.IsNullOrEmpty(_current.MediaScreenshotPath)
+						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
+					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaScreenTempPath);
 
-				checkBoxMediaVideo.Checked = (!string.IsNullOrEmpty(Selection.MediaVideoPreviewTempPath) && string.IsNullOrEmpty(_current.MediaVideoPreviewImagePath))
-					|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(_systemRomPath, _current.MediaVideoPreviewImagePath), Selection.MediaVideoPreviewTempPath);
+				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaVideoPreviewImagePath);
+				checkBoxMediaVideo.Checked = (
+					!string.IsNullOrEmpty(Selection.MediaVideoPreviewTempPath) 
+					&& ( string.IsNullOrEmpty(_current.MediaVideoPreviewImagePath)
+						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
+					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaVideoPreviewTempPath);
 			}
 			catch (OperationCanceledException)
 			{

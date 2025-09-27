@@ -458,9 +458,12 @@ namespace RetroScrap2000
 						&& game.MediaCoverPath == game.MediaScreenshotPath)
 						forceimage = true;
 
-					if (coverscPath != null && (forceimage
-						|| string.IsNullOrEmpty(game.MediaCoverPath)
-						|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaCoverPath), coverscPath)) )
+					string? currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaCoverPath);
+					if ( coverscPath != null && 
+						 ( forceimage 
+							|| string.IsNullOrEmpty(currentmedia)
+							|| !File.Exists(currentmedia)
+							|| ImageTools.ImagesAreDifferent(currentmedia, coverscPath)) )
 					{
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 								game.Name!, "Set Box2D..."));
@@ -490,9 +493,12 @@ namespace RetroScrap2000
 						break;
 					}
 
-					if (shotscPath != null && (forceimage
-					|| string.IsNullOrEmpty(game.MediaScreenshotPath)
-					|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, game.MediaScreenshotPath), shotscPath)))
+					currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaScreenshotPath);
+					if ( shotscPath != null && 
+						 ( forceimage
+						|| string.IsNullOrEmpty(currentmedia)
+						|| !File.Exists(currentmedia)
+						|| ImageTools.ImagesAreDifferent(currentmedia, shotscPath)))
 					{
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 							game.Name!, "Set Screenshot..."));
@@ -521,11 +527,12 @@ namespace RetroScrap2000
 						break;
 					}
 
+					currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaVideoPreviewImagePath);
+
 					if (prevTasksc != null && !string.IsNullOrEmpty(prevTasksc.Value.videoAbsPath) 
 					&& ( string.IsNullOrEmpty(game.MediaVideoPath )
-						|| string.IsNullOrEmpty(game.MediaVideoPreviewImagePath)
-						|| ImageTools.ImagesAreDifferent(FileTools.ResolveMediaPath(baseDir, 
-							game.MediaVideoPreviewImagePath), prevTasksc.Value.videoPreviewAbsPath)))
+						|| !File.Exists(FileTools.ResolveMediaPath(baseDir, game.MediaVideoPath))
+						|| ImageTools.ImagesAreDifferent(currentmedia, prevTasksc.Value.videoPreviewAbsPath)))
 					{
 						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
 							game.Name!, "Set Video..."));

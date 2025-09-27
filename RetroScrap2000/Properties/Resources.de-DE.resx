@@ -279,4 +279,10 @@
   <data name="Txt_Msg_UpdateV1toV2" xml:space="preserve">
     <value>Es steht eine neuere Version  zur Verfügung. Aktualisiere deine alte Version {0} mit der neuen Version {1}. Verwende den Link für den Download. </value>
   </data>
+  <data name="Txt_Msg_Err_DeleteRomXml" xml:space="preserve">
+    <value>Der Eintrag konnte aus der 'gamelist.xml' nicht entfernt werden.</value>
+  </data>
+  <data name="Txt_Msg_Question_DeleteRomMultipleEntries" xml:space="preserve">
+    <value>Es gibt mehrere Einträge in der 'gamelist.xml' zu diesem Rom. Drücke auf 'Ja', um alle Einträge und die Rom-Datei zu entfernen. Drücke auf 'Nein', um nur den einen Eintrag aus der 'gamelist.xml' zu entfernen ohne die Datei zu löschen. </value>
+  </data>
 </root>

@@ -38,9 +38,9 @@
 			colMsg = new ColumnHeader();
 			buttonStart = new Button();
 			progressBarScrap = new ProgressBar();
-			pictureBox1 = new PictureBox();
+			pictureBoxAniWait = new PictureBox();
 			groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).BeginInit();
 			SuspendLayout();
 			// 
 			// groupBox1
@@ -51,7 +51,7 @@
 			groupBox1.Margin = new Padding(3, 2, 3, 2);
 			groupBox1.Name = "groupBox1";
 			groupBox1.Padding = new Padding(3, 2, 3, 2);
-			groupBox1.Size = new Size(765, 308);
+			groupBox1.Size = new Size(856, 408);
 			groupBox1.TabIndex = 2;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Monitor";
@@ -66,7 +66,7 @@
 			listViewMonitor.Margin = new Padding(3, 2, 3, 2);
 			listViewMonitor.Name = "listViewMonitor";
 			listViewMonitor.ShowGroups = false;
-			listViewMonitor.Size = new Size(759, 288);
+			listViewMonitor.Size = new Size(850, 388);
 			listViewMonitor.TabIndex = 0;
 			listViewMonitor.UseCompatibleStateImageBehavior = false;
 			listViewMonitor.View = View.Details;
@@ -113,25 +113,26 @@
 			progressBarScrap.Location = new Point(178, 9);
 			progressBarScrap.Margin = new Padding(3, 2, 3, 2);
 			progressBarScrap.Name = "progressBarScrap";
-			progressBarScrap.Size = new Size(524, 46);
+			progressBarScrap.Size = new Size(615, 46);
 			progressBarScrap.TabIndex = 1;
 			// 
-			// pictureBox1
+			// pictureBoxAniWait
 			// 
-			pictureBox1.Location = new Point(707, 9);
-			pictureBox1.Margin = new Padding(3, 2, 3, 2);
-			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(66, 46);
-			pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-			pictureBox1.TabIndex = 6;
-			pictureBox1.TabStop = false;
+			pictureBoxAniWait.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			pictureBoxAniWait.Location = new Point(797, 9);
+			pictureBoxAniWait.Margin = new Padding(3, 2, 3, 2);
+			pictureBoxAniWait.Name = "pictureBoxAniWait";
+			pictureBoxAniWait.Size = new Size(66, 46);
+			pictureBoxAniWait.SizeMode = PictureBoxSizeMode.Zoom;
+			pictureBoxAniWait.TabIndex = 6;
+			pictureBoxAniWait.TabStop = false;
 			// 
 			// FormScrapAuto
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(786, 377);
-			Controls.Add(pictureBox1);
+			ClientSize = new Size(877, 477);
+			Controls.Add(pictureBoxAniWait);
 			Controls.Add(progressBarScrap);
 			Controls.Add(buttonStart);
 			Controls.Add(groupBox1);
@@ -142,7 +143,7 @@
 			Text = "FormScrapAuto";
 			Load += FormScrapAuto_Load;
 			groupBox1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).EndInit();
 			ResumeLayout(false);
 		}
 
@@ -157,6 +158,6 @@
 		private ColumnHeader colMsg;
 		private ColumnHeader colNr;
 		private ColumnHeader colRom;
-		private PictureBox pictureBox1;
+		private PictureBox pictureBoxAniWait;
 	}
 }

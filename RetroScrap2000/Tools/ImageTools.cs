@@ -62,11 +62,17 @@ namespace RetroScrap2000.Tools
 
 			// absolut machen (unterstützt "./media/..." usw.)
 			var abs = FileTools.ResolveMediaPath(baseDir, relOrAbsPath);
-			if (string.IsNullOrEmpty(abs) || !System.IO.File.Exists(abs))
+			if (string.IsNullOrEmpty(abs) )
 			{
-				Trace.WriteLine($"[Tools.LoadImageCachedAsync]: Absolut Path is null!");
+				Trace.WriteLine($"[Tools.LoadImageCachedAsync]: ResolveMediaPath() from {relOrAbsPath} not success!");
 				return null;
 			}
+			else if ( !System.IO.File.Exists(abs))
+			{
+				Trace.WriteLine($"[Tools.LoadImageCachedAsync]: File not found: {abs}");
+				return null;
+			}
+
 			return await LoadAbsoluteImageCachedAsync(abs, ct);
 		}
 

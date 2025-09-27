@@ -279,4 +279,10 @@
   <data name="Txt_Msg_UpdateV1toV2" xml:space="preserve">
     <value>Une version plus récente est disponible. Mettez à jour votre ancienne version {0} vers la nouvelle version {1}. Utilisez le lien pour le téléchargement.</value>
   </data>
+  <data name="Txt_Msg_Err_DeleteRomXml" xml:space="preserve">
+    <value>L'entrée n'a pas pu être supprimée du 'gamelist.xml'.</value>
+  </data>
+  <data name="Txt_Msg_Question_DeleteRomMultipleEntries" xml:space="preserve">
+    <value>Il existe plusieurs entrées pour ce ROM dans le 'gamelist.xml'. Appuyez sur 'Oui' pour supprimer toutes les entrées ainsi que le fichier ROM. Appuyez sur 'Non' pour supprimer uniquement l'entrée unique du 'gamelist.xml' sans supprimer le fichier.</value>
+  </data>
 </root>

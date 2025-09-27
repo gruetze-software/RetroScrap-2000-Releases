@@ -35,7 +35,7 @@ namespace RetroScrap2000
 
 		public static DialogResult ShowQuestion(string msg)
 		{
-			return MessageBox.Show(msg, GetTitle(), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+			return MessageBox.Show(msg, GetTitle(), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 		}
 	}
 }

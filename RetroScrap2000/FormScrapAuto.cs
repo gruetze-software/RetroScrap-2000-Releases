@@ -21,6 +21,9 @@ namespace RetroScrap2000
 		public GameList Roms { get; set; }
 		public bool ScrapWasStarting { get; set; } = false;
 		private bool _isrunning = false;
+
+		private System.Windows.Forms.Timer _startTimer = new System.Windows.Forms.Timer();
+
 		public FormScrapAuto(GameList roms, ScrapperManager scrapper, 
 			string basedir, RetroSystems systems, RetroScrapOptions options)
 		{
@@ -30,6 +33,15 @@ namespace RetroScrap2000
 			_basedir = basedir;
 			_systems = systems;
 			_options = options;
+
+			_startTimer.Interval = 500; // 0.5 Sekunden warten
+			_startTimer.Tick += _startTimer_Tick;
+		}
+
+		private void _startTimer_Tick(object? sender, EventArgs e)
+		{
+			_startTimer.Stop();
+			buttonStart_Click(this, EventArgs.Empty);
 		}
 
 		private void FormScrapAuto_Load(object sender, EventArgs e)
@@ -40,6 +52,8 @@ namespace RetroScrap2000
 				colMsg.Text = Properties.Resources.Txt_Column_ScrapAuto_Message;
 				colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
 				colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
+
+			_startTimer.Start();
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
@@ -52,7 +66,7 @@ namespace RetroScrap2000
 				return;
 			}
 
-			this.pictureBox1.Image = Properties.Resources.joystickani;
+			this.pictureBoxAniWait.Image = Properties.Resources.joystickani;
 			buttonStart.Text = "Stop";
 			_isrunning = true;
 
@@ -61,7 +75,7 @@ namespace RetroScrap2000
 			var ct = _scrapCts.Token;
 
 			listViewMonitor.Items.Clear();
-			this.pictureBox1.Image = Properties.Resources.joystickani;
+			this.pictureBoxAniWait.Image = Properties.Resources.joystickani;
 			// Erstellen des Progress-Objekts. Die Action-Methode wird auf dem UI-Thread ausgeführt.
 			var progressHandler = new Progress<ProgressObj>(report =>
 			{
@@ -101,7 +115,7 @@ namespace RetroScrap2000
 			finally
 			{
 				progressBarScrap.Value = 0;
-				this.pictureBox1.Image = null;
+				this.pictureBoxAniWait.Image = null;
 			}
 
 

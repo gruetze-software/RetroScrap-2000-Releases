@@ -1,9 +1,8 @@
 ﻿using RetroScrap2000;
-using System.CodeDom;
+using System.Diagnostics;
+using System.Globalization;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using System.Globalization;
-using System.Diagnostics;
 
 public class GameManager
 {
@@ -64,16 +63,40 @@ public static class GameListLoader
 {
 	private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
 
+	private static string NormalizeRelativePath(string path)
+	{
+		if (string.IsNullOrEmpty(path))
+			return string.Empty;
+
+		// 1. Alle Backslashes (\) durch Forward Slashes (/) ersetzen (Standard in Batocera/Linux)
+		string normalizedPath = path.Replace('\\', '/');
+
+		// 2. Führendes "./" oder nur "." entfernen, falls vorhanden
+		if (normalizedPath.StartsWith("./"))
+		{
+			normalizedPath = normalizedPath.Substring(2);
+		}
+		else if (normalizedPath.StartsWith("."))
+		{
+			// Falls nur ein Punkt ohne Slash vorkommt
+			normalizedPath = normalizedPath.Substring(1);
+		}
+
+		// 3. Alle Pfade in Kleinbuchstaben konvertieren (um Case-Insensitivity zu erzwingen)
+		return normalizedPath.ToLowerInvariant();
+	}
+
 	/// <summary>
 	/// Löscht einen Eintrag aus der gamelist.xml basierend auf dem relativen Pfad der ROM-Datei.
 	/// </summary>
 	/// <param name="xmlPath">Der vollständige Pfad zur gamelist.xml-Datei.</param>
 	/// <param name="romPath">Der relative Pfad der ROM-Datei, wie in <path> gespeichert.</param>
+	/// <param name="deleteAllReferences">Kommt der path mehrfach vor, werden alle Einträge dazu gelöscht, wenn true gesetzt</param>
 	/// <returns>True bei Erfolg, andernfalls false.</returns>
-	public static bool DeleteGameByPath(string xmlPath, string romRelPath)
+	public static bool DeleteGame(string xmlPath, GameEntry rom, bool deleteAllReferences = false)
 	{
 		// Sicherstellen, dass die XML-Datei existiert.
-		if (!File.Exists(xmlPath))
+		if (!File.Exists(xmlPath) || string.IsNullOrEmpty(rom.Path) )
 		{
 			return false;
 		}
@@ -92,9 +115,65 @@ public static class GameListLoader
 					return false;
 				}
 
-				//// Finden Sie das <game>-Element mit dem passenden <path>-Tag.
+				// Prüfen, ob die Datei mehrfach vorhanden ist
+				string normalizedRomPath = NormalizeRelativePath(rom.Path);
+				// Prüfen, ob die Datei mehrfach vorhanden ist
+				var duplicates = root.Elements("game")
+						.Where(g =>
+						{
+							var pathElem = g.Element("path");
+							if (pathElem == null)
+							{
+								return false;
+							}
+
+							// Normalisiere den Pfad aus der XML
+							string normalizedXmlPath = NormalizeRelativePath(pathElem.Value);
+
+							// Führe den Vergleich mit den bereinigten Werten durch
+							return normalizedXmlPath.Equals(normalizedRomPath, StringComparison.OrdinalIgnoreCase);
+						})
+						.ToList();
+
+				if (deleteAllReferences)
+				{
+					if (duplicates.Count > 1)
+					{
+						Trace.WriteLine($"Warnung: Mehrere Einträge ({duplicates.Count}) mit dem Pfad '{rom.Path}' in der gamelist.xml " +
+							"gefunden. Versuche, alle Einträge zu löschen.");
+						foreach (var dup in duplicates)
+						{
+							dup.Remove();
+						}
+						doc.Save(xmlPath);
+						return true;
+					}
+				}
+
+				// Finden Sie das <game>-Element mit dem passenden <path>-Tag.
 				var gameToDelete = root.Elements("game")
-															 .FirstOrDefault(g => g.Element("path")?.Value == romRelPath);
+						.FirstOrDefault(g =>
+						{
+							// 1. Pfad aus XML extrahieren und normalisieren
+							string? xmlPath = g.Element("path")?.Value;
+							string normalizedXmlPath = NormalizeRelativePath(xmlPath!);
+
+							// 2. Vergleich
+							bool pathMatches = normalizedXmlPath == normalizedRomPath;
+
+							// 3. Optional: Wenn der Pfad nicht übereinstimmt, sofort false zurückgeben
+							if (!pathMatches) return false;
+
+							// 4. Zusätzliche Kriterien (nur prüfen, wenn Pfad übereinstimmt)
+							return g.Element("name")?.Value == rom.Name
+									&& g.Element("developer")?.Value == rom.Developer
+									&& g.Element("publisher")?.Value == rom.Publisher
+									// Hinweis: Bei releasedate/genre/etc. können ebenfalls Formatierungsprobleme auftreten,
+									// wenn diese nicht standardisiert gespeichert werden.
+									&& g.Element("genre")?.Value == rom.Genre
+									&& g.Element("releasedate")?.Value == rom.ReleaseDateRaw
+									;
+						});
 
 				if (gameToDelete != null)
 				{
@@ -107,14 +186,62 @@ public static class GameListLoader
 				}
 				else
 				{
-					// Eintrag wurde nicht gefunden.
-					return false;
+					// Eintrag wurde nicht gefunden. Das ist okay, da vermutlich nur das File gelöscht werden soll.
+					return true;
 				}
 			}
 			catch
 			{
 				// Fehler beim Laden oder Speichern.
 				return false;
+			}
+		}
+	}
+
+	public static int GetNumbersOfEntriesInXml(string xmlPath, GameEntry rom)
+	{
+		// Sicherstellen, dass die XML-Datei existiert.
+		if (!File.Exists(xmlPath))
+		{
+			return 0;
+		}
+
+		// Stellen Sie sicher, dass das Lock-Objekt verfügbar ist.
+		// Falls es in einer anderen Klasse liegt, muss es entsprechend referenziert werden.
+		lock (_xmlFileLock)
+		{
+			try
+			{
+				// XML-Dokument laden.
+				XDocument doc = XDocument.Load(xmlPath);
+				var root = doc.Element("gameList");
+				if (root == null)
+				{
+					return 0;
+				}
+
+				// Prüfen, wie oft die Datei über den NORMALISIERTEN Pfad vorhanden ist.
+				string normalizedRomPath = NormalizeRelativePath(rom.Path!);
+				var duplicates = root.Elements("game")
+						.Where(g =>
+						{
+							// 1. Pfad aus XML extrahieren
+							string? xmlPath = g.Element("path")?.Value;
+
+							// 2. Den XML-Pfad normalisieren
+							string normalizedXmlPath = NormalizeRelativePath(xmlPath!);
+
+							// 3. Den normalisierten Pfad mit dem normalisierten Zielpfad vergleichen
+							return normalizedXmlPath == normalizedRomPath;
+						})
+						.ToList();
+
+					return duplicates.Count;
+			}
+			catch
+			{
+				// Fehler beim Laden
+				return 0;
 			}
 		}
 	}
@@ -257,27 +384,34 @@ public static class GameListLoader
 				.ToList();
 
 		var pathsInXml = new HashSet<string>(
-				loadedList.Games
-						.Select(g => g.Path)
-						.Where(p => p != null)
-						.Cast<string>(),
-				StringComparer.OrdinalIgnoreCase
-		);
+			loadedList.Games
+				.Select(g => g.Path)
+				.Where(p => p != null)
+				.Select(p => NormalizeRelativePath(p!)));
 
 		foreach (var romFile in existingRomsOnDisk)
 		{
-			var relativePath = "./" + Path.GetRelativePath(romDirectory, romFile).Replace('\\', '/');
+			// 1. Erzeuge den relativen Pfad (dieser enthält dein "./" oder den relativen Ordner)
+			var relativePathWithPrefix = "./" + Path.GetRelativePath(romDirectory, romFile).Replace('\\', '/');
 
-			if (!pathsInXml.Contains(relativePath))
+			// 2. Normalisiere diesen Pfad für den Vergleich
+			var normalizedPathForComparison = NormalizeRelativePath(relativePathWithPrefix);
+
+			// Jetzt prüfen: Ist der NORMALISIERTE Pfad bereits in der normalisierten XML-Liste?
+			if (!pathsInXml.Contains(normalizedPathForComparison))
 			{
 				if (!string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(romFile)))
 				{
+					// FÜR DAS SPEICHERN: Entweder speicherst du den bereinigten Pfad (empfohlen)
+					// oder den Pfad mit "./" (wenn du das so beibehalten möchtest).
+					// Am saubersten ist es, den normalisierten (ohne ./) Pfad zu speichern.
 					var newEntry = new GameEntry
 					{
-						Path = relativePath,
+						Path = normalizedPathForComparison, // <--- Normalisierten Pfad speichern
 						Name = Path.GetFileNameWithoutExtension(romFile),
 						RetroSystemId = system.Id
 					};
+
 					loadedList.Games.Add(newEntry);
 					hasChanges = true;
 					Trace.WriteLine($"{system.Name}: Neuen Eintrag hinzugefügt: \"{newEntry.Name}\"");
