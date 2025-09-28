@@ -37,6 +37,9 @@ namespace RetroScrap2000
 			InitializeComponent();
 			_options = options;
 
+			//DeveloperVault vault = new DeveloperVault();
+			//vault.Save("gruetze99", "nmAkw40JxtR");
+
 			_loadTimer.Interval = 500;
 			_loadTimer.Elapsed += LoadTimer_Elapsed;
 			_loadTimer.Enabled = false;
@@ -255,14 +258,17 @@ namespace RetroScrap2000
 		private async Task ScrapRomAsync()
 		{
 			var sysFolder = GetSelectedRomPath();
-			if (_selectedRom == null || string.IsNullOrEmpty(sysFolder))
+			if (_selectedRom == null || string.IsNullOrEmpty(_selectedRom.Path) || string.IsNullOrEmpty(sysFolder))
 			{
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
 				return;
 			}
 
 			// Rom-Basisname als romnom
-			var romFileName = Path.GetFileName(_selectedRom.Name ?? _selectedRom.Path ?? "");
+			string? romFileName = _selectedRom.Name;
+			if ( string.IsNullOrEmpty(romFileName) )
+				romFileName = Utils.GetNameFromFile(_selectedRom.Path);
+
 			if (string.IsNullOrWhiteSpace(romFileName))
 			{
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_WrongRomFile);
@@ -279,28 +285,45 @@ namespace RetroScrap2000
 				await Splash.ShowStatusWithDelayAsync(string.Format(
 					Properties.Resources.Txt_Status_Label_Scrap_Running, _selectedRom.Name), 300);
 
+				// Rom scrappen
+				Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
 				var (ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options.GetLanguageShortCode());
-				if (!ok || data == null)
+				if (!ok)
 				{
+					_selectedRom.State = eState.Error;
+
 					Splash.CloseSplashScreen();
-					string errMsg = string.IsNullOrEmpty(err)
-						? Properties.Resources.Txt_Msg_Scrap_Fail
-						: err;
-					if ( err == Properties.Resources.Txt_Msg_Scrap_NoDataFound )
-						errMsg += "\r\n\r\n" + Properties.Resources.Txt_Log_Scrap_NoGameFound;
+					string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
 					MyMsgBox.ShowErr($"\"{romFileName}\": {errMsg}");
 					SetStatusToolStripLabel($"\"{_selectedRom.Name}\": {err}.");
 					return;
 				}
-
-
-				data.Source = "ScreenScraper.fr";
+				else if (data == null)
+				{
+					// Wenn der Name bereits gesetzt war und wir damit keinen Erfolg hatten, versuchen wir nun den Filename
+					if (!string.IsNullOrEmpty(_selectedRom.Name))
+					{
+						romFileName = Utils.GetNameFromFile(_selectedRom.Path);
+						Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
+						(ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options.GetLanguageShortCode());
+						if (!ok || data == null)
+						{
+							Splash.CloseSplashScreen();
+							MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_NoDataFoundFor + " " + romFileName);
+							SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
+							return;
+						}
+					}
+				}
+				
+				data!.Source = "ScreenScraper.fr";
 
 				// Dialog zum Übernehmen der Daten
 				Splash.CloseSplashScreen();
 				using var dlg = new FormScrapRom(sysFolder, _selectedRom, data);
 				if (dlg.ShowDialog(this) != DialogResult.OK)
 				{
+					_selectedRom.State = eState.None;
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
 					return;
 				}
@@ -334,6 +357,7 @@ namespace RetroScrap2000
 					MoveOrCopyScrapVideoRom(true, sel.MediaVideoTempPath, sysFolder);
 				}
 
+				_selectedRom.State = eState.Scraped;
 				// UI aktualisieren
 				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
 				await SaveRomAsync();
@@ -647,6 +671,10 @@ namespace RetroScrap2000
 					it.SubItems.Add(g.RatingStars.ToString("0.0"));
 					it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
 					it.Tag = g;
+					if ( g.State == eState.Scraped )
+						it.BackColor = System.Drawing.Color.LightGreen;
+					else if (g.State == eState.Error || g.State == eState.NoData)
+						it.BackColor = System.Drawing.Color.LightCoral;
 					items.Add(it);
 				}
 				listViewRoms.Items.AddRange(items.ToArray());

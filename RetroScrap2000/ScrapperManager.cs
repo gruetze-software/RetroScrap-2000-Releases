@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace RetroScrap2000
 	public class ScrapperManager
 	{
 		private static readonly HttpClient _http = new() { Timeout = TimeSpan.FromSeconds(30) };
-		private string _devId, _devPw, _soft;
+		private DeveloperVault _devVault = new DeveloperVault();
+		private AppInfo _appinfo = Utils.GetAppInfo();
 		private string? _ssid, _sspw;
 
 		private const string BaseUrl = "https://api.screenscraper.fr/api2/";
@@ -30,9 +32,8 @@ namespace RetroScrap2000
 
 		public ScrapperManager()
 		{
-			_devId = "gruetze99"; _devPw = "nmAkw40JxtR"; _soft = "RetroScrap2000"; 
 			if (!_http.DefaultRequestHeaders.Contains("User-Agent"))
-				_http.DefaultRequestHeaders.Add("User-Agent", $"{_soft}");
+				_http.DefaultRequestHeaders.Add("User-Agent", $"{_appinfo.ProductName!.Replace(" ", "")}");
 		}
 
 		public void RefreshSecrets(string ssid, string ssPassword)
@@ -41,11 +42,8 @@ namespace RetroScrap2000
 			_sspw = ssPassword;
 		}
 
-		private string BuildAuthQuery() =>
-			$"devid={_devId}&devpassword={_devPw}&softname={_soft}&ssid={_ssid}&sspassword={_sspw}&output=json";
-
-		private string BuildAuthQueryWithOutSs() =>
-		$"devid={_devId}&devpassword={_devPw}&softname={_soft}&output=json";
+		private string BuildAuthQuery() => $"devid={getDD().s1}&devpassword={getDD().s2}&softname={_appinfo.ProductName!.Replace(" ", "")}&ssid={_ssid}&sspassword={_sspw}&output=json";
+		private string BuildAuthQueryWithOutSs() => $"devid={getDD().s1}&devpassword={getDD().s2}&softname={_appinfo.ProductName!.Replace(" ", "")}&output=json";
 
 		public async Task<SsUserInfosResponse> FetchSsUserInfosAsync()
 		{
@@ -198,7 +196,7 @@ namespace RetroScrap2000
 		public async Task<(bool ok, ScrapeGame? data, string? error)> GetGameAsync(
 			string? romFileName, int systemId, string languageShortCode, CancellationToken ct = default)
 		{
-			if ( string.IsNullOrEmpty(romFileName) )
+			if (string.IsNullOrEmpty(romFileName))
 				return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
 
 			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(romFileName)}";
@@ -214,9 +212,9 @@ namespace RetroScrap2000
 					if (_countScrapGame >= 2)
 					{
 						_countScrapGame = 0;
-						return (false, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+						return (true, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
 					}
-					else
+					else 
 					{
 						Trace.WriteLine("Unter dem Namen \"" + romFileName + "\" wurde kein Spiel gefunden. Versuche anderen Namen...");
 						string romname = CleanPrefix(romFileName);
@@ -362,8 +360,7 @@ namespace RetroScrap2000
 			for( int i = 0; i < iGesamt; ++i)
 			{
 				GameEntry game = gameList.Games[i];
-				dPerc = (double)(i + 1) / iGesamt * 100;
-				iPerc = (int)Math.Round(dPerc);
+				iPerc = Utils.CalculatePercentage(i + 1, iGesamt);
 
 				if (ct.IsCancellationRequested)
 				{
@@ -372,32 +369,43 @@ namespace RetroScrap2000
 					break;
 				}
 
-				progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+				progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, Properties.Resources.Txt_Status_Label_Scrap_Running));
 
 				try
 				{
-					// Rom scrappen
+					// Rom scrappen (1. Versuch über Rom.Name)
+					Trace.WriteLine($"--> await GetGameAsync \"{game.Name}\"");
 					var result = await GetGameAsync(game.Name, gameList.RetroSys.Id, languageShortCode, ct);
 					// Ergebnis prüfen
 					if (!result.ok)
 					{
-						ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
-							game.Name!, $"{result.error}.");
-						err.Typ = ProgressObj.eTyp.Error;
-						progress.Report(err);
+						game.State = eState.Error;
+						ProgressObj error = new ProgressObj(iPerc, i + 1,
+							game.Name!, $"{result.error ?? "Error"} \"{game.Name}\".");
+						error.Typ = ProgressObj.eTyp.Error;
+						progress.Report(error);
 						continue;
 					}
-					if (result.data == null)
+					else if (result.data == null)
 					{
-						ProgressObj warning = new ProgressObj(iPerc, iGesamt, i + 1,
-							game.Name!, $"{Properties.Resources.Txt_Log_Scrap_NoDataFoundFor} \"{game.Name}\".");
-						warning.Typ = ProgressObj.eTyp.Warning;
-						progress.Report(warning);
-						continue;
+						// 2. Versuch über Rom-Filename
+						string filename = Utils.GetNameFromFile(game.Path!);
+						Trace.WriteLine($"--> await GetGameAsync \"{filename}\"");
+						result = await GetGameAsync(filename, gameList.RetroSys.Id, languageShortCode, ct);
+						// Ergebnis prüfen
+						if (!result.ok || result.data == null)
+						{
+							game.State = eState.NoData;
+							ProgressObj warning = new ProgressObj(iPerc, i + 1,
+								game.Name!, $"{Properties.Resources.Txt_Log_Scrap_NoDataFoundFor} \"{game.Name}\".");
+							warning.Typ = ProgressObj.eTyp.Warning;
+							progress.Report(warning);
+							continue;
+						}
 					}
 					// Daten prüfen und übernehmen
-					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
 					if (!string.IsNullOrEmpty(result.data.Id) && int.TryParse(result.data.Id, out int id) && id > 0)
 						game.Id = id;
@@ -419,8 +427,10 @@ namespace RetroScrap2000
 					if ( result.data.ReleaseDate != null && result.data.ReleaseDate != DateTime.MinValue )
 						game.ReleaseDate = result.data.ReleaseDate;
 
+					game.State = eState.Scraped;
+
 					// Images vom Scraped-Objekt temporär laden
-					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Box2D..."));
 					var coverTasksc = await ImageTools.LoadImageFromUrlCachedAsync(result.data.Box2DUrl, ct);
 					if (ct.IsCancellationRequested)
@@ -430,7 +440,7 @@ namespace RetroScrap2000
 						break;
 					}
 					var coverscPath = FileTools.SaveImageToTempFile(coverTasksc);
-					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Screenshot..."));
 					if (ct.IsCancellationRequested)
 					{
@@ -440,7 +450,7 @@ namespace RetroScrap2000
 					}
 					var shotTasksc = await ImageTools.LoadImageFromUrlCachedAsync(result.data.ImageUrl, ct);
 					var shotscPath = FileTools.SaveImageToTempFile(shotTasksc);
-					progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + " Video..."));
 					var prevTasksc = await VideoTools.LoadVideoPreviewFromUrlAsync(result.data.VideoUrl, ct);
 
@@ -465,7 +475,7 @@ namespace RetroScrap2000
 							|| !File.Exists(currentmedia)
 							|| ImageTools.ImagesAreDifferent(currentmedia, coverscPath)) )
 					{
-						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						progress.Report(new ProgressObj(iPerc, i + 1,
 								game.Name!, "Set Box2D..."));
 
 						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
@@ -479,7 +489,7 @@ namespace RetroScrap2000
 						}
 						else
 						{
-							ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+							ProgressObj err = new ProgressObj(iPerc, i + 1,
 								game.Name!, "Fail to move Box2D!");
 							err.Typ = ProgressObj.eTyp.Error;
 							progress.Report(err);
@@ -500,7 +510,7 @@ namespace RetroScrap2000
 						|| !File.Exists(currentmedia)
 						|| ImageTools.ImagesAreDifferent(currentmedia, shotscPath)))
 					{
-						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						progress.Report(new ProgressObj(iPerc, i + 1,
 							game.Name!, "Set Screenshot..."));
 						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
 							shotscPath,
@@ -513,7 +523,7 @@ namespace RetroScrap2000
 						}
 						else
 						{
-							ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+							ProgressObj err = new ProgressObj(iPerc, i + 1,
 								game.Name!, $"Fail to move Screenshot!");
 							err.Typ = ProgressObj.eTyp.Error;
 							progress.Report(err);
@@ -534,7 +544,7 @@ namespace RetroScrap2000
 						|| !File.Exists(FileTools.ResolveMediaPath(baseDir, game.MediaVideoPath))
 						|| ImageTools.ImagesAreDifferent(currentmedia, prevTasksc.Value.videoPreviewAbsPath)))
 					{
-						progress.Report(new ProgressObj(iPerc, iGesamt, i + 1,
+						progress.Report(new ProgressObj(iPerc, i + 1,
 							game.Name!, "Set Video..."));
 						var res = FileTools.MoveOrCopyScrapFileRom(true, game.Name,
 							prevTasksc.Value.videoAbsPath,
@@ -547,7 +557,8 @@ namespace RetroScrap2000
 				}
 				catch (Exception e)
 				{
-					ProgressObj err = new ProgressObj(iPerc, iGesamt, i + 1,
+					game.State = eState.Error;
+					ProgressObj err = new ProgressObj(iPerc, i + 1,
 						game.Name!, $"Error! {Utils.GetExcMsg(e)}");
 					err.Typ = ProgressObj.eTyp.Error;
 					progress.Report(err);
@@ -555,6 +566,14 @@ namespace RetroScrap2000
 				}
 			}
 			progress.Report(new ProgressObj(0, Properties.Resources.Txt_Log_Scrap_End));
+		}
+
+		private (string s1, string s2) getDD()
+		{
+			string? s1, s2;
+			if (!_devVault.TryLoad(out s1, out s2))
+				throw new ApplicationException("No Developer Login Data found.");
+			return (s1!, s2!);
 		}
 	}
 }

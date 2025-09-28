@@ -73,6 +73,24 @@ namespace RetroScrap2000
 			return (int)((current / (double)total) * 100);
 		}
 
+		public static string GetNameFromFile(string filePath)
+		{
+			// Liefert den Dateinamen OHNE Erweiterung zurück.
+			// Path.GetFileNameWithoutExtension() kann das auch, aber bei
+			// Namen wie "Dr. Mario.zip" liefert es nur "Dr." zurück.
+			// Daher hier eine eigene Implementierung.
 
+			if (string.IsNullOrWhiteSpace(filePath))
+				return string.Empty;
+			
+			string filename = Path.GetFileName(filePath);
+			int index = filename.LastIndexOf('.');
+			if (index < 0)
+				return filename.Trim(); // keine Erweiterung
+			if ( index == 0)
+				return string.Empty; // nur Erweiterung, kein Name
+			
+			return filename.Substring(0, index).Trim(); // Name ohne Erweiterung
+		}
 	}
 }

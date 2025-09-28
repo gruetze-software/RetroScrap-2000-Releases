@@ -400,7 +400,8 @@ public static class GameListLoader
 			// Jetzt prüfen: Ist der NORMALISIERTE Pfad bereits in der normalisierten XML-Liste?
 			if (!pathsInXml.Contains(normalizedPathForComparison))
 			{
-				if (!string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(romFile)))
+				string fileNameWithoutExt = Utils.GetNameFromFile(romFile);
+				if (!string.IsNullOrEmpty(fileNameWithoutExt))
 				{
 					// FÜR DAS SPEICHERN: Entweder speicherst du den bereinigten Pfad (empfohlen)
 					// oder den Pfad mit "./" (wenn du das so beibehalten möchtest).
@@ -408,7 +409,7 @@ public static class GameListLoader
 					var newEntry = new GameEntry
 					{
 						Path = normalizedPathForComparison, // <--- Normalisierten Pfad speichern
-						Name = Path.GetFileNameWithoutExtension(romFile),
+						Name = fileNameWithoutExt,
 						RetroSystemId = system.Id
 					};
 
@@ -437,11 +438,22 @@ public class GameList
 	
 }
 
+public enum eState : byte
+{
+	None = 0,
+	NoData,
+	Scraped,
+	Error
+};
+
 [XmlRoot("game")]
 public class GameEntry
 {
 	[XmlIgnore]
 	public int RetroSystemId { get; set; } = -1;
+	
+	[XmlIgnore]
+	public eState State { get; set; } = eState.None;
 
 	[XmlAttribute("id")]
 	public int Id { get; set; }
@@ -531,7 +543,7 @@ public class GameEntry
 				return null;
 
 			// Dateiname ohne .mp4
-			var baseName = System.IO.Path.GetFileNameWithoutExtension(videoPath);
+			var baseName = Utils.GetNameFromFile(videoPath);
 
 			// Vorschau-Dateiname anhängen
 			return System.IO.Path.Combine(dir, baseName + "_preview.jpg");

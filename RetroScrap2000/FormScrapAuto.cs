@@ -44,14 +44,18 @@ namespace RetroScrap2000
 			buttonStart_Click(this, EventArgs.Empty);
 		}
 
+		private void SetTitle(int index, int total)
+		{
+			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem, 
+				index, total) + $" \"{Roms.RetroSys.Name}\" ";
+		}
+
 		private void FormScrapAuto_Load(object sender, EventArgs e)
 		{
-			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem,
-				Roms.Games.Count) + $" \"{Roms.RetroSys.Name}\".";
-
-				colMsg.Text = Properties.Resources.Txt_Column_ScrapAuto_Message;
-				colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
-				colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
+			SetTitle(0, Roms.Games.Count);
+			colMsg.Text = Properties.Resources.Txt_Column_ScrapAuto_Message;
+			colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
+			colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 
 			_startTimer.Start();
 		}
@@ -116,6 +120,7 @@ namespace RetroScrap2000
 			{
 				progressBarScrap.Value = 0;
 				this.pictureBoxAniWait.Image = null;
+				this.buttonStart.Text = "Start";
 			}
 
 
@@ -125,7 +130,7 @@ namespace RetroScrap2000
 		{
 			ListViewItem it = new ListViewItem(DateTime.Now.ToString("HH:mm:ss"));
 			it.SubItems.Add(report.Typ.ToString());
-			it.SubItems.Add(report.RomNumberAndTotal);
+			it.SubItems.Add(report.RomNumber.ToString());
 			it.SubItems.Add(report.RomName);
 			it.SubItems.Add(report.MessageText);
 			it.ImageKey = report.Typ.ToString();
@@ -135,6 +140,7 @@ namespace RetroScrap2000
 				it.ForeColor = Color.Orange;
 			listViewMonitor.Items.Add(it);
 			listViewMonitor.EnsureVisible(listViewMonitor.Items.Count - 1);
+			SetTitle(report.RomNumber, Roms.Games.Count);
 		}
 
 		private void AddProtokollItem(ProgressObj.eTyp typ, string message)

@@ -19,14 +19,14 @@ namespace RetroScrap2000
 
 		public int ProgressPerc { get; set; }
 		public string RomName { get; set; }
-		public string? RomNumberAndTotal { get; set; }
+		public int RomNumber { get; set; }
 		public string? MessageText { get; set; }
 		public ProgressObj() 
 		{
 			Typ = eTyp.Info;
 			ProgressPerc = -1;
 			RomName = string.Empty;
-			RomNumberAndTotal = string.Empty;
+			RomNumber = 0;
 			MessageText = "";
 		}
 
@@ -41,10 +41,10 @@ namespace RetroScrap2000
 			eTyp.Info, progressPerc, messageText)
 		{	}
 
-		public ProgressObj(int progressPerc, int romtotal, int romnr,
+		public ProgressObj(int progressPerc, int romnr,
 			string romName, string messageText) : this(progressPerc, messageText)
 		{
-			RomNumberAndTotal = $"({romnr}/{romtotal})";
+			RomNumber = romnr;
 			RomName = romName;
 		}
 		

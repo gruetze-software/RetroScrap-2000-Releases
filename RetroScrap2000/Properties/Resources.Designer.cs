@@ -161,6 +161,24 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 613663396531663468376A306B336D35.
+        /// </summary>
+        internal static string RetroIV {
+            get {
+                return ResourceManager.GetString("RetroIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 71377235643368326B396D3667317434663878306A3370356332763962317A36.
+        /// </summary>
+        internal static string RetroK {
+            get {
+                return ResourceManager.GetString("RetroK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap RetroScrap2000_256 {
@@ -598,7 +616,7 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scraping {0} ROMs from system.
+        ///   Looks up a localized string similar to Scraping {0}/{1} ROMs from system.
         /// </summary>
         internal static string Txt_Scrap_Auto_Title_FromSystem {
             get {
