@@ -37,9 +37,6 @@ namespace RetroScrap2000
 			InitializeComponent();
 			_options = options;
 
-			//DeveloperVault vault = new DeveloperVault();
-			//vault.Save("gruetze99", "nmAkw40JxtR");
-
 			_loadTimer.Interval = 500;
 			_loadTimer.Elapsed += LoadTimer_Elapsed;
 			_loadTimer.Enabled = false;
