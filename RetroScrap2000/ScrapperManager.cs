@@ -17,6 +17,9 @@ using System.Web;
 
 namespace RetroScrap2000
 {
+	/// <summary>
+	/// ScrapperManager für ScreenScraper.fr
+	/// </summary>
 	public class ScrapperManager
 	{
 		private static readonly HttpClient _http = new() { Timeout = TimeSpan.FromSeconds(30) };
