@@ -537,14 +537,26 @@ public class GameEntry
 	public string? Players { get; set; }
 
 	[XmlElement("image")]
-	public string? MediaScreenshotPath { get; set; }
+	public string? MediaImageBoxPath { get; set; }
 
 	[XmlElement("thumbnail")]
-	public string? MediaCoverPath { get; set; }
+	public string? MediaThumbnailPath { get; set; }
 
 	[XmlElement("video")]
 	public string? MediaVideoPath { get; set; }
+	[XmlElement("marquee")]
+	public string? MediaMarqueePath { get; set; }
 
+	[XmlElement("fanart")]
+	public string? MediaFanArtPath { get; set; }
+	[XmlElement("screenshot")]
+	public string? MediaScreenshotPath { get; set; }
+	[XmlElement("wheel")]
+	public string? MediaWheelPath { get; set; }
+	[XmlElement("manual")]
+	public string? MediaManualPath { get; set; }
+	[XmlElement("map")]
+	public string? MediaMapPath { get; set; }
 	[XmlIgnore]
 	public string? MediaVideoPreviewImagePath
 	{

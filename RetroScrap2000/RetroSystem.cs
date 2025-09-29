@@ -206,8 +206,8 @@ namespace RetroScrap2000
 			SetElementValue(gameEl, "publisher", NullIfEmpty(rom.Publisher));
 			SetElementValue(gameEl, "rating", rom.Rating > 0 ? rom.Rating.ToString("0.00", CultureInfo.InvariantCulture) : null);
 			SetElementValue(gameEl, "releasedate", rom.ReleaseDateRaw);
-			SetElementValue(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
-			SetElementValue(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
+			SetElementValue(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaImageBoxPath));
+			SetElementValue(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaThumbnailPath));
 			SetElementValue(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
 
 			// Attribute setzen

@@ -65,13 +65,23 @@ namespace RetroScrap2000
 				comboBoxLanguage.SelectedIndex = 0; // Default to first language if not found
 			pictureBoxDonation.Image = Properties.Resources.donate48;
 			linkLabelDonate.LinkClicked += LinkLabelInfo_LinkClicked;
-			// Scrap
+			// Scrap User
 			textBoxApiLogin.Text = Options.ApiUser ?? "";
 			if (Options.Secret != null)
 			{
 				if (Options.Secret.TryLoad(out string? pwd))
 					textBoxApiPwd.Text = pwd ?? "";
 			}
+			// Scrap Data
+			checkBoxMediaFanart.Checked = Options.MediaFanart == true;
+			checkBoxMediaImageBox.Checked = Options.MediaBoxImage == true;	
+			checkBoxMediaManual.Checked = Options.MediaManual == true;
+			checkBoxMediaMap.Checked = Options.MediaMap == true;
+			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
+			checkBoxMediaThumbnail.Checked = Options.MediaThumbnail == true;
+			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
+			checkBoxMediaWheel.Checked = Options.MediaWheel == true;
+			checkBoxMediaMarquee.Checked = Options.MediaMarquee == true;
 
 			// Info
 			pictureBoxAppIcon.Image = Properties.Resources.RetroScrap2000_256;
@@ -222,6 +232,15 @@ namespace RetroScrap2000
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
 			SaveSecrets();
+			Options.MediaFanart = checkBoxMediaFanart.Checked;
+			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
+			Options.MediaManual = checkBoxMediaManual.Checked;
+			Options.MediaMap = checkBoxMediaMap.Checked;
+			Options.MediaScreenshot = checkBoxMediaScreenshot.Checked;
+			Options.MediaThumbnail = checkBoxMediaThumbnail.Checked;
+			Options.MediaVideo = checkBoxMediaVideo.Checked;
+			Options.MediaWheel = checkBoxMediaWheel.Checked;
+			Options.MediaMarquee = checkBoxMediaMarquee.Checked;
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}

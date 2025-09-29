@@ -53,9 +53,9 @@ namespace RetroScrap2000
 				textBoxRomOldRelease.Text = "";
 			starRatingControlRomOld.Rating = _current.RatingStars;
 			// Busy-Platzhalter anzeigen
-			if (!string.IsNullOrEmpty(_current.MediaCoverPath))
+			if (!string.IsNullOrEmpty(_current.MediaThumbnailPath))
 				UiTools.ShowBusyPreview(pictureBoxRomOldFront, "Cover …");
-			if (!string.IsNullOrEmpty(_current.MediaScreenshotPath))
+			if (!string.IsNullOrEmpty(_current.MediaImageBoxPath))
 				UiTools.ShowBusyPreview(pictureBoxRomOldScreen, "Screenshot …");
 			if (!string.IsNullOrEmpty(_current.MediaVideoPath))
 				UiTools.ShowBusyPreview(pictureBoxRomOldVideo, "Video …");
@@ -63,20 +63,20 @@ namespace RetroScrap2000
 			try
 			{
 				// asynchron + gecached
-				var coverTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaCoverPath, CancellationToken.None);
-				var shotTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaScreenshotPath, CancellationToken.None);
+				var coverTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaThumbnailPath, CancellationToken.None);
+				var shotTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaImageBoxPath, CancellationToken.None);
 				var prevTask = ImageTools.LoadVideoPreviewAsync(_systemRomPath, _current, CancellationToken.None);
 
 				// Ergebnisse zuweisen + Busy ausblenden
 				var cover = await coverTask;
 				UiTools.HideBusyPreview(pictureBoxRomOldFront);
 				pictureBoxRomOldFront.Image = cover;
-				pictureBoxRomOldFront.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaCoverPath);
+				pictureBoxRomOldFront.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaThumbnailPath);
 
 				var shot = await shotTask;
 				UiTools.HideBusyPreview(pictureBoxRomOldScreen);
 				pictureBoxRomOldScreen.Image = shot;
-				pictureBoxRomOldScreen.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaScreenshotPath);
+				pictureBoxRomOldScreen.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaImageBoxPath);
 
 				var prev = await prevTask; // prev?.overlay = Image, prev?.videoAbsPath = Pfad fürs Klicken
 				UiTools.HideBusyPreview(pictureBoxRomOldVideo);
@@ -141,17 +141,17 @@ namespace RetroScrap2000
 				checkBoxRating.Checked = _scraped.RatingNormalized.HasValue && _current.Rating != _scraped.RatingNormalized;
 				checkBoxRelease.Checked = _scraped.ReleaseDate != _current.ReleaseDate;
 
-				string? currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaCoverPath);
+				string? currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaThumbnailPath);
 				checkBoxMediaFront.Checked = ( 
 					!string.IsNullOrEmpty(Selection.MediaBoxTempPath) 
-					&& ( string.IsNullOrEmpty(_current.MediaCoverPath) 
+					&& ( string.IsNullOrEmpty(_current.MediaThumbnailPath) 
 						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
 					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaBoxTempPath);
 
-				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaScreenshotPath);
+				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaImageBoxPath);
 				checkBoxMediaScreen.Checked = (
 					!string.IsNullOrEmpty(Selection.MediaScreenTempPath) 
-					&& ( string.IsNullOrEmpty(_current.MediaScreenshotPath)
+					&& ( string.IsNullOrEmpty(_current.MediaImageBoxPath)
 						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
 					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaScreenTempPath);
 

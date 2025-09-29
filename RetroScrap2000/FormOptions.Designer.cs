@@ -53,6 +53,17 @@
 			radioButtonRetroArch = new RadioButton();
 			radioButtonBatocera = new RadioButton();
 			tabPageScrap = new TabPage();
+			tabPageScrapData = new TabPage();
+			groupBox5 = new GroupBox();
+			checkBoxMediaMap = new CheckBox();
+			checkBoxMediaManual = new CheckBox();
+			checkBoxMediaVideo = new CheckBox();
+			checkBoxMediaThumbnail = new CheckBox();
+			checkBoxMediaImageBox = new CheckBox();
+			checkBoxMediaWheel = new CheckBox();
+			checkBoxMediaScreenshot = new CheckBox();
+			checkBoxMediaMarquee = new CheckBox();
+			checkBoxMediaFanart = new CheckBox();
 			tabPageAppInfo = new TabPage();
 			tableLayoutPanelInfo = new TableLayoutPanel();
 			tableLayoutPanelIcons = new TableLayoutPanel();
@@ -77,17 +88,6 @@
 			label3 = new Label();
 			labelInfoProduct = new Label();
 			linkLabel1 = new LinkLabel();
-			tabPageScrapData = new TabPage();
-			checkBox1 = new CheckBox();
-			checkBox2 = new CheckBox();
-			groupBox5 = new GroupBox();
-			checkBox3 = new CheckBox();
-			checkBox4 = new CheckBox();
-			checkBox5 = new CheckBox();
-			checkBox6 = new CheckBox();
-			checkBox7 = new CheckBox();
-			checkBox8 = new CheckBox();
-			checkBox9 = new CheckBox();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
 			tabControlOptions.SuspendLayout();
@@ -96,6 +96,8 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxDonation).BeginInit();
 			groupBox3.SuspendLayout();
 			tabPageScrap.SuspendLayout();
+			tabPageScrapData.SuspendLayout();
+			groupBox5.SuspendLayout();
 			tabPageAppInfo.SuspendLayout();
 			tableLayoutPanelInfo.SuspendLayout();
 			tableLayoutPanelIcons.SuspendLayout();
@@ -104,8 +106,6 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxAppIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).BeginInit();
 			tableLayoutPanelAppText.SuspendLayout();
-			tabPageScrapData.SuspendLayout();
-			groupBox5.SuspendLayout();
 			SuspendLayout();
 			// 
 			// buttonCancel
@@ -211,10 +211,10 @@
 			// 
 			// groupBox4
 			// 
+			resources.ApplyResources(groupBox4, "groupBox4");
 			groupBox4.Controls.Add(linkLabelDonate);
 			groupBox4.Controls.Add(labelDonText);
 			groupBox4.Controls.Add(pictureBoxDonation);
-			resources.ApplyResources(groupBox4, "groupBox4");
 			groupBox4.Name = "groupBox4";
 			groupBox4.TabStop = false;
 			// 
@@ -237,11 +237,11 @@
 			// 
 			// groupBox3
 			// 
+			resources.ApplyResources(groupBox3, "groupBox3");
 			groupBox3.Controls.Add(label10);
 			groupBox3.Controls.Add(buttonInfoRetroPie);
 			groupBox3.Controls.Add(radioButtonRetroArch);
 			groupBox3.Controls.Add(radioButtonBatocera);
-			resources.ApplyResources(groupBox3, "groupBox3");
 			groupBox3.Name = "groupBox3";
 			groupBox3.TabStop = false;
 			// 
@@ -277,6 +277,82 @@
 			resources.ApplyResources(tabPageScrap, "tabPageScrap");
 			tabPageScrap.Name = "tabPageScrap";
 			tabPageScrap.UseVisualStyleBackColor = true;
+			// 
+			// tabPageScrapData
+			// 
+			tabPageScrapData.Controls.Add(groupBox5);
+			resources.ApplyResources(tabPageScrapData, "tabPageScrapData");
+			tabPageScrapData.Name = "tabPageScrapData";
+			tabPageScrapData.UseVisualStyleBackColor = true;
+			// 
+			// groupBox5
+			// 
+			groupBox5.Controls.Add(checkBoxMediaMap);
+			groupBox5.Controls.Add(checkBoxMediaManual);
+			groupBox5.Controls.Add(checkBoxMediaVideo);
+			groupBox5.Controls.Add(checkBoxMediaThumbnail);
+			groupBox5.Controls.Add(checkBoxMediaImageBox);
+			groupBox5.Controls.Add(checkBoxMediaWheel);
+			groupBox5.Controls.Add(checkBoxMediaScreenshot);
+			groupBox5.Controls.Add(checkBoxMediaMarquee);
+			groupBox5.Controls.Add(checkBoxMediaFanart);
+			resources.ApplyResources(groupBox5, "groupBox5");
+			groupBox5.Name = "groupBox5";
+			groupBox5.TabStop = false;
+			// 
+			// checkBoxMediaMap
+			// 
+			resources.ApplyResources(checkBoxMediaMap, "checkBoxMediaMap");
+			checkBoxMediaMap.Name = "checkBoxMediaMap";
+			checkBoxMediaMap.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaManual
+			// 
+			resources.ApplyResources(checkBoxMediaManual, "checkBoxMediaManual");
+			checkBoxMediaManual.Name = "checkBoxMediaManual";
+			checkBoxMediaManual.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaVideo
+			// 
+			resources.ApplyResources(checkBoxMediaVideo, "checkBoxMediaVideo");
+			checkBoxMediaVideo.Name = "checkBoxMediaVideo";
+			checkBoxMediaVideo.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaThumbnail
+			// 
+			resources.ApplyResources(checkBoxMediaThumbnail, "checkBoxMediaThumbnail");
+			checkBoxMediaThumbnail.Name = "checkBoxMediaThumbnail";
+			checkBoxMediaThumbnail.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaImageBox
+			// 
+			resources.ApplyResources(checkBoxMediaImageBox, "checkBoxMediaImageBox");
+			checkBoxMediaImageBox.Name = "checkBoxMediaImageBox";
+			checkBoxMediaImageBox.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaWheel
+			// 
+			resources.ApplyResources(checkBoxMediaWheel, "checkBoxMediaWheel");
+			checkBoxMediaWheel.Name = "checkBoxMediaWheel";
+			checkBoxMediaWheel.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaScreenshot
+			// 
+			resources.ApplyResources(checkBoxMediaScreenshot, "checkBoxMediaScreenshot");
+			checkBoxMediaScreenshot.Name = "checkBoxMediaScreenshot";
+			checkBoxMediaScreenshot.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaMarquee
+			// 
+			resources.ApplyResources(checkBoxMediaMarquee, "checkBoxMediaMarquee");
+			checkBoxMediaMarquee.Name = "checkBoxMediaMarquee";
+			checkBoxMediaMarquee.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaFanart
+			// 
+			resources.ApplyResources(checkBoxMediaFanart, "checkBoxMediaFanart");
+			checkBoxMediaFanart.Name = "checkBoxMediaFanart";
+			checkBoxMediaFanart.UseVisualStyleBackColor = true;
 			// 
 			// tabPageAppInfo
 			// 
@@ -435,88 +511,6 @@
 			linkLabel1.Name = "linkLabel1";
 			linkLabel1.TabStop = true;
 			// 
-			// tabPageScrapData
-			// 
-			tabPageScrapData.Controls.Add(groupBox5);
-			resources.ApplyResources(tabPageScrapData, "tabPageScrapData");
-			tabPageScrapData.Name = "tabPageScrapData";
-			tabPageScrapData.UseVisualStyleBackColor = true;
-			// 
-			// checkBox1
-			// 
-			resources.ApplyResources(checkBox1, "checkBox1");
-			checkBox1.Name = "checkBox1";
-			checkBox1.UseVisualStyleBackColor = true;
-			// 
-			// checkBox2
-			// 
-			resources.ApplyResources(checkBox2, "checkBox2");
-			checkBox2.Name = "checkBox2";
-			checkBox2.UseVisualStyleBackColor = true;
-			// 
-			// groupBox5
-			// 
-			groupBox5.Controls.Add(checkBox9);
-			groupBox5.Controls.Add(checkBox8);
-			groupBox5.Controls.Add(checkBox7);
-			groupBox5.Controls.Add(checkBox6);
-			groupBox5.Controls.Add(checkBox5);
-			groupBox5.Controls.Add(checkBox4);
-			groupBox5.Controls.Add(checkBox3);
-			groupBox5.Controls.Add(checkBox1);
-			groupBox5.Controls.Add(checkBox2);
-			resources.ApplyResources(groupBox5, "groupBox5");
-			groupBox5.Name = "groupBox5";
-			groupBox5.TabStop = false;
-			// 
-			// checkBox3
-			// 
-			resources.ApplyResources(checkBox3, "checkBox3");
-			checkBox3.Name = "checkBox3";
-			checkBox3.UseVisualStyleBackColor = true;
-			// 
-			// checkBox4
-			// 
-			resources.ApplyResources(checkBox4, "checkBox4");
-			checkBox4.Name = "checkBox4";
-			checkBox4.UseVisualStyleBackColor = true;
-			// 
-			// checkBox5
-			// 
-			resources.ApplyResources(checkBox5, "checkBox5");
-			checkBox5.Checked = true;
-			checkBox5.CheckState = CheckState.Checked;
-			checkBox5.Name = "checkBox5";
-			checkBox5.UseVisualStyleBackColor = true;
-			// 
-			// checkBox6
-			// 
-			resources.ApplyResources(checkBox6, "checkBox6");
-			checkBox6.Checked = true;
-			checkBox6.CheckState = CheckState.Checked;
-			checkBox6.Name = "checkBox6";
-			checkBox6.UseVisualStyleBackColor = true;
-			// 
-			// checkBox7
-			// 
-			resources.ApplyResources(checkBox7, "checkBox7");
-			checkBox7.Checked = true;
-			checkBox7.CheckState = CheckState.Checked;
-			checkBox7.Name = "checkBox7";
-			checkBox7.UseVisualStyleBackColor = true;
-			// 
-			// checkBox8
-			// 
-			resources.ApplyResources(checkBox8, "checkBox8");
-			checkBox8.Name = "checkBox8";
-			checkBox8.UseVisualStyleBackColor = true;
-			// 
-			// checkBox9
-			// 
-			resources.ApplyResources(checkBox9, "checkBox9");
-			checkBox9.Name = "checkBox9";
-			checkBox9.UseVisualStyleBackColor = true;
-			// 
 			// FormOptions
 			// 
 			AcceptButton = buttonOK;
@@ -538,6 +532,9 @@
 			groupBox3.ResumeLayout(false);
 			groupBox3.PerformLayout();
 			tabPageScrap.ResumeLayout(false);
+			tabPageScrapData.ResumeLayout(false);
+			groupBox5.ResumeLayout(false);
+			groupBox5.PerformLayout();
 			tabPageAppInfo.ResumeLayout(false);
 			tableLayoutPanelInfo.ResumeLayout(false);
 			tableLayoutPanelIcons.ResumeLayout(false);
@@ -547,9 +544,6 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).EndInit();
 			tableLayoutPanelAppText.ResumeLayout(false);
 			tableLayoutPanelAppText.PerformLayout();
-			tabPageScrapData.ResumeLayout(false);
-			groupBox5.ResumeLayout(false);
-			groupBox5.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -605,14 +599,14 @@
 		private LinkLabel linkLabelDonate;
 		private TabPage tabPageScrapData;
 		private GroupBox groupBox5;
-		private CheckBox checkBox4;
-		private CheckBox checkBox3;
-		private CheckBox checkBox1;
-		private CheckBox checkBox2;
-		private CheckBox checkBox6;
-		private CheckBox checkBox5;
-		private CheckBox checkBox7;
-		private CheckBox checkBox9;
-		private CheckBox checkBox8;
+		private CheckBox checkBoxMediaWheel;
+		private CheckBox checkBoxMediaScreenshot;
+		private CheckBox checkBoxMediaMarquee;
+		private CheckBox checkBoxMediaFanart;
+		private CheckBox checkBoxMediaThumbnail;
+		private CheckBox checkBoxMediaImageBox;
+		private CheckBox checkBoxMediaVideo;
+		private CheckBox checkBoxMediaMap;
+		private CheckBox checkBoxMediaManual;
 	}
 }

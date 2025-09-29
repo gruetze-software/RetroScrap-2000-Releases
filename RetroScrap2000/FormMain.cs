@@ -629,45 +629,45 @@ namespace RetroScrap2000
 
 		public async void NewMediaAsync(PictureBox pb)
 		{
-			bool video = pb == pictureBoxImgVideo;
-			OpenFileDialog ofd = new OpenFileDialog();
-			if (video)
-			{
-				ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
-				ofd.Filter = "MP4 (*.mp4)|*.mp4";
-			}
-			else
-			{
-				ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
-				ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
-			}
-			if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null)
-			{
-				var baseDir = GetSelectedRomPath();
-				if (string.IsNullOrEmpty(baseDir))
-					return;
+			//bool video = pb == pictureBoxImgVideo;
+			//OpenFileDialog ofd = new OpenFileDialog();
+			//if (video)
+			//{
+			//	ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
+			//	ofd.Filter = "MP4 (*.mp4)|*.mp4";
+			//}
+			//else
+			//{
+			//	ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
+			//	ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
+			//}
+			//if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null)
+			//{
+			//	var baseDir = GetSelectedRomPath();
+			//	if (string.IsNullOrEmpty(baseDir))
+			//		return;
 
-				if (pb == pictureBoxImgBox)
-				{
-					MoveOrCopyScrapImageCoverRom(false, ofd.FileName, baseDir);
-					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaCoverPath);
-				}
-				else if (pb == pictureBoxImgScreenshot)
-				{
-					MoveOrCopyScrapImageScreenshotRom(false, ofd.FileName, baseDir);
-					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaScreenshotPath);
-				}
-				else if (pb == pictureBoxImgVideo)
-				{
-					MoveOrCopyScrapVideoRom(false, ofd.FileName, baseDir);
-					pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaVideoPath);
-				}
-				else
-					Debug.Assert(false);
+			//	if (pb == pictureBoxImgBox)
+			//	{
+			//		MoveOrCopyScrapImageCoverRom(false, ofd.FileName, baseDir);
+			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaThumbnailPath);
+			//	}
+			//	else if (pb == pictureBoxImgScreenshot)
+			//	{
+			//		MoveOrCopyScrapImageScreenshotRom(false, ofd.FileName, baseDir);
+			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaImageBoxPath);
+			//	}
+			//	else if (pb == pictureBoxImgVideo)
+			//	{
+			//		MoveOrCopyScrapVideoRom(false, ofd.FileName, baseDir);
+			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaVideoPath);
+			//	}
+			//	else
+			//		Debug.Assert(false);
 
-				await SaveRomAsync();
-				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
-			}
+			//	await SaveRomAsync();
+			//	await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
+			//}
 		}
 
 		private void MediaNeuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -717,8 +717,8 @@ namespace RetroScrap2000
 			it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
 
 			// Verwende die VORHER BERECHNETEN Status-Werte
-			it.SubItems.Add(getIconIndex(g.MediaCoverPath, status.CoverExists));
-			it.SubItems.Add(getIconIndex(g.MediaScreenshotPath, status.ScreenshotExists));
+			it.SubItems.Add(getIconIndex(g.MediaThumbnailPath, status.CoverExists));
+			it.SubItems.Add(getIconIndex(g.MediaImageBoxPath, status.ScreenshotExists));
 			it.SubItems.Add(getIconIndex(g.MediaVideoPath, status.VideoExists));
 
 			it.Tag = g;
@@ -767,8 +767,8 @@ namespace RetroScrap2000
 			var statusTasks = roms!.Games.Select(g => Task.Run(() => new RomStatus
 			{
 				Game = g,
-				CoverExists = checkExists(g.MediaCoverPath),
-				ScreenshotExists = checkExists(g.MediaScreenshotPath),
+				CoverExists = checkExists(g.MediaThumbnailPath),
+				ScreenshotExists = checkExists(g.MediaImageBoxPath),
 				VideoExists = checkExists(g.MediaVideoPath)
 			})).ToList();
 
@@ -869,8 +869,8 @@ namespace RetroScrap2000
 					var romstatus = new RomStatus
 					{
 						Game = _selectedRom,
-						CoverExists = checkExists(_selectedRom.MediaCoverPath),
-						ScreenshotExists = checkExists(_selectedRom.MediaScreenshotPath),
+						CoverExists = checkExists(_selectedRom.MediaThumbnailPath),
+						ScreenshotExists = checkExists(_selectedRom.MediaImageBoxPath),
 						VideoExists = checkExists(_selectedRom.MediaVideoPath)
 					};
 
@@ -981,7 +981,7 @@ namespace RetroScrap2000
 			var result = CopyOrMoveMediaFileToRom(movefile, sourceFile, "./media/box2dfront/", basedir);
 
 			if (result.ok && !string.IsNullOrEmpty(result.file))
-				_selectedRom!.MediaCoverPath = result.file;
+				_selectedRom!.MediaThumbnailPath = result.file;
 		}
 
 		private void MoveOrCopyScrapImageScreenshotRom(bool movefile, string sourceFile, string basedir)
@@ -989,7 +989,7 @@ namespace RetroScrap2000
 			var result = CopyOrMoveMediaFileToRom(movefile, sourceFile, "./media/images/", basedir);
 
 			if (result.ok && !string.IsNullOrEmpty(result.file))
-				_selectedRom!.MediaScreenshotPath = result.file;
+				_selectedRom!.MediaImageBoxPath = result.file;
 		}
 
 		private void MoveOrCopyScrapVideoRom(bool movefile, string sourceFile, string basedir)
@@ -1062,17 +1062,128 @@ namespace RetroScrap2000
 			catch (OperationCanceledException) { /* ok */ }
 		}
 
-		private async Task SetRomOnGuiAsync(GameEntry? rom, CancellationToken ct)
+		private async Task UpdateMediaTabsAsync(GameEntry? rom, string baseDir, CancellationToken ct)
 		{
-			pictureBoxImgBox.Image = null;
-			pictureBoxImgBox.Tag = null;
-			pictureBoxImgScreenshot.Image = null;
-			pictureBoxImgScreenshot.Tag = null;
-			pictureBoxImgVideo.Image = null;
-			pictureBoxImgVideo.Tag = null;
+			// Alle vorhandenen TabPages entfernen, um eine saubere Ansicht zu gewährleisten
+			tabControlRomMedia.TabPages.Clear();
 
 			if (rom == null)
 			{
+				return;
+			}
+
+			// Eine Liste der potenziellen Medien und ihrer Pfade erstellen
+			var mediaMap = new Dictionary<string, (eMediaType type, string? path)>
+			{
+					{ "Box 2D", (eMediaType.BoxImage, rom.MediaImageBoxPath) },
+					{ "Thumbnail", (eMediaType.Thumbnail, rom.MediaThumbnailPath ) },
+					{ "Screenshot", (eMediaType.Screenshot, rom.MediaScreenshotPath) },
+					{ "Video", (eMediaType.Video, rom.MediaVideoPath) },
+					{ "Fanart", (eMediaType.Fanart, rom.MediaFanArtPath) },
+					{ "Marquee", (eMediaType.Marquee, rom.MediaMarqueePath) },
+					{ "Wheel", (eMediaType.Wheel, rom.MediaWheelPath) },
+					{ "Manual", (eMediaType.Manual, rom.MediaManualPath) },
+					{ "Map", (eMediaType.Map, rom.MediaMapPath) },
+					// Füge hier alle weiteren Medientypen hinzu, die du unterstützen möchtest
+			};
+
+			int tabIndex = 0;
+
+			// Durch die Map iterieren und Tabs nur für vorhandene Medien erstellen
+			foreach (var kvp in mediaMap)
+			{
+				string mediaName = kvp.Key;
+				string? mediaPath = kvp.Value.path;
+
+				// Nur wenn der Pfad vorhanden (nicht null, nicht leer) ist, einen Tab erstellen
+				if (!string.IsNullOrEmpty(mediaPath))
+				{
+					await CreateAndAddMediaTabAsync(rom, mediaName, baseDir, mediaPath, kvp.Value.type, tabIndex, ct);
+					tabIndex++;
+				}
+			}
+		}
+
+		private async Task CreateAndAddMediaTabAsync(GameEntry rom, string title, string baseDir, string mediaPath, 
+			eMediaType type, int index, CancellationToken ct)
+		{
+			// 1. TabPage erstellen
+			var tabPage = new TabPage(title);
+			tabPage.Name = title.Replace(" ", "");
+			tabPage.Tag = type;
+
+			// 2. PictureBox erstellen
+			var pictureBox = new PictureBox
+			{
+				// Name der PictureBox zur späteren Identifizierung (optional)
+				Name = "pb" + title.Replace(" ", ""),
+				Dock = DockStyle.Fill,
+				SizeMode = PictureBoxSizeMode.Zoom
+			};
+			pictureBox.Click += PictureBoxMedia_Click; // Gemeinsamer Click-Handler
+			pictureBox.Cursor = Cursors.Hand;
+
+			// 3. PictureBox zum Tab hinzufügen
+			tabPage.Controls.Add(pictureBox);
+
+			// 4. Tab zum TabControl hinzufügen
+			tabControlRomMedia.TabPages.Add(tabPage);
+
+			// 5. Busy-Platzhalter anzeigen
+			UiTools.ShowBusyPreview(pictureBox, $"{title} …");
+
+			try
+			{
+				// 6. asynchron + gecached Medien laden
+				if (type != eMediaType.Video && type != eMediaType.Manual)
+				{
+					var mediatask = ImageTools.LoadImageCachedAsync(baseDir, mediaPath, ct);
+					var media = await mediatask;
+					if (!ct.IsCancellationRequested)
+					{
+						UiTools.HideBusyPreview(pictureBox);
+						pictureBox.Image = media;
+						pictureBox.Tag = FileTools.ResolveMediaPath(baseDir, mediaPath);
+					}
+				}
+				else if (type == eMediaType.Manual)
+				{
+					// TODO
+					UiTools.ShowBusyPreview(pictureBox, $"Under Construction!");
+				}
+				else
+				{
+					var prevTask = ImageTools.LoadVideoPreviewAsync(baseDir, rom, ct);
+					var video = await prevTask;
+					if (!ct.IsCancellationRequested)
+					{
+						UiTools.HideBusyPreview(pictureBox);
+						pictureBox.Image = video.Value.overlay;
+						pictureBox.Tag = video.Value.videoAbsPath;
+					}
+				}				
+			}
+			catch 
+			{
+				UiTools.HideBusyPreview(pictureBox);
+				throw;
+			}
+		}
+
+		private void PictureBoxMedia_Click(object? sender, EventArgs e)
+		{
+			if ( sender is PictureBox pb)
+			{
+				if (pb.Image != null && pb.Tag != null)
+					UiTools.OpenPicBoxTagFile(pb);
+			}
+		}
+
+		private async Task SetRomOnGuiAsync(GameEntry? rom, CancellationToken ct)
+		{
+			if (rom == null)
+			{
+				tabControlRomMedia.TabPages.Clear();
 				textBoxRomName.Text = string.Empty;
 				textBoxRomDesc.Text = string.Empty;
 				textBoxRomDetailsReleaseDate.Text = string.Empty;
@@ -1094,52 +1205,12 @@ namespace RetroScrap2000
 			textBoxRomDetailsAnzPlayer.Text = rom.Players ?? "";
 			starRatingControlRom.Rating = rom.RatingStars;
 
-			// Busy-Platzhalter anzeigen
-			UiTools.ShowBusyPreview(pictureBoxImgBox, "Cover …");
-			UiTools.ShowBusyPreview(pictureBoxImgScreenshot, "Screenshot …");
-			UiTools.ShowBusyPreview(pictureBoxImgVideo, "Video …");
-
 			var baseDir = GetSelectedRomPath();
 			if (string.IsNullOrEmpty(baseDir))
 				return;
 
-			try
-			{
-				// asynchron + gecached
-				var coverTask = ImageTools.LoadImageCachedAsync(baseDir, rom.MediaCoverPath, ct);
-				var shotTask = ImageTools.LoadImageCachedAsync(baseDir, rom.MediaScreenshotPath, ct);
-				var prevTask = ImageTools.LoadVideoPreviewAsync(baseDir, rom, ct);
-
-				var cover = await coverTask;
-				if (!ct.IsCancellationRequested)
-				{
-					UiTools.HideBusyPreview(pictureBoxImgBox);
-					pictureBoxImgBox.Image = cover;
-					pictureBoxImgBox.Tag = FileTools.ResolveMediaPath(baseDir, rom.MediaCoverPath);
-				}
-
-				var shot = await shotTask;
-				if (!ct.IsCancellationRequested)
-				{
-					UiTools.HideBusyPreview(pictureBoxImgScreenshot);
-					pictureBoxImgScreenshot.Image = shot;
-					pictureBoxImgScreenshot.Tag = FileTools.ResolveMediaPath(baseDir, rom.MediaScreenshotPath);
-				}
-
-				var prev = await prevTask;
-				if (!ct.IsCancellationRequested)
-				{
-					UiTools.HideBusyPreview(pictureBoxImgVideo);
-					pictureBoxImgVideo.Image = prev?.overlay;
-					pictureBoxImgVideo.Tag = prev?.videoAbsPath; // Klick → Standardplayer
-					pictureBoxImgVideo.Cursor = (prev?.overlay != null) ? Cursors.Hand : Cursors.Default;
-				}
-			}
-			catch (OperationCanceledException)
-			{
-				// okay – wird vom Aufrufer gefangen
-				throw;
-			}
+			// Medien TabControl initialisieren
+			await UpdateMediaTabsAsync(rom, baseDir, ct);
 		}
 
 		private void SetStatusToolStripLabel(string text)

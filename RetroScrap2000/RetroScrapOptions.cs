@@ -9,17 +9,79 @@ using System.Threading.Tasks;
 
 namespace RetroScrap2000
 {
+	public enum eMediaType
+	{
+		BoxImage = 0,
+		Thumbnail,
+		Video,
+		Marquee,
+		Fanart,
+		Screenshot,
+		Wheel,
+		Manual,
+		Map,
+		Unknown
+	}
+
 	public class RetroScrapOptions
 	{
 		public string? RomPath { get; set; }
 		public string? Language { get; set; }
 		public string? ApiUser { get; set; }
+		public bool? MediaBoxImage { get; set; }
+		public bool? MediaThumbnail { get; set; }
+		public bool? MediaVideo { get; set; }
+		public bool? MediaMarquee { get; set; }
+		public bool? MediaFanart { get; set; }
+		public bool? MediaScreenshot { get; set; }
+		public bool? MediaWheel { get; set; }
+		public bool? MediaManual { get; set; }
+		public bool? MediaMap { get; set; }
+
+
 		[JsonIgnore]
 		public PasswordVault? Secret { get; set; }
 
 		public RetroScrapOptions() 
 		{ 
 			Secret = new PasswordVault(Path.Combine(GetOptionsPath(), "vault.dat"));
+			MediaBoxImage = true;
+			MediaThumbnail = true;
+			MediaVideo = true;
+		}
+
+		public static string GetMediaFolder(eMediaType type)
+		{
+			return type switch
+			{
+				eMediaType.BoxImage => "image",
+				eMediaType.Thumbnail => "thumb",
+				eMediaType.Video => "video",
+				eMediaType.Marquee => "marquee",
+				eMediaType.Fanart => "fanart",
+				eMediaType.Screenshot => "screenshot",
+				eMediaType.Wheel => "wheel",
+				eMediaType.Manual => "manual",
+				eMediaType.Map => "map",
+				_ => "unknown",
+			};
+		}
+
+		public bool IsMediaTypeEnabled(eMediaType type)
+		{
+			return type switch
+			{
+				eMediaType.BoxImage => MediaBoxImage ?? false,
+				eMediaType.Thumbnail => MediaThumbnail ?? false,
+				eMediaType.Video => MediaVideo ?? false,
+				eMediaType.Marquee => MediaMarquee ?? false,
+				eMediaType.Fanart => MediaFanart ?? false,
+				eMediaType.Screenshot => MediaScreenshot ?? false,
+				eMediaType.Wheel => MediaWheel ?? false,
+				eMediaType.Manual => MediaManual ?? false,
+				eMediaType.Map => MediaMap ?? false,
+				_ => false,
+			};
 		}
 
 		private static string GetOptionsPath()

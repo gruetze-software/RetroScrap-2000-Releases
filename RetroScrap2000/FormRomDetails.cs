@@ -38,11 +38,11 @@ namespace RetroScrap2000
 			listViewDetails.Items.Add(item);
 
 			item = new ListViewItem("Path Cover:");
-			item.SubItems.Add(_rom.MediaCoverPath);
+			item.SubItems.Add(_rom.MediaThumbnailPath);
 			listViewDetails.Items.Add(item);
 
 			item = new ListViewItem("Path Screen:");
-			item.SubItems.Add(_rom.MediaScreenshotPath);
+			item.SubItems.Add(_rom.MediaImageBoxPath);
 			listViewDetails.Items.Add(item);
 
 			item = new ListViewItem("Path Video:");

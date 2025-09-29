@@ -67,17 +67,7 @@
 			pictureBoxRomSystem = new PictureBox();
 			listBoxSystem = new ListBox();
 			textBoxRomDesc = new TextBox();
-			tableLayoutPanelRomMedia = new TableLayoutPanel();
-			pictureBoxImgBox = new PictureBox();
-			contextMenuStripMedia = new ContextMenuStrip(components);
-			showToolStripMenuItem = new ToolStripMenuItem();
-			addToolStripMenuItem = new ToolStripMenuItem();
-			deleteToolStripMenuItem = new ToolStripMenuItem();
-			label6 = new Label();
-			pictureBoxImgScreenshot = new PictureBox();
-			label7 = new Label();
-			pictureBoxImgVideo = new PictureBox();
-			label8 = new Label();
+			tabControlRomMedia = new TabControl();
 			tableLayoutPanelRomDetails = new TableLayoutPanel();
 			textBoxRomDetailsAnzPlayer = new TextBox();
 			label10 = new Label();
@@ -93,6 +83,10 @@
 			buttonRomSave = new Button();
 			buttonRomScrap = new Button();
 			starRatingControlRom = new StarRatingControl();
+			contextMenuStripMedia = new ContextMenuStrip(components);
+			showToolStripMenuItem = new ToolStripMenuItem();
+			addToolStripMenuItem = new ToolStripMenuItem();
+			deleteToolStripMenuItem = new ToolStripMenuItem();
 			statusStripMain = new StatusStrip();
 			toolStripStatusLabelMain = new ToolStripStatusLabel();
 			((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
@@ -114,12 +108,8 @@
 			tableLayoutPanelRightInnen.SuspendLayout();
 			tableLayoutPanelSystem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxRomSystem).BeginInit();
-			tableLayoutPanelRomMedia.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgBox).BeginInit();
-			contextMenuStripMedia.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgScreenshot).BeginInit();
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgVideo).BeginInit();
 			tableLayoutPanelRomDetails.SuspendLayout();
+			contextMenuStripMedia.SuspendLayout();
 			statusStripMain.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -333,7 +323,7 @@
 			// 
 			// splitContainerRightRom.Panel2
 			// 
-			splitContainerRightRom.Panel2.Controls.Add(tableLayoutPanelRomMedia);
+			splitContainerRightRom.Panel2.Controls.Add(tabControlRomMedia);
 			// 
 			// tableLayoutPanelRightInnen
 			// 
@@ -374,83 +364,12 @@
 			resources.ApplyResources(textBoxRomDesc, "textBoxRomDesc");
 			textBoxRomDesc.Name = "textBoxRomDesc";
 			// 
-			// tableLayoutPanelRomMedia
+			// tabControlRomMedia
 			// 
-			resources.ApplyResources(tableLayoutPanelRomMedia, "tableLayoutPanelRomMedia");
-			tableLayoutPanelRomMedia.Controls.Add(pictureBoxImgBox, 0, 1);
-			tableLayoutPanelRomMedia.Controls.Add(label6, 0, 0);
-			tableLayoutPanelRomMedia.Controls.Add(pictureBoxImgScreenshot, 1, 1);
-			tableLayoutPanelRomMedia.Controls.Add(label7, 1, 0);
-			tableLayoutPanelRomMedia.Controls.Add(pictureBoxImgVideo, 2, 1);
-			tableLayoutPanelRomMedia.Controls.Add(label8, 2, 0);
-			tableLayoutPanelRomMedia.Name = "tableLayoutPanelRomMedia";
-			// 
-			// pictureBoxImgBox
-			// 
-			pictureBoxImgBox.BackColor = SystemColors.ControlLight;
-			pictureBoxImgBox.ContextMenuStrip = contextMenuStripMedia;
-			resources.ApplyResources(pictureBoxImgBox, "pictureBoxImgBox");
-			pictureBoxImgBox.Name = "pictureBoxImgBox";
-			pictureBoxImgBox.TabStop = false;
-			pictureBoxImgBox.Click += pictureBoxImgVideo_Click;
-			// 
-			// contextMenuStripMedia
-			// 
-			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
-			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { showToolStripMenuItem, addToolStripMenuItem, deleteToolStripMenuItem });
-			contextMenuStripMedia.Name = "contextMenuStripMedia";
-			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");
-			// 
-			// showToolStripMenuItem
-			// 
-			showToolStripMenuItem.Name = "showToolStripMenuItem";
-			resources.ApplyResources(showToolStripMenuItem, "showToolStripMenuItem");
-			showToolStripMenuItem.Click += MediaAnzeigenToolStripMenuItem_Click;
-			// 
-			// addToolStripMenuItem
-			// 
-			addToolStripMenuItem.Name = "addToolStripMenuItem";
-			resources.ApplyResources(addToolStripMenuItem, "addToolStripMenuItem");
-			addToolStripMenuItem.Click += MediaNeuToolStripMenuItem_Click;
-			// 
-			// deleteToolStripMenuItem
-			// 
-			resources.ApplyResources(deleteToolStripMenuItem, "deleteToolStripMenuItem");
-			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			deleteToolStripMenuItem.Click += MediaLöschenToolStripMenuItem_Click;
-			// 
-			// label6
-			// 
-			resources.ApplyResources(label6, "label6");
-			label6.Name = "label6";
-			// 
-			// pictureBoxImgScreenshot
-			// 
-			pictureBoxImgScreenshot.BackColor = SystemColors.ControlLight;
-			pictureBoxImgScreenshot.ContextMenuStrip = contextMenuStripMedia;
-			resources.ApplyResources(pictureBoxImgScreenshot, "pictureBoxImgScreenshot");
-			pictureBoxImgScreenshot.Name = "pictureBoxImgScreenshot";
-			pictureBoxImgScreenshot.TabStop = false;
-			pictureBoxImgScreenshot.Click += pictureBoxImgVideo_Click;
-			// 
-			// label7
-			// 
-			resources.ApplyResources(label7, "label7");
-			label7.Name = "label7";
-			// 
-			// pictureBoxImgVideo
-			// 
-			pictureBoxImgVideo.BackColor = SystemColors.ControlLight;
-			pictureBoxImgVideo.ContextMenuStrip = contextMenuStripMedia;
-			resources.ApplyResources(pictureBoxImgVideo, "pictureBoxImgVideo");
-			pictureBoxImgVideo.Name = "pictureBoxImgVideo";
-			pictureBoxImgVideo.TabStop = false;
-			pictureBoxImgVideo.Click += pictureBoxImgVideo_Click;
-			// 
-			// label8
-			// 
-			resources.ApplyResources(label8, "label8");
-			label8.Name = "label8";
+			resources.ApplyResources(tabControlRomMedia, "tabControlRomMedia");
+			tabControlRomMedia.Multiline = true;
+			tabControlRomMedia.Name = "tabControlRomMedia";
+			tabControlRomMedia.SelectedIndex = 0;
 			// 
 			// tableLayoutPanelRomDetails
 			// 
@@ -554,6 +473,31 @@
 			starRatingControlRom.StarCount = 5;
 			starRatingControlRom.StarSpacing = 4;
 			// 
+			// contextMenuStripMedia
+			// 
+			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
+			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { showToolStripMenuItem, addToolStripMenuItem, deleteToolStripMenuItem });
+			contextMenuStripMedia.Name = "contextMenuStripMedia";
+			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");
+			// 
+			// showToolStripMenuItem
+			// 
+			showToolStripMenuItem.Name = "showToolStripMenuItem";
+			resources.ApplyResources(showToolStripMenuItem, "showToolStripMenuItem");
+			showToolStripMenuItem.Click += MediaAnzeigenToolStripMenuItem_Click;
+			// 
+			// addToolStripMenuItem
+			// 
+			addToolStripMenuItem.Name = "addToolStripMenuItem";
+			resources.ApplyResources(addToolStripMenuItem, "addToolStripMenuItem");
+			addToolStripMenuItem.Click += MediaNeuToolStripMenuItem_Click;
+			// 
+			// deleteToolStripMenuItem
+			// 
+			resources.ApplyResources(deleteToolStripMenuItem, "deleteToolStripMenuItem");
+			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+			deleteToolStripMenuItem.Click += MediaLöschenToolStripMenuItem_Click;
+			// 
 			// statusStripMain
 			// 
 			statusStripMain.ImageScalingSize = new Size(20, 20);
@@ -595,14 +539,9 @@
 			tableLayoutPanelRightInnen.PerformLayout();
 			tableLayoutPanelSystem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxRomSystem).EndInit();
-			tableLayoutPanelRomMedia.ResumeLayout(false);
-			tableLayoutPanelRomMedia.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgBox).EndInit();
-			contextMenuStripMedia.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgScreenshot).EndInit();
-			((System.ComponentModel.ISupportInitialize)pictureBoxImgVideo).EndInit();
 			tableLayoutPanelRomDetails.ResumeLayout(false);
 			tableLayoutPanelRomDetails.PerformLayout();
+			contextMenuStripMedia.ResumeLayout(false);
 			statusStripMain.ResumeLayout(false);
 			statusStripMain.PerformLayout();
 			ResumeLayout(false);
@@ -622,10 +561,6 @@
 		private TableLayoutPanel tableLayoutPanelRightInnen;
 		private TextBox textBoxRomName;
 		private TextBox textBoxRomDesc;
-		private TableLayoutPanel tableLayoutPanelRomMedia;
-		private PictureBox pictureBoxImgBox;
-		private PictureBox pictureBoxImgScreenshot;
-		private PictureBox pictureBoxImgVideo;
 		private TableLayoutPanel tableLayoutPanelRomDetails;
 		private Label label3;
 		private Label label2;
@@ -634,9 +569,6 @@
 		private Label label5;
 		private TextBox textBoxRomDetailsDeveloper;
 		private Label label4;
-		private Label label6;
-		private Label label7;
-		private Label label8;
 		private Label label9;
 		private TextBox textBoxRomDetailsAnzPlayer;
 		private Label label10;
@@ -676,5 +608,6 @@
 		private ColumnHeader columnRomsCover;
 		private ColumnHeader columnRomsScreen;
 		private ColumnHeader columnRomsVideo;
+		private TabControl tabControlRomMedia;
 	}
 }

@@ -466,11 +466,11 @@ namespace RetroScrap2000
 					// Theoretisch könnte es sein, dass das alte Screenshot und Box in ein und denselben Verzeichnis liegen
 					// Das räumen wir auf und setzen neue Bilder in getrennten Ordnern
 					bool forceimage = false;
-					if (!string.IsNullOrEmpty(game.MediaScreenshotPath) && !string.IsNullOrEmpty(game.MediaCoverPath)
-						&& game.MediaCoverPath == game.MediaScreenshotPath)
+					if (!string.IsNullOrEmpty(game.MediaImageBoxPath) && !string.IsNullOrEmpty(game.MediaThumbnailPath)
+						&& game.MediaThumbnailPath == game.MediaImageBoxPath)
 						forceimage = true;
 
-					string? currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaCoverPath);
+					string? currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaThumbnailPath);
 					if ( coverscPath != null && 
 						 ( forceimage 
 							|| string.IsNullOrEmpty(currentmedia)
@@ -487,7 +487,7 @@ namespace RetroScrap2000
 
 						if (res.ok && !string.IsNullOrEmpty(res.file))
 						{
-							game.MediaCoverPath = res.file;
+							game.MediaThumbnailPath = res.file;
 						}
 						else
 						{
@@ -505,7 +505,7 @@ namespace RetroScrap2000
 						break;
 					}
 
-					currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaScreenshotPath);
+					currentmedia = FileTools.ResolveMediaPath(baseDir, game.MediaImageBoxPath);
 					if ( shotscPath != null && 
 						 ( forceimage
 						|| string.IsNullOrEmpty(currentmedia)
@@ -521,7 +521,7 @@ namespace RetroScrap2000
 
 						if (res.ok && !string.IsNullOrEmpty(res.file))
 						{
-							game.MediaScreenshotPath = res.file;
+							game.MediaImageBoxPath = res.file;
 						}
 						else
 						{
