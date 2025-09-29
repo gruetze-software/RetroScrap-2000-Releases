@@ -133,13 +133,13 @@
     <value>System</value>
   </data>
   <data name="colSystemName.Width" type="System.Int32, mscorlib">
-    <value>190</value>
+    <value>200</value>
   </data>
   <data name="colSystemHersteller.Text" xml:space="preserve">
     <value>Manufacturer</value>
   </data>
   <data name="colSystemHersteller.Width" type="System.Int32, mscorlib">
-    <value>100</value>
+    <value>120</value>
   </data>
   <data name="colSystemVon.Text" xml:space="preserve">
     <value>Start</value>
@@ -149,6 +149,9 @@
   </data>
   <data name="colSystemAnzRoms.Text" xml:space="preserve">
     <value>ROMs</value>
+  </data>
+  <data name="colSystemAnzRoms.Width" type="System.Int32, mscorlib">
+    <value>80</value>
   </data>
   <metadata name="contextMenuStripSystems.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>153, 17</value>
@@ -362,6 +365,15 @@
   </data>
   <data name="colRomsFile.Width" type="System.Int32, mscorlib">
     <value>100</value>
+  </data>
+  <data name="columnRomsCover.Text" xml:space="preserve">
+    <value>Box?</value>
+  </data>
+  <data name="columnRomsScreen.Text" xml:space="preserve">
+    <value>Scr?</value>
+  </data>
+  <data name="columnRomsVideo.Text" xml:space="preserve">
+    <value>Vid?</value>
   </data>
   <metadata name="contextMenuStripRoms.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>356, 21</value>
@@ -620,7 +632,7 @@
     <value>Both</value>
   </data>
   <data name="textBoxRomDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>555, 142</value>
+    <value>555, 139</value>
   </data>
   <data name="textBoxRomDesc.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -647,7 +659,7 @@
     <value>4</value>
   </data>
   <data name="tableLayoutPanelRightInnen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>561, 289</value>
+    <value>561, 286</value>
   </data>
   <data name="tableLayoutPanelRightInnen.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -722,7 +734,7 @@
     <value>3, 23</value>
   </data>
   <data name="pictureBoxImgBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 223</value>
+    <value>180, 221</value>
   </data>
   <data name="pictureBoxImgBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -782,7 +794,7 @@
     <value>189, 23</value>
   </data>
   <data name="pictureBoxImgScreenshot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 223</value>
+    <value>181, 221</value>
   </data>
   <data name="pictureBoxImgScreenshot.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -842,7 +854,7 @@
     <value>376, 23</value>
   </data>
   <data name="pictureBoxImgVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 223</value>
+    <value>182, 221</value>
   </data>
   <data name="pictureBoxImgVideo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -905,7 +917,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanelRomMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>561, 249</value>
+    <value>561, 247</value>
   </data>
   <data name="tableLayoutPanelRomMedia.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -938,10 +950,10 @@
     <value>1</value>
   </data>
   <data name="splitContainerRightRom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 550</value>
+    <value>565, 545</value>
   </data>
   <data name="splitContainerRightRom.SplitterDistance" type="System.Int32, mscorlib">
-    <value>293</value>
+    <value>290</value>
   </data>
   <data name="splitContainerRightRom.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1301,7 +1313,7 @@
     <value>2, 3, 2, 3</value>
   </data>
   <data name="buttonRomSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 57</value>
+    <value>196, 62</value>
   </data>
   <data name="buttonRomSave.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1337,7 +1349,7 @@
     <value>2, 3, 2, 3</value>
   </data>
   <data name="buttonRomScrap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 57</value>
+    <value>196, 62</value>
   </data>
   <data name="buttonRomScrap.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1397,7 +1409,7 @@
     <value>4</value>
   </data>
   <data name="tableLayoutPanelRomDetails.Size" type="System.Drawing.Size, System.Drawing">
-    <value>565, 168</value>
+    <value>565, 173</value>
   </data>
   <data name="tableLayoutPanelRomDetails.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1433,7 +1445,7 @@
     <value>565, 722</value>
   </data>
   <data name="splitContainerRight.SplitterDistance" type="System.Int32, mscorlib">
-    <value>550</value>
+    <value>545</value>
   </data>
   <data name="splitContainerRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2782,6 +2794,24 @@
     <value>colRomsFile</value>
   </data>
   <data name="&gt;&gt;colRomsFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnRomsCover.Name" xml:space="preserve">
+    <value>columnRomsCover</value>
+  </data>
+  <data name="&gt;&gt;columnRomsCover.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnRomsScreen.Name" xml:space="preserve">
+    <value>columnRomsScreen</value>
+  </data>
+  <data name="&gt;&gt;columnRomsScreen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnRomsVideo.Name" xml:space="preserve">
+    <value>columnRomsVideo</value>
+  </data>
+  <data name="&gt;&gt;columnRomsVideo.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;scrapToolStripMenuItem.Name" xml:space="preserve">

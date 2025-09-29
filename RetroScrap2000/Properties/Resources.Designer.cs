@@ -63,9 +63,29 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap check16 {
+            get {
+                object obj = ResourceManager.GetObject("check16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap donate48 {
             get {
                 object obj = ResourceManager.GetObject("donate48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fail16 {
+            get {
+                object obj = ResourceManager.GetObject("fail16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +143,29 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap general32 {
+            get {
+                object obj = ResourceManager.GetObject("general32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap grützesoftware_icon {
             get {
                 object obj = ResourceManager.GetObject("grützesoftware_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap info32 {
+            get {
+                object obj = ResourceManager.GetObject("info32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +186,16 @@ namespace RetroScrap2000.Properties {
         internal static System.Drawing.Bitmap joystickani {
             get {
                 object obj = ResourceManager.GetObject("joystickani", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media32 {
+            get {
+                object obj = ResourceManager.GetObject("media32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -670,6 +720,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking media files....
+        /// </summary>
+        internal static string Txt_Status_Label_CheckingMedia {
+            get {
+                return ResourceManager.GetString("Txt_Status_Label_CheckingMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The retrosystems are being loaded....
         /// </summary>
         internal static string Txt_Status_Label_ReadRoms {
@@ -729,6 +788,16 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_System_Manufacturer {
             get {
                 return ResourceManager.GetString("Txt_System_Manufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap user32 {
+            get {
+                object obj = ResourceManager.GetObject("user32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

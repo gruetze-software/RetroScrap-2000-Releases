@@ -77,6 +77,17 @@
 			label3 = new Label();
 			labelInfoProduct = new Label();
 			linkLabel1 = new LinkLabel();
+			tabPageScrapData = new TabPage();
+			checkBox1 = new CheckBox();
+			checkBox2 = new CheckBox();
+			groupBox5 = new GroupBox();
+			checkBox3 = new CheckBox();
+			checkBox4 = new CheckBox();
+			checkBox5 = new CheckBox();
+			checkBox6 = new CheckBox();
+			checkBox7 = new CheckBox();
+			checkBox8 = new CheckBox();
+			checkBox9 = new CheckBox();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
 			tabControlOptions.SuspendLayout();
@@ -93,6 +104,8 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxAppIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).BeginInit();
 			tableLayoutPanelAppText.SuspendLayout();
+			tabPageScrapData.SuspendLayout();
+			groupBox5.SuspendLayout();
 			SuspendLayout();
 			// 
 			// buttonCancel
@@ -182,6 +195,7 @@
 			resources.ApplyResources(tabControlOptions, "tabControlOptions");
 			tabControlOptions.Controls.Add(tabPageLang);
 			tabControlOptions.Controls.Add(tabPageScrap);
+			tabControlOptions.Controls.Add(tabPageScrapData);
 			tabControlOptions.Controls.Add(tabPageAppInfo);
 			tabControlOptions.Name = "tabControlOptions";
 			tabControlOptions.SelectedIndex = 0;
@@ -421,6 +435,88 @@
 			linkLabel1.Name = "linkLabel1";
 			linkLabel1.TabStop = true;
 			// 
+			// tabPageScrapData
+			// 
+			tabPageScrapData.Controls.Add(groupBox5);
+			resources.ApplyResources(tabPageScrapData, "tabPageScrapData");
+			tabPageScrapData.Name = "tabPageScrapData";
+			tabPageScrapData.UseVisualStyleBackColor = true;
+			// 
+			// checkBox1
+			// 
+			resources.ApplyResources(checkBox1, "checkBox1");
+			checkBox1.Name = "checkBox1";
+			checkBox1.UseVisualStyleBackColor = true;
+			// 
+			// checkBox2
+			// 
+			resources.ApplyResources(checkBox2, "checkBox2");
+			checkBox2.Name = "checkBox2";
+			checkBox2.UseVisualStyleBackColor = true;
+			// 
+			// groupBox5
+			// 
+			groupBox5.Controls.Add(checkBox9);
+			groupBox5.Controls.Add(checkBox8);
+			groupBox5.Controls.Add(checkBox7);
+			groupBox5.Controls.Add(checkBox6);
+			groupBox5.Controls.Add(checkBox5);
+			groupBox5.Controls.Add(checkBox4);
+			groupBox5.Controls.Add(checkBox3);
+			groupBox5.Controls.Add(checkBox1);
+			groupBox5.Controls.Add(checkBox2);
+			resources.ApplyResources(groupBox5, "groupBox5");
+			groupBox5.Name = "groupBox5";
+			groupBox5.TabStop = false;
+			// 
+			// checkBox3
+			// 
+			resources.ApplyResources(checkBox3, "checkBox3");
+			checkBox3.Name = "checkBox3";
+			checkBox3.UseVisualStyleBackColor = true;
+			// 
+			// checkBox4
+			// 
+			resources.ApplyResources(checkBox4, "checkBox4");
+			checkBox4.Name = "checkBox4";
+			checkBox4.UseVisualStyleBackColor = true;
+			// 
+			// checkBox5
+			// 
+			resources.ApplyResources(checkBox5, "checkBox5");
+			checkBox5.Checked = true;
+			checkBox5.CheckState = CheckState.Checked;
+			checkBox5.Name = "checkBox5";
+			checkBox5.UseVisualStyleBackColor = true;
+			// 
+			// checkBox6
+			// 
+			resources.ApplyResources(checkBox6, "checkBox6");
+			checkBox6.Checked = true;
+			checkBox6.CheckState = CheckState.Checked;
+			checkBox6.Name = "checkBox6";
+			checkBox6.UseVisualStyleBackColor = true;
+			// 
+			// checkBox7
+			// 
+			resources.ApplyResources(checkBox7, "checkBox7");
+			checkBox7.Checked = true;
+			checkBox7.CheckState = CheckState.Checked;
+			checkBox7.Name = "checkBox7";
+			checkBox7.UseVisualStyleBackColor = true;
+			// 
+			// checkBox8
+			// 
+			resources.ApplyResources(checkBox8, "checkBox8");
+			checkBox8.Name = "checkBox8";
+			checkBox8.UseVisualStyleBackColor = true;
+			// 
+			// checkBox9
+			// 
+			resources.ApplyResources(checkBox9, "checkBox9");
+			checkBox9.Name = "checkBox9";
+			checkBox9.UseVisualStyleBackColor = true;
+			// 
 			// FormOptions
 			// 
 			AcceptButton = buttonOK;
@@ -451,6 +547,9 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).EndInit();
 			tableLayoutPanelAppText.ResumeLayout(false);
 			tableLayoutPanelAppText.PerformLayout();
+			tabPageScrapData.ResumeLayout(false);
+			groupBox5.ResumeLayout(false);
+			groupBox5.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -504,5 +603,16 @@
 		private GroupBox groupBox4;
 		private PictureBox pictureBoxDonation;
 		private LinkLabel linkLabelDonate;
+		private TabPage tabPageScrapData;
+		private GroupBox groupBox5;
+		private CheckBox checkBox4;
+		private CheckBox checkBox3;
+		private CheckBox checkBox1;
+		private CheckBox checkBox2;
+		private CheckBox checkBox6;
+		private CheckBox checkBox5;
+		private CheckBox checkBox7;
+		private CheckBox checkBox9;
+		private CheckBox checkBox8;
 	}
 }

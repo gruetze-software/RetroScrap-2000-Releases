@@ -94,6 +94,7 @@
 			textBoxHistory.ScrollBars = ScrollBars.Vertical;
 			textBoxHistory.Size = new Size(465, 194);
 			textBoxHistory.TabIndex = 0;
+			textBoxHistory.TextChanged += textBoxHistory_TextChanged;
 			// 
 			// pictureBoxSystem
 			// 

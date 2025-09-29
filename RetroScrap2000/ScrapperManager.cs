@@ -357,7 +357,6 @@ namespace RetroScrap2000
 			IProgress<ProgressObj> progress, string languageShortCode, CancellationToken ct = default)
 		{
 			int iGesamt = gameList.Games.Count;
-			double dPerc = 0.0;
 			int iPerc = 0;
 			// Schleife über alle Roms
 			for( int i = 0; i < iGesamt; ++i)

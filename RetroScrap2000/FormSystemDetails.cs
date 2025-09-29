@@ -21,7 +21,7 @@ namespace RetroScrap2000
 
 		private void FormSystemDetails_Load(object sender, EventArgs e)
 		{
-			if ( _retrosystem.FileBanner != null ) 
+			if (_retrosystem.FileBanner != null)
 				pictureBoxSystem.Image = Image.FromFile(_retrosystem.FileBanner);
 
 			ListViewItem item = new ListViewItem("Name:");
@@ -72,6 +72,11 @@ namespace RetroScrap2000
 		private void FormSystemDetails_Resize(object sender, EventArgs e)
 		{
 			ResizeListView();
+		}
+
+		private void textBoxHistory_TextChanged(object sender, EventArgs e)
+		{
+			_retrosystem.Description = textBoxHistory.Text;
 		}
 	}
 }

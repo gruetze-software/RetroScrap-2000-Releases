@@ -16,7 +16,7 @@ namespace RetroScrap2000
 		private CancellationTokenSource? _scrapCts;
 		private ScrapperManager _scrapper;
 		private RetroScrapOptions _options;
-		private RetroSystems _systems = new();
+		private RetroSystem _system = new();
 		private string _basedir;
 		public GameList Roms { get; set; }
 		public bool ScrapWasStarting { get; set; } = false;
@@ -25,13 +25,13 @@ namespace RetroScrap2000
 		private System.Windows.Forms.Timer _startTimer = new System.Windows.Forms.Timer();
 
 		public FormScrapAuto(GameList roms, ScrapperManager scrapper, 
-			string basedir, RetroSystems systems, RetroScrapOptions options)
+			string basedir, RetroSystem system, RetroScrapOptions options)
 		{
 			InitializeComponent();
 			Roms = roms;
 			_scrapper = scrapper;
 			_basedir = basedir;
-			_systems = systems;
+			_system = system;
 			_options = options;
 
 			_startTimer.Interval = 500; // 0.5 Sekunden warten
@@ -98,7 +98,7 @@ namespace RetroScrap2000
 				// Speichern
 				AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGameList);
 				bool ok = await Task.Run(() =>
-						_systems.SaveAllRomsToGamelistXml(
+						_system.SaveAllRomsToGamelistXml(
 								baseDir: _basedir,
 								roms: Roms.Games
 						)

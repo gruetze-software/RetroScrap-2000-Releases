@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Text;
 using System.Reflection;
 using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.Design.AxImporter;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RetroScrap2000
 {
+
 	public partial class FormMain : Form
 	{
 		RetroScrapOptions _options = new RetroScrapOptions();
@@ -19,6 +22,7 @@ namespace RetroScrap2000
 		RetroSystems _systems = new RetroSystems();
 		GameManager _gameManager = new GameManager();
 		GameEntry? _selectedRom = null;
+		RetroSystem? _selectedSystem = null;
 
 		private System.Timers.Timer _loadTimer = new();
 		private int _loadTimerTicks = 0;
@@ -43,11 +47,11 @@ namespace RetroScrap2000
 			
 
 			// DoubleBuffering für flüssiges Zeichnen
-			typeof(ListView).GetProperty("DoubleBuffered",
+			typeof(System.Windows.Forms.ListView).GetProperty("DoubleBuffered",
 					System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
 					?.SetValue(listViewSystems, true);
 
-			typeof(ListView).GetProperty("DoubleBuffered",
+			typeof(System.Windows.Forms.ListView).GetProperty("DoubleBuffered",
 					System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
 					?.SetValue(listViewRoms, true);
 		}
@@ -143,8 +147,72 @@ namespace RetroScrap2000
 			}
 			listViewSystems.SmallImageList = imgList;
 
+			ImageList imglistRoms = new ImageList() { ImageSize = new Size(16, 16), ColorDepth = ColorDepth.Depth32Bit };
+			imglistRoms.Images.Add("check", Properties.Resources.check16);
+			imglistRoms.Images.Add("fail", Properties.Resources.fail16);
+			listViewRoms.SmallImageList = imglistRoms;
+			listViewRoms.OwnerDraw = true;
+			this.listViewRoms.DrawSubItem += new DrawListViewSubItemEventHandler(ListViewRoms_DrawSubItem);
+			this.listViewRoms.DrawColumnHeader += (sender, e) => e.DrawDefault = true;
+
 			_loadTimer.Enabled = true;
 			_loadTimer.Start();
+		}
+
+		private void ListViewRoms_DrawSubItem(object? sender, DrawListViewSubItemEventArgs e)
+		{
+			// Die Spalten, die Icons anzeigen sollen, sind Index 6, 7 und 8.
+			// Index 0-5 (Text) werden normal behandelt.
+			bool isMediaColumn = e.ColumnIndex >= 6 && e.ColumnIndex <= 8;
+
+			// --- 1. Normale Spalten (Text-Spalten: 0 bis 5) ---
+			if (!isMediaColumn)
+			{
+				// Lasse Windows alles zeichnen (Hintergrund, Text, Fokus).
+				e.DrawDefault = true;
+				return;
+			}
+
+			// --- 2. Medien-Spalten (Index 6, 7, 8) ---
+
+			// Zeichne zuerst den Hintergrund (Farbe, Selektion). Dies ist notwendig für OwnerDraw.
+			e.DrawBackground();
+
+			// Lese den Zustands-Indikator aus dem Text ("" = nichts, "0" = Check, "1" = Fail)
+			string? strgIndex = e.SubItem?.Text;
+			int imageIndex = -1; // Standard: Kein Bild zeichnen.
+
+			// Wenn der Zustand "" ist, bleibt imageIndex bei -1.
+			if (strgIndex == "0")
+			{
+				imageIndex = 0; // Annahme: Index 0 in ImageList ist das Check-Icon
+			}
+			else if (strgIndex == "1")
+			{
+				imageIndex = 1; // Annahme: Index 1 in ImageList ist das Fail-Icon
+			}
+
+			// Zeichne das Icon nur, wenn ein gültiger Index gefunden wurde.
+			if (imageIndex > -1 && listViewRoms.SmallImageList != null)
+			{
+				// Berechne die Position des Bildes zentriert in der Zelle
+				int imageWidth = listViewRoms.SmallImageList.ImageSize.Width;
+				int imageHeight = listViewRoms.SmallImageList.ImageSize.Height;
+
+				int x = e.Bounds.Left + (e.Bounds.Width / 2) - (imageWidth / 2);
+				int y = e.Bounds.Top + (e.Bounds.Height / 2) - (imageHeight / 2);
+
+				// Zeichne das Bild aus der ImageList
+				listViewRoms.SmallImageList.Draw(e.Graphics, x, y, imageIndex);
+			}
+
+			// WICHTIG: Die Fokus-Zeichnung muss außerhalb der spezifischen Logik des Icon-Index liegen,
+			// damit sie auch bei Zustand "" (kein Icon) funktioniert, wenn das Item ausgewählt ist.
+			if ((e.ItemState & ListViewItemStates.Focused) != 0)
+			{
+				e.DrawFocusRectangle(e.Bounds);
+			}
+		
 		}
 
 		private void SetTitleMainForm()
@@ -390,14 +458,15 @@ namespace RetroScrap2000
 				FormSystemDetails frm = new FormSystemDetails(gamelist.RetroSys);
 				if (frm.ShowDialog() == DialogResult.OK)
 				{
-					// TODO Save System
+					if (!string.IsNullOrEmpty(gamelist.RetroSys.Description))
+						_systems.Save();
 				}
 			}
 		}
 
 		private async void SystemAllRomsScrapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (_selectedRom == null)
+			if (_selectedRom == null || _selectedSystem == null )
 				return;
 
 			var baseDir = GetSelectedRomPath();
@@ -408,7 +477,7 @@ namespace RetroScrap2000
 			if (gamelist == null)
 				return;
 
-			FormScrapAuto frm = new FormScrapAuto(gamelist, _scrapper, baseDir, _systems, _options);
+			FormScrapAuto frm = new FormScrapAuto(gamelist, _scrapper, baseDir, _selectedSystem, _options);
 			frm.ShowDialog();
 			if (frm.ScrapWasStarting == false)
 				return;
@@ -629,11 +698,48 @@ namespace RetroScrap2000
 						: null;
 		}
 
+		private ListViewItem GetLVRom( RomStatus status)
+		{
+			Func<string?, bool, string> getIconIndex = (originalMediaPath, exists) =>
+			{
+				if (string.IsNullOrEmpty(originalMediaPath)) return ""; // Zustand 1: KEIN Pfad im XML gesetzt -> KEIN Icon
+				else if (exists) return "0"; // Zustand 2: Pfad gesetzt UND Datei existiert -> Check-Icon
+				else return "1"; // Zustand 3: Pfad gesetzt, ABER Datei fehlt -> Fail-Icon
+			};
+
+			var g = status.Game;
+			var it = new ListViewItem(g.Name ?? Path.GetFileName(g.Path ?? ""));
+
+			it.SubItems.Add(g.ReleaseDate?.ToString("yyyy") ?? "");
+			it.SubItems.Add(g.Genre);
+			it.SubItems.Add(g.Players);
+			it.SubItems.Add(g.RatingStars > 0.0 ? g.RatingStars.ToString("0.0") : "");
+			it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
+
+			// Verwende die VORHER BERECHNETEN Status-Werte
+			it.SubItems.Add(getIconIndex(g.MediaCoverPath, status.CoverExists));
+			it.SubItems.Add(getIconIndex(g.MediaScreenshotPath, status.ScreenshotExists));
+			it.SubItems.Add(getIconIndex(g.MediaVideoPath, status.VideoExists));
+
+			it.Tag = g;
+
+			return it;
+		}
+
 		private async Task SetRomListSync()
 		{
 			// Selektion lesen: GameList des Systems aus Tag
 			var roms = GetSeletedGameList();
-			var system = roms?.RetroSys;
+			_selectedSystem = roms?.RetroSys;
+
+			string? romsPath = _selectedSystem != null ? GetRomPath(_selectedSystem.Id) : null;
+			if (string.IsNullOrEmpty(romsPath) || !Directory.Exists(romsPath))
+			{
+				listViewRoms.Items.Clear();
+				_selectedRom = null;
+				await SetRomOnGuiAsync(null, CancellationToken.None); // Details rechts leeren
+				return;
+			}
 
 			// laufende System-Ladevorgänge abbrechen
 			_sysSelCts?.Cancel();
@@ -643,37 +749,50 @@ namespace RetroScrap2000
 			// UI: Systemanzeige aktualisieren (Banner + Infos)
 			try
 			{
-				await SetSystemOnGuiAsync(system, sysCt);
+				await SetSystemOnGuiAsync(_selectedSystem, sysCt);
 			}
 			catch (OperationCanceledException) { /* ok */ }
 
 			// ROM-Liste neu füllen (gebatcht, kein Async nötig – nur UI)
-			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem, system?.Name));
+			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem, 
+				_selectedSystem!.Name));
+
+			Func<string?, bool> checkExists = (mediapath) =>
+			{
+				if (string.IsNullOrEmpty(mediapath)) return false;
+				return File.Exists(FileTools.ResolveMediaPath(romsPath, mediapath));
+			};
+
+			// Erstelle eine Liste von Tasks, um alle File.Exists-Prüfungen PARALLEL zu starten.
+			var statusTasks = roms!.Games.Select(g => Task.Run(() => new RomStatus
+			{
+				Game = g,
+				CoverExists = checkExists(g.MediaCoverPath),
+				ScreenshotExists = checkExists(g.MediaScreenshotPath),
+				VideoExists = checkExists(g.MediaVideoPath)
+			})).ToList();
+
+			SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_CheckingMedia);
+			RomStatus[] allRomStatus = await Task.WhenAll(statusTasks);
+
 			listViewRoms.BeginUpdate();
+			
 			try
 			{
 				listViewRoms.Items.Clear();
 				_selectedRom = null;
 				await SetRomOnGuiAsync(null, CancellationToken.None); // Details rechts leeren
 
-				if (roms == null) return;
+				if (roms == null) 
+					return;
 
 				var items = new List<ListViewItem>(roms.Games.Count);
-				foreach (var g in roms.Games)
+				foreach (var status in allRomStatus)
 				{
-					var it = new ListViewItem(g.Name ?? Path.GetFileName(g.Path ?? ""));
-					it.SubItems.Add(g.ReleaseDate?.ToString("yyyy") ?? "");
-					it.SubItems.Add(g.Genre);
-					it.SubItems.Add(g.Players);
-					it.SubItems.Add(g.RatingStars.ToString("0.0"));
-					it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
-					it.Tag = g;
-					if ( g.State == eState.Scraped )
-						it.BackColor = System.Drawing.Color.LightGreen;
-					else if (g.State == eState.Error || g.State == eState.NoData)
-						it.BackColor = System.Drawing.Color.LightCoral;
+					ListViewItem it = GetLVRom(status);
 					items.Add(it);
 				}
+			
 				listViewRoms.Items.AddRange(items.ToArray());
 			}
 			finally
@@ -687,12 +806,19 @@ namespace RetroScrap2000
 					listViewRoms.Items[0].Focused = true;
 				}
 				SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_AnzRomsLoad,
-					roms?.Games.Count));
+					listViewRoms.Items.Count));
 			}
 		}
 
+	
 		private async Task SaveRomAsync()
 		{
+			if (_selectedSystem == null)
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoSystem);
+				return;
+			}
+
 			if (_selectedRom == null)
 			{
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_NoRom);
@@ -725,22 +851,33 @@ namespace RetroScrap2000
 				buttonRomSave.Enabled = false;
 
 				bool ok = await Task.Run(() =>
-						_systems.SaveRomToGamelistXml(
+						_selectedSystem!.SaveRomToGamelistXml(
 								romPath: sysFolder,
 								rom: _selectedRom
 						)
 				);
 				if (ok)
 				{
+					Func<string?, bool> checkExists = (mediapath) =>
+					{
+						if (string.IsNullOrEmpty(mediapath)) return false;
+						return File.Exists(FileTools.ResolveMediaPath(sysFolder, mediapath));
+					};
+
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomSave);
+
+					var romstatus = new RomStatus
+					{
+						Game = _selectedRom,
+						CoverExists = checkExists(_selectedRom.MediaCoverPath),
+						ScreenshotExists = checkExists(_selectedRom.MediaScreenshotPath),
+						VideoExists = checkExists(_selectedRom.MediaVideoPath)
+					};
+
+					var tempLv = GetLVRom(romstatus);
 					var selitem = listViewRoms.SelectedItems[0];
-					selitem.SubItems[0].Text = _selectedRom.Name ?? Path.GetFileName(_selectedRom.Path ?? "");
-					selitem.SubItems[1].Text = _selectedRom.ReleaseDate?.ToString("yyyy") ?? "";
-					selitem.SubItems[2].Text = _selectedRom.Genre;
-					selitem.SubItems[3].Text = _selectedRom.Players;
-					selitem.SubItems[4].Text = _selectedRom.RatingStars.ToString("0.0");
-					selitem.SubItems[5].Text = Path.GetFileName(_selectedRom.Path ?? "");
-					selitem.Tag = _selectedRom;
+					for ( int i = 0; i < selitem.SubItems.Count; i++)
+						selitem.SubItems[i].Text = tempLv.SubItems[i].Text;
 				}
 				else
 				{
@@ -770,6 +907,7 @@ namespace RetroScrap2000
 			listViewSystems.Items.Clear();
 			listViewRoms.Items.Clear();
 			_selectedRom = null;
+			_selectedSystem = null;
 			await SetRomOnGuiAsync(null, CancellationToken.None);
 
 			Splash.ShowSplashScreen();
@@ -862,7 +1000,7 @@ namespace RetroScrap2000
 				_selectedRom!.MediaVideoPath = result.file;
 		}
 
-		private void SortListview(ListView lst, int newsortcolumn, ref int aktsortcolumn,
+		private void SortListview(System.Windows.Forms.ListView lst, int newsortcolumn, ref int aktsortcolumn,
 			ref SortOrder sortOrder)
 		{
 			if (newsortcolumn != aktsortcolumn)
@@ -1009,12 +1147,12 @@ namespace RetroScrap2000
 			this.toolStripStatusLabelMain.Text = text;
 		}
 
-		private string? GetSelectedRomPath()
+		private string? GetRomPath(int systemid)
 		{
-			if (_selectedRom == null || string.IsNullOrEmpty(_gameManager.RomPath))
+			if ( string.IsNullOrEmpty(_gameManager.RomPath))
 				return null;
 
-			var systemFolder = _systems.GetRomFolder(_selectedRom.RetroSystemId);
+			var systemFolder = _systems.GetRomFolder(systemid);
 			if (_gameManager.RomPath.ToLower().EndsWith(systemFolder.ToLower()))
 				return _gameManager.RomPath;
 
@@ -1022,6 +1160,16 @@ namespace RetroScrap2000
 			return baseDir;
 		}
 
+		private string? GetSelectedRomPath()
+		{
+			if (_selectedRom == null )
+				return null;
+
+			return GetRomPath(_selectedRom.RetroSystemId);
+		}
+
 		
 	}
+
 }
+

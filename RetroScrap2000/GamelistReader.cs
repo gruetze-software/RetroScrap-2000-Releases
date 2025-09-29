@@ -4,18 +4,27 @@ using System.Globalization;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+
+public class RomStatus
+{
+	public GameEntry Game { get; set; } = new();
+	public bool CoverExists { get; set; }
+	public bool ScreenshotExists { get; set; }
+	public bool VideoExists { get; set; }
+}
+
 public class GameManager
 {
 	public Dictionary<string, GameList> SystemList { get; set; } = new Dictionary<string, GameList>();
 	public string? RomPath { get; set; }
 	public GameManager() { }
 
-	private void LoadSystem(string xmlpath, RetroSystems systems, RetroSystem sys)
+	private void LoadSystem(string xmlpath, RetroSystem sys)
 	{
 		if ( string.IsNullOrEmpty(RomPath) )
 			throw new ApplicationException("RomPath is null!");
 
-		var key = Directory.GetParent(xmlpath).Name;
+		var key = Directory.GetParent(xmlpath)!.Name;
 		// Die Load-Methode liefert immer eine GameList zurück, auch wenn die XML-Datei nicht existiert oder leer ist.
 		var loadresult = GameListLoader.Load(xmlpath, sys);
 		GameList gl = loadresult.Games;
@@ -25,8 +34,18 @@ public class GameManager
 		{
 			Trace.WriteLine("" + sys.Name + ": Änderungen in der gamelist.xml erkannt. Save...");
 			// Es gab Änderungen, also speichern wir die aktualisierte Liste zurück in die XML-Datei.
-			systems.SaveAllRomsToGamelistXml(RomPath, gl.Games);
+			sys.SaveAllRomsToGamelistXml(RomPath, gl.Games);
 		}
+	}
+
+	public RetroSystem? GetSystemById(int id)
+	{
+		foreach (var sys in SystemList.Values)
+		{
+			if (sys.RetroSys.Id == id)
+				return sys.RetroSys;
+		}
+		return null;
 	}
 
 	public void	Load(string rompath, RetroSystems systems)
@@ -38,7 +57,7 @@ public class GameManager
 		RomPath = rompath;
 		if (!rompath.ToLower().EndsWith("roms"))
 		{
-			LoadSystem(Path.Combine(RomPath, "gamelist.xml"), systems,
+			LoadSystem(Path.Combine(RomPath, "gamelist.xml"),
 				systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == Path.GetFileName(RomPath).ToLower())!);
 		}
 		else
@@ -53,7 +72,7 @@ public class GameManager
 					continue;
 				}
 				var xmlfile = Path.Combine(RomPath, sysDir, "gamelist.xml");
-				LoadSystem(xmlfile, systems, system);
+				LoadSystem(xmlfile, system);
 			}
 		}
 	}

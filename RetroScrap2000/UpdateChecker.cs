@@ -115,7 +115,7 @@ namespace RetroScrap2000
 					{
 						// 1. Prüfen, ob das Element 'name' existiert und unseren Dateinamen enthält
 						if (asset.TryGetProperty("name", out JsonElement nameElement) &&
-								nameElement.GetString() != null && nameElement.GetString().EndsWith("zip") )
+								nameElement.GetString() != null && nameElement.GetString()!.EndsWith("zip") )
 						{
 							// 2. Das korrekte Asset wurde gefunden: Jetzt die Download-URL extrahieren
 							if (asset.TryGetProperty("browser_download_url", out JsonElement urlElement) &&

@@ -52,6 +52,9 @@
 			colRomsAnzPlayer = new ColumnHeader();
 			colRomsRating = new ColumnHeader();
 			colRomsFile = new ColumnHeader();
+			columnRomsCover = new ColumnHeader();
+			columnRomsScreen = new ColumnHeader();
+			columnRomsVideo = new ColumnHeader();
 			contextMenuStripRoms = new ContextMenuStrip(components);
 			scrapToolStripMenuItem = new ToolStripMenuItem();
 			detailsToolStripMenuItem1 = new ToolStripMenuItem();
@@ -231,7 +234,7 @@
 			// listViewRoms
 			// 
 			listViewRoms.Activation = ItemActivation.OneClick;
-			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile });
+			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile, columnRomsCover, columnRomsScreen, columnRomsVideo });
 			listViewRoms.ContextMenuStrip = contextMenuStripRoms;
 			resources.ApplyResources(listViewRoms, "listViewRoms");
 			listViewRoms.FullRowSelect = true;
@@ -266,6 +269,18 @@
 			// colRomsFile
 			// 
 			resources.ApplyResources(colRomsFile, "colRomsFile");
+			// 
+			// columnRomsCover
+			// 
+			resources.ApplyResources(columnRomsCover, "columnRomsCover");
+			// 
+			// columnRomsScreen
+			// 
+			resources.ApplyResources(columnRomsScreen, "columnRomsScreen");
+			// 
+			// columnRomsVideo
+			// 
+			resources.ApplyResources(columnRomsVideo, "columnRomsVideo");
 			// 
 			// contextMenuStripRoms
 			// 
@@ -658,5 +673,8 @@
 		private ToolStripMenuItem deleteToolStripMenuItem;
 		private ToolStripMenuItem addToolStripMenuItem;
 		private StarRatingControl starRatingControlRom;
+		private ColumnHeader columnRomsCover;
+		private ColumnHeader columnRomsScreen;
+		private ColumnHeader columnRomsVideo;
 	}
 }

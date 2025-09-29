@@ -337,4 +337,27 @@
   <data name="RetroIV" xml:space="preserve">
     <value>613663396531663468376A306B336D35</value>
   </data>
+  <data name="check16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\accept_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>check</comment>
+  </data>
+  <data name="fail16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\remove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>fail</comment>
+  </data>
+  <data name="Txt_Status_Label_CheckingMedia" xml:space="preserve">
+    <value>Checking media files...</value>
+  </data>
+  <data name="user32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\media32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="general32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\general32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="info32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\info32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -33,6 +33,235 @@ namespace RetroScrap2000
 		{
 			return Name;
 		}
+
+		public bool SaveRomToGamelistXml(string romPath, GameEntry rom)
+		{
+			// Pfade
+			var xmlPath = Path.Combine(romPath, "gamelist.xml");
+			var backupPath = xmlPath + ".bak";
+
+			// relative <path> bestimmen – Primärschlüssel
+			var relPath = GetRomPathForXml(romPath, rom);
+
+			lock (_xmlFileLock)
+			{
+				// Backup (nur wenn Datei existiert)
+				if (File.Exists(xmlPath))
+				{
+					try { File.Copy(xmlPath, backupPath, overwrite: true); }
+					catch { /* egal – Speicher nicht abbrechen */ }
+				}
+
+				// Dokument laden oder neu erstellen
+				XDocument doc;
+				if (File.Exists(xmlPath))
+				{
+					doc = XDocument.Load(xmlPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+				}
+				else
+				{
+					doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
+									new XElement("gameList"));
+				}
+
+				var root = doc.Element("gameList") ?? new XElement("gameList");
+
+				// <game> anhand <path> suchen
+				var gameEl = root.Elements("game")
+												 .FirstOrDefault(x => string.Equals((string?)x.Element("path"), relPath, StringComparison.OrdinalIgnoreCase));
+
+				// Das game-Element nur erstellen, wenn es nicht existiert
+				if (gameEl == null)
+				{
+					gameEl = new XElement("game");
+					root.Add(gameEl);
+				}
+
+				SetRomToXml(gameEl, relPath, romPath, rom);
+
+				try
+				{
+					var xmlWriterSettings = new System.Xml.XmlWriterSettings
+					{
+						Indent = true,
+						IndentChars = "  ", // Normales Leerzeichen verwenden
+						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+						NewLineChars = Environment.NewLine,
+						NewLineHandling = System.Xml.NewLineHandling.Replace,
+						OmitXmlDeclaration = false
+					};
+					using (var w = System.Xml.XmlWriter.Create(xmlPath, xmlWriterSettings))
+						doc.Save(w);
+
+					return true;
+				}
+				catch
+				{
+					throw; // aufrufende Funktion fängt das ab
+				}
+			}
+		}
+
+		public bool SaveAllRomsToGamelistXml(string baseDir, IEnumerable<GameEntry> roms)
+		{
+			// Pfade
+			var xmlPath = Path.Combine(baseDir, "gamelist.xml");
+			var sysDir = Directory.GetParent(xmlPath)?.FullName ?? baseDir;
+			var backupPath = xmlPath + ".bak";
+
+			lock (_xmlFileLock)
+			{
+				// Backup (nur wenn Datei existiert)
+				if (File.Exists(xmlPath))
+				{
+					try { File.Copy(xmlPath, backupPath, overwrite: true); }
+					catch { /* ignorieren */ }
+				}
+
+				// Neues Dokument anlegen
+				var doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement("gameList"));
+				var root = doc.Element("gameList")!;
+
+				foreach (var rom in roms)
+				{
+					// relative <path> bestimmen – Primärschlüssel
+					var relPath = GetRomPathForXml(sysDir, rom);
+					var gameEl = new XElement("game");
+					SetRomToXml(gameEl, relPath, sysDir, rom);
+					root.Add(gameEl);
+				}
+
+				try
+				{
+					var xmlWriterSettings = new System.Xml.XmlWriterSettings
+					{
+						Indent = true,
+						IndentChars = "  ", // Normales Leerzeichen verwenden
+						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+						NewLineChars = Environment.NewLine,
+						NewLineHandling = System.Xml.NewLineHandling.Replace,
+						OmitXmlDeclaration = false
+					};
+					using (var w = System.Xml.XmlWriter.Create(xmlPath, xmlWriterSettings))
+						doc.Save(w);
+
+					return true;
+				}
+				catch (Exception ex)
+				{
+					Trace.WriteLine(Utils.GetExcMsg(ex));
+					return false;
+				}
+			}
+		}
+
+		private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
+		private static void SetRomToXml(XElement gameEl, string relPath, string sysDir, GameEntry rom)
+		{
+			Trace.WriteLine("[RetroSystem::SetRomToXml] Adding rom " + relPath);
+			// Hilfsmethode, um ein Element zu setzen oder zu entfernen
+			void SetElementValue(XElement parent, string name, string? value)
+			{
+				var element = parent.Element(name);
+				if (string.IsNullOrEmpty(value))
+				{
+					// Wenn der Wert null oder leer ist, Element entfernen
+					element?.Remove();
+				}
+				else
+				{
+					if (element == null)
+					{
+						// Wenn das Element nicht existiert, neues hinzufügen
+						parent.Add(new XElement(name, value));
+					}
+					else
+					{
+						// Wenn das Element existiert, Wert aktualisieren
+						element.Value = value;
+					}
+				}
+			}
+			void SetAttribute(XElement element, string attributeName, string? value)
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					element.Attribute(attributeName)?.Remove();
+				}
+				else
+				{
+					element.SetAttributeValue(attributeName, value);
+				}
+			}
+
+			// Setzen Sie zuerst das path-Element
+			SetElementValue(gameEl, "path", relPath);
+
+			// Setzen Sie alle anderen Elemente mit der Hilfsmethode
+			SetElementValue(gameEl, "name", NullIfEmpty(rom.Name));
+			SetElementValue(gameEl, "desc", NullIfEmpty(rom.Description));
+			SetElementValue(gameEl, "genre", NullIfEmpty(rom.Genre));
+			SetElementValue(gameEl, "players", NullIfEmpty(rom.Players));
+			SetElementValue(gameEl, "developer", NullIfEmpty(rom.Developer));
+			SetElementValue(gameEl, "publisher", NullIfEmpty(rom.Publisher));
+			SetElementValue(gameEl, "rating", rom.Rating > 0 ? rom.Rating.ToString("0.00", CultureInfo.InvariantCulture) : null);
+			SetElementValue(gameEl, "releasedate", rom.ReleaseDateRaw);
+			SetElementValue(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
+			SetElementValue(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
+			SetElementValue(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
+
+			// Attribute setzen
+			SetAttribute(gameEl, "id", rom.Id.ToString());
+			SetAttribute(gameEl, "source", rom.Source ?? "");
+		}
+
+		static string? NullIfEmpty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
+
+		/// Primärschlüssel in der XML: <path> (relativ zum Systemordner)
+		private string GetRomPathForXml(string systemDir, GameEntry rom)
+		{
+			// Falls in GameEntry bereits ein XML-konformer relativer Pfad liegt – nutze ihn.
+			// Sonst aus absolutem Pfad ein "./…" bauen.
+			if (!string.IsNullOrWhiteSpace(rom.Path) && rom.Path.StartsWith("./"))
+				return rom.Path.Replace('\\', '/');
+
+			// Fallback: Absolut → relativ
+			// rom.Path kann absolut sein; wir rechnen relativ zum Systemordner:
+			var abs = !string.IsNullOrEmpty(rom.Path) ? Path.Combine(systemDir, rom.Path.TrimStart('.', '\\', '/')) : null;
+			if (!string.IsNullOrEmpty(abs) && File.Exists(abs))
+				return "./" + Path.GetFileName(abs);
+
+			// Letzte Instanz: nur Dateiname aus Name/Path
+			var file = Path.GetFileName(rom.Path ?? rom.Name ?? "unknown.rom");
+			return "./" + file.Replace('\\', '/');
+		}
+
+		/// Medien relativ machen (./media/…); wenn schon relativ: unverändert
+		private static string? EnsureRelativeMedia(string systemDir, string? mediaFromModel)
+		{
+			if (string.IsNullOrWhiteSpace(mediaFromModel))
+				return null;
+
+			// Bereits relativ?
+			if (mediaFromModel.StartsWith("./") || mediaFromModel.StartsWith(".\\"))
+				return mediaFromModel.Replace('\\', '/');
+
+			// Absolut unterhalb des Systemordners? → relativer Pfad ab Systemordner
+			try
+			{
+				var full = Path.GetFullPath(mediaFromModel);
+				var sys = Path.GetFullPath(systemDir);
+				if (full.StartsWith(sys, StringComparison.OrdinalIgnoreCase))
+				{
+					var rel = full.Substring(sys.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+					return "./" + rel.Replace('\\', '/');
+				}
+			}
+			catch { /* ignorieren – gib Original zurück */ }
+
+			// als Fallback Original zurück (EmulationStation kann auch absolute Pfade)
+			return mediaFromModel.Replace('\\', '/');
+		}
 	}
 
 	public class RetroSystems
@@ -73,7 +302,7 @@ namespace RetroScrap2000
 						Id = s.id,
 						Name = !string.IsNullOrEmpty(s.Name) ? s.Name : "Unknown System",
 						Typ = s.type,
-						RomFolderName = BatoceraFolders.MapToBatoceraFolder(s.noms)
+						RomFolderName = BatoceraFolders.MapToBatoceraFolder(s.noms)!
 					};
 					
 					SystemList.Add(retroSystem);
@@ -223,234 +452,10 @@ namespace RetroScrap2000
 			}
 		}
 
-		private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
+		
 
-		public bool SaveRomToGamelistXml(string romPath, GameEntry rom)
-		{
-			// Pfade
-			var xmlPath = Path.Combine(romPath, "gamelist.xml");
-			var backupPath = xmlPath + ".bak";
+		
 
-			// relative <path> bestimmen – Primärschlüssel
-			var relPath = GetRomPathForXml(romPath, rom);
-
-			lock (_xmlFileLock)
-			{
-				// Backup (nur wenn Datei existiert)
-				if (File.Exists(xmlPath))
-				{
-					try { File.Copy(xmlPath, backupPath, overwrite: true); }
-					catch { /* egal – Speicher nicht abbrechen */ }
-				}
-
-				// Dokument laden oder neu erstellen
-				XDocument doc;
-				if (File.Exists(xmlPath))
-				{
-					doc = XDocument.Load(xmlPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
-				}
-				else
-				{
-					doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-									new XElement("gameList"));
-				}
-
-				var root = doc.Element("gameList") ?? new XElement("gameList");
-
-				// <game> anhand <path> suchen
-				var gameEl = root.Elements("game")
-												 .FirstOrDefault(x => string.Equals((string?)x.Element("path"), relPath, StringComparison.OrdinalIgnoreCase));
-
-				// Das game-Element nur erstellen, wenn es nicht existiert
-				if (gameEl == null)
-				{
-					gameEl = new XElement("game");
-					root.Add(gameEl);
-				}
-
-				SetRomToXml(gameEl, relPath, romPath, rom);
-
-				try
-				{
-					var xmlWriterSettings = new System.Xml.XmlWriterSettings
-					{
-						Indent = true,
-						IndentChars = "  ", // Normales Leerzeichen verwenden
-						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
-						NewLineChars = Environment.NewLine,
-						NewLineHandling = System.Xml.NewLineHandling.Replace,
-						OmitXmlDeclaration = false
-					};
-					using (var w = System.Xml.XmlWriter.Create(xmlPath, xmlWriterSettings))
-						doc.Save(w);
-
-					return true;
-				}
-				catch
-				{
-					throw; // aufrufende Funktion fängt das ab
-				}
-			}
-		}
-
-		public bool SaveAllRomsToGamelistXml(string baseDir, IEnumerable<GameEntry> roms)
-		{
-			// Pfade
-			var xmlPath = Path.Combine(baseDir, "gamelist.xml");
-			var sysDir = Directory.GetParent(xmlPath)?.FullName ?? baseDir;
-			var backupPath = xmlPath + ".bak";
-
-			lock (_xmlFileLock)
-			{
-				// Backup (nur wenn Datei existiert)
-				if (File.Exists(xmlPath))
-				{
-					try { File.Copy(xmlPath, backupPath, overwrite: true); }
-					catch { /* ignorieren */ }
-				}
-
-				// Neues Dokument anlegen
-				var doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement("gameList"));
-				var root = doc.Element("gameList")!;
-
-				foreach (var rom in roms)
-				{
-					// relative <path> bestimmen – Primärschlüssel
-					var relPath = GetRomPathForXml(sysDir, rom);
-					var gameEl = new XElement("game");
-					SetRomToXml(gameEl, relPath, sysDir, rom);
-					root.Add(gameEl);
-				}
-
-				try
-				{
-					var xmlWriterSettings = new System.Xml.XmlWriterSettings
-					{
-						Indent = true,
-						IndentChars = "  ", // Normales Leerzeichen verwenden
-						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
-						NewLineChars = Environment.NewLine,
-						NewLineHandling = System.Xml.NewLineHandling.Replace,
-						OmitXmlDeclaration = false
-					};
-					using (var w = System.Xml.XmlWriter.Create(xmlPath, xmlWriterSettings))
-						doc.Save(w);
-
-					return true;
-				}
-				catch (Exception ex)
-				{
-					Trace.WriteLine(Utils.GetExcMsg(ex));
-					return false;
-				}
-			}
-		}
-
-		private static void SetRomToXml(XElement gameEl, string relPath, string sysDir, GameEntry rom)
-		{
-			Trace.WriteLine("[RetroSystem::SetRomToXml] Adding rom " + relPath);
-			// Hilfsmethode, um ein Element zu setzen oder zu entfernen
-			void SetElementValue(XElement parent, string name, string? value)
-			{
-				var element = parent.Element(name);
-				if (string.IsNullOrEmpty(value))
-				{
-					// Wenn der Wert null oder leer ist, Element entfernen
-					element?.Remove();
-				}
-				else
-				{
-					if (element == null)
-					{
-						// Wenn das Element nicht existiert, neues hinzufügen
-						parent.Add(new XElement(name, value));
-					}
-					else
-					{
-						// Wenn das Element existiert, Wert aktualisieren
-						element.Value = value;
-					}
-				}
-			}
-			void SetAttribute(XElement element, string attributeName, string? value)
-			{
-				if (string.IsNullOrEmpty(value))
-				{
-					element.Attribute(attributeName)?.Remove();
-				}
-				else
-				{
-					element.SetAttributeValue(attributeName, value);
-				}
-			}
-			
-			// Setzen Sie zuerst das path-Element
-			SetElementValue(gameEl, "path", relPath);
-
-			// Setzen Sie alle anderen Elemente mit der Hilfsmethode
-			SetElementValue(gameEl, "name", NullIfEmpty(rom.Name));
-			SetElementValue(gameEl, "desc", NullIfEmpty(rom.Description));
-			SetElementValue(gameEl, "genre", NullIfEmpty(rom.Genre));
-			SetElementValue(gameEl, "players", NullIfEmpty(rom.Players));
-			SetElementValue(gameEl, "developer", NullIfEmpty(rom.Developer));
-			SetElementValue(gameEl, "publisher", NullIfEmpty(rom.Publisher));
-			SetElementValue(gameEl, "rating", rom.Rating > 0 ? rom.Rating.ToString("0.00", CultureInfo.InvariantCulture) : null);
-			SetElementValue(gameEl, "releasedate", rom.ReleaseDateRaw);
-			SetElementValue(gameEl, "image", EnsureRelativeMedia(sysDir, rom.MediaScreenshotPath));
-			SetElementValue(gameEl, "thumbnail", EnsureRelativeMedia(sysDir, rom.MediaCoverPath));
-			SetElementValue(gameEl, "video", EnsureRelativeMedia(sysDir, rom.MediaVideoPath));
-
-			// Attribute setzen
-			SetAttribute(gameEl, "id", rom.Id.ToString());
-			SetAttribute(gameEl, "source", rom.Source ?? "");
-		}
-
-		static string? NullIfEmpty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
-
-		/// Primärschlüssel in der XML: <path> (relativ zum Systemordner)
-		private string GetRomPathForXml(string systemDir, GameEntry rom)
-		{
-			// Falls in GameEntry bereits ein XML-konformer relativer Pfad liegt – nutze ihn.
-			// Sonst aus absolutem Pfad ein "./…" bauen.
-			if (!string.IsNullOrWhiteSpace(rom.Path) && rom.Path.StartsWith("./"))
-				return rom.Path.Replace('\\', '/');
-
-			// Fallback: Absolut → relativ
-			// rom.Path kann absolut sein; wir rechnen relativ zum Systemordner:
-			var abs = !string.IsNullOrEmpty(rom.Path) ? Path.Combine(systemDir, rom.Path.TrimStart('.', '\\', '/')) : null;
-			if (!string.IsNullOrEmpty(abs) && File.Exists(abs))
-				return "./" + Path.GetFileName(abs);
-
-			// Letzte Instanz: nur Dateiname aus Name/Path
-			var file = Path.GetFileName(rom.Path ?? rom.Name ?? "unknown.rom");
-			return "./" + file.Replace('\\', '/');
-		}
-
-		/// Medien relativ machen (./media/…); wenn schon relativ: unverändert
-		private static string? EnsureRelativeMedia(string systemDir, string? mediaFromModel)
-		{
-			if (string.IsNullOrWhiteSpace(mediaFromModel))
-				return null;
-
-			// Bereits relativ?
-			if (mediaFromModel.StartsWith("./") || mediaFromModel.StartsWith(".\\"))
-				return mediaFromModel.Replace('\\', '/');
-
-			// Absolut unterhalb des Systemordners? → relativer Pfad ab Systemordner
-			try
-			{
-				var full = Path.GetFullPath(mediaFromModel);
-				var sys = Path.GetFullPath(systemDir);
-				if (full.StartsWith(sys, StringComparison.OrdinalIgnoreCase))
-				{
-					var rel = full.Substring(sys.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-					return "./" + rel.Replace('\\', '/');
-				}
-			}
-			catch { /* ignorieren – gib Original zurück */ }
-
-			// als Fallback Original zurück (EmulationStation kann auch absolute Pfade)
-			return mediaFromModel.Replace('\\', '/');
-		}
+		
 	}
 }
