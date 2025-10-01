@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroScrap2000.Tools;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RetroScrap2000
 {
@@ -91,6 +93,128 @@ namespace RetroScrap2000
 				return string.Empty; // nur Erweiterung, kein Name
 			
 			return filename.Substring(0, index).Trim(); // Name ohne Erweiterung
+		}
+
+		public static async Task<(System.Drawing.Image? img, string? absPath)>  LoadMediaAsync(
+			eMediaType type, string? urlOrRelPath, string baseDir, CancellationToken ct)
+		{
+
+			System.Drawing.Image? img = null;
+			string? absPath = null;
+
+			if (string.IsNullOrEmpty(urlOrRelPath) || type == eMediaType.Unknown)
+				return (img, absPath);
+
+			if (type == eMediaType.Manual)
+			{
+				// TODO: Under Construction …
+				return (img, absPath);
+			}
+
+			if (type == eMediaType.Video)
+			{
+				if (!urlOrRelPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+				{
+					var localfile = FileTools.ResolveMediaPath(baseDir, urlOrRelPath);
+					if (localfile != null && File.Exists(localfile))
+					{
+						var preview = await ImageTools.LoadVideoPreviewAsync(baseDir, urlOrRelPath, ct);
+						if (preview.HasValue)
+						{
+							img = preview.Value.overlay;
+							absPath = preview.Value.videoAbsPath;
+						}
+					}
+				}
+				else
+				{
+					var vidTask = await VideoTools.LoadVideoPreviewFromUrlAsync(urlOrRelPath, ct);
+					if (vidTask.HasValue)
+					{
+						img = vidTask.Value.overlay;
+						absPath = vidTask.Value.videoAbsPath;
+					}
+				}
+			}
+			else
+			{
+				if (!urlOrRelPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+				{
+					img = await ImageTools.LoadImageCachedAsync(baseDir, urlOrRelPath, ct);
+					absPath = FileTools.ResolveMediaPath(baseDir, urlOrRelPath);
+				}
+				else
+				{
+					img = await ImageTools.LoadImageFromUrlCachedAsync(urlOrRelPath, CancellationToken.None);
+					absPath = FileTools.SaveImageToTempFile(img);
+				}
+			}
+
+			return (img, absPath);
+		}
+
+		public static bool? IsMediaIdentical(eMediaType typ, string? absPathNew, string? relPathOld, string systemRomPath )
+		{
+			if (typ == eMediaType.Unknown
+					|| string.IsNullOrEmpty(absPathNew)
+					|| !File.Exists(absPathNew))
+				return null;
+
+			if (string.IsNullOrEmpty(relPathOld))
+				return false; // kein altes Medium, also nicht identisch
+		
+			// Altes Medium nicht mehr da
+			var oldMedia = FileTools.ResolveMediaPath(systemRomPath, relPathOld);
+			if (string.IsNullOrEmpty(oldMedia) || !File.Exists(oldMedia))
+				return false;
+			
+			// Filegröße unterschiedlich?
+			FileInfo old = new FileInfo(oldMedia);
+			FileInfo neu = new FileInfo(absPathNew);
+			if (old.Length != neu.Length)
+				return false; // unterschiedliche Filegröße
+
+			// Letzte Prüfung: Bilder unterschiedlich?
+			if (typ != eMediaType.Video && typ != eMediaType.Manual
+				&& ImageTools.ImagesAreDifferent(oldMedia, absPathNew))
+				return false;
+
+			return true;
+		}
+
+		public static void ForceHorizontalScrollForMediaPreviewControls(FlowLayoutPanel flowLayoutPanel)
+		{
+			if (flowLayoutPanel.Controls.Count == 0)
+			{
+				return;
+			}
+
+			var control = new MediaPreviewControl();
+			Debug.Assert(flowLayoutPanel.Controls[0] is MediaPreviewControl, "Expected MediaPreviewControl in FlowLayoutPanel");
+			int CONTROL_WIDTH = flowLayoutPanel.Controls[0].Width;
+			int MARGIN = flowLayoutPanel.Controls[0].Margin.All;          // Der Margin-Wert Ihres Controls oder Panels
+			int SCROLLBAR_SAFETY_MARGIN = 20; // Extra Platz für die Scrollbar selbst
+
+			// Berechnung der Gesamtbreite aller UserControls
+			int totalWidth = (flowLayoutPanel.Controls.Count * CONTROL_WIDTH) +
+											 (flowLayoutPanel.Controls.Count * MARGIN) +
+											 SCROLLBAR_SAFETY_MARGIN;
+			Trace.WriteLine($"ForceHorizontalScroll: Widht: {totalWidth}");
+			// Nur setzen, wenn die berechnete Breite größer ist als die aktuelle Breite des Host-Panels.
+			// Wir setzen hier die Breite des FlowLayoutPanel (des Kindes)
+			if (totalWidth > flowLayoutPanel.Parent!.ClientRectangle.Width)
+			{
+				flowLayoutPanel.Width = totalWidth;
+			}
+			else
+			{
+				// Wichtig: Wenn die Gesamtbreite kleiner ist, muss die Breite des FlowLayoutPanel
+				// wieder auf die Breite des Hosts gesetzt werden, um die Scrollbar zu entfernen.
+				flowLayoutPanel.Width = flowLayoutPanel.Parent.ClientRectangle.Width;
+			}
+
+			// Setzen der Höhe auf die feste Höhe der Controls, um vertikale Probleme zu vermeiden
+			flowLayoutPanel.Height = control.Height + MARGIN;
 		}
 	}
 }

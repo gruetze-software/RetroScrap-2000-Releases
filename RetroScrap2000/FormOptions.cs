@@ -40,7 +40,15 @@ namespace RetroScrap2000
 				comboBoxLanguage.Items.Add(lang);
 
 			comboBoxLanguage.DrawItem += ComboBoxLanguage_DrawItem;
-
+			if (string.IsNullOrEmpty(Options.Region) || Options.Region == "eu")
+				comboBoxLangRegion.SelectedIndex = 0;
+			else if (Options.Region == "us")
+				comboBoxLangRegion.SelectedIndex = 1;
+			else if (Options.Region == "jp")
+				comboBoxLangRegion.SelectedIndex = 2;
+			else
+				Debug.Assert(false);
+			
 			radioButtonBatocera.Checked = true;
 
 			ImageList imgTab = new ImageList() { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
@@ -78,7 +86,6 @@ namespace RetroScrap2000
 			checkBoxMediaManual.Checked = Options.MediaManual == true;
 			checkBoxMediaMap.Checked = Options.MediaMap == true;
 			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
-			checkBoxMediaThumbnail.Checked = Options.MediaThumbnail == true;
 			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
 			checkBoxMediaWheel.Checked = Options.MediaWheel == true;
 			checkBoxMediaMarquee.Checked = Options.MediaMarquee == true;
@@ -232,12 +239,20 @@ namespace RetroScrap2000
 		private void buttonOK_Click(object sender, EventArgs e)
 		{
 			SaveSecrets();
+			if (comboBoxLangRegion.SelectedIndex == 0)
+				Options.Region = "eu";
+			else if (comboBoxLangRegion.SelectedIndex == 1)
+				Options.Region = "us";
+			else if (comboBoxLangRegion.SelectedIndex == 2)
+				Options.Region = "jp";
+			else
+			 Options.Region = "eu"; // default
+
 			Options.MediaFanart = checkBoxMediaFanart.Checked;
 			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
 			Options.MediaManual = checkBoxMediaManual.Checked;
 			Options.MediaMap = checkBoxMediaMap.Checked;
 			Options.MediaScreenshot = checkBoxMediaScreenshot.Checked;
-			Options.MediaThumbnail = checkBoxMediaThumbnail.Checked;
 			Options.MediaVideo = checkBoxMediaVideo.Checked;
 			Options.MediaWheel = checkBoxMediaWheel.Checked;
 			Options.MediaMarquee = checkBoxMediaMarquee.Checked;

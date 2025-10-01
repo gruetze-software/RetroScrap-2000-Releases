@@ -32,6 +32,8 @@
 			buttonCancel = new Button();
 			buttonOK = new Button();
 			groupBox1 = new GroupBox();
+			comboBoxLangRegion = new ComboBox();
+			label8 = new Label();
 			labelHelpLang = new Label();
 			comboBoxLanguage = new ComboBox();
 			groupBox2 = new GroupBox();
@@ -58,7 +60,6 @@
 			checkBoxMediaMap = new CheckBox();
 			checkBoxMediaManual = new CheckBox();
 			checkBoxMediaVideo = new CheckBox();
-			checkBoxMediaThumbnail = new CheckBox();
 			checkBoxMediaImageBox = new CheckBox();
 			checkBoxMediaWheel = new CheckBox();
 			checkBoxMediaScreenshot = new CheckBox();
@@ -125,11 +126,26 @@
 			// 
 			// groupBox1
 			// 
+			groupBox1.Controls.Add(comboBoxLangRegion);
+			groupBox1.Controls.Add(label8);
 			groupBox1.Controls.Add(labelHelpLang);
 			groupBox1.Controls.Add(comboBoxLanguage);
 			resources.ApplyResources(groupBox1, "groupBox1");
 			groupBox1.Name = "groupBox1";
 			groupBox1.TabStop = false;
+			// 
+			// comboBoxLangRegion
+			// 
+			comboBoxLangRegion.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBoxLangRegion.FormattingEnabled = true;
+			comboBoxLangRegion.Items.AddRange(new object[] { resources.GetString("comboBoxLangRegion.Items"), resources.GetString("comboBoxLangRegion.Items1"), resources.GetString("comboBoxLangRegion.Items2") });
+			resources.ApplyResources(comboBoxLangRegion, "comboBoxLangRegion");
+			comboBoxLangRegion.Name = "comboBoxLangRegion";
+			// 
+			// label8
+			// 
+			resources.ApplyResources(label8, "label8");
+			label8.Name = "label8";
 			// 
 			// labelHelpLang
 			// 
@@ -290,7 +306,6 @@
 			groupBox5.Controls.Add(checkBoxMediaMap);
 			groupBox5.Controls.Add(checkBoxMediaManual);
 			groupBox5.Controls.Add(checkBoxMediaVideo);
-			groupBox5.Controls.Add(checkBoxMediaThumbnail);
 			groupBox5.Controls.Add(checkBoxMediaImageBox);
 			groupBox5.Controls.Add(checkBoxMediaWheel);
 			groupBox5.Controls.Add(checkBoxMediaScreenshot);
@@ -317,12 +332,6 @@
 			resources.ApplyResources(checkBoxMediaVideo, "checkBoxMediaVideo");
 			checkBoxMediaVideo.Name = "checkBoxMediaVideo";
 			checkBoxMediaVideo.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaThumbnail
-			// 
-			resources.ApplyResources(checkBoxMediaThumbnail, "checkBoxMediaThumbnail");
-			checkBoxMediaThumbnail.Name = "checkBoxMediaThumbnail";
-			checkBoxMediaThumbnail.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMediaImageBox
 			// 
@@ -523,6 +532,7 @@
 			Name = "FormOptions";
 			Load += FormOptions_Load;
 			groupBox1.ResumeLayout(false);
+			groupBox1.PerformLayout();
 			groupBox2.ResumeLayout(false);
 			groupBox2.PerformLayout();
 			tabControlOptions.ResumeLayout(false);
@@ -603,10 +613,11 @@
 		private CheckBox checkBoxMediaScreenshot;
 		private CheckBox checkBoxMediaMarquee;
 		private CheckBox checkBoxMediaFanart;
-		private CheckBox checkBoxMediaThumbnail;
 		private CheckBox checkBoxMediaImageBox;
 		private CheckBox checkBoxMediaVideo;
 		private CheckBox checkBoxMediaMap;
 		private CheckBox checkBoxMediaManual;
+		private ComboBox comboBoxLangRegion;
+		private Label label8;
 	}
 }

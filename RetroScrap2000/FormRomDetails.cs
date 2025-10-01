@@ -37,17 +37,7 @@ namespace RetroScrap2000
 			item.SubItems.Add(_rom.Source);
 			listViewDetails.Items.Add(item);
 
-			item = new ListViewItem("Path Cover:");
-			item.SubItems.Add(_rom.MediaThumbnailPath);
-			listViewDetails.Items.Add(item);
-
-			item = new ListViewItem("Path Screen:");
-			item.SubItems.Add(_rom.MediaImageBoxPath);
-			listViewDetails.Items.Add(item);
-
-			item = new ListViewItem("Path Video:");
-			item.SubItems.Add(_rom.MediaVideoPath);
-			listViewDetails.Items.Add(item);
+			// TODO
 
 			ResizeListView();
 		}

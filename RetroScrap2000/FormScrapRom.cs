@@ -1,4 +1,5 @@
-﻿using RetroScrap2000.Tools;
+﻿using RetroScrap2000.Properties;
+using RetroScrap2000.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,12 +9,14 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Resources;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace RetroScrap2000
 {
@@ -22,15 +25,63 @@ namespace RetroScrap2000
 		private readonly GameEntry _current;
 		private readonly ScrapeGame _scraped;
 		private readonly string _systemRomPath;
+		private readonly RetroScrapOptions _options;
 
 		public ScrapeSelection Selection { get; } = new();
-
-		public FormScrapRom(string systemRomPath, GameEntry current, ScrapeGame scraped)
+		public StarRatingControl starRatingControlRomOld { get; set; } = new StarRatingControl();
+		public StarRatingControl starRatingControlRomNew { get; set; } = new StarRatingControl();
+		public FormScrapRom(string systemRomPath, GameEntry current, ScrapeGame scraped, RetroScrapOptions options)
 		{
 			InitializeComponent();
+
+			starRatingControlRomOld = new StarRatingControl()
+			{
+				AllowHalfStars = true,
+				EmptyColor = Color.LightGray,
+				FilledColor = Color.Red,
+				Name = "starRatingControlRomOld",
+				OutlineColor = Color.Black,
+				Rating = 0D,
+				StarCount = 5,
+				StarSpacing = 4,
+				Dock = DockStyle.Fill
+			};
+			starRatingControlRomNew = new StarRatingControl()
+			{
+				AllowHalfStars = true,
+				EmptyColor = Color.LightGray,
+				FilledColor = Color.Red,
+				Name = "starRatingControlRomNew",
+				OutlineColor = Color.Black,
+				Rating = 0D,
+				StarCount = 5,
+				StarSpacing = 4,
+				Dock = DockStyle.Fill,
+			};
+
+			tableLayoutPanelLeft.Controls.Add(starRatingControlRomOld, 1, 7);
+			tableLayoutPanelRight.Controls.Add(starRatingControlRomNew, 0, 7);
+
 			_current = current;
 			_scraped = scraped;
 			_systemRomPath = systemRomPath;
+			_options = options;
+
+			// Für das linke FlowLayoutPanel
+			panelLeft.AutoScroll = true; // Ermöglicht das Scrollen, wenn der Inhalt größer als der sichtbare Bereich ist
+			this.flowLayoutPanelMediaLeft.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+			this.flowLayoutPanelMediaLeft.AutoScroll = false;
+			this.flowLayoutPanelMediaLeft.WrapContents = false; 
+			this.flowLayoutPanelMediaLeft.AutoSize = false;      // **Muss True sein** -> Erlaubt es, horizontal über die Grenzen des Formulars hinauszuwachsen.
+			this.flowLayoutPanelMediaLeft.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
+
+			// Für das rechte FlowLayoutPanel
+			panelRight.AutoScroll = true; // Ermöglicht das Scrollen, wenn der Inhalt größer als der sichtbare Bereich ist
+			this.flowLayoutPanelMediaRight.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+			this.flowLayoutPanelMediaRight.AutoScroll = false;
+			this.flowLayoutPanelMediaRight.WrapContents = false; // **Muss False sein**
+			this.flowLayoutPanelMediaRight.AutoSize = false;       
+			this.flowLayoutPanelMediaRight.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
 		}
 
 		private async void FormScrapRom_Load(object sender, EventArgs e)
@@ -41,6 +92,7 @@ namespace RetroScrap2000
 			Cursor.Current = Cursors.WaitCursor;
 
 			// Links füllen (current)
+			//////////////////////////////////////////////////////////////////////////
 			textBoxRomOldName.Text = _current.Name ?? "";
 			textBoxRomOldDesc.Text = _current.Description ?? "";
 			textBoxRomOldGenre.Text = _current.Genre ?? "";
@@ -52,39 +104,21 @@ namespace RetroScrap2000
 			else
 				textBoxRomOldRelease.Text = "";
 			starRatingControlRomOld.Rating = _current.RatingStars;
-			// Busy-Platzhalter anzeigen
-			if (!string.IsNullOrEmpty(_current.MediaThumbnailPath))
-				UiTools.ShowBusyPreview(pictureBoxRomOldFront, "Cover …");
-			if (!string.IsNullOrEmpty(_current.MediaImageBoxPath))
-				UiTools.ShowBusyPreview(pictureBoxRomOldScreen, "Screenshot …");
-			if (!string.IsNullOrEmpty(_current.MediaVideoPath))
-				UiTools.ShowBusyPreview(pictureBoxRomOldVideo, "Video …");
 
 			try
 			{
-				// asynchron + gecached
-				var coverTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaThumbnailPath, CancellationToken.None);
-				var shotTask = ImageTools.LoadImageCachedAsync(_systemRomPath, _current.MediaImageBoxPath, CancellationToken.None);
-				var prevTask = ImageTools.LoadVideoPreviewAsync(_systemRomPath, _current, CancellationToken.None);
+				foreach (var kvp in _current.MediaTypeDictionary)
+				{
+					if (string.IsNullOrEmpty(kvp.Value))
+						continue;
 
-				// Ergebnisse zuweisen + Busy ausblenden
-				var cover = await coverTask;
-				UiTools.HideBusyPreview(pictureBoxRomOldFront);
-				pictureBoxRomOldFront.Image = cover;
-				pictureBoxRomOldFront.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaThumbnailPath);
-
-				var shot = await shotTask;
-				UiTools.HideBusyPreview(pictureBoxRomOldScreen);
-				pictureBoxRomOldScreen.Image = shot;
-				pictureBoxRomOldScreen.Tag = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaImageBoxPath);
-
-				var prev = await prevTask; // prev?.overlay = Image, prev?.videoAbsPath = Pfad fürs Klicken
-				UiTools.HideBusyPreview(pictureBoxRomOldVideo);
-				pictureBoxRomOldVideo.Image = prev?.overlay;
-				pictureBoxRomOldVideo.Tag = prev?.videoAbsPath; // Klick startet Standardplayer
-				pictureBoxRomOldVideo.Cursor = (prev?.overlay != null) ? Cursors.Hand : Cursors.Default;
+					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, CancellationToken.None, false);
+					flowLayoutPanelMediaLeft.Controls.Add(control);
+				}
+				Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMediaLeft);
 
 				// Rechts füllen (scraped)
+				/////////////////////////////////////////////////////////////////////
 				textBoxRomNewName.Text = _scraped.Name ?? "";
 				_scraped.Description = Utils.DecodeTextFromApi(_scraped.Description);
 				textBoxRomNewDesc.Text = _scraped.Description ?? "";
@@ -96,40 +130,21 @@ namespace RetroScrap2000
 				if (_scraped.RatingNormalized != null && _scraped.RatingNormalized.HasValue && _scraped.RatingNormalized.Value > 0)
 					starRatingControlRomNew.Rating = _scraped.RatingNormalized.Value * 5.0;
 
-				// Busy-Platzhalter anzeigen
-				if (!string.IsNullOrEmpty(_scraped.Box2DUrl))
-					UiTools.ShowBusyPreview(pictureBoxRomNewFront, "Lade Cover …");
-				if (!string.IsNullOrEmpty(_scraped.ImageUrl))
-					UiTools.ShowBusyPreview(pictureBoxRomNewScreen, "Lade Screenshot …");
-				if (!string.IsNullOrEmpty(_scraped.VideoUrl))
-					UiTools.ShowBusyPreview(pictureBoxRomNewVideo, "Lade Video-Vorschau …");
+				foreach (var kvp in _scraped.MediaUrls)
+				{
+					if (string.IsNullOrEmpty(kvp.Value))
+						continue;
 
+					if (_options.IsMediaTypeEnabled(kvp.Key) != true)
+					{
+						Trace.WriteLine($"Skip Download {kvp.Key.ToString()}, it's not checked in Options...");
+						continue; // diese Media-Art ist nicht gewünscht
+					}
 
-				// asynchron + gecached
-				var coverTasksc = ImageTools.LoadImageFromUrlCachedAsync(_scraped.Box2DUrl, CancellationToken.None);
-				var shotTasksc = ImageTools.LoadImageFromUrlCachedAsync(_scraped.ImageUrl, CancellationToken.None);
-				var prevTasksc = VideoTools.LoadVideoPreviewFromUrlAsync(_scraped.VideoUrl, CancellationToken.None);
-
-				// Ergebnisse zuweisen + Busy ausblenden
-				var coversc = await coverTasksc;
-				UiTools.HideBusyPreview(pictureBoxRomNewFront);
-				pictureBoxRomNewFront.Image = coversc;
-				Selection.MediaBoxTempPath = FileTools.SaveImageToTempFile(coversc);
-				pictureBoxRomNewFront.Tag = Selection.MediaBoxTempPath;
-
-				var shotsc = await shotTasksc;
-				UiTools.HideBusyPreview(pictureBoxRomNewScreen);
-				pictureBoxRomNewScreen.Image = shotsc;
-				Selection.MediaScreenTempPath = FileTools.SaveImageToTempFile(shotsc);
-				pictureBoxRomNewScreen.Tag = Selection.MediaScreenTempPath;
-
-				var prevsc = await prevTasksc; // prev?.overlay = Image, prev?.videoAbsPath = Pfad fürs Klicken
-				UiTools.HideBusyPreview(pictureBoxRomNewVideo);
-				pictureBoxRomNewVideo.Image = prevsc?.overlay;
-				Selection.MediaVideoTempPath = prevsc?.videoAbsPath;
-				pictureBoxRomNewVideo.Tag = Selection.MediaVideoTempPath; // Klick startet Standardplayer
-				Selection.MediaVideoPreviewTempPath = prevsc?.videoPreviewAbsPath;
-				pictureBoxRomNewVideo.Cursor = (prevsc?.overlay != null) ? Cursors.Hand : Cursors.Default;
+					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, CancellationToken.None, true);
+					flowLayoutPanelMediaRight.Controls.Add(control);
+				}
+				Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMediaRight);
 
 				// Checkboxen setzen (nur wenn rechts was da ist)
 				checkBoxName.Checked = !string.IsNullOrEmpty(_scraped.Name) && _scraped.Name != _current.Name;
@@ -141,26 +156,23 @@ namespace RetroScrap2000
 				checkBoxRating.Checked = _scraped.RatingNormalized.HasValue && _current.Rating != _scraped.RatingNormalized;
 				checkBoxRelease.Checked = _scraped.ReleaseDate != _current.ReleaseDate;
 
-				string? currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaThumbnailPath);
-				checkBoxMediaFront.Checked = ( 
-					!string.IsNullOrEmpty(Selection.MediaBoxTempPath) 
-					&& ( string.IsNullOrEmpty(_current.MediaThumbnailPath) 
-						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
-					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaBoxTempPath);
-
-				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaImageBoxPath);
-				checkBoxMediaScreen.Checked = (
-					!string.IsNullOrEmpty(Selection.MediaScreenTempPath) 
-					&& ( string.IsNullOrEmpty(_current.MediaImageBoxPath)
-						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
-					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaScreenTempPath);
-
-				currentMedia = FileTools.ResolveMediaPath(_systemRomPath, _current.MediaVideoPreviewImagePath);
-				checkBoxMediaVideo.Checked = (
-					!string.IsNullOrEmpty(Selection.MediaVideoPreviewTempPath) 
-					&& ( string.IsNullOrEmpty(_current.MediaVideoPreviewImagePath)
-						|| string.IsNullOrEmpty(currentMedia) || !File.Exists(currentMedia) ) )
-					|| ImageTools.ImagesAreDifferent(currentMedia, Selection.MediaVideoPreviewTempPath);
+				// Media-Checkboxen: nur wenn rechts was da ist UND es ist anders als links
+				foreach (var control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
+				{
+					if (control != null 
+						&& control.MediaType != eMediaType.Unknown 
+						&& !string.IsNullOrEmpty(control.AbsolutPath) 
+						&& File.Exists(control.AbsolutPath) )
+					{
+						Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: false));
+						// Gibt es diese Media-Art in alt?
+						if (_current.MediaTypeDictionary.TryGetValue(control.MediaType, out var oldPath))
+						{
+							bool? identical = Utils.IsMediaIdentical(control.MediaType, control.AbsolutPath, oldPath, _systemRomPath);
+							control.CheckBox.Checked = identical == false; // nur wenn ungleich
+						}
+					}
+				} // Next control
 			}
 			catch (OperationCanceledException)
 			{
@@ -222,12 +234,30 @@ namespace RetroScrap2000
 			Selection.TakePub = checkBoxPub.Checked;
 			Selection.TakeRating = checkBoxRating.Checked;
 			Selection.TakeRelease = checkBoxRelease.Checked;
-			Selection.TakeMediaBox = checkBoxMediaFront.Checked;
-			Selection.TakeMediaScreen = checkBoxMediaScreen.Checked;
-			Selection.TakeMediaVideo = checkBoxMediaVideo.Checked;
+			
+			foreach ( MediaPreviewControl control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
+			{
+				if (control.CheckBox.Checked 
+					&& !string.IsNullOrEmpty(control.AbsolutPath) 
+					&& Selection.MediaTempPaths.ContainsKey(control.MediaType))
+				{
+					var tuple = Selection.MediaTempPaths[control.MediaType];
+					tuple.take = true;
+					Selection.MediaTempPaths[control.MediaType] = tuple;
+				}
+			}
 
 			this.DialogResult = DialogResult.OK;
 			this.Close();
+		}
+
+		private async Task<MediaPreviewControl> CreateMediaPreviewPanel(eMediaType type, string? url, string baseDir,CancellationToken ct, bool checkboxen)
+		{
+			var control = new MediaPreviewControl();
+			control.MediaType = type;
+			control.ShowCheckbox = checkboxen;
+			await control.LoadMediaAsync(url, baseDir, ct);
+			return control;
 		}
 	}
 
@@ -235,8 +265,7 @@ namespace RetroScrap2000
 	{
 		public bool TakeName, TakeDesc, TakeGenre, TakePlayers, TakeDev, TakePub, TakeRating, TakeRelease;
 		public bool TakeMediaBox, TakeMediaVideo, TakeMediaScreen;
-		public string? MediaBoxTempPath, MediaScreenTempPath, MediaVideoPreviewTempPath, MediaVideoTempPath;
-		// die Werte, die übernommen werden würden (aus ScrapeGame)
+		public Dictionary<eMediaType, (string tempPath, bool take)> MediaTempPaths { get; set; } = new();
 		public ScrapeGame? NewData { get; set; }
 	}
 }

@@ -12,7 +12,6 @@ namespace RetroScrap2000
 	public enum eMediaType
 	{
 		BoxImage = 0,
-		Thumbnail,
 		Video,
 		Marquee,
 		Fanart,
@@ -27,9 +26,9 @@ namespace RetroScrap2000
 	{
 		public string? RomPath { get; set; }
 		public string? Language { get; set; }
+		public string? Region { get; set; }
 		public string? ApiUser { get; set; }
 		public bool? MediaBoxImage { get; set; }
-		public bool? MediaThumbnail { get; set; }
 		public bool? MediaVideo { get; set; }
 		public bool? MediaMarquee { get; set; }
 		public bool? MediaFanart { get; set; }
@@ -46,16 +45,16 @@ namespace RetroScrap2000
 		{ 
 			Secret = new PasswordVault(Path.Combine(GetOptionsPath(), "vault.dat"));
 			MediaBoxImage = true;
-			MediaThumbnail = true;
+			MediaScreenshot = true;
 			MediaVideo = true;
+			Region = "eu";
 		}
 
-		public static string GetMediaFolder(eMediaType type)
+		public static string GetMediaFolderAndXmlTag(eMediaType type)
 		{
 			return type switch
 			{
 				eMediaType.BoxImage => "image",
-				eMediaType.Thumbnail => "thumb",
 				eMediaType.Video => "video",
 				eMediaType.Marquee => "marquee",
 				eMediaType.Fanart => "fanart",
@@ -72,7 +71,6 @@ namespace RetroScrap2000
 			return type switch
 			{
 				eMediaType.BoxImage => MediaBoxImage ?? false,
-				eMediaType.Thumbnail => MediaThumbnail ?? false,
 				eMediaType.Video => MediaVideo ?? false,
 				eMediaType.Marquee => MediaMarquee ?? false,
 				eMediaType.Fanart => MediaFanart ?? false,

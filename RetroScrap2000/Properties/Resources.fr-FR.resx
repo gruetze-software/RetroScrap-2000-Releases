@@ -288,4 +288,16 @@
   <data name="Txt_Status_Label_CheckingMedia" xml:space="preserve">
     <value>Vérification des fichiers multimédias...</value>
   </data>
+  <data name="Txt_Log_Scrap_New_Media" xml:space="preserve">
+    <value>Définir un nouveau support</value>
+  </data>
+  <data name="Txt_Log_Scrap_Media_Move_Fail" xml:space="preserve">
+    <value>Erreur lors de la copie</value>
+  </data>
+  <data name="Txt_Log_Scrap_Different_Replace" xml:space="preserve">
+    <value>Différences trouvées, remplacer le fichier</value>
+  </data>
+  <data name="Txt_Log_Scrap_Identical_Skip" xml:space="preserve">
+    <value>Aucune différence trouvée, passage</value>
+  </data>
 </root>

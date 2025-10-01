@@ -52,9 +52,6 @@
 			colRomsAnzPlayer = new ColumnHeader();
 			colRomsRating = new ColumnHeader();
 			colRomsFile = new ColumnHeader();
-			columnRomsCover = new ColumnHeader();
-			columnRomsScreen = new ColumnHeader();
-			columnRomsVideo = new ColumnHeader();
 			contextMenuStripRoms = new ContextMenuStrip(components);
 			scrapToolStripMenuItem = new ToolStripMenuItem();
 			detailsToolStripMenuItem1 = new ToolStripMenuItem();
@@ -67,7 +64,8 @@
 			pictureBoxRomSystem = new PictureBox();
 			listBoxSystem = new ListBox();
 			textBoxRomDesc = new TextBox();
-			tabControlRomMedia = new TabControl();
+			panelMedia = new Panel();
+			flowLayoutPanelMedia = new FlowLayoutPanel();
 			tableLayoutPanelRomDetails = new TableLayoutPanel();
 			textBoxRomDetailsAnzPlayer = new TextBox();
 			label10 = new Label();
@@ -82,7 +80,6 @@
 			textBoxRomDetailsReleaseDate = new TextBox();
 			buttonRomSave = new Button();
 			buttonRomScrap = new Button();
-			starRatingControlRom = new StarRatingControl();
 			contextMenuStripMedia = new ContextMenuStrip(components);
 			showToolStripMenuItem = new ToolStripMenuItem();
 			addToolStripMenuItem = new ToolStripMenuItem();
@@ -108,6 +105,7 @@
 			tableLayoutPanelRightInnen.SuspendLayout();
 			tableLayoutPanelSystem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxRomSystem).BeginInit();
+			panelMedia.SuspendLayout();
 			tableLayoutPanelRomDetails.SuspendLayout();
 			contextMenuStripMedia.SuspendLayout();
 			statusStripMain.SuspendLayout();
@@ -224,7 +222,7 @@
 			// listViewRoms
 			// 
 			listViewRoms.Activation = ItemActivation.OneClick;
-			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile, columnRomsCover, columnRomsScreen, columnRomsVideo });
+			listViewRoms.Columns.AddRange(new ColumnHeader[] { colRomsName, colRomsRelease, colRomsGenre, colRomsAnzPlayer, colRomsRating, colRomsFile });
 			listViewRoms.ContextMenuStrip = contextMenuStripRoms;
 			resources.ApplyResources(listViewRoms, "listViewRoms");
 			listViewRoms.FullRowSelect = true;
@@ -259,18 +257,6 @@
 			// colRomsFile
 			// 
 			resources.ApplyResources(colRomsFile, "colRomsFile");
-			// 
-			// columnRomsCover
-			// 
-			resources.ApplyResources(columnRomsCover, "columnRomsCover");
-			// 
-			// columnRomsScreen
-			// 
-			resources.ApplyResources(columnRomsScreen, "columnRomsScreen");
-			// 
-			// columnRomsVideo
-			// 
-			resources.ApplyResources(columnRomsVideo, "columnRomsVideo");
 			// 
 			// contextMenuStripRoms
 			// 
@@ -323,7 +309,7 @@
 			// 
 			// splitContainerRightRom.Panel2
 			// 
-			splitContainerRightRom.Panel2.Controls.Add(tabControlRomMedia);
+			splitContainerRightRom.Panel2.Controls.Add(panelMedia);
 			// 
 			// tableLayoutPanelRightInnen
 			// 
@@ -364,12 +350,16 @@
 			resources.ApplyResources(textBoxRomDesc, "textBoxRomDesc");
 			textBoxRomDesc.Name = "textBoxRomDesc";
 			// 
-			// tabControlRomMedia
+			// panelMedia
 			// 
-			resources.ApplyResources(tabControlRomMedia, "tabControlRomMedia");
-			tabControlRomMedia.Multiline = true;
-			tabControlRomMedia.Name = "tabControlRomMedia";
-			tabControlRomMedia.SelectedIndex = 0;
+			resources.ApplyResources(panelMedia, "panelMedia");
+			panelMedia.Controls.Add(flowLayoutPanelMedia);
+			panelMedia.Name = "panelMedia";
+			// 
+			// flowLayoutPanelMedia
+			// 
+			resources.ApplyResources(flowLayoutPanelMedia, "flowLayoutPanelMedia");
+			flowLayoutPanelMedia.Name = "flowLayoutPanelMedia";
 			// 
 			// tableLayoutPanelRomDetails
 			// 
@@ -387,7 +377,6 @@
 			tableLayoutPanelRomDetails.Controls.Add(textBoxRomDetailsReleaseDate, 1, 0);
 			tableLayoutPanelRomDetails.Controls.Add(buttonRomSave, 3, 3);
 			tableLayoutPanelRomDetails.Controls.Add(buttonRomScrap, 1, 3);
-			tableLayoutPanelRomDetails.Controls.Add(starRatingControlRom, 3, 0);
 			tableLayoutPanelRomDetails.Name = "tableLayoutPanelRomDetails";
 			// 
 			// textBoxRomDetailsAnzPlayer
@@ -461,18 +450,6 @@
 			buttonRomScrap.UseVisualStyleBackColor = true;
 			buttonRomScrap.Click += buttonRomScrap_Click;
 			// 
-			// starRatingControlRom
-			// 
-			starRatingControlRom.AllowHalfStars = true;
-			resources.ApplyResources(starRatingControlRom, "starRatingControlRom");
-			starRatingControlRom.EmptyColor = Color.LightGray;
-			starRatingControlRom.FilledColor = Color.Red;
-			starRatingControlRom.Name = "starRatingControlRom";
-			starRatingControlRom.OutlineColor = Color.Black;
-			starRatingControlRom.Rating = 0D;
-			starRatingControlRom.StarCount = 5;
-			starRatingControlRom.StarSpacing = 4;
-			// 
 			// contextMenuStripMedia
 			// 
 			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
@@ -539,6 +516,7 @@
 			tableLayoutPanelRightInnen.PerformLayout();
 			tableLayoutPanelSystem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxRomSystem).EndInit();
+			panelMedia.ResumeLayout(false);
 			tableLayoutPanelRomDetails.ResumeLayout(false);
 			tableLayoutPanelRomDetails.PerformLayout();
 			contextMenuStripMedia.ResumeLayout(false);
@@ -604,10 +582,7 @@
 		private ToolStripMenuItem showToolStripMenuItem;
 		private ToolStripMenuItem deleteToolStripMenuItem;
 		private ToolStripMenuItem addToolStripMenuItem;
-		private StarRatingControl starRatingControlRom;
-		private ColumnHeader columnRomsCover;
-		private ColumnHeader columnRomsScreen;
-		private ColumnHeader columnRomsVideo;
-		private TabControl tabControlRomMedia;
+		private Panel panelMedia;
+		private FlowLayoutPanel flowLayoutPanelMedia;
 	}
 }

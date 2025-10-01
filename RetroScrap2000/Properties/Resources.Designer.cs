@@ -441,6 +441,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Differences found, replace file.
+        /// </summary>
+        internal static string Txt_Log_Scrap_Different_Replace {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_Different_Replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scrap process completed..
         /// </summary>
         internal static string Txt_Log_Scrap_End {
@@ -450,11 +459,38 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No differences found, skipping.
+        /// </summary>
+        internal static string Txt_Log_Scrap_Identical_Skip {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_Identical_Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         internal static string Txt_Log_Scrap_Loading {
             get {
                 return ResourceManager.GetString("Txt_Log_Scrap_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while copying.
+        /// </summary>
+        internal static string Txt_Log_Scrap_Media_Move_Fail {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_Media_Move_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set new medium.
+        /// </summary>
+        internal static string Txt_Log_Scrap_New_Media {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_New_Media", resourceCulture);
             }
         }
         

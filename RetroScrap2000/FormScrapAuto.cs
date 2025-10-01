@@ -94,7 +94,7 @@ namespace RetroScrap2000
 				ScrapWasStarting = true;
 				// Aufruf der asynchronen Methode und Übergabe des Progress-Objekts
 				await _scrapper.ScrapGamesAsync(Roms, Roms.RetroSys.Id, _basedir, 
-					progressHandler, _options.GetLanguageShortCode(), ct);
+					progressHandler, _options, ct);
 				// Speichern
 				AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGameList);
 				bool ok = await Task.Run(() =>

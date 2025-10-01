@@ -117,124 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tableLayoutPanelRight.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="checkBoxMediaVideo.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="checkBoxMediaVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 360</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="checkBoxMediaVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 64</value>
-  </data>
-  <data name="checkBoxMediaVideo.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="checkBoxMediaVideo.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Name" xml:space="preserve">
-    <value>checkBoxMediaVideo</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="checkBoxMediaScreen.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaScreen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaScreen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 292</value>
-  </data>
-  <data name="checkBoxMediaScreen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 64</value>
-  </data>
-  <data name="checkBoxMediaScreen.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="checkBoxMediaScreen.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreen.Name" xml:space="preserve">
-    <value>checkBoxMediaScreen</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreen.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreen.ZOrder" xml:space="preserve">
+  <data name="tableLayoutPanelGroupboxRight.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="checkBoxMediaFront.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaFront.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaFront.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 224</value>
-  </data>
-  <data name="checkBoxMediaFront.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaFront.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 64</value>
-  </data>
-  <data name="checkBoxMediaFront.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="checkBoxMediaFront.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFront.Name" xml:space="preserve">
-    <value>checkBoxMediaFront</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFront.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFront.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFront.ZOrder" xml:space="preserve">
+  <data name="tableLayoutPanelRight.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="checkBoxRating.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="checkBoxRating.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="checkBoxRating.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 202</value>
+    <value>373, 202</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="checkBoxRating.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
@@ -257,7 +158,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxRating.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="checkBoxRelease.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -266,7 +167,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxRelease.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 180</value>
+    <value>373, 180</value>
   </data>
   <data name="checkBoxRelease.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -290,7 +191,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxRelease.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>1</value>
   </data>
   <data name="checkBoxPub.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -299,7 +200,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxPub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 158</value>
+    <value>373, 158</value>
   </data>
   <data name="checkBoxPub.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -323,7 +224,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxPub.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="checkBoxDev.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -332,7 +233,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxDev.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 136</value>
+    <value>373, 136</value>
   </data>
   <data name="checkBoxDev.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -356,7 +257,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxDev.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>3</value>
   </data>
   <data name="checkBoxPlayer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -365,7 +266,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxPlayer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 114</value>
+    <value>373, 114</value>
   </data>
   <data name="checkBoxPlayer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -389,7 +290,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxPlayer.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>4</value>
   </data>
   <data name="checkBoxGenre.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -398,7 +299,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxGenre.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 92</value>
+    <value>373, 92</value>
   </data>
   <data name="checkBoxGenre.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -422,7 +323,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxGenre.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>5</value>
   </data>
   <data name="checkBoxDesc.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -431,7 +332,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 24</value>
+    <value>373, 24</value>
   </data>
   <data name="checkBoxDesc.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -455,67 +356,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxDesc.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 360</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 64</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomNewVideo.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewVideo.Name" xml:space="preserve">
-    <value>pictureBoxRomNewVideo</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewVideo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewVideo.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewVideo.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 292</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 64</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomNewScreen.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewScreen.Name" xml:space="preserve">
-    <value>pictureBoxRomNewScreen</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewScreen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewScreen.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewScreen.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>6</value>
   </data>
   <data name="textBoxRomNewRelease.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -527,7 +368,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewRelease.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewRelease.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -542,7 +383,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewRelease.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>7</value>
   </data>
   <data name="textBoxRomNewPub.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -554,7 +395,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewPub.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewPub.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -569,7 +410,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewPub.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>8</value>
   </data>
   <data name="textBoxRomNewDev.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -581,7 +422,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewDev.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewDev.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -596,7 +437,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewDev.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>9</value>
   </data>
   <data name="textBoxRomNewPlayers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -608,7 +449,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewPlayers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewPlayers.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -623,7 +464,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewPlayers.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>10</value>
   </data>
   <data name="textBoxRomNewGenre.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -635,7 +476,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewGenre.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewGenre.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -650,7 +491,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewGenre.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>11</value>
   </data>
   <data name="textBoxRomNewDesc.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -668,7 +509,7 @@
     <value>Both</value>
   </data>
   <data name="textBoxRomNewDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 64</value>
+    <value>364, 64</value>
   </data>
   <data name="textBoxRomNewDesc.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -683,7 +524,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewDesc.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>12</value>
   </data>
   <data name="textBoxRomNewName.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -695,7 +536,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomNewName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>364, 23</value>
   </data>
   <data name="textBoxRomNewName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -710,64 +551,7 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;textBoxRomNewName.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="starRatingControlRomNew.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="starRatingControlRomNew.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 202</value>
-  </data>
-  <data name="starRatingControlRomNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="starRatingControlRomNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 18</value>
-  </data>
-  <data name="starRatingControlRomNew.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomNew.Name" xml:space="preserve">
-    <value>starRatingControlRomNew</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomNew.Type" xml:space="preserve">
-    <value>RetroScrap2000.StarRatingControl, RetroScrap2000, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomNew.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomNew.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="pictureBoxRomNewFront.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomNewFront.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 224</value>
-  </data>
-  <data name="pictureBoxRomNewFront.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomNewFront.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 64</value>
-  </data>
-  <data name="pictureBoxRomNewFront.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomNewFront.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewFront.Name" xml:space="preserve">
-    <value>pictureBoxRomNewFront</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewFront.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewFront.Parent" xml:space="preserve">
-    <value>tableLayoutPanelRight</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomNewFront.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>13</value>
   </data>
   <data name="checkBoxName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -776,7 +560,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 2</value>
+    <value>373, 2</value>
   </data>
   <data name="checkBoxName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -800,22 +584,22 @@
     <value>tableLayoutPanelRight</value>
   </data>
   <data name="&gt;&gt;checkBoxName.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>14</value>
   </data>
   <data name="tableLayoutPanelRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 18</value>
+    <value>3, 2</value>
   </data>
   <data name="tableLayoutPanelRight.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tableLayoutPanelRight.RowCount" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>9</value>
   </data>
   <data name="tableLayoutPanelRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 429</value>
+    <value>396, 229</value>
   </data>
   <data name="tableLayoutPanelRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -827,16 +611,115 @@
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelRight.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+    <value>tableLayoutPanelGroupboxRight</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelRight.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="tableLayoutPanelRight.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="checkBoxMediaVideo" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaScreen" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaFront" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxRating" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxRelease" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxPub" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxDev" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxPlayer" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxDesc" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxRomNewVideo" Row="10" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxRomNewScreen" Row="9" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewRelease" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewPub" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewDev" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewPlayers" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewGenre" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewDesc" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewName" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="starRatingControlRomNew" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxRomNewFront" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxName" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,26,Absolute,18" /&gt;&lt;Rows Styles="Absolute,22,Absolute,68,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,68,Absolute,68,Absolute,68,Absolute,1" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="checkBoxRating" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxRelease" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxPub" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxDev" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxPlayer" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxDesc" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewRelease" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewPub" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewDev" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewPlayers" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewGenre" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewDesc" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomNewName" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxName" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,26" /&gt;&lt;Rows Styles="Absolute,22,Absolute,68,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,15" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="panelRight.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>396, 264</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="flowLayoutPanelMediaRight.WrapContents" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaRight.Name" xml:space="preserve">
+    <value>flowLayoutPanelMediaRight</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaRight.Parent" xml:space="preserve">
+    <value>panelRight</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaRight.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panelRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 235</value>
+  </data>
+  <data name="panelRight.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="panelRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>396, 264</value>
+  </data>
+  <data name="panelRight.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;panelRight.Name" xml:space="preserve">
+    <value>panelRight</value>
+  </data>
+  <data name="&gt;&gt;panelRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelRight.Parent" xml:space="preserve">
+    <value>tableLayoutPanelGroupboxRight</value>
+  </data>
+  <data name="&gt;&gt;panelRight.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 18</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>402, 501</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelGroupboxRight.Name" xml:space="preserve">
+    <value>tableLayoutPanelGroupboxRight</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelGroupboxRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelGroupboxRight.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelGroupboxRight.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanelGroupboxRight.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableLayoutPanelRight" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panelRight" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 9</value>
+    <value>0, 0</value>
   </data>
   <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -845,7 +728,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 449</value>
+    <value>408, 521</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -860,22 +743,22 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>splitContainerMain.Panel2</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>554, 470</value>
+    <value>716, 535</value>
   </data>
   <data name="buttonCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 22</value>
+    <value>82, 26</value>
   </data>
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -899,13 +782,13 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>466, 470</value>
+    <value>628, 535</value>
   </data>
   <data name="buttonOK.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="buttonOK.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 22</value>
+    <value>82, 26</value>
   </data>
   <data name="buttonOK.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -925,83 +808,86 @@
   <data name="&gt;&gt;buttonOK.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+  <data name="tableLayoutPanel1GroupboxLeft.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="panelLeft.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>364, 264</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="flowLayoutPanelMediaLeft.WrapContents" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaLeft.Name" xml:space="preserve">
+    <value>flowLayoutPanelMediaLeft</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaLeft.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaLeft.Parent" xml:space="preserve">
+    <value>panelLeft</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaLeft.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panelLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 235</value>
+  </data>
+  <data name="panelLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="panelLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>364, 264</value>
+  </data>
+  <data name="panelLeft.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panelLeft.Name" xml:space="preserve">
+    <value>panelLeft</value>
+  </data>
+  <data name="&gt;&gt;panelLeft.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelLeft.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1GroupboxLeft</value>
+  </data>
+  <data name="&gt;&gt;panelLeft.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tableLayoutPanelLeft.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 360</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 64</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomOldVideo.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldVideo.Name" xml:space="preserve">
-    <value>pictureBoxRomOldVideo</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldVideo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldVideo.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldVideo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 292</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 64</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomOldScreen.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldScreen.Name" xml:space="preserve">
-    <value>pictureBoxRomOldScreen</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldScreen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldScreen.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldScreen.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="textBoxRomOldRelease.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldRelease.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 180</value>
+    <value>112, 180</value>
   </data>
   <data name="textBoxRomOldRelease.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldRelease.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldRelease.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1016,19 +902,19 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldRelease.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="textBoxRomOldPub.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldPub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 158</value>
+    <value>112, 158</value>
   </data>
   <data name="textBoxRomOldPub.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldPub.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldPub.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -1043,19 +929,19 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldPub.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="textBoxRomOldDev.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldDev.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 136</value>
+    <value>112, 136</value>
   </data>
   <data name="textBoxRomOldDev.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldDev.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldDev.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1070,19 +956,19 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldDev.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="textBoxRomOldPlayers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldPlayers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 114</value>
+    <value>112, 114</value>
   </data>
   <data name="textBoxRomOldPlayers.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldPlayers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldPlayers.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1097,19 +983,19 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldPlayers.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="textBoxRomOldGenre.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldGenre.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 92</value>
+    <value>112, 92</value>
   </data>
   <data name="textBoxRomOldGenre.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldGenre.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldGenre.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1124,13 +1010,13 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldGenre.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="textBoxRomOldDesc.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 24</value>
+    <value>112, 24</value>
   </data>
   <data name="textBoxRomOldDesc.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -1142,7 +1028,7 @@
     <value>Both</value>
   </data>
   <data name="textBoxRomOldDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 64</value>
+    <value>249, 64</value>
   </data>
   <data name="textBoxRomOldDesc.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1157,7 +1043,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldDesc.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1169,7 +1055,7 @@
     <value>3, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1190,7 +1076,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1202,7 +1088,7 @@
     <value>3, 22</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 68</value>
+    <value>103, 68</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1223,7 +1109,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1235,7 +1121,7 @@
     <value>3, 90</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1256,7 +1142,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1268,7 +1154,7 @@
     <value>3, 112</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1289,7 +1175,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1301,7 +1187,7 @@
     <value>3, 134</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1322,7 +1208,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1334,7 +1220,7 @@
     <value>3, 156</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1355,7 +1241,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1367,7 +1253,7 @@
     <value>3, 178</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1388,7 +1274,7 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1400,7 +1286,7 @@
     <value>3, 200</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>103, 22</value>
   </data>
   <data name="label8.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1421,118 +1307,19 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label9.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 222</value>
-  </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 68</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Box 2D:</value>
-  </data>
-  <data name="label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
-  </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label10.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 290</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 68</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>Screenshot:</value>
-  </data>
-  <data name="label10.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 358</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 68</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>Video:</value>
-  </data>
-  <data name="label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>13</value>
   </data>
   <data name="textBoxRomOldName.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textBoxRomOldName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 2</value>
+    <value>112, 2</value>
   </data>
   <data name="textBoxRomOldName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="textBoxRomOldName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 23</value>
+    <value>249, 23</value>
   </data>
   <data name="textBoxRomOldName.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1547,79 +1334,22 @@
     <value>tableLayoutPanelLeft</value>
   </data>
   <data name="&gt;&gt;textBoxRomOldName.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="starRatingControlRomOld.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="starRatingControlRomOld.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 202</value>
-  </data>
-  <data name="starRatingControlRomOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="starRatingControlRomOld.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 18</value>
-  </data>
-  <data name="starRatingControlRomOld.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomOld.Name" xml:space="preserve">
-    <value>starRatingControlRomOld</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomOld.Type" xml:space="preserve">
-    <value>RetroScrap2000.StarRatingControl, RetroScrap2000, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomOld.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;starRatingControlRomOld.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="pictureBoxRomOldFront.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pictureBoxRomOldFront.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 224</value>
-  </data>
-  <data name="pictureBoxRomOldFront.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxRomOldFront.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 64</value>
-  </data>
-  <data name="pictureBoxRomOldFront.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBoxRomOldFront.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldFront.Name" xml:space="preserve">
-    <value>pictureBoxRomOldFront</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldFront.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldFront.Parent" xml:space="preserve">
-    <value>tableLayoutPanelLeft</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxRomOldFront.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>14</value>
   </data>
   <data name="tableLayoutPanelLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 18</value>
+    <value>3, 2</value>
   </data>
   <data name="tableLayoutPanelLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tableLayoutPanelLeft.RowCount" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>9</value>
   </data>
   <data name="tableLayoutPanelLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 429</value>
+    <value>364, 229</value>
   </data>
   <data name="tableLayoutPanelLeft.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1631,16 +1361,52 @@
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelLeft.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+    <value>tableLayoutPanel1GroupboxLeft</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanelLeft.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tableLayoutPanelLeft.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBoxRomOldVideo" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxRomOldScreen" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldRelease" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldPub" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldDev" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldPlayers" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldDesc" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="9" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="10" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldName" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="starRatingControlRomOld" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxRomOldFront" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,Percent,70" /&gt;&lt;Rows Styles="Absolute,22,Absolute,68,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,68,Absolute,68,Absolute,68,Absolute,1,Absolute,15" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textBoxRomOldRelease" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldPub" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldDev" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldPlayers" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldDesc" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomOldName" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,Percent,70" /&gt;&lt;Rows Styles="Absolute,22,Absolute,68,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,22,Absolute,15" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 18</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>370, 501</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1GroupboxLeft.Name" xml:space="preserve">
+    <value>tableLayoutPanel1GroupboxLeft</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1GroupboxLeft.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1GroupboxLeft.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1GroupboxLeft.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1GroupboxLeft.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="panelLeft" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanelLeft" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 9</value>
+    <value>0, 0</value>
   </data>
   <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -1649,7 +1415,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 449</value>
+    <value>376, 521</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1664,9 +1430,63 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>splitContainerMain.Panel1</value>
   </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splitContainerMain.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="splitContainerMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 9</value>
+  </data>
+  <data name="splitContainerMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel1.Name" xml:space="preserve">
+    <value>splitContainerMain.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel1.Parent" xml:space="preserve">
+    <value>splitContainerMain</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel2.Name" xml:space="preserve">
+    <value>splitContainerMain.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel2.Parent" xml:space="preserve">
+    <value>splitContainerMain</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitContainerMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>788, 521</value>
+  </data>
+  <data name="splitContainerMain.SplitterDistance" type="System.Int32, mscorlib">
+    <value>376</value>
+  </data>
+  <data name="splitContainerMain.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Name" xml:space="preserve">
+    <value>splitContainerMain</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splitContainerMain.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -1676,7 +1496,7 @@
     <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>647, 501</value>
+    <value>808, 566</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

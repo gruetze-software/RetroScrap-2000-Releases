@@ -539,9 +539,6 @@ public class GameEntry
 	[XmlElement("image")]
 	public string? MediaImageBoxPath { get; set; }
 
-	[XmlElement("thumbnail")]
-	public string? MediaThumbnailPath { get; set; }
-
 	[XmlElement("video")]
 	public string? MediaVideoPath { get; set; }
 	[XmlElement("marquee")]
@@ -557,31 +554,89 @@ public class GameEntry
 	public string? MediaManualPath { get; set; }
 	[XmlElement("map")]
 	public string? MediaMapPath { get; set; }
-	[XmlIgnore]
-	public string? MediaVideoPreviewImagePath
+
+
+	/// <summary>
+	/// Liefert den relativen Pfad zum Preview-JPG für ein Video. 
+	/// </summary>
+	/// <param name="relVideoPath"></param>
+	/// <returns></returns>
+	public static string? GetMediaVideoPreviewImagePath(string relVideoPath)
 	{
-		get
+		if (string.IsNullOrEmpty(relVideoPath))
+			return null;
+
+		// Absoluten Pfad zum Video bauen
+		var videoPath = relVideoPath.TrimStart('.', '/', '\\');
+
+		// Verzeichnis des Videos
+		var dir = System.IO.Path.GetDirectoryName(videoPath);
+		if (string.IsNullOrEmpty(dir))
+			return null;
+
+		// Dateiname ohne .mp4
+		var baseName = Utils.GetNameFromFile(videoPath);
+
+		// Vorschau-Dateiname anhängen
+		return System.IO.Path.Combine(dir, baseName + "_preview.jpg");
+	}
+
+	
+	[XmlElement("genreid")]
+	public int GenreId { get; set; }
+
+	[XmlIgnore]
+	public Dictionary<eMediaType, string?> MediaTypeDictionary 
+	{
+		get 
 		{
-			if (string.IsNullOrEmpty(MediaVideoPath))
-				return null;
+			return new Dictionary<eMediaType, string?>()
+			{
+				{ eMediaType.BoxImage, this.MediaImageBoxPath },
+				{ eMediaType.Screenshot, this.MediaScreenshotPath },
+				{ eMediaType.Fanart, this.MediaFanArtPath },
+				{ eMediaType.Marquee, this.MediaMarqueePath },
+				{ eMediaType.Manual, this.MediaManualPath },
+				{ eMediaType.Map, this.MediaMapPath },
+				{ eMediaType.Video, this.MediaVideoPath },
+				{ eMediaType.Wheel, this.MediaWheelPath }
+			};
+		} 
+	}
 
-			// Absoluten Pfad zum Video bauen
-			var videoPath = MediaVideoPath.TrimStart('.', '/', '\\');
-
-			// Verzeichnis des Videos
-			var dir = System.IO.Path.GetDirectoryName(videoPath);
-			if (string.IsNullOrEmpty(dir))
-				return null;
-
-			// Dateiname ohne .mp4
-			var baseName = Utils.GetNameFromFile(videoPath);
-
-			// Vorschau-Dateiname anhängen
-			return System.IO.Path.Combine(dir, baseName + "_preview.jpg");
+	public void SetMediaPath(eMediaType type, string path)
+	{
+		switch ( type )
+		{
+			case eMediaType.BoxImage:
+				this.MediaImageBoxPath = path;
+				break;
+			case eMediaType.Screenshot:
+				this.MediaScreenshotPath = path;
+				break;
+			case eMediaType.Fanart:
+				this.MediaFanArtPath = path;
+				break;
+			case eMediaType.Marquee:
+				this.MediaMarqueePath = path;
+				break;
+			case eMediaType.Manual:
+				this.MediaManualPath = path;
+				break;
+			case eMediaType.Map:
+				this.MediaMapPath = path;
+				break;
+			case eMediaType.Video:
+				this.MediaVideoPath = path;
+				break;
+			case eMediaType.Wheel:
+				this.MediaWheelPath = path;
+				break;
+			default:
+			Debug.Assert(false, "Unbekannter Medientyp");
+				break;
 		}
 	}
 
-	[XmlElement("genreid")]
-	public int GenreId { get; set; }
 }
 

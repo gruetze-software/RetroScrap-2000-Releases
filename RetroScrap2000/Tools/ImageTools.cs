@@ -119,17 +119,25 @@ namespace RetroScrap2000.Tools
 		}
 
 
+		/// <summary>
+		/// Erzeugt ein Play-Overlay-Image und liefert es zusammen mit dem absoluten Videopfad.
+		/// </summary>
+		/// <param name="baseDir">Der Rom-Pfad inkl. System-Ordner</param>
+		/// <param name="relPath">Der relative Pfad zur Videodatei</param>
+		/// <param name="ct">Cancel-Token</param>
+		/// <returns>Overlay-Image und Absolut-Pfad zur Videodatei</returns>
 		public static async Task<(Image overlay, string videoAbsPath)?> LoadVideoPreviewAsync(string baseDir,
-			GameEntry rom, CancellationToken ct)
+			string? relPath, CancellationToken ct)
 		{
-			if (string.IsNullOrEmpty(rom.MediaVideoPath))
+			if (string.IsNullOrEmpty(relPath))
 				return null;
 
-			var videoAbs = FileTools.ResolveMediaPath(baseDir, rom.MediaVideoPath);
+			var videoAbs = FileTools.ResolveMediaPath(baseDir, relPath);
 			if (!System.IO.File.Exists(videoAbs))
 				return null;
 
-			var previewAbs = FileTools.ResolveMediaPath(baseDir, rom.MediaVideoPreviewImagePath);
+			var previewImgRelPath = GameEntry.GetMediaVideoPreviewImagePath(relPath);
+			var previewAbs = FileTools.ResolveMediaPath(baseDir, previewImgRelPath);
 			if (!string.IsNullOrEmpty(previewAbs) && !System.IO.File.Exists(previewAbs))
 			{
 				// erzeugen (dein ffmpeg‑Wrapper ist bereits async)
@@ -138,7 +146,7 @@ namespace RetroScrap2000.Tools
 
 			ct.ThrowIfCancellationRequested();
 
-			var img = await LoadImageCachedAsync(baseDir, rom.MediaVideoPreviewImagePath, ct);
+			var img = await LoadImageCachedAsync(baseDir, previewImgRelPath, ct);
 			if (img == null)
 				return null;
 
