@@ -37,8 +37,10 @@ namespace RetroScrap2000
 
 			// 1. Unnötige Präfixe und Suffixe entfernen
 			string gitVersion = gitInfo.version!;
-			string cleanedVersion = gitVersion.TrimStart("Release_".ToCharArray());
-			cleanedVersion = cleanedVersion.TrimEnd("_beta".ToCharArray());
+			int startIndex = 0;
+			while (startIndex < gitVersion.Length && !char.IsDigit(gitVersion[startIndex]))
+				startIndex++;
+			string cleanedVersion = gitVersion.Substring(startIndex);
 
 			// 2. Ersten Teil des Strings bis zum ersten nicht-numerischen Zeichen extrahieren
 			// Dies ist nützlich, wenn das Format nicht immer konsistent ist.
