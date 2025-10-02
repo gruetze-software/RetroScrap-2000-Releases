@@ -19,7 +19,8 @@ With just a few clicks you can automatically enrich your retro game library with
 -   🕹️ Simple and intuitive user interface
 -   🌐 Multilingual support for English, German, French and Spanish
 
-<img width="986" height="593" alt="image" src="https://github.com/user-attachments/assets/2269a947-74e4-40bc-a41d-7e4ad2da2848" />
+<img width="1254" height="670" alt="496695064-d00073c3-82e4-4f9a-89b2-ee4d1a2ecf42" src="https://github.com/user-attachments/assets/f20eda35-a309-44cf-b163-5128c513c871" />
+
 
 ### Youtube-Video - Tutorial:
 
