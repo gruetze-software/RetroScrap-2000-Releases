@@ -254,7 +254,7 @@ namespace RetroScrap2000
 			// Description
 			if (jeu.synopsis != null && jeu.synopsis.Length > 0)
 			{
-				var desc = jeu.synopsis.FirstOrDefault(x => x.langue != null && x.langue.ToLower() == opt.Language);
+				var desc = jeu.synopsis.FirstOrDefault(x => x.langue != null && x.langue.ToLower() == opt.GetLanguageShortCode());
 				if (desc != null)
 				{
 					sg.Description = desc.text;
@@ -273,7 +273,7 @@ namespace RetroScrap2000
 				var gen = jeu.genres.LastOrDefault(x => x.noms != null && x.noms.Length > 0);
 				if (gen != null)
 				{
-					var degen = gen.noms?.FirstOrDefault(x => x.langue == opt.Language);
+					var degen = gen.noms?.FirstOrDefault(x => x.langue == opt.GetLanguageShortCode());
 					if (degen != null)
 					{
 						sg.Genre = degen.text;

@@ -55,7 +55,7 @@ namespace RetroScrap2000.Tools
 		/// baseDir + relPath werden mit ResolveMediaPath kombiniert.
 		/// </summary>
 		public static async Task<Image?> LoadImageCachedAsync(
-				string baseDir, string? relOrAbsPath, CancellationToken ct)
+				string baseDir, string? relOrAbsPath, CancellationToken ct, bool bypassCache = false)
 		{
 			if (string.IsNullOrWhiteSpace(relOrAbsPath))
 				return null;
@@ -73,21 +73,24 @@ namespace RetroScrap2000.Tools
 				return null;
 			}
 
-			return await LoadAbsoluteImageCachedAsync(abs, ct);
+			return await LoadAbsoluteImageCachedAsync(abs, ct, bypassCache);
 		}
 
 		/// <summary>
 		/// Lädt ein Bild von einem absoluten Pfad, und cached es.
 		/// </summary>
 		public static async Task<Image?> LoadAbsoluteImageCachedAsync(
-				string absolutePath, CancellationToken ct)
+				string absolutePath, CancellationToken ct, bool byPassCache = false)
 		{
 			if (string.IsNullOrWhiteSpace(absolutePath) || !System.IO.File.Exists(absolutePath))
 				return null;
 
 			var key = $"{absolutePath}";
-			if (_localImageCache.TryGetValue(key, out var cached))
-				return cached;
+			if (!byPassCache)
+			{
+				if (_localImageCache.TryGetValue(key, out var cached))
+					return cached;
+			}
 
 			// I/O im Hintergrund
 			return await Task.Run(() =>
@@ -127,7 +130,7 @@ namespace RetroScrap2000.Tools
 		/// <param name="ct">Cancel-Token</param>
 		/// <returns>Overlay-Image und Absolut-Pfad zur Videodatei</returns>
 		public static async Task<(Image overlay, string videoAbsPath)?> LoadVideoPreviewAsync(string baseDir,
-			string? relPath, CancellationToken ct)
+			string? relPath, CancellationToken ct, bool byPassCache = false)
 		{
 			if (string.IsNullOrEmpty(relPath))
 				return null;
@@ -146,7 +149,7 @@ namespace RetroScrap2000.Tools
 
 			ct.ThrowIfCancellationRequested();
 
-			var img = await LoadImageCachedAsync(baseDir, previewImgRelPath, ct);
+			var img = await LoadImageCachedAsync(baseDir, previewImgRelPath, ct, byPassCache);
 			if (img == null)
 				return null;
 
@@ -169,6 +172,83 @@ namespace RetroScrap2000.Tools
 				try { kv.Value.Dispose(); } catch { /* ignore */ }
 			}
 			_localImageCache.Clear();
+		}
+
+		/// <summary>
+		/// Entfernt den Cache-Eintrag für eine spezifische Datei. 
+		/// Muss aufgerufen werden, wenn die Datei gelöscht oder ersetzt wurde.
+		/// </summary>
+		/// <param name="absoluteFilePath">Der absolute Pfad der gelöschten Datei.</param>
+		public static void InvalidateCacheEntry(string absoluteFilePath)
+		{
+			Image? removedImage = null;
+
+			// Prüfen, ob der Schlüssel existiert, ist nicht zwingend notwendig, 
+			// da TryRemove einfach fehlschlägt, falls der Schlüssel nicht da ist.
+			// Wir verwenden TryRemove direkt:
+			if (_localImageCache.TryRemove(absoluteFilePath, out removedImage))
+			{
+				// Wichtig: Das entfernte Image-Objekt muss freigegeben werden,
+				// damit die Systemressourcen (Handles) nicht hängen bleiben.
+				removedImage.Dispose();
+				Trace.WriteLine($"Cache Invalidate: {absoluteFilePath} removed and disposed.");
+			}
+			else
+			{
+				Trace.WriteLine($"Cache Invalidate: {absoluteFilePath} not found in cache or removal failed.");
+			}
+		}
+
+		public static Image CreateErrorImage(string pathToShow) // Parameter auf vollen Pfad umbenannt
+		{
+			const int width = 144;
+			const int height = 149;
+			var bitmap = new Bitmap(width, height);
+
+			using (Graphics g = Graphics.FromImage(bitmap))
+			// Verkleinere die Schrift für den Pfad, um mehr Zeilenumbruch zu ermöglichen
+			using (Font fontBold = new Font("Arial", 10, FontStyle.Bold))
+			using (Font fontNormal = new Font("Arial", 7))
+			{
+				g.Clear(Color.LightGray); // Hintergrundfarbe
+
+				string errorText1 = Properties.Resources.Txt_Fail_FileNotExist;
+				string errorText2 = pathToShow; // Der volle Pfad
+
+				// 1. Format für den oberen Fehlertext (Zentriert)
+				var formatCenter = new StringFormat
+				{
+					Alignment = StringAlignment.Center,
+					LineAlignment = StringAlignment.Near // Oben starten
+				};
+
+				// 2. Format für den Pfad (Links ausgerichtet, Umbruch zulassen)
+				var formatPath = new StringFormat
+				{
+					Alignment = StringAlignment.Near, // Links ausrichten
+					LineAlignment = StringAlignment.Near
+				};
+
+				// --- Zeichenbereiche definieren (mit 5px Rand) ---
+				const int padding = 5;
+
+				// Bereich für den Fehlertext (Startet oben, 30px hoch)
+				var rectError = new RectangleF(padding, padding, width - 2 * padding, 30);
+
+				// Bereich für den Pfad (Startet unter dem Fehlertext, nimmt den Rest des Platzes ein)
+				var rectPath = new RectangleF(padding, rectError.Bottom + 5, width - 2 * padding, height - rectError.Bottom - 2 * padding);
+
+				// Text 1: Fehlertext (oben zentriert)
+				g.DrawString(errorText1, fontBold, Brushes.Red, rectError, formatCenter);
+
+				// Text 2: Pfad (linksbündig, bricht automatisch um)
+				g.DrawString(errorText2, fontNormal, Brushes.Black, rectPath, formatPath);
+
+				// Füge einen Rahmen hinzu
+				g.DrawRectangle(Pens.Red, 0, 0, width - 1, height - 1);
+			}
+
+			return bitmap;
 		}
 
 		public static Image? LoadBitmapNoLock(string? absolutePath)

@@ -63,9 +63,29 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add16 {
+            get {
+                object obj = ResourceManager.GetObject("add16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap check16 {
             get {
                 object obj = ResourceManager.GetObject("check16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete16 {
+            get {
+                object obj = ResourceManager.GetObject("delete16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +216,16 @@ namespace RetroScrap2000.Properties {
         internal static System.Drawing.Bitmap media32 {
             get {
                 object obj = ResourceManager.GetObject("media32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap open16 {
+            get {
+                object obj = ResourceManager.GetObject("open16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -423,6 +453,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File not found!.
+        /// </summary>
+        internal static string Txt_Fail_FileNotExist {
+            get {
+                return ResourceManager.GetString("Txt_Fail_FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancellation has been requested. Please wait..
         /// </summary>
         internal static string Txt_Log_Scrap_CancelRequest {
@@ -558,6 +597,42 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove the existing image or video..
+        /// </summary>
+        internal static string Txt_Media_ToolTip_Delete {
+            get {
+                return ResourceManager.GetString("Txt_Media_ToolTip_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert a new medium (image or video)..
+        /// </summary>
+        internal static string Txt_Media_ToolTip_New {
+            get {
+                return ResourceManager.GetString("Txt_Media_ToolTip_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the current medium (image or video) with the default program..
+        /// </summary>
+        internal static string Txt_Media_ToolTip_Open {
+            get {
+                return ResourceManager.GetString("Txt_Media_ToolTip_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new &apos;{0}&apos; medium....
+        /// </summary>
+        internal static string Txt_Menu_AddMedium {
+            get {
+                return ResourceManager.GetString("Txt_Menu_AddMedium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The entry could not be removed from the &apos;gamelist.xml&apos;..
         /// </summary>
         internal static string Txt_Msg_Err_DeleteRomXml {
@@ -612,11 +687,29 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you want to delete the file, press Yes. If you only want to delete the information about the file and keep the file, press No..
+        /// </summary>
+        internal static string Txt_Msg_Question_DeleteMedia {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_DeleteMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are multiple entries for this ROM in the &apos;gamelist.xml&apos;. Press &apos;Yes&apos; to remove all entries and the ROM file. Press &apos;No&apos; to remove only the single entry from the &apos;gamelist.xml&apos; without deleting the file..
         /// </summary>
         internal static string Txt_Msg_Question_DeleteRomMultipleEntries {
             get {
                 return ResourceManager.GetString("Txt_Msg_Question_DeleteRomMultipleEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you select a new file, the existing file will be replaced. Do you want to do that?.
+        /// </summary>
+        internal static string Txt_Msg_Question_NewMedia {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_NewMedia", resourceCulture);
             }
         }
         

@@ -96,5 +96,50 @@ namespace RetroScrap2000.Tools
 
 			return (false, null);
 		}
+
+		/// <summary>
+		/// Löscht eine Medien-Datei.
+		/// </summary>
+		/// <param name="destbasedir">Der Basisordner (z.B. der Rom-Ordner).</param>
+		/// <param name="destrelpath">Der relative Pfad zur Datei (z.B. ./media/images/).</param>
+		/// <returns>True, wenn die Operation erfolgreich war oder keine Löschung angefordert wurde. False bei Fehler.</returns>
+		public static bool DeleteScrapFile(string destbasedir, string destrelpath)
+		{
+
+			// 1. Absoluten Pfad auflösen
+			// Annahme: ResolveMediaPath ist eine verfügbare Funktion in Ihrer Utility-Klasse
+			string? abspath = ResolveMediaPath(destbasedir, destrelpath);
+
+			if (string.IsNullOrEmpty(abspath))
+			{
+				// Der Pfad konnte nicht aufgelöst werden, oder ist bereits leer.
+				// Keine Aktion notwendig, als Erfolg werten.
+				return true;
+			}
+
+			// 2. Prüfen, ob die Datei existiert
+			if (File.Exists(abspath))
+			{
+				try
+				{
+					// 3. Datei löschen
+					Trace.WriteLine($"FileDelete: \"{abspath}\"");
+					File.Delete(abspath);
+					ImageTools.InvalidateCacheEntry(abspath); // Cache-Eintrag entfernen, falls vorhanden
+					return true;
+				}
+				catch (Exception ex)
+				{
+					// 4. Fehlerbehandlung (z.B. Datei wird von einem anderen Prozess verwendet)
+					// Hier könnten Sie auch ein MessageBox.Show() einfügen.
+					Trace.WriteLine($"ERROR deleting file \"{abspath}\": {Utils.GetExcMsg(ex)}");
+					return false;
+				}
+			}
+
+			// Die Datei existiert nicht (mehr),
+			// Kein Löschen nötig, als Erfolg werten.
+			return true;
+		}
 	}
 }

@@ -96,7 +96,7 @@ namespace RetroScrap2000
 		}
 
 		public static async Task<(System.Drawing.Image? img, string? absPath)>  LoadMediaAsync(
-			eMediaType type, string? urlOrRelPath, string baseDir, CancellationToken ct)
+			eMediaType type, string? urlOrRelPath, string baseDir, CancellationToken ct, bool byPassCache = false)
 		{
 
 			System.Drawing.Image? img = null;
@@ -111,14 +111,16 @@ namespace RetroScrap2000
 				return (img, absPath);
 			}
 
+			bool isLocalFileRequest = !urlOrRelPath.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+
 			if (type == eMediaType.Video)
 			{
-				if (!urlOrRelPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+				if (isLocalFileRequest)
 				{
 					var localfile = FileTools.ResolveMediaPath(baseDir, urlOrRelPath);
 					if (localfile != null && File.Exists(localfile))
 					{
-						var preview = await ImageTools.LoadVideoPreviewAsync(baseDir, urlOrRelPath, ct);
+						var preview = await ImageTools.LoadVideoPreviewAsync(baseDir, urlOrRelPath, ct, byPassCache);
 						if (preview.HasValue)
 						{
 							img = preview.Value.overlay;
@@ -138,9 +140,9 @@ namespace RetroScrap2000
 			}
 			else
 			{
-				if (!urlOrRelPath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+				if (isLocalFileRequest)
 				{
-					img = await ImageTools.LoadImageCachedAsync(baseDir, urlOrRelPath, ct);
+					img = await ImageTools.LoadImageCachedAsync(baseDir, urlOrRelPath, ct, byPassCache);
 					absPath = FileTools.ResolveMediaPath(baseDir, urlOrRelPath);
 				}
 				else
@@ -148,6 +150,17 @@ namespace RetroScrap2000
 					img = await ImageTools.LoadImageFromUrlCachedAsync(urlOrRelPath, CancellationToken.None);
 					absPath = FileTools.SaveImageToTempFile(img);
 				}
+			}
+
+			// Prüfe: War es eine lokale Anfrage UND wurde kein Bild geladen (img == null)?
+			// Wenn die Datei nicht gefunden wurde, bleiben img und absPath null, und dieser Block fängt das ab.
+			if (isLocalFileRequest && img == null && !string.IsNullOrEmpty(absPath) )
+			{
+				// Erzeuge das Fehlerbild
+				img = ImageTools.CreateErrorImage(absPath);
+
+				// WICHTIG: absPath wird explizit auf null gesetzt, da die Datei nicht existiert.
+				absPath = null;
 			}
 
 			return (img, absPath);
@@ -189,7 +202,6 @@ namespace RetroScrap2000
 				return;
 			}
 
-			var control = new MediaPreviewControl();
 			Debug.Assert(flowLayoutPanel.Controls[0] is MediaPreviewControl, "Expected MediaPreviewControl in FlowLayoutPanel");
 			int CONTROL_WIDTH = flowLayoutPanel.Controls[0].Width;
 			int MARGIN = flowLayoutPanel.Controls[0].Margin.All;          // Der Margin-Wert Ihres Controls oder Panels
@@ -214,7 +226,7 @@ namespace RetroScrap2000
 			}
 
 			// Setzen der Höhe auf die feste Höhe der Controls, um vertikale Probleme zu vermeiden
-			flowLayoutPanel.Height = control.Height + MARGIN;
+			flowLayoutPanel.Height = flowLayoutPanel.Controls[0].Height + MARGIN;
 		}
 	}
 }

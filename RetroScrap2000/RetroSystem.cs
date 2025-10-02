@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace RetroScrap2000
@@ -78,13 +80,19 @@ namespace RetroScrap2000
 				}
 
 				SetRomToXml(gameEl, relPath, romPath, rom);
+				// Bereinige den Dokumentbaum vor dem Speichern.
+				// Entfernt alle leeren Textknoten (Whitespace) und unnötige Kommentare,
+				// die die automatische Einrückung stören könnten.
+				doc.DescendantNodes()
+						.Where(n => n.NodeType == XmlNodeType.Text && string.IsNullOrWhiteSpace(n.ToString()))
+						.Remove();
 
 				try
 				{
 					var xmlWriterSettings = new System.Xml.XmlWriterSettings
 					{
-						Indent = true,
-						IndentChars = "  ", // Normales Leerzeichen verwenden
+						Indent = true, // Aktiviert die Formatierung
+						IndentChars = "    ", // Normales Leerzeichen verwenden, Normalerweise 2 oder 4 Leerzeichen
 						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
 						NewLineChars = Environment.NewLine,
 						NewLineHandling = System.Xml.NewLineHandling.Replace,
@@ -131,12 +139,19 @@ namespace RetroScrap2000
 					root.Add(gameEl);
 				}
 
+				// Bereinige den Dokumentbaum vor dem Speichern.
+				// Entfernt alle leeren Textknoten (Whitespace) und unnötige Kommentare,
+				// die die automatische Einrückung stören könnten.
+				doc.DescendantNodes()
+						.Where(n => n.NodeType == XmlNodeType.Text && string.IsNullOrWhiteSpace(n.ToString()))
+						.Remove();
+
 				try
 				{
 					var xmlWriterSettings = new System.Xml.XmlWriterSettings
 					{
 						Indent = true,
-						IndentChars = "  ", // Normales Leerzeichen verwenden
+						IndentChars = "    ", // Normales Leerzeichen verwenden
 						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
 						NewLineChars = Environment.NewLine,
 						NewLineHandling = System.Xml.NewLineHandling.Replace,

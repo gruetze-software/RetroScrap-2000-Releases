@@ -604,7 +604,7 @@ public class GameEntry
 		} 
 	}
 
-	public void SetMediaPath(eMediaType type, string path)
+	public void SetMediaPath(eMediaType type, string? path)
 	{
 		switch ( type )
 		{

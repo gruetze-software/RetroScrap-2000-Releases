@@ -255,8 +255,8 @@ namespace RetroScrap2000
 		{
 			var control = new MediaPreviewControl();
 			control.MediaType = type;
-			control.ShowCheckbox = checkboxen;
-			await control.LoadMediaAsync(url, baseDir, ct);
+			control.DisplayMode = checkboxen ? MediaPreviewControl.ControlDisplayMode.Checkbox : MediaPreviewControl.ControlDisplayMode.None;
+			await control.LoadMediaAsync(url, baseDir, ct, false);
 			return control;
 		}
 	}

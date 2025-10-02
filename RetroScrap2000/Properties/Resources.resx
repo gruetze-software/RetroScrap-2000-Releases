@@ -372,4 +372,34 @@
   <data name="Txt_Log_Scrap_Identical_Skip" xml:space="preserve">
     <value>No differences found, skipping</value>
   </data>
+  <data name="open16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\open16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="delete16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Media_ToolTip_Open" xml:space="preserve">
+    <value>Open the current medium (image or video) with the default program.</value>
+  </data>
+  <data name="Txt_Media_ToolTip_New" xml:space="preserve">
+    <value>Insert a new medium (image or video).</value>
+  </data>
+  <data name="Txt_Media_ToolTip_Delete" xml:space="preserve">
+    <value>Remove the existing image or video.</value>
+  </data>
+  <data name="Txt_Msg_Question_DeleteMedia" xml:space="preserve">
+    <value>If you want to delete the file, press Yes. If you only want to delete the information about the file and keep the file, press No.</value>
+  </data>
+  <data name="Txt_Msg_Question_NewMedia" xml:space="preserve">
+    <value>If you select a new file, the existing file will be replaced. Do you want to do that?</value>
+  </data>
+  <data name="Txt_Menu_AddMedium" xml:space="preserve">
+    <value>Add new '{0}' medium...</value>
+  </data>
+  <data name="Txt_Fail_FileNotExist" xml:space="preserve">
+    <value>File not found!</value>
+  </data>
 </root>

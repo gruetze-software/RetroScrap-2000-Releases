@@ -74,27 +74,27 @@
 			// colTime
 			// 
 			colTime.Text = "Zeitpunkt";
-			colTime.Width = 100;
+			colTime.Width = 80;
 			// 
 			// colTyp
 			// 
 			colTyp.Text = "Typ";
-			colTyp.Width = 90;
+			colTyp.Width = 70;
 			// 
 			// colNr
 			// 
 			colNr.Text = "Nr.";
-			colNr.Width = 90;
+			colNr.Width = 80;
 			// 
 			// colRom
 			// 
 			colRom.Text = "Rom";
-			colRom.Width = 150;
+			colRom.Width = 160;
 			// 
 			// colMsg
 			// 
 			colMsg.Text = "Message";
-			colMsg.Width = 400;
+			colMsg.Width = 430;
 			// 
 			// buttonStart
 			// 

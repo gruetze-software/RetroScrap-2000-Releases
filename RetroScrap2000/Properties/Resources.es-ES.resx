@@ -300,4 +300,25 @@
   <data name="Txt_Log_Scrap_Identical_Skip" xml:space="preserve">
     <value>No se encontraron diferencias, se omite</value>
   </data>
+  <data name="Txt_Media_ToolTip_Open" xml:space="preserve">
+    <value>Abrir el medio actual (imagen o video) con el programa predeterminado.</value>
+  </data>
+  <data name="Txt_Media_ToolTip_New" xml:space="preserve">
+    <value>Insertar un nuevo medio (imagen o video).</value>
+  </data>
+  <data name="Txt_Media_ToolTip_Delete" xml:space="preserve">
+    <value>Eliminar la imagen o el video existente.</value>
+  </data>
+  <data name="Txt_Msg_Question_DeleteMedia" xml:space="preserve">
+    <value>Si deseas eliminar el archivo, presiona Sí. Si solo quieres eliminar la información del archivo y conservar el archivo, presiona No.</value>
+  </data>
+  <data name="Txt_Msg_Question_NewMedia" xml:space="preserve">
+    <value>Si seleccionas un archivo nuevo, se reemplazará el archivo existente. ¿Deseas hacerlo?</value>
+  </data>
+  <data name="Txt_Menu_AddMedium" xml:space="preserve">
+    <value>Añadir nuevo tipo de medio '{0}'...</value>
+  </data>
+  <data name="Txt_Fail_FileNotExist" xml:space="preserve">
+    <value>¡Archivo no encontrado!</value>
+  </data>
 </root>

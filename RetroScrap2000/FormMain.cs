@@ -62,7 +62,7 @@ namespace RetroScrap2000
 			_loadTimer.Interval = 500;
 			_loadTimer.Elapsed += LoadTimer_Elapsed;
 			_loadTimer.Enabled = false;
-			
+
 
 			// DoubleBuffering für flüssiges Zeichnen
 			typeof(System.Windows.Forms.ListView).GetProperty("DoubleBuffered",
@@ -85,7 +85,7 @@ namespace RetroScrap2000
 				_loadTimer.Stop();
 				CheckForUpdate();
 			}
-			else if (_loadTimerTicks == 1 )
+			else if (_loadTimerTicks == 1)
 			{
 				// Den gesamten UI-Code-Block auf dem Haupt-UI-Thread ausführen
 				this.Invoke(new Action(async () =>
@@ -130,8 +130,8 @@ namespace RetroScrap2000
 			if (checkUpd.update)
 			{
 				FormUpdate frm = new FormUpdate(
-					checkUpd.newversion!, 
-					Utils.GetAppInfo().ProductVersion, 
+					checkUpd.newversion!,
+					Utils.GetAppInfo().ProductVersion,
 					check.DownloadUrl!);
 				frm.ShowDialog();
 			}
@@ -230,7 +230,7 @@ namespace RetroScrap2000
 			{
 				e.DrawFocusRectangle(e.Bounds);
 			}
-		
+
 		}
 
 		private void SetTitleMainForm()
@@ -329,15 +329,6 @@ namespace RetroScrap2000
 			SortListview(listViewRoms, e.Column, ref _romSortCol, ref _romSortOrder);
 		}
 
-		private void pictureBoxImgVideo_Click(object sender, EventArgs e)
-		{
-			PictureBox pb = (PictureBox)sender;
-			if (pb.Image == null || pb.Tag == null)
-				NewMediaAsync(pb);
-			else
-				OpenMedia(pb);
-		}
-
 		private async Task ScrapRomAsync()
 		{
 			var sysFolder = GetSelectedRomPath();
@@ -349,7 +340,7 @@ namespace RetroScrap2000
 
 			// Rom-Basisname als romnom
 			string? romFileName = _selectedRom.Name;
-			if ( string.IsNullOrEmpty(romFileName) )
+			if (string.IsNullOrEmpty(romFileName))
 				romFileName = Utils.GetNameFromFile(_selectedRom.Path);
 
 			if (string.IsNullOrWhiteSpace(romFileName))
@@ -398,7 +389,7 @@ namespace RetroScrap2000
 						}
 					}
 				}
-				
+
 				data!.Source = "ScreenScraper.fr";
 
 				// Dialog zum Übernehmen der Daten
@@ -432,14 +423,14 @@ namespace RetroScrap2000
 					{
 						if (val.takeit && !string.IsNullOrEmpty(val.tempPath))
 						{
-							var result = CopyOrMoveMediaFileToRom(true, val.tempPath, 
-								$"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(med.Key)}/", sysFolder );
-							if ( result.ok && !string.IsNullOrEmpty(result.file) )
+							var result = CopyOrMoveMediaFileToRom(true, val.tempPath,
+								$"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(med.Key)}/", sysFolder);
+							if (result.ok && !string.IsNullOrEmpty(result.file))
 								_selectedRom.SetMediaPath(med.Key, result.file);
 						}
 					}
 				}
-				
+
 				_selectedRom.State = eState.Scraped;
 				// UI aktualisieren
 				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
@@ -484,7 +475,7 @@ namespace RetroScrap2000
 
 		private async void SystemAllRomsScrapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (_selectedRom == null || _selectedSystem == null )
+			if (_selectedRom == null || _selectedSystem == null)
 				return;
 
 			var baseDir = GetSelectedRomPath();
@@ -577,16 +568,16 @@ namespace RetroScrap2000
 
 				if (deletefromxml)
 				{
-					if ( !GameListLoader.DeleteGame(
+					if (!GameListLoader.DeleteGame(
 						xmlPath: Path.Combine(baseDir, "gamelist.xml"),
 						rom: _selectedRom,
-						deleteAllReferences: deleteAllRefs ) )
+						deleteAllReferences: deleteAllRefs))
 					{
 						MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Err_DeleteRomXml);
 						return;
 					}
 				}
-			
+
 				if (deletefile)
 				{
 					if (File.Exists(file))
@@ -620,85 +611,6 @@ namespace RetroScrap2000
 			await ScrapRomAsync();
 		}
 
-		private PictureBox? GetPictureBoxFromMenuItem(object sender)
-		{
-			var menuItem = sender as ToolStripMenuItem;
-			if (menuItem?.Owner is ContextMenuStrip contextMenu)
-			{
-				// Die SourceControl-Eigenschaft enthält die Picturebox
-				return contextMenu.SourceControl as PictureBox;
-			}
-			return null;
-		}
-
-		private void MediaAnzeigenToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var pictureBox = GetPictureBoxFromMenuItem(sender);
-			if (pictureBox != null)
-				OpenMedia(pictureBox);
-		}
-
-		public void OpenMedia(PictureBox pb)
-		{
-			if (pb.Image == null || pb.Tag == null)
-				return;
-			UiTools.OpenPicBoxTagFile(pb);
-		}
-
-		public async void NewMediaAsync(PictureBox pb)
-		{
-			//bool video = pb == pictureBoxImgVideo;
-			//OpenFileDialog ofd = new OpenFileDialog();
-			//if (video)
-			//{
-			//	ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
-			//	ofd.Filter = "MP4 (*.mp4)|*.mp4";
-			//}
-			//else
-			//{
-			//	ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
-			//	ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
-			//}
-			//if (ofd.ShowDialog() == DialogResult.OK && _selectedRom != null)
-			//{
-			//	var baseDir = GetSelectedRomPath();
-			//	if (string.IsNullOrEmpty(baseDir))
-			//		return;
-
-			//	if (pb == pictureBoxImgBox)
-			//	{
-			//		MoveOrCopyScrapImageCoverRom(false, ofd.FileName, baseDir);
-			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaThumbnailPath);
-			//	}
-			//	else if (pb == pictureBoxImgScreenshot)
-			//	{
-			//		MoveOrCopyScrapImageScreenshotRom(false, ofd.FileName, baseDir);
-			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaImageBoxPath);
-			//	}
-			//	else if (pb == pictureBoxImgVideo)
-			//	{
-			//		MoveOrCopyScrapVideoRom(false, ofd.FileName, baseDir);
-			//		pb.Tag = FileTools.ResolveMediaPath(baseDir, _selectedRom.MediaVideoPath);
-			//	}
-			//	else
-			//		Debug.Assert(false);
-
-			//	await SaveRomAsync();
-			//	await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
-			//}
-		}
-
-		private void MediaNeuToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var pictureBox = GetPictureBoxFromMenuItem(sender);
-			if (pictureBox != null)
-				NewMediaAsync(pictureBox);
-		}
-
-		private void MediaLöschenToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
 
 		private void OpenOptionsFrm(int tabpageindex = 0)
 		{
@@ -716,7 +628,7 @@ namespace RetroScrap2000
 						: null;
 		}
 
-		private ListViewItem GetLVRom( RomStatus status)
+		private ListViewItem GetLVRom(RomStatus status)
 		{
 			//Func<string?, bool, string> getIconIndex = (originalMediaPath, exists) =>
 			//{
@@ -766,7 +678,7 @@ namespace RetroScrap2000
 			catch (OperationCanceledException) { /* ok */ }
 
 			// ROM-Liste neu füllen (gebatcht, kein Async nötig – nur UI)
-			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem, 
+			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem,
 				_selectedSystem!.Name));
 
 			Func<string?, bool> checkExists = (mediapath) =>
@@ -791,14 +703,14 @@ namespace RetroScrap2000
 			RomStatus[] allRomStatus = await Task.WhenAll(statusTasks);
 
 			listViewRoms.BeginUpdate();
-			
+
 			try
 			{
 				listViewRoms.Items.Clear();
 				_selectedRom = null;
 				await SetRomOnGuiAsync(null, CancellationToken.None); // Details rechts leeren
 
-				if (roms == null) 
+				if (roms == null)
 					return;
 
 				var items = new List<ListViewItem>(roms.Games.Count);
@@ -807,7 +719,7 @@ namespace RetroScrap2000
 					ListViewItem it = GetLVRom(status);
 					items.Add(it);
 				}
-			
+
 				listViewRoms.Items.AddRange(items.ToArray());
 			}
 			finally
@@ -825,7 +737,7 @@ namespace RetroScrap2000
 			}
 		}
 
-	
+
 		private async Task SaveRomAsync()
 		{
 			if (_selectedSystem == null)
@@ -891,7 +803,7 @@ namespace RetroScrap2000
 
 					var tempLv = GetLVRom(romstatus);
 					var selitem = listViewRoms.SelectedItems[0];
-					for ( int i = 0; i < selitem.SubItems.Count; i++)
+					for (int i = 0; i < selitem.SubItems.Count; i++)
 						selitem.SubItems[i].Text = tempLv.SubItems[i].Text;
 				}
 				else
@@ -1060,7 +972,25 @@ namespace RetroScrap2000
 			if (rom == null)
 				return;
 
+			// Das Kontextmenü für die MediaPreviewControls setzen
+			List<ToolStripMenuItem> addTypeMenuItems = new List<ToolStripMenuItem>()
+			{
+				addType1ToolStripMenuItem,
+				addType2ToolStripMenuItem,
+				addType3ToolStripMenuItem,
+				addType4ToolStripMenuItem,
+				addType5ToolStripMenuItem,
+				addType6ToolStripMenuItem,
+				addType7ToolStripMenuItem,
+				addType8ToolStripMenuItem,
+				addType9ToolStripMenuItem
+			};
+			// Zunächst alle für neue Medienarten ausblenden
+			foreach (var item in addTypeMenuItems)
+				item.Visible = false;
+			
 			// Durch die Map iterieren und Tabs nur für vorhandene Medien erstellen
+			int index = 0;
 			foreach (var kvp in rom.MediaTypeDictionary)
 			{
 				string? mediaPath = kvp.Value;
@@ -1069,13 +999,191 @@ namespace RetroScrap2000
 				{
 					var control = new MediaPreviewControl();
 					control.MediaType = kvp.Key;
-					control.ShowCheckbox = false;
-					await control.LoadMediaAsync(mediaPath, baseDir, ct);
+					control.DisplayMode = MediaPreviewControl.ControlDisplayMode.Buttons;
+					control.ContextMenuStrip = contextMenuStripMedia;
+
+					// Events der Buttons abonnieren
+					control.ViewMediaClicked += MediaControl_ViewMediaClicked;
+					control.NewMediaClicked += MediaControl_NewMediaClicked;
+					control.DeleteMediaClicked += MediaControl_DeleteMediaClicked;
+
+					await control.LoadMediaAsync(mediaPath, baseDir, ct, true);
 					Trace.WriteLine("Adding media control for " + kvp.Key);
 					flowLayoutPanelMedia.Controls.Add(control);
 				}
+				else
+				{
+					addTypeMenuItems[index].Visible = true;
+					addTypeMenuItems[index].Text = string.Format(Properties.Resources.Txt_Menu_AddMedium, kvp.Key.ToString());
+					addTypeMenuItems[index].Tag = kvp.Key;
+					index++;
+				}
 			}
 			Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMedia);
+		}
+
+		private async void addMediaToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_selectedRom == null)
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
+
+			eMediaType type = (eMediaType)(sender as ToolStripMenuItem)!.Tag!;
+			OpenFileDialog ofd = new OpenFileDialog();
+			if (type == eMediaType.Video)
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
+				ofd.Filter = "MP4 (*.mp4)|*.mp4";
+			}
+			else
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
+				ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
+			}
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				await SetNewFile(type, ofd.FileName);
+			}
+
+		}
+
+		private async Task DeleteMediaFile(eMediaType type, string? absolutPath, bool noqestion, bool deleteonlyxml = false)
+		{
+			if (string.IsNullOrEmpty(absolutPath) || !File.Exists(absolutPath) || _selectedRom == null)
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
+
+			bool deleteOnlyXmlInfo = deleteonlyxml;
+			// Frage, ob nur der XML-Eintrag oder auch die Datei gelöscht werden soll
+			if (noqestion == false)
+			{
+				var userChoice = MyMsgBox.ShowQuestion(Properties.Resources.Txt_Msg_Question_DeleteMedia);
+				if (userChoice == DialogResult.Cancel)
+					return;
+
+				deleteOnlyXmlInfo = userChoice == DialogResult.No;
+			}
+
+			bool deleted = false;
+			if (!deleteOnlyXmlInfo)
+			{
+				// Datei physikalisch löschen
+				deleted = FileTools.DeleteScrapFile(baseDir, _selectedRom.MediaTypeDictionary[type]!);
+			}
+
+			// Immer den XML-Eintrag löschen
+			_selectedRom.SetMediaPath(type, null);
+			await SaveRomAsync();
+			await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
+		}
+
+		private void viewToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Hier brauche ich das MediaPreviewControl, von dem aus das Kontextmenü geöffnet wurde			
+			var menuItem = sender as ToolStripItem;
+			if (menuItem == null) return;
+			var contextMenu = menuItem.Owner as ContextMenuStrip;
+			if (contextMenu == null) return;
+			var control = contextMenu.SourceControl as MediaPreviewControl;
+
+			if (control != null)
+				UiTools.OpenPicBoxTagFile(control.PicBox);
+		}
+
+		private async void newToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Hier brauche ich das MediaPreviewControl, von dem aus das Kontextmenü geöffnet wurde			
+			var menuItem = sender as ToolStripItem;
+			if (menuItem == null) return;
+			var contextMenu = menuItem.Owner as ContextMenuStrip;
+			if (contextMenu == null) return;
+			var control = contextMenu.SourceControl as MediaPreviewControl;
+
+			if (control == null)
+			{
+				Debug.Assert(false);
+				return;
+			}
+
+			if (MyMsgBox.ShowQuestion(Properties.Resources.Txt_Msg_Question_NewMedia) != DialogResult.Yes)
+				return;
+
+			OpenFileDialog ofd = new OpenFileDialog();
+			if (control.MediaType == eMediaType.Video)
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Video;
+				ofd.Filter = "MP4 (*.mp4)|*.mp4";
+			}
+			else
+			{
+				ofd.Title = Properties.Resources.Txt_Dlg_Select_Image;
+				ofd.Filter = "Png (*.png)|*.png|Jpeg (*.jpg)|*.jpg";
+			}
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				await SetNewFile(control.MediaType, ofd.FileName);
+			}
+		}
+
+		private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Hier brauche ich das MediaPreviewControl, von dem aus das Kontextmenü geöffnet wurde			
+			var menuItem = sender as ToolStripItem;
+			if (menuItem == null) return;
+			var contextMenu = menuItem.Owner as ContextMenuStrip;
+			if (contextMenu == null) return;
+			var control = contextMenu.SourceControl as MediaPreviewControl;
+			if ( control == null)
+			{
+				Debug.Assert(false);
+				return;
+			}
+
+			await DeleteMediaFile(control.MediaType, control.AbsolutPath, noqestion: false);
+		}
+
+		private async void MediaControl_DeleteMediaClicked(object? sender, MediaDeleteActionEventArgs e)
+		{
+			await DeleteMediaFile(e.MediaType, e.AbsolutPath, noqestion: true, e.DeleteOnlyXmlInfo);
+		}
+
+		private async Task SetNewFile(eMediaType type, string? sourcefile)
+		{
+			if (_selectedRom == null || string.IsNullOrEmpty(sourcefile) || !File.Exists(sourcefile))
+				return;
+
+			var baseDir = GetSelectedRomPath();
+			if (string.IsNullOrEmpty(baseDir))
+				return;
+
+			var result = CopyOrMoveMediaFileToRom(false, sourcefile,
+				$"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(type)}/", baseDir);
+			if (result.ok && !string.IsNullOrEmpty(result.file))
+			{
+				_selectedRom.SetMediaPath(type, result.file);
+				await SaveRomAsync();
+				await SetRomOnGuiAsync(_selectedRom, CancellationToken.None);
+			}
+			else
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_Media_Move_Fail + " " + sourcefile);
+			}
+		}
+
+		private async void MediaControl_NewMediaClicked(object? sender, MediaActionEventArgs e)
+		{
+			await SetNewFile(e.MediaType, e.AbsolutPath);
+		}
+
+		private void MediaControl_ViewMediaClicked(object? sender, MediaActionEventArgs e)
+		{
+			UiTools.OpenFileWithDefaultApp(e.AbsolutPath);
 		}
 
 		private async Task SetRomOnGuiAsync(GameEntry? rom, CancellationToken ct)
@@ -1120,7 +1228,7 @@ namespace RetroScrap2000
 
 		private string? GetRomPath(int systemid)
 		{
-			if ( string.IsNullOrEmpty(_gameManager.RomPath))
+			if (string.IsNullOrEmpty(_gameManager.RomPath))
 				return null;
 
 			var systemFolder = _systems.GetRomFolder(systemid);
@@ -1133,13 +1241,13 @@ namespace RetroScrap2000
 
 		private string? GetSelectedRomPath()
 		{
-			if (_selectedRom == null )
+			if (_selectedRom == null)
 				return null;
 
 			return GetRomPath(_selectedRom.RetroSystemId);
 		}
 
-		
+
 	}
 
 }

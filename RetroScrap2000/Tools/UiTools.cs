@@ -66,15 +66,15 @@ namespace RetroScrap2000.Tools
 			}
 		}
 
-		public static void OpenPicBoxTagFile(PictureBox picbox)
+		public static void OpenFileWithDefaultApp(string absPathFile)
 		{
-			if (picbox != null && picbox.Tag != null && picbox.Tag is string file && File.Exists(file))
+			if ( !string.IsNullOrEmpty(absPathFile) && File.Exists(absPathFile))
 			{
 				try
 				{
 					var psi = new System.Diagnostics.ProcessStartInfo
 					{
-						FileName = file,
+						FileName = absPathFile,
 						UseShellExecute = true // wichtig: Standard-App verwenden
 					};
 					System.Diagnostics.Process.Start(psi);
@@ -84,6 +84,12 @@ namespace RetroScrap2000.Tools
 					MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 				}
 			}
+		}
+
+		public static void OpenPicBoxTagFile(PictureBox picbox)
+		{
+			if (picbox != null && picbox.Tag != null && picbox.Tag is string file)
+				OpenFileWithDefaultApp(file);
 		}
 	}
 }
