@@ -36,10 +36,12 @@ namespace RetroScrap2000
 		public bool? MediaWheel { get; set; }
 		public bool? MediaManual { get; set; }
 		public bool? MediaMap { get; set; }
+		public List<MediaManualSystem> MediaManualSystemList { get; set; } = new();
 
 
 		[JsonIgnore]
 		public PasswordVault? Secret { get; set; }
+		public RetroSystems Systems { get; internal set; } = new();
 
 		public RetroScrapOptions() 
 		{ 
@@ -50,7 +52,15 @@ namespace RetroScrap2000
 			Region = "eu";
 		}
 
-		public static string GetMediaFolderAndXmlTag(eMediaType type)
+		public static List<string> GetStandardMediaFolderAndXmlTagList()
+		{
+			return new List<string>()
+			{
+				"image", "video", "marquee", "fanart", "screenshot", "wheel", "manual", "map"
+			};
+		}
+
+		public static string GetStandardMediaFolderAndXmlTag(eMediaType type)
 		{
 			return type switch
 			{
@@ -131,5 +141,32 @@ namespace RetroScrap2000
 			var json = File.ReadAllText(GetOptionsFile());
 			return JsonSerializer.Deserialize<RetroScrapOptions>(json) ?? new RetroScrapOptions();
 		}
+	}
+
+	public class MediaManualSystem
+	{
+		public string Name { get; set; } = string.Empty;
+		public string AbsolutPathMedia { get; set; } = string.Empty;
+		public string? RelPathMediaToRomPath { get; set; }
+		public string? MediaExtensionFilter { get; set; }
+		public int? RomSystemID { get; set; }
+		public string XmlKeyName { get; set; } = string.Empty;
+
+		public override string ToString()
+		{
+			return Name ?? "[Empty MediaManualSystem]";
+		}
+
+		public void CopyFrom(MediaManualSystem other)
+		{
+			// Alle Properties von 'other' auf 'this' kopieren
+			this.AbsolutPathMedia = other.AbsolutPathMedia;
+			this.Name = other.Name;
+			this.MediaExtensionFilter = other.MediaExtensionFilter;
+			this.RomSystemID = other.RomSystemID;
+			this.XmlKeyName = other.XmlKeyName;
+			this.RelPathMediaToRomPath = other.RelPathMediaToRomPath;
+		}
+
 	}
 }

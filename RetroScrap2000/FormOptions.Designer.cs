@@ -65,6 +65,30 @@
 			checkBoxMediaScreenshot = new CheckBox();
 			checkBoxMediaMarquee = new CheckBox();
 			checkBoxMediaFanart = new CheckBox();
+			tabPageCustom = new TabPage();
+			buttonOptMMScan = new Button();
+			buttonOptDelete = new Button();
+			groupBox6 = new GroupBox();
+			checkBoxOptMMRelPath = new CheckBox();
+			label16 = new Label();
+			label12 = new Label();
+			textBoxOptMMFilePatterns = new TextBox();
+			radioButtonOptMMAllSystems = new RadioButton();
+			label17 = new Label();
+			radioButtonOptMMSystem = new RadioButton();
+			textBoxOptMMXMLTag = new TextBox();
+			comboBoxOptMMSystems = new ComboBox();
+			textBoxOptMMPath = new TextBox();
+			label14 = new Label();
+			textBoxOptMMName = new TextBox();
+			buttonOptMMPath = new Button();
+			label15 = new Label();
+			buttonOptMMAdd = new Button();
+			listViewOptManualMedia = new ListView();
+			colMMName = new ColumnHeader();
+			colMMSystem = new ColumnHeader();
+			colMMXML = new ColumnHeader();
+			colMMPath = new ColumnHeader();
 			tabPageAppInfo = new TabPage();
 			tableLayoutPanelInfo = new TableLayoutPanel();
 			tableLayoutPanelIcons = new TableLayoutPanel();
@@ -89,6 +113,7 @@
 			label3 = new Label();
 			labelInfoProduct = new Label();
 			linkLabel1 = new LinkLabel();
+			colMMRelPath = new ColumnHeader();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
 			tabControlOptions.SuspendLayout();
@@ -99,6 +124,8 @@
 			tabPageScrap.SuspendLayout();
 			tabPageScrapData.SuspendLayout();
 			groupBox5.SuspendLayout();
+			tabPageCustom.SuspendLayout();
+			groupBox6.SuspendLayout();
 			tabPageAppInfo.SuspendLayout();
 			tableLayoutPanelInfo.SuspendLayout();
 			tableLayoutPanelIcons.SuspendLayout();
@@ -212,6 +239,7 @@
 			tabControlOptions.Controls.Add(tabPageLang);
 			tabControlOptions.Controls.Add(tabPageScrap);
 			tabControlOptions.Controls.Add(tabPageScrapData);
+			tabControlOptions.Controls.Add(tabPageCustom);
 			tabControlOptions.Controls.Add(tabPageAppInfo);
 			tabControlOptions.Name = "tabControlOptions";
 			tabControlOptions.SelectedIndex = 0;
@@ -362,6 +390,167 @@
 			resources.ApplyResources(checkBoxMediaFanart, "checkBoxMediaFanart");
 			checkBoxMediaFanart.Name = "checkBoxMediaFanart";
 			checkBoxMediaFanart.UseVisualStyleBackColor = true;
+			// 
+			// tabPageCustom
+			// 
+			tabPageCustom.Controls.Add(buttonOptMMScan);
+			tabPageCustom.Controls.Add(buttonOptDelete);
+			tabPageCustom.Controls.Add(groupBox6);
+			tabPageCustom.Controls.Add(buttonOptMMAdd);
+			tabPageCustom.Controls.Add(listViewOptManualMedia);
+			resources.ApplyResources(tabPageCustom, "tabPageCustom");
+			tabPageCustom.Name = "tabPageCustom";
+			tabPageCustom.UseVisualStyleBackColor = true;
+			// 
+			// buttonOptMMScan
+			// 
+			resources.ApplyResources(buttonOptMMScan, "buttonOptMMScan");
+			buttonOptMMScan.Name = "buttonOptMMScan";
+			buttonOptMMScan.UseVisualStyleBackColor = true;
+			buttonOptMMScan.Click += buttonOptMMScan_Click;
+			// 
+			// buttonOptDelete
+			// 
+			resources.ApplyResources(buttonOptDelete, "buttonOptDelete");
+			buttonOptDelete.Name = "buttonOptDelete";
+			buttonOptDelete.UseVisualStyleBackColor = true;
+			buttonOptDelete.Click += buttonOptDelete_Click;
+			// 
+			// groupBox6
+			// 
+			resources.ApplyResources(groupBox6, "groupBox6");
+			groupBox6.Controls.Add(checkBoxOptMMRelPath);
+			groupBox6.Controls.Add(label16);
+			groupBox6.Controls.Add(label12);
+			groupBox6.Controls.Add(textBoxOptMMFilePatterns);
+			groupBox6.Controls.Add(radioButtonOptMMAllSystems);
+			groupBox6.Controls.Add(label17);
+			groupBox6.Controls.Add(radioButtonOptMMSystem);
+			groupBox6.Controls.Add(textBoxOptMMXMLTag);
+			groupBox6.Controls.Add(comboBoxOptMMSystems);
+			groupBox6.Controls.Add(textBoxOptMMPath);
+			groupBox6.Controls.Add(label14);
+			groupBox6.Controls.Add(textBoxOptMMName);
+			groupBox6.Controls.Add(buttonOptMMPath);
+			groupBox6.Controls.Add(label15);
+			groupBox6.Name = "groupBox6";
+			groupBox6.TabStop = false;
+			// 
+			// checkBoxOptMMRelPath
+			// 
+			resources.ApplyResources(checkBoxOptMMRelPath, "checkBoxOptMMRelPath");
+			checkBoxOptMMRelPath.Name = "checkBoxOptMMRelPath";
+			checkBoxOptMMRelPath.UseVisualStyleBackColor = true;
+			// 
+			// label16
+			// 
+			resources.ApplyResources(label16, "label16");
+			label16.Name = "label16";
+			// 
+			// label12
+			// 
+			resources.ApplyResources(label12, "label12");
+			label12.Name = "label12";
+			// 
+			// textBoxOptMMFilePatterns
+			// 
+			resources.ApplyResources(textBoxOptMMFilePatterns, "textBoxOptMMFilePatterns");
+			textBoxOptMMFilePatterns.Name = "textBoxOptMMFilePatterns";
+			// 
+			// radioButtonOptMMAllSystems
+			// 
+			resources.ApplyResources(radioButtonOptMMAllSystems, "radioButtonOptMMAllSystems");
+			radioButtonOptMMAllSystems.Checked = true;
+			radioButtonOptMMAllSystems.Name = "radioButtonOptMMAllSystems";
+			radioButtonOptMMAllSystems.TabStop = true;
+			radioButtonOptMMAllSystems.UseVisualStyleBackColor = true;
+			radioButtonOptMMAllSystems.CheckedChanged += radioButtonOptMMAllSystems_CheckedChanged;
+			// 
+			// label17
+			// 
+			resources.ApplyResources(label17, "label17");
+			label17.Name = "label17";
+			// 
+			// radioButtonOptMMSystem
+			// 
+			resources.ApplyResources(radioButtonOptMMSystem, "radioButtonOptMMSystem");
+			radioButtonOptMMSystem.Name = "radioButtonOptMMSystem";
+			radioButtonOptMMSystem.UseVisualStyleBackColor = true;
+			radioButtonOptMMSystem.CheckedChanged += radioButtonOptMMSystem_CheckedChanged;
+			// 
+			// textBoxOptMMXMLTag
+			// 
+			resources.ApplyResources(textBoxOptMMXMLTag, "textBoxOptMMXMLTag");
+			textBoxOptMMXMLTag.Name = "textBoxOptMMXMLTag";
+			// 
+			// comboBoxOptMMSystems
+			// 
+			resources.ApplyResources(comboBoxOptMMSystems, "comboBoxOptMMSystems");
+			comboBoxOptMMSystems.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBoxOptMMSystems.FormattingEnabled = true;
+			comboBoxOptMMSystems.Name = "comboBoxOptMMSystems";
+			// 
+			// textBoxOptMMPath
+			// 
+			resources.ApplyResources(textBoxOptMMPath, "textBoxOptMMPath");
+			textBoxOptMMPath.Name = "textBoxOptMMPath";
+			textBoxOptMMPath.ReadOnly = true;
+			// 
+			// label14
+			// 
+			resources.ApplyResources(label14, "label14");
+			label14.Name = "label14";
+			// 
+			// textBoxOptMMName
+			// 
+			resources.ApplyResources(textBoxOptMMName, "textBoxOptMMName");
+			textBoxOptMMName.Name = "textBoxOptMMName";
+			// 
+			// buttonOptMMPath
+			// 
+			resources.ApplyResources(buttonOptMMPath, "buttonOptMMPath");
+			buttonOptMMPath.Name = "buttonOptMMPath";
+			buttonOptMMPath.UseVisualStyleBackColor = true;
+			buttonOptMMPath.Click += buttonOptMMPath_Click;
+			// 
+			// label15
+			// 
+			resources.ApplyResources(label15, "label15");
+			label15.Name = "label15";
+			// 
+			// buttonOptMMAdd
+			// 
+			resources.ApplyResources(buttonOptMMAdd, "buttonOptMMAdd");
+			buttonOptMMAdd.Name = "buttonOptMMAdd";
+			buttonOptMMAdd.UseVisualStyleBackColor = true;
+			buttonOptMMAdd.Click += buttonOptMMAdd_Click;
+			// 
+			// listViewOptManualMedia
+			// 
+			resources.ApplyResources(listViewOptManualMedia, "listViewOptManualMedia");
+			listViewOptManualMedia.Columns.AddRange(new ColumnHeader[] { colMMName, colMMSystem, colMMXML, colMMPath, colMMRelPath });
+			listViewOptManualMedia.FullRowSelect = true;
+			listViewOptManualMedia.GridLines = true;
+			listViewOptManualMedia.Name = "listViewOptManualMedia";
+			listViewOptManualMedia.UseCompatibleStateImageBehavior = false;
+			listViewOptManualMedia.View = View.Details;
+			listViewOptManualMedia.SelectedIndexChanged += listViewOptManualMedia_SelectedIndexChanged;
+			// 
+			// colMMName
+			// 
+			resources.ApplyResources(colMMName, "colMMName");
+			// 
+			// colMMSystem
+			// 
+			resources.ApplyResources(colMMSystem, "colMMSystem");
+			// 
+			// colMMXML
+			// 
+			resources.ApplyResources(colMMXML, "colMMXML");
+			// 
+			// colMMPath
+			// 
+			resources.ApplyResources(colMMPath, "colMMPath");
 			// 
 			// tabPageAppInfo
 			// 
@@ -520,6 +709,10 @@
 			linkLabel1.Name = "linkLabel1";
 			linkLabel1.TabStop = true;
 			// 
+			// colMMRelPath
+			// 
+			resources.ApplyResources(colMMRelPath, "colMMRelPath");
+			// 
 			// FormOptions
 			// 
 			AcceptButton = buttonOK;
@@ -545,6 +738,9 @@
 			tabPageScrapData.ResumeLayout(false);
 			groupBox5.ResumeLayout(false);
 			groupBox5.PerformLayout();
+			tabPageCustom.ResumeLayout(false);
+			groupBox6.ResumeLayout(false);
+			groupBox6.PerformLayout();
 			tabPageAppInfo.ResumeLayout(false);
 			tableLayoutPanelInfo.ResumeLayout(false);
 			tableLayoutPanelIcons.ResumeLayout(false);
@@ -619,5 +815,30 @@
 		private CheckBox checkBoxMediaManual;
 		private ComboBox comboBoxLangRegion;
 		private Label label8;
+		private TabPage tabPageCustom;
+		private Button buttonOptDelete;
+		private GroupBox groupBox6;
+		private Label label16;
+		private Label label12;
+		private TextBox textBoxOptMMFilePatterns;
+		private RadioButton radioButtonOptMMAllSystems;
+		private Label label17;
+		private RadioButton radioButtonOptMMSystem;
+		private TextBox textBoxOptMMXMLTag;
+		private ComboBox comboBoxOptMMSystems;
+		private TextBox textBoxOptMMPath;
+		private Label label14;
+		private TextBox textBoxOptMMName;
+		private Button buttonOptMMPath;
+		private Label label15;
+		private Button buttonOptMMAdd;
+		private ListView listViewOptManualMedia;
+		private ColumnHeader colMMName;
+		private ColumnHeader colMMSystem;
+		private ColumnHeader colMMXML;
+		private ColumnHeader colMMPath;
+		private Button buttonOptMMScan;
+		private CheckBox checkBoxOptMMRelPath;
+		private ColumnHeader colMMRelPath;
 	}
 }

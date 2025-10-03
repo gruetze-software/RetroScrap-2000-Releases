@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace RetroScrap2000
 {
-	public class RetroSystem
+	public class RetroSystem : IComparable<RetroSystem>
 	{
 		public int Id { get; set; } = -1;
 		public string Name { get; set; } = "Unknown System";
@@ -35,6 +35,16 @@ namespace RetroScrap2000
 		{
 			return Name;
 		}
+
+		// Definiert die Sortierlogik für List<T>.Sort()
+		public int CompareTo(RetroSystem? other)
+		{
+			if (other == null) return 1;
+
+			// Vergleiche die Systemnamen
+			return string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
+		}
+
 
 		public bool SaveRomToGamelistXml(string romPath, GameEntry rom)
 		{
@@ -223,7 +233,7 @@ namespace RetroScrap2000
 			SetElementValue(gameEl, "releasedate", rom.ReleaseDateRaw);
 			foreach (var kvp in rom.MediaTypeDictionary)
 			{
-				string xmlTag = RetroScrapOptions.GetMediaFolderAndXmlTag(kvp.Key);
+				string xmlTag = RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key);
 				SetElementValue(gameEl, xmlTag, EnsureRelativeMedia(sysDir, kvp.Value));
 			}
 

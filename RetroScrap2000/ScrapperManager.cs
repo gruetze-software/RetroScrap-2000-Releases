@@ -519,7 +519,7 @@ namespace RetroScrap2000
 						{
 							progress.Report(new ProgressObj(iPerc, i + 1, game.Name!, $"{Properties.Resources.Txt_Log_Scrap_New_Media} {kvp.Key.ToString()}."));
 							var res = FileTools.MoveOrCopyScrapFileRom(true,
-								game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(kvp.Key)}/");
+								game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
 							if (res.ok && !string.IsNullOrEmpty(res.file))
 							{
 								game.SetMediaPath(kvp.Key, res.file);
@@ -551,7 +551,7 @@ namespace RetroScrap2000
 								progress.Report(info);
 
 								var res = FileTools.MoveOrCopyScrapFileRom(true,
-									game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(kvp.Key)}/");
+									game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
 								if (res.ok && !string.IsNullOrEmpty(res.file))
 								{
 									game.SetMediaPath(kvp.Key, res.file);

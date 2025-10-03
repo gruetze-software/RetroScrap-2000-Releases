@@ -83,6 +83,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap custom32 {
+            get {
+                object obj = ResourceManager.GetObject("custom32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete16 {
             get {
                 object obj = ResourceManager.GetObject("delete16", resourceCulture);
@@ -651,6 +661,60 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A source with this combination of path and XML key already exists. Please change the path or the XML key..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_AlwaysExist {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_AlwaysExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is an invalid XML key. Only Latin letters, numbers, and hyphens are allowed; it cannot start with a number and cannot contain special characters such as &lt;, &gt;, &amp;, or spaces..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_InvalidXmlKey {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_InvalidXmlKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The entry cannot be added. Essential data is missing..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_MissingData {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_MissingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The relative path can only be set if the ROM path is set. Please first select the ROM path in the main dialog..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_RelPathWithOutRomPath {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_RelPathWithOutRomPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The relative path to the Rom path &apos;{0}&apos; could not be determined. Please note that, for example, both folders must be on the same drive..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The XML key is already in use. Choose a different one..
+        /// </summary>
+        internal static string Txt_Msg_Opt_MM_XmlAlwaysExist {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Opt_MM_XmlAlwaysExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Important info for RetroPie users:.
         /// </summary>
         internal static string Txt_Msg_Opt_RetroPie_Info1 {
@@ -773,6 +837,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Msg_StartAppNoSsUser {
             get {
                 return ResourceManager.GetString("Txt_Msg_StartAppNoSsUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This feature is still in progress. But it will definitely be included in the next release!.
+        /// </summary>
+        internal static string Txt_Msg_UnderConstruction {
+            get {
+                return ResourceManager.GetString("Txt_Msg_UnderConstruction", resourceCulture);
             }
         }
         

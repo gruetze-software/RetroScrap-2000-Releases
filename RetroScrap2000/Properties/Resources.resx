@@ -402,4 +402,28 @@
   <data name="Txt_Fail_FileNotExist" xml:space="preserve">
     <value>File not found!</value>
   </data>
+  <data name="custom32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\custom32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_AlwaysExist" xml:space="preserve">
+    <value>A source with this combination of path and XML key already exists. Please change the path or the XML key.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_XmlAlwaysExist" xml:space="preserve">
+    <value>The XML key is already in use. Choose a different one.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_MissingData" xml:space="preserve">
+    <value>The entry cannot be added. Essential data is missing.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_InvalidXmlKey" xml:space="preserve">
+    <value>This is an invalid XML key. Only Latin letters, numbers, and hyphens are allowed; it cannot start with a number and cannot contain special characters such as &lt;, &gt;, &amp;, or spaces.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_RelPathWithOutRomPath" xml:space="preserve">
+    <value>The relative path can only be set if the ROM path is set. Please first select the ROM path in the main dialog.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath" xml:space="preserve">
+    <value>The relative path to the Rom path '{0}' could not be determined. Please note that, for example, both folders must be on the same drive.</value>
+  </data>
+  <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
+    <value>This feature is still in progress. But it will definitely be included in the next release!</value>
+  </data>
 </root>

@@ -39,6 +39,43 @@ namespace RetroScrap2000.Tools
 			return name;
 		}
 
+		/// <summary>
+		/// Berechnet einen relativen Pfad vom Basisordner zum Zielordner.
+		/// </summary>
+		/// <param name="absolutePath">Der Zielordner (z.B. C:\Manuals\SNES).</param>
+		/// <param name="relativeTo">Der Basisordner (z.B. C:\Roms\SNES).</param>
+		/// <returns>Der relative Pfad (z.B. ..\..\Manuals\SNES) oder der absolute Pfad, falls kein Bezug möglich ist.</returns>
+		public static string GetRelativePath(string absolutePath, string relativeTo)
+		{
+			// 1. Laufwerkprüfung (muss dasselbe sein)
+			string baseRoot = Path.GetPathRoot(relativeTo) ?? string.Empty;
+			string targetRoot = Path.GetPathRoot(absolutePath) ?? string.Empty;
+
+			if (!baseRoot.Equals(targetRoot, StringComparison.OrdinalIgnoreCase))
+			{
+				// Fehler: Läuft auf verschiedenen Laufwerken. Rückgabe des absoluten Pfades oder Fehlermeldung
+				return absolutePath;
+			}
+
+			// 2. Relativen Pfad über die URI-Klasse berechnen (sauberste Methode)
+			try
+			{
+				// Beide Pfade müssen mit einem abschließenden Slash versehen sein
+				Uri baseUri = new Uri(relativeTo.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar);
+				Uri targetUri = new Uri(absolutePath.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar);
+
+				Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
+
+				// Ergebnis als normalen String zurückgeben und Slashes korrigieren
+				return Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
+			}
+			catch (Exception)
+			{
+				// Bei unerwartetem Fehler (z.B. ungültiges Format)
+				return absolutePath;
+			}
+		}
+
 		public static string? ResolveMediaPath(string systemDir, string? xmlValue)
 		{
 			if (string.IsNullOrWhiteSpace(xmlValue)) return null;

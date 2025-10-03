@@ -321,4 +321,25 @@
   <data name="Txt_Fail_FileNotExist" xml:space="preserve">
     <value>Fichier non trouvé !</value>
   </data>
+  <data name="Txt_Msg_Opt_MM_AlwaysExist" xml:space="preserve">
+    <value>Une source avec cette combinaison de chemin et de clé XML existe déjà. Veuillez modifier le chemin ou la clé XML.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_XmlAlwaysExist" xml:space="preserve">
+    <value>La clé XML est déjà utilisée. Choisissez-en une autre.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_MissingData" xml:space="preserve">
+    <value>Impossible d'ajouter l'entrée. Des données essentielles sont manquantes.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_InvalidXmlKey" xml:space="preserve">
+    <value>Ceci est une clé XML invalide. Seules les lettres latines, les chiffres et les traits d'union sont autorisés ; elle ne peut pas commencer par un chiffre et ne peut pas contenir de caractères spéciaux tels que &lt;, &gt;, &amp;, ou des espaces.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_RelPathWithOutRomPath" xml:space="preserve">
+    <value>Le chemin relatif ne peut être défini que si le chemin du ROM est défini. Veuillez d'abord sélectionner le chemin du ROM dans la boîte de dialogue principale.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath" xml:space="preserve">
+    <value>Le chemin relatif vers le chemin Rom '{0}' n'a pas pu être déterminé. Veuillez noter que, par exemple, les deux dossiers doivent être sur le même lecteur.</value>
+  </data>
+  <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
+    <value>Cette fonctionnalité est encore en cours de développement. Mais elle sera sûrement incluse dans la prochaine version !</value>
+  </data>
 </root>

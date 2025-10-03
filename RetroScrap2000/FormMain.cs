@@ -101,6 +101,8 @@ namespace RetroScrap2000
 						await _systems.SetSystemsFromApiAsync(_scrapper);
 						_systems.Save();
 					}
+					_options.Systems = _systems;
+
 					// Statusmeldungen mit Wartezeit
 					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 500);
 					if (_options != null && _options.Secret != null
@@ -424,7 +426,7 @@ namespace RetroScrap2000
 						if (val.takeit && !string.IsNullOrEmpty(val.tempPath))
 						{
 							var result = CopyOrMoveMediaFileToRom(true, val.tempPath,
-								$"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(med.Key)}/", sysFolder);
+								$"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(med.Key)}/", sysFolder);
 							if (result.ok && !string.IsNullOrEmpty(result.file))
 								_selectedRom.SetMediaPath(med.Key, result.file);
 						}
@@ -614,7 +616,7 @@ namespace RetroScrap2000
 
 		private void OpenOptionsFrm(int tabpageindex = 0)
 		{
-			FormOptions frm = new FormOptions(_options, _scrapper, tabpageindex);
+			FormOptions frm = new FormOptions(_options, _scrapper, tabpageindex, _systems.SystemList);
 			if (frm.ShowDialog() == DialogResult.OK)
 			{
 				_options.Save();
@@ -1163,7 +1165,7 @@ namespace RetroScrap2000
 				return;
 
 			var result = CopyOrMoveMediaFileToRom(false, sourcefile,
-				$"./media/{RetroScrapOptions.GetMediaFolderAndXmlTag(type)}/", baseDir);
+				$"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(type)}/", baseDir);
 			if (result.ok && !string.IsNullOrEmpty(result.file))
 			{
 				_selectedRom.SetMediaPath(type, result.file);

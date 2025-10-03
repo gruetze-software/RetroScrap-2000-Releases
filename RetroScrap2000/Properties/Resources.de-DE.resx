@@ -321,4 +321,25 @@
   <data name="Txt_Fail_FileNotExist" xml:space="preserve">
     <value>Datei nicht gefunden!</value>
   </data>
+  <data name="Txt_Msg_Opt_MM_AlwaysExist" xml:space="preserve">
+    <value>Eine Quelle mit dieser Kombination aus Pfad und XML-Schlüssel existiert bereits. Bitte ändern Sie den Pfad oder den XML-Schlüssel.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_XmlAlwaysExist" xml:space="preserve">
+    <value>Der XML-Schlüssel ist bereits vergeben. Wähle einen anderen.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_MissingData" xml:space="preserve">
+    <value>Der Eintrag kann nicht hinzugefügt werden. Es fehlen wesentliche Daten.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_InvalidXmlKey" xml:space="preserve">
+    <value>Das ist ein ungültiger XML-Schlüssel. Erlaubt sind nur lateinische Buchstaben, Zahlen und Bindestriche, er darf nicht mit einer Zahl beginnen und keine Sonderzeichen wie &lt;, &gt;, &amp; oder Leerzeichen enthalten.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_RelPathWithOutRomPath" xml:space="preserve">
+    <value>Der relative Pfad kann nur gesetzt werden, wenn der ROM-Pfad gesetzt ist. Bitte zunächst den ROM-Pfad im Haupt-Dialog auswählen.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath" xml:space="preserve">
+    <value>Der relative Pfad zum Rom-Pfad '{0}' konnte nicht ermittelt werden. Beachte bitte, dass z. B. beide Ordner auf demselben Laufwerk sein müssen.</value>
+  </data>
+  <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
+    <value>Diese Funktion ist noch in Arbeit. Aber es wird bestimmt im nächsten Release dabei sein!</value>
+  </data>
 </root>

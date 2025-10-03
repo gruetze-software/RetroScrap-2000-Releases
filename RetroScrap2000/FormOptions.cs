@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroScrap2000.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace RetroScrap2000
 {
@@ -25,7 +27,8 @@ namespace RetroScrap2000
 
 		private readonly ScrapperManager? _manager;
 		public RetroScrapOptions Options { get; set; }
-		public FormOptions(RetroScrapOptions opt, ScrapperManager man, int tabpageindex)
+		public List<RetroSystem> RetroSystemList { get; set; }
+		public FormOptions(RetroScrapOptions opt, ScrapperManager man, int tabpageindex, List<RetroSystem> retroSystemList)
 		{
 			InitializeComponent();
 			tabControlOptions.SelectedIndex = tabpageindex;
@@ -48,19 +51,22 @@ namespace RetroScrap2000
 				comboBoxLangRegion.SelectedIndex = 2;
 			else
 				Debug.Assert(false);
-			
+
 			radioButtonBatocera.Checked = true;
 
 			ImageList imgTab = new ImageList() { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			imgTab.Images.Add("general", Properties.Resources.general32); // Allgemein
 			imgTab.Images.Add("scrapuser", Properties.Resources.user32); // Scrap
 			imgTab.Images.Add("scrapdata", Properties.Resources.media32); // Scrap-Daten
+			imgTab.Images.Add("custom", Properties.Resources.custom32); // Info
 			imgTab.Images.Add("info", Properties.Resources.info32); // Info
 			tabControlOptions.ImageList = imgTab;
 			tabControlOptions.TabPages[0].ImageKey = "general";
 			tabControlOptions.TabPages[1].ImageKey = "scrapuser";
 			tabControlOptions.TabPages[2].ImageKey = "scrapdata";
-			tabControlOptions.TabPages[3].ImageKey = "info";
+			tabControlOptions.TabPages[3].ImageKey = "custom";
+			tabControlOptions.TabPages[4].ImageKey = "info";
+			RetroSystemList = retroSystemList;
 		}
 
 		private void FormOptions_Load(object sender, EventArgs e)
@@ -82,13 +88,19 @@ namespace RetroScrap2000
 			}
 			// Scrap Data
 			checkBoxMediaFanart.Checked = Options.MediaFanart == true;
-			checkBoxMediaImageBox.Checked = Options.MediaBoxImage == true;	
+			checkBoxMediaImageBox.Checked = Options.MediaBoxImage == true;
 			checkBoxMediaManual.Checked = Options.MediaManual == true;
 			checkBoxMediaMap.Checked = Options.MediaMap == true;
 			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
 			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
 			checkBoxMediaWheel.Checked = Options.MediaWheel == true;
 			checkBoxMediaMarquee.Checked = Options.MediaMarquee == true;
+
+			// Media Manual
+			RetroSystemList.Sort();
+			comboBoxOptMMSystems.Items.AddRange(RetroSystemList.ToArray());
+			radioButtonOptMMAllSystems.Checked = true;
+			FillMMList();
 
 			// Info
 			pictureBoxAppIcon.Image = Properties.Resources.RetroScrap2000_256;
@@ -246,7 +258,7 @@ namespace RetroScrap2000
 			else if (comboBoxLangRegion.SelectedIndex == 2)
 				Options.Region = "jp";
 			else
-			 Options.Region = "eu"; // default
+				Options.Region = "eu"; // default
 
 			Options.MediaFanart = checkBoxMediaFanart.Checked;
 			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
@@ -274,7 +286,7 @@ namespace RetroScrap2000
 		{
 			StartProc("https://www.screenscraper.fr/");
 		}
-		
+
 		private void buttonInfoRetroPie_Click(object sender, EventArgs e)
 		{
 			MyMsgBox.Show(
@@ -298,6 +310,280 @@ namespace RetroScrap2000
 			{
 				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 			}
+		}
+
+		private void buttonOptMMPath_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog fbd = new FolderBrowserDialog
+			{
+				RootFolder = Environment.SpecialFolder.MyComputer,
+				ShowNewFolderButton = true
+			};
+
+			if (fbd.ShowDialog() == DialogResult.OK)
+			{
+				textBoxOptMMPath.Text = fbd.SelectedPath;
+			}
+		}
+
+		public static string NormalizeFilePatterns(string input)
+		{
+			if (string.IsNullOrWhiteSpace(input))
+				return "*.*"; // Standard: Alle Dateien
+
+			// 1. Muster am Semikolon trennen und bereinigen
+			var patterns = input.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+													.Select(p => p.Trim());
+
+			// 2. Jedes Muster korrigieren (Sicherstellen, dass es mit * oder *.) beginnt)
+			var normalizedPatterns = patterns.Select(p =>
+			{
+				// Wenn Muster mit Punkt (.) beginnt, * davor setzen (z.B. .pdf -> *.pdf)
+				if (p.StartsWith("."))
+				{
+					return "*" + p;
+				}
+				// Wenn es nicht mit * beginnt, *.* davor setzen (z.B. pdf -> *pdf)
+				if (!p.StartsWith("*"))
+				{
+					// Setzt *. davor, falls keine Wildcard enthalten ist
+					if (!p.Contains('*'))
+					{
+						return "*." + p;
+					}
+				}
+				return p;
+			}).Distinct(StringComparer.OrdinalIgnoreCase);
+
+			// 3. Neu zusammensetzen
+			return string.Join(";", normalizedPatterns);
+		}
+
+		public static bool IsValidXmlKeyName(string keyName)
+		{
+			if (string.IsNullOrWhiteSpace(keyName))
+				return false;
+
+			// 1. Prüfen auf ungültige XML-Zeichen und Whitespace
+			if (keyName.Any(c => Char.IsWhiteSpace(c) || System.Xml.XmlConvert.IsXmlChar(c) == false))
+			{
+				return false;
+			}
+
+			// 2. Prüfen auf Zeichen, die in XML-Tagnamen verboten sind (z.B. <>&"' /)
+			if (keyName.Contains('<') || keyName.Contains('>') || keyName.Contains('&'))
+			{
+				return false;
+			}
+
+			// 3. Prüfen, ob der Name mit einem gültigen Zeichen beginnt (keine Zahl, kein Punkt/Bindestrich)
+			if (!System.Xml.XmlConvert.IsStartNCNameChar(keyName[0]))
+			{
+				return false;
+			}
+
+			// Optional: Alle deutschen Umlaute (ä, ö, ü) sind in XML-Tagnamen technisch erlaubt,
+			// aber oft vermieden. Wenn Sie sie verbieten wollen, fügen Sie die Prüfung hier ein.
+			// Falls Sie nur ASCII oder lateinische Buchstaben zulassen wollen:
+			if (keyName.Any(c => c > 127))
+				return false;
+
+			// Wenn alle Prüfungen bestanden sind:
+			return true;
+		}
+
+		private void FillMMList()
+		{
+			listViewOptManualMedia.BeginUpdate();
+			listViewOptManualMedia.Items.Clear();
+			foreach (var entry in this.Options.MediaManualSystemList)
+			{
+				string systemname = entry.RomSystemID == null ? "*"
+					: (RetroSystemList.FirstOrDefault(x => x.Id == entry.RomSystemID.Value)?.Name ?? $"ID {entry.RomSystemID.Value}");
+				ListViewItem item = new ListViewItem(entry.Name);
+				item.SubItems.Add(systemname);
+				item.SubItems.Add(entry.XmlKeyName);
+				item.SubItems.Add(entry.AbsolutPathMedia);
+				item.SubItems.Add(entry.RelPathMediaToRomPath ?? "");
+				item.Tag = entry;
+				listViewOptManualMedia.Items.Add(item);
+			}
+			listViewOptManualMedia.EndUpdate();
+		}
+		private void buttonOptMMAdd_Click(object sender, EventArgs e)
+		{
+			// TODO:
+			MyMsgBox.Show(Properties.Resources.Txt_Msg_UnderConstruction);
+			return;
+
+			bool newEntry = listViewOptManualMedia.SelectedItems.Count != 1;
+			MediaManualSystem tempEntry = new MediaManualSystem()
+			{
+				AbsolutPathMedia = textBoxOptMMPath.Text,
+				Name = textBoxOptMMName.Text,
+				XmlKeyName = textBoxOptMMXMLTag.Text,
+				MediaExtensionFilter = textBoxOptMMFilePatterns.Text,
+				RomSystemID = radioButtonOptMMAllSystems.Checked
+					? null
+					: (comboBoxOptMMSystems.SelectedItem is RetroSystem rs ? rs.Id : (int?)null)
+			};
+
+			// Sind grundlegende Daten gefüllt?
+			if (string.IsNullOrEmpty(tempEntry.AbsolutPathMedia)
+				|| string.IsNullOrEmpty(tempEntry.Name)
+				|| string.IsNullOrEmpty(tempEntry.XmlKeyName))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_MissingData);
+				return;
+			}
+
+			// Ist der Xml-Key bereits im Standard vergeben (z. B. "marquee")?
+			if (RetroScrapOptions.GetStandardMediaFolderAndXmlTagList().Contains(tempEntry.XmlKeyName))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_XmlAlwaysExist);
+				return;
+			}
+
+			// Ist der Xml-Key valide?
+			if (!IsValidXmlKeyName(tempEntry.XmlKeyName))
+			{
+				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_InvalidXmlKey);
+				return;
+			}
+
+			// Wenn der relative Pfad gesetzt werden soll, muss zwingend der ROM-Path angegeben sein
+			if (checkBoxOptMMRelPath.Checked)
+			{
+				if (string.IsNullOrEmpty(Options.RomPath))
+				{
+					MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_RelPathWithOutRomPath);
+					return;
+				}
+			}
+
+			// Existiert bereits ein Eintrag mit denselben Namen, Pfad und Xml-Key?
+			if (newEntry)
+			{
+				bool alreadyExists = this.Options.MediaManualSystemList.Any(existingEntry =>
+							existingEntry.AbsolutPathMedia.Equals(tempEntry.AbsolutPathMedia, StringComparison.OrdinalIgnoreCase)
+					&& existingEntry.XmlKeyName.Equals(tempEntry.XmlKeyName, StringComparison.OrdinalIgnoreCase));
+				if (alreadyExists)
+				{
+					MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_AlwaysExist);
+					return;
+				}
+			}
+			// Pattern glätten
+			string normalizedPatterns = NormalizeFilePatterns(textBoxOptMMFilePatterns.Text);
+			tempEntry.MediaExtensionFilter = normalizedPatterns;
+			textBoxOptMMFilePatterns.Text = normalizedPatterns;
+
+			// Relativen Pfad zum ROM-Pfad ermitteln
+			if (checkBoxOptMMRelPath.Checked)
+			{
+				string relPath = FileTools.GetRelativePath(tempEntry.AbsolutPathMedia, Options.RomPath!);
+				if (string.Compare(relPath, tempEntry.AbsolutPathMedia, true) == 0)
+				{
+					MyMsgBox.ShowWarn(string.Format(Properties.Resources.Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath, Options.RomPath));
+					checkBoxOptMMRelPath.Checked = false;
+					tempEntry.RelPathMediaToRomPath = null;
+				}
+				else
+				{
+					tempEntry.RelPathMediaToRomPath = relPath;
+				}
+			}
+			else
+			{
+				tempEntry.RelPathMediaToRomPath = null;
+			}
+
+			// Füge den neuen Eintrag hinzu oder passe den vorhandenen an
+			if (newEntry)
+			{
+				this.Options.MediaManualSystemList.Add(tempEntry);
+			}
+			else
+			{
+				MediaManualSystem oldEntry = (MediaManualSystem)listViewOptManualMedia.SelectedItems[0].Tag!;
+				oldEntry.CopyFrom(tempEntry);
+			}
+
+			FillMMList();
+		}
+
+		private void buttonOptDelete_Click(object sender, EventArgs e)
+		{
+			if (listViewOptManualMedia.SelectedItems.Count == 1)
+			{
+				MediaManualSystem entryToRemove = (MediaManualSystem)listViewOptManualMedia.SelectedItems[0].Tag!;
+
+				MediaManualSystem? existingEntry = Options.MediaManualSystemList.FirstOrDefault(e =>
+							e.AbsolutPathMedia.Equals(entryToRemove.AbsolutPathMedia, StringComparison.OrdinalIgnoreCase)
+					&& e.XmlKeyName.Equals(entryToRemove.XmlKeyName, StringComparison.OrdinalIgnoreCase)
+					&& e.Name.Equals(entryToRemove.Name, StringComparison.OrdinalIgnoreCase)
+				);
+
+				if (existingEntry != null)
+				{
+					// 3. Entferne das gefundene Objekt aus der Liste
+					Options.MediaManualSystemList.Remove(existingEntry);
+
+					// 4. Entferne das Element aus der ListView-Anzeige
+					listViewOptManualMedia.SelectedItems[0].Remove();
+				}
+			}
+		}
+
+		private void buttonOptMMScan_Click(object sender, EventArgs e)
+		{
+			MyMsgBox.Show(Properties.Resources.Txt_Msg_UnderConstruction);
+			return;
+		}
+
+		private void listViewOptManualMedia_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listViewOptManualMedia.SelectedItems.Count == 1)
+			{
+				MediaManualSystem mediaManualSystem = (MediaManualSystem)listViewOptManualMedia.SelectedItems[0].Tag!;
+				if (mediaManualSystem.RomSystemID == null)
+				{
+					radioButtonOptMMAllSystems.Checked = true;
+				}
+				else
+				{
+					radioButtonOptMMSystem.Checked = true;
+					comboBoxOptMMSystems.SelectedItem = RetroSystemList.FirstOrDefault(x => x.Id == mediaManualSystem.RomSystemID);
+				}
+
+				textBoxOptMMFilePatterns.Text = mediaManualSystem.MediaExtensionFilter;
+				textBoxOptMMName.Text = mediaManualSystem.Name;
+				textBoxOptMMPath.Text = mediaManualSystem.AbsolutPathMedia;
+				textBoxOptMMXMLTag.Text = mediaManualSystem.XmlKeyName;
+				checkBoxOptMMRelPath.Checked = !string.IsNullOrEmpty(mediaManualSystem.RelPathMediaToRomPath);
+
+			}
+			else
+			{
+				radioButtonOptMMAllSystems.Checked = true;
+				textBoxOptMMFilePatterns.Text = string.Empty;
+				textBoxOptMMName.Text = string.Empty;
+				textBoxOptMMPath.Text = string.Empty;
+				textBoxOptMMXMLTag.Text = string.Empty;
+				checkBoxOptMMRelPath.Checked = false;
+			}
+		}
+
+		private void radioButtonOptMMAllSystems_CheckedChanged(object sender, EventArgs e)
+		{
+			comboBoxOptMMSystems.SelectedIndex = -1;
+			comboBoxOptMMSystems.Enabled = false;
+		}
+
+		private void radioButtonOptMMSystem_CheckedChanged(object sender, EventArgs e)
+		{
+			comboBoxOptMMSystems.SelectedIndex = 0;
+			comboBoxOptMMSystems.Enabled = Enabled;
 		}
 	}
 }

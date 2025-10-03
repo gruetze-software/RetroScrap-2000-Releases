@@ -321,4 +321,25 @@
   <data name="Txt_Fail_FileNotExist" xml:space="preserve">
     <value>¡Archivo no encontrado!</value>
   </data>
+  <data name="Txt_Msg_Opt_MM_AlwaysExist" xml:space="preserve">
+    <value>Ya existe una fuente con esta combinación de ruta y clave XML. Cambie la ruta o la clave XML.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_XmlAlwaysExist" xml:space="preserve">
+    <value>La clave XML ya está en uso. Elija otra.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_MissingData" xml:space="preserve">
+    <value>No se puede agregar la entrada. Faltan datos esenciales.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_InvalidXmlKey" xml:space="preserve">
+    <value>Esta es una clave XML inválida. Solo se permiten letras latinas, números y guiones; no puede comenzar con un número ni contener caracteres especiales como &lt;, &gt;, &amp;, o espacios.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_RelPathWithOutRomPath" xml:space="preserve">
+    <value>La ruta relativa solo se puede configurar si se establece la ruta del ROM. Por favor, primero seleccione la ruta del ROM en el diálogo principal.</value>
+  </data>
+  <data name="Txt_Msg_Opt_MM_WarningRelPathNotSet_RomPath" xml:space="preserve">
+    <value>No se pudo determinar la ruta relativa a la ruta de Rom '{0}'. Tenga en cuenta que, por ejemplo, ambas carpetas deben estar en la misma unidad.</value>
+  </data>
+  <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
+    <value>¡Esta función todavía está en desarrollo. Pero seguramente estará incluida en la próxima versión!</value>
+  </data>
 </root>
