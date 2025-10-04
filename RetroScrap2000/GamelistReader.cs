@@ -101,8 +101,7 @@ public static class GameListLoader
 			normalizedPath = normalizedPath.Substring(1);
 		}
 
-		// 3. Alle Pfade in Kleinbuchstaben konvertieren (um Case-Insensitivity zu erzwingen)
-		return normalizedPath.ToLowerInvariant();
+		return normalizedPath;
 	}
 
 	/// <summary>
