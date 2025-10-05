@@ -342,4 +342,7 @@
   <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
     <value>Diese Funktion ist noch in Arbeit. Aber es wird bestimmt im nächsten Release dabei sein!</value>
   </data>
+  <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
+    <value>Es gibt mehr als einen Treffer. Scrape das ROM einzeln.</value>
+  </data>
 </root>

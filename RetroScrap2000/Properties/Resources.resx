@@ -426,4 +426,7 @@
   <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
     <value>This feature is still in progress. But it will definitely be included in the next release!</value>
   </data>
+  <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
+    <value>There is more than one match. Scrape the ROM individually.</value>
+  </data>
 </root>

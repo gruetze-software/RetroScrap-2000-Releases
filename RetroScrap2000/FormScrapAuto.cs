@@ -22,8 +22,6 @@ namespace RetroScrap2000
 		public bool ScrapWasStarting { get; set; } = false;
 		private bool _isrunning = false;
 
-		private System.Windows.Forms.Timer _startTimer = new System.Windows.Forms.Timer();
-
 		public FormScrapAuto(GameList roms, ScrapperManager scrapper, 
 			string basedir, RetroSystem system, RetroScrapOptions options)
 		{
@@ -33,21 +31,12 @@ namespace RetroScrap2000
 			_basedir = basedir;
 			_system = system;
 			_options = options;
-
-			_startTimer.Interval = 500; // 0.5 Sekunden warten
-			_startTimer.Tick += _startTimer_Tick;
-		}
-
-		private void _startTimer_Tick(object? sender, EventArgs e)
-		{
-			_startTimer.Stop();
-			buttonStart_Click(this, EventArgs.Empty);
 		}
 
 		private void SetTitle(int index, int total)
 		{
 			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem, 
-				index, total) + $" \"{Roms.RetroSys.Name}\" ";
+				index, total) + $" \"{Roms.RetroSys.Name_eu}\" ";
 		}
 
 		private void FormScrapAuto_Load(object sender, EventArgs e)
@@ -57,7 +46,7 @@ namespace RetroScrap2000
 			colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
 			colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 
-			_startTimer.Start();
+			
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
@@ -93,7 +82,7 @@ namespace RetroScrap2000
 			{
 				ScrapWasStarting = true;
 				// Aufruf der asynchronen Methode und Übergabe des Progress-Objekts
-				await _scrapper.ScrapGamesAsync(Roms, Roms.RetroSys.Id, _basedir, 
+				await _scrapper.ScrapGamesAsync(Roms, checkBoxOnlyLocal.Checked, Roms.RetroSys.Id, _basedir, 
 					progressHandler, _options, ct);
 				// Speichern
 				AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGameList);

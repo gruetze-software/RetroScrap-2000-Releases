@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json;
@@ -17,7 +19,11 @@ namespace RetroScrap2000
 	public class RetroSystem : IComparable<RetroSystem>
 	{
 		public int Id { get; set; } = -1;
-		public string Name { get; set; } = "Unknown System";
+		public string Name_eu { get; set; } = "Unknown System";
+		public string Name_us { get; set; } = "Unknown System";
+		public string? Extensions { get; set; }
+		public string? RomType { get; set; }
+		public string? SupportType { get; set; }
 		public string RomFolderName { get; set; } = "romsystem";
 		public string? Hersteller { get; set; }
 		public string? Typ { get; set; }
@@ -33,7 +39,7 @@ namespace RetroScrap2000
 
 		public override string ToString()
 		{
-			return Name;
+			return Name_eu;
 		}
 
 		// Definiert die Sortierlogik für List<T>.Sort()
@@ -42,7 +48,7 @@ namespace RetroScrap2000
 			if (other == null) return 1;
 
 			// Vergleiche die Systemnamen
-			return string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
+			return string.Compare(this.Name_eu, other.Name_eu, StringComparison.OrdinalIgnoreCase);
 		}
 
 
@@ -294,11 +300,21 @@ namespace RetroScrap2000
 	public class RetroSystems
 	{
 		public List<RetroSystem> SystemList { get; set; } = new List<RetroSystem>();
+		public int? SystemListVersion { get; set; }
+		[JsonIgnore]
+		public int SystemListAktVersion { get; internal set; }
 
+		[JsonIgnore]
+		public bool IsTooOld { get; internal set; }
+
+		[JsonIgnore]
 		public static string FolderBanner = Path.Combine(AppContext.BaseDirectory, "Resources", "System_Banner");
+		[JsonIgnore]
 		public static string FolderIcons = Path.Combine(AppContext.BaseDirectory, "Resources", "System_Icons");
 		public RetroSystems() 
-		{ 
+		{
+			IsTooOld = false;
+			SystemListAktVersion = 1;
 		}
 
 		public string GetRomFolder(int systemid)
@@ -327,16 +343,51 @@ namespace RetroScrap2000
 						Ende = !string.IsNullOrEmpty(s.datefin) ? (int.TryParse(s.datefin, out int z) ? z : 0) : 0,
 						Hersteller = s.compagnie,
 						Id = s.id,
-						Name = !string.IsNullOrEmpty(s.Name) ? s.Name : "Unknown System",
-						Typ = s.type,
+						Name_eu = !string.IsNullOrEmpty(s.Name_eu) ? s.Name_eu : "Unknown System",
+						Name_us = !string.IsNullOrEmpty(s.Name_us) ? s.Name_us : s.Name_eu ?? "Unknown System",
+						Extensions = s.extensions,
+						RomType = GetEngFromFrance(s.romtype),
+						SupportType = GetEngFromFrance(s.supporttype),
+						Typ = GetEngFromFrance(s.type),
 						RomFolderName = BatoceraFolders.MapToBatoceraFolder(s.noms)!
+
 					};
 					
 					SystemList.Add(retroSystem);
 				}
 			}
 		}
-		
+
+		private string GetEngFromFrance(string? type)
+		{
+			if (string.IsNullOrEmpty(type)) return string.Empty;
+
+			if (type.ToLower() == "console portable") return "Handheld Console";
+			if (type.ToLower() == "ordinateur") return "Computer";
+			if (type.ToLower() == "accessoire") return "Accessory";
+			if (type.ToLower() == "emulation arcade") return "Arcade Emulation";
+			if (type.ToLower() == "autres") return "Others";
+			if (type.ToLower() == "machine virtuelle") return "Virtual Machine";
+			if (type.ToLower() == "flipper") return "Pinball";
+			if (type.ToLower() == "dossier") return "folder";
+			if (type.ToLower() == "fichier") return "file";
+			if (type.ToLower() == "cartouche") return "cartridge";
+			if (type.ToLower() == "disquette") return "floppy";
+			if (type.ToLower() == "cartouche-download") return "cartridge-download";
+			if (type.ToLower() == "k7") return "cassette";
+			if (type.ToLower() == "k7-disquette") return "cassette-floppy";
+			if (type.ToLower() == "cartouche-k7") return "cartridge-floppy";
+			if (type.ToLower() == "cartouche-k7-disquette") return "cartridge-cassette-floppy";
+			if (type.ToLower() == "carte") return "card";
+			if (type.ToLower() == "cd-disquette") return "cd-floppy";
+			if (type.ToLower() == "non-applicable") return "not applicable";
+			if (type.ToLower() == "bluray") return "Blu-ray";
+
+
+
+			return type;
+		}
+
 		private static string GetRetroSystemsFile()
 		{
 			var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -350,6 +401,7 @@ namespace RetroScrap2000
 		/// </summary>
 		public void Save()
 		{
+			SystemListVersion = SystemListAktVersion;
 			var options = new JsonSerializerOptions
 			{
 				WriteIndented = true // hübsch formatiert
@@ -362,25 +414,35 @@ namespace RetroScrap2000
 		/// Lädt die Retrosysteme aus einer Json-Datei. 
 		/// Falls die Datei nicht existiert, wird ein neues Objekt zurückgegeben.
 		/// </summary>
-		public static RetroSystems Load()
+		public void Load()
 		{
+			this.SystemListVersion = null;
+			this.SystemList = new List<RetroSystem>();
+			this.IsTooOld = false;	
+
 			var systemjsonfile = GetRetroSystemsFile();
 			if (!File.Exists(systemjsonfile))
 			{
-				return new RetroSystems();
+				return;
 			}
 				
 			var json = File.ReadAllText(GetRetroSystemsFile());
 			var retVal = JsonSerializer.Deserialize<RetroSystems>(json);
 			if (retVal == null)
 			{
-				return new RetroSystems();
+				return;
 			}
+			else
+			{
+				this.SystemListVersion = retVal.SystemListVersion;
+				this.SystemList = retVal.SystemList;
+			}
+
+			if (SystemListVersion == null || SystemListVersion.Value < SystemListAktVersion)
+				this.IsTooOld = true;
 
 			// TODO Einmalig zum Füllen der Beschreibung: 
 			//fillDescription(retVal);
-
-			return retVal;
 		}
 
 		private static void fillDescription(RetroSystems retVal)

@@ -67,7 +67,9 @@ namespace RetroScrap2000.Tools
 				Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
 
 				// Ergebnis als normalen String zurückgeben und Slashes korrigieren
-				return Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
+				var ret = Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
+				ret = ret.TrimEnd(Path.DirectorySeparatorChar);
+				return ret;
 			}
 			catch (Exception)
 			{
@@ -94,19 +96,59 @@ namespace RetroScrap2000.Tools
 			return Path.Combine(systemDir, rel);
 		}
 
-		public static (bool ok, string? file) MoveOrCopyScrapFileRom(bool move, string? romname,
+		public static bool SetLocalMediaFilesToGame(GameEntry game, string baseDir)
+		{
+			if (string.IsNullOrEmpty(game.Path)
+				|| string.IsNullOrEmpty(baseDir))
+				return false;
+			
+			string? absPathRom = ResolveMediaPath(game.Path, baseDir);
+			if (string.IsNullOrEmpty(absPathRom))
+				return false;
+
+			// Medien-Verzeichnisse abklappern, in Frage kommen der Dateiname und der Name des Game	
+			var dirMedienStrg = Path.Combine(baseDir, "media");
+			DirectoryInfo dirMedien = new DirectoryInfo(dirMedienStrg);
+			if (!dirMedien.Exists)
+			{
+				Trace.WriteLine($"{dirMedienStrg} not exist!");
+				return false;
+			}
+
+			var dirs = dirMedien.GetDirectories();
+			foreach (var m in RetroScrapOptions.GetStandardMediaFolderAndXmlTagList())
+			{
+				var founddir = dirs.FirstOrDefault(x => x.Name.ToLower() == m.Value.ToLower());
+				if (founddir != null)
+				{
+					var foundgame = Directory.GetFiles(founddir.FullName, game.FileName! + "*", SearchOption.TopDirectoryOnly);
+					if ( foundgame == null || foundgame.Length == 0 )
+						foundgame = Directory.GetFiles(founddir.FullName, game.Name + "*", SearchOption.TopDirectoryOnly);
+					if (foundgame == null || foundgame.Length == 0)
+						foundgame = Directory.GetFiles(founddir.FullName, FileTools.MakeSafeFileName(game.Name!) + "*", SearchOption.TopDirectoryOnly);
+					if (foundgame == null || foundgame.Length == 0)
+						continue;
+					else
+						game.SetMediaPath(m.Key, FileTools.GetRelativePath(foundgame[0], baseDir));
+				}
+			}
+
+			return true;
+		}
+
+		public static (bool ok, string? file) MoveOrCopyScrapFileRom(bool move, GameEntry rom,
 			string? sourcefile,
 			string destbasedir,
 			string destrelpath)
 		{
-			if (!string.IsNullOrEmpty(romname)
+			if (!string.IsNullOrEmpty(rom.FileName)
 				&& !string.IsNullOrEmpty(sourcefile)
 				&& File.Exists(sourcefile))
 			{
 				string destfileend = Path.GetExtension(sourcefile).ToLower();
 
 				if (string.IsNullOrEmpty(destrelpath))
-					throw new ApplicationException("Relative Path not set for " + romname + ".");
+					throw new ApplicationException("Relative Path not set for " + rom.FileName + ".");
 
 				string? abspath = ResolveMediaPath(destbasedir, destrelpath);
 				if (!string.IsNullOrEmpty(abspath))
@@ -114,7 +156,7 @@ namespace RetroScrap2000.Tools
 					if (!Directory.Exists(abspath))
 						Directory.CreateDirectory(abspath);
 
-					string destfilename = MakeSafeFileName(romname) + destfileend;
+					string destfilename = Utils.GetNameFromFile(rom.FileName) + destfileend;
 					string destfile = Path.Combine(abspath, destfilename);
 					if (move)
 					{

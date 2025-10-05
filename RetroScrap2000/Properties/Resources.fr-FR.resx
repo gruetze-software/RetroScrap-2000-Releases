@@ -342,4 +342,7 @@
   <data name="Txt_Msg_UnderConstruction" xml:space="preserve">
     <value>Cette fonctionnalité est encore en cours de développement. Mais elle sera sûrement incluse dans la prochaine version !</value>
   </data>
+  <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
+    <value>Il y a plus d'un résultat. Mettez à jour le ROM individuellement.</value>
+  </data>
 </root>

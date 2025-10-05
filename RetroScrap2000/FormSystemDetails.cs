@@ -24,20 +24,50 @@ namespace RetroScrap2000
 			if (_retrosystem.FileBanner != null)
 				pictureBoxSystem.Image = Image.FromFile(_retrosystem.FileBanner);
 
-			ListViewItem item = new ListViewItem("Name:");
-			item.SubItems.Add(_retrosystem.Name);
+			if (string.Compare(_retrosystem.Name_eu, _retrosystem.Name_us, StringComparison.OrdinalIgnoreCase) != 0)
+			{
+				ListViewItem itemname = new ListViewItem("Name (EU):");
+				itemname.SubItems.Add(_retrosystem.Name_eu);
+				listViewDetails.Items.Add(itemname);
+
+				itemname = new ListViewItem("Name (US):");
+				itemname.SubItems.Add(_retrosystem.Name_us);
+				listViewDetails.Items.Add(itemname);
+			}
+			else
+			{
+				ListViewItem itemname = new ListViewItem("Name:");
+				itemname.SubItems.Add(_retrosystem.Name_eu);
+				listViewDetails.Items.Add(itemname);
+			}
+
+			ListViewItem item = new ListViewItem("Manufacturer:");
+			item.SubItems.Add(_retrosystem.Hersteller);
 			listViewDetails.Items.Add(item);
 
-			item = new ListViewItem("Manufacture:");
-			item.SubItems.Add(_retrosystem.Hersteller);
+			item = new ListViewItem("Date");
+			string dd = "";
+			if ( _retrosystem.Debut > 0 && _retrosystem.Ende > 0 )
+				dd = $"{_retrosystem.Debut.ToString()} - {_retrosystem.Ende.ToString()}";
+			else if (_retrosystem.Debut > 0 || _retrosystem.Ende > 0 )
+				dd = _retrosystem.Debut > 0 ? _retrosystem.Debut.ToString() : _retrosystem.Ende.ToString();
+			item.SubItems.Add(dd);
 			listViewDetails.Items.Add(item);
 
 			item = new ListViewItem("Type:");
 			item.SubItems.Add(_retrosystem.Typ);
 			listViewDetails.Items.Add(item);
 
-			item = new ListViewItem("Date");
-			item.SubItems.Add($"{_retrosystem.Debut.ToString()} - {_retrosystem.Ende.ToString()}");
+			item = new ListViewItem("Support type:");
+			item.SubItems.Add(_retrosystem.SupportType);
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("Rom type:");
+			item.SubItems.Add(_retrosystem.RomType);
+			listViewDetails.Items.Add(item);
+
+			item = new ListViewItem("File extensions");
+			item.SubItems.Add($"{_retrosystem.Extensions}");
 			listViewDetails.Items.Add(item);
 
 			textBoxHistory.Text = _retrosystem.Description;

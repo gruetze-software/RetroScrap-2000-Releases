@@ -43,9 +43,10 @@
 			// 
 			buttonOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 			buttonOK.DialogResult = DialogResult.OK;
-			buttonOK.Location = new Point(395, 509);
+			buttonOK.Location = new Point(346, 438);
+			buttonOK.Margin = new Padding(3, 2, 3, 2);
 			buttonOK.Name = "buttonOK";
-			buttonOK.Size = new Size(94, 29);
+			buttonOK.Size = new Size(82, 22);
 			buttonOK.TabIndex = 2;
 			buttonOK.Text = "OK";
 			buttonOK.UseVisualStyleBackColor = true;
@@ -66,9 +67,10 @@
 			listViewDetails.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
 			listViewDetails.FullRowSelect = true;
 			listViewDetails.GridLines = true;
-			listViewDetails.Location = new Point(12, 111);
+			listViewDetails.Location = new Point(10, 83);
+			listViewDetails.Margin = new Padding(3, 2, 3, 2);
 			listViewDetails.Name = "listViewDetails";
-			listViewDetails.Size = new Size(477, 160);
+			listViewDetails.Size = new Size(418, 164);
 			listViewDetails.TabIndex = 0;
 			listViewDetails.UseCompatibleStateImageBehavior = false;
 			listViewDetails.View = View.Details;
@@ -77,9 +79,11 @@
 			// 
 			groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			groupBox1.Controls.Add(textBoxHistory);
-			groupBox1.Location = new Point(12, 277);
+			groupBox1.Location = new Point(10, 251);
+			groupBox1.Margin = new Padding(3, 2, 3, 2);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new Size(477, 226);
+			groupBox1.Padding = new Padding(3, 2, 3, 2);
+			groupBox1.Size = new Size(417, 183);
 			groupBox1.TabIndex = 1;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "History";
@@ -88,33 +92,36 @@
 			// 
 			textBoxHistory.AcceptsReturn = true;
 			textBoxHistory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			textBoxHistory.Location = new Point(6, 26);
+			textBoxHistory.Location = new Point(5, 20);
+			textBoxHistory.Margin = new Padding(3, 2, 3, 2);
 			textBoxHistory.Multiline = true;
 			textBoxHistory.Name = "textBoxHistory";
 			textBoxHistory.ScrollBars = ScrollBars.Vertical;
-			textBoxHistory.Size = new Size(465, 194);
+			textBoxHistory.Size = new Size(407, 159);
 			textBoxHistory.TabIndex = 0;
 			textBoxHistory.TextChanged += textBoxHistory_TextChanged;
 			// 
 			// pictureBoxSystem
 			// 
 			pictureBoxSystem.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			pictureBoxSystem.Location = new Point(12, 12);
+			pictureBoxSystem.Location = new Point(10, 9);
+			pictureBoxSystem.Margin = new Padding(3, 2, 3, 2);
 			pictureBoxSystem.Name = "pictureBoxSystem";
-			pictureBoxSystem.Size = new Size(477, 83);
+			pictureBoxSystem.Size = new Size(417, 62);
 			pictureBoxSystem.SizeMode = PictureBoxSizeMode.Zoom;
 			pictureBoxSystem.TabIndex = 3;
 			pictureBoxSystem.TabStop = false;
 			// 
 			// FormSystemDetails
 			// 
-			AutoScaleDimensions = new SizeF(8F, 20F);
+			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(501, 550);
+			ClientSize = new Size(438, 468);
 			Controls.Add(pictureBoxSystem);
 			Controls.Add(groupBox1);
 			Controls.Add(listViewDetails);
 			Controls.Add(buttonOK);
+			Margin = new Padding(3, 2, 3, 2);
 			MaximizeBox = false;
 			MinimizeBox = false;
 			Name = "FormSystemDetails";

@@ -399,7 +399,7 @@ namespace RetroScrap2000
 			foreach (var entry in this.Options.MediaManualSystemList)
 			{
 				string systemname = entry.RomSystemID == null ? "*"
-					: (RetroSystemList.FirstOrDefault(x => x.Id == entry.RomSystemID.Value)?.Name ?? $"ID {entry.RomSystemID.Value}");
+					: (RetroSystemList.FirstOrDefault(x => x.Id == entry.RomSystemID.Value)?.Name_eu ?? $"ID {entry.RomSystemID.Value}");
 				ListViewItem item = new ListViewItem(entry.Name);
 				item.SubItems.Add(systemname);
 				item.SubItems.Add(entry.XmlKeyName);
@@ -438,7 +438,7 @@ namespace RetroScrap2000
 			}
 
 			// Ist der Xml-Key bereits im Standard vergeben (z. B. "marquee")?
-			if (RetroScrapOptions.GetStandardMediaFolderAndXmlTagList().Contains(tempEntry.XmlKeyName))
+			if (RetroScrapOptions.GetStandardMediaFolderAndXmlTagList().ContainsValue(tempEntry.XmlKeyName))
 			{
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_XmlAlwaysExist);
 				return;

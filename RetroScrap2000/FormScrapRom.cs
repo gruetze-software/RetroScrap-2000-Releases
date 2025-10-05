@@ -251,7 +251,7 @@ namespace RetroScrap2000
 			this.Close();
 		}
 
-		private async Task<MediaPreviewControl> CreateMediaPreviewPanel(eMediaType type, string? url, string baseDir,CancellationToken ct, bool checkboxen)
+		private async Task<MediaPreviewControl> CreateMediaPreviewPanel(eMediaType type, string? url, string baseDir, CancellationToken ct, bool checkboxen)
 		{
 			var control = new MediaPreviewControl();
 			control.MediaType = type;

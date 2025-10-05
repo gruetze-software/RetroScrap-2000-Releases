@@ -535,6 +535,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is more than one match. Scrape the ROM individually..
+        /// </summary>
+        internal static string Txt_Log_Scrap_MoreThenOneMatch {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_MoreThenOneMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set new medium.
         /// </summary>
         internal static string Txt_Log_Scrap_New_Media {

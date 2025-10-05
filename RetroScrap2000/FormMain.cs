@@ -72,6 +72,7 @@ namespace RetroScrap2000
 			typeof(System.Windows.Forms.ListView).GetProperty("DoubleBuffered",
 					System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
 					?.SetValue(listViewRoms, true);
+
 		}
 
 		#region Form-Events
@@ -94,15 +95,16 @@ namespace RetroScrap2000
 					// Warte, bis der Splashscreen vollständig initialisiert ist
 					await Splash.WaitForSplashScreenAsync();
 
-					_systems = RetroSystems.Load();
-					if (_systems.SystemList.Count == 0)
+					_systems = new RetroSystems();
+					_systems.Load();
+					if (_systems.SystemList.Count == 0 || _systems.IsTooOld )
 					{
 						await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 100);
 						await _systems.SetSystemsFromApiAsync(_scrapper);
 						_systems.Save();
 					}
 					_options.Systems = _systems;
-
+					
 					// Statusmeldungen mit Wartezeit
 					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 500);
 					if (_options != null && _options.Secret != null
@@ -363,7 +365,7 @@ namespace RetroScrap2000
 
 				// Rom scrappen
 				Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
-				var (ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options);
+				var (ok, data, gameRecherceList, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options);
 				if (!ok)
 				{
 					_selectedRom.State = eState.Error;
@@ -376,27 +378,40 @@ namespace RetroScrap2000
 				}
 				else if (data == null)
 				{
-					// Wenn der Name bereits gesetzt war und wir damit keinen Erfolg hatten, versuchen wir nun den Filename
-					if (!string.IsNullOrEmpty(_selectedRom.Name))
+					// Gab es mehrere Treffer?
+					if (gameRecherceList != null && gameRecherceList.Count > 1)
 					{
-						romFileName = Utils.GetNameFromFile(_selectedRom.Path);
-						Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
-						(ok, data, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options);
-						if (!ok || data == null)
+						// TODO:
+					}
+					else
+					{
+						// Wenn der Name bereits gesetzt war und wir damit keinen Erfolg hatten, versuchen wir nun den Filename
+						if (!string.IsNullOrEmpty(_selectedRom.Name))
 						{
-							Splash.CloseSplashScreen();
-							MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_NoDataFoundFor + " " + romFileName);
-							SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
-							return;
+							romFileName = Utils.GetNameFromFile(_selectedRom.Path);
+							Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
+							(ok, data, gameRecherceList, err) = await _scrapper.GetGameAsync(romFileName, _selectedRom.RetroSystemId, _options);
+							if (!ok)
+							{
+								Splash.CloseSplashScreen();
+								MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_NoDataFoundFor + " " + romFileName);
+								SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
+								return;
+							}
+							else if (data == null && gameRecherceList?.Count > 1)
+							{
+								// TODO:
+							}
 						}
 					}
 				}
 
-				data!.Source = "ScreenScraper.fr";
+				var sc = data!;
+				sc.Source = "ScreenScraper.fr";
 
 				// Dialog zum Übernehmen der Daten
 				Splash.CloseSplashScreen();
-				using var dlg = new FormScrapRom(sysFolder, _selectedRom, data, _options);
+				using var dlg = new FormScrapRom(sysFolder, _selectedRom, sc, _options);
 				if (dlg.ShowDialog(this) != DialogResult.OK)
 				{
 					_selectedRom.State = eState.None;
@@ -681,7 +696,7 @@ namespace RetroScrap2000
 
 			// ROM-Liste neu füllen (gebatcht, kein Async nötig – nur UI)
 			SetStatusToolStripLabel(string.Format(Properties.Resources.Txt_Status_Label_ReadSystem,
-				_selectedSystem!.Name));
+				_selectedSystem!.Name_eu));
 
 			Func<string?, bool> checkExists = (mediapath) =>
 			{
@@ -859,7 +874,7 @@ namespace RetroScrap2000
 					var sys = roms.RetroSys;
 					if (sys == null) continue;
 
-					var it = new ListViewItem(sys.Name)
+					var it = new ListViewItem(sys.Name_eu)
 					{
 						Tag = roms,
 						ImageKey = kv.Key
@@ -896,7 +911,7 @@ namespace RetroScrap2000
 			{
 				result = FileTools.MoveOrCopyScrapFileRom(
 					move: movefile,
-					romname: _selectedRom.Name,
+					rom: _selectedRom,
 					sourcefile: sourcefile,
 					destbasedir: basedir,
 					destrelpath: relMediaRomPath);
@@ -935,7 +950,7 @@ namespace RetroScrap2000
 			// Textinfos sofort
 			listBoxSystem.BeginUpdate();
 			listBoxSystem.Items.Clear();
-			listBoxSystem.Items.Add(system.Name);
+			listBoxSystem.Items.Add(system.Name_eu);
 			listBoxSystem.Items.Add($"{Properties.Resources.Txt_System_Manufacturer}: " + (system.Hersteller ?? ""));
 			if (system.Debut > 0 && system.Ende > 0)
 				listBoxSystem.Items.Add($"{system.Debut} - {system.Ende}");

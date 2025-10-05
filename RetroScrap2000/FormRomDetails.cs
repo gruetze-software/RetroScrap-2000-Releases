@@ -25,7 +25,7 @@ namespace RetroScrap2000
 		{
 			FileInfo f = new FileInfo(_romFile);
 
-			ListViewItem item = new ListViewItem("Name:");
+			ListViewItem item = new ListViewItem("File:");
 			item.SubItems.Add(f.FullName);
 			listViewDetails.Items.Add(item);
 
@@ -36,6 +36,16 @@ namespace RetroScrap2000
 			item = new ListViewItem("Source:");
 			item.SubItems.Add(_rom.Source);
 			listViewDetails.Items.Add(item);
+
+			foreach (var media in _rom.MediaTypeDictionary)
+			{
+				if (!string.IsNullOrEmpty(media.Value))
+				{
+					item = new ListViewItem(media.Key.ToString() + ":");
+					item.SubItems.Add(media.Value);
+					listViewDetails.Items.Add(item);
+				}
+			}
 
 			// TODO
 

@@ -32,7 +32,7 @@ public class GameManager
 			SystemList.Add(key, gl);
 		if (loadresult.HasChanges && gl.Games.Count > 0)
 		{
-			Trace.WriteLine("" + sys.Name + ": Änderungen in der gamelist.xml erkannt. Save...");
+			Trace.WriteLine("" + sys.Name_eu + ": Änderungen in der gamelist.xml erkannt. Save...");
 			// Es gab Änderungen, also speichern wir die aktualisierte Liste zurück in die XML-Datei.
 			sys.SaveAllRomsToGamelistXml(RomPath, gl.Games);
 		}
@@ -380,7 +380,7 @@ public static class GameListLoader
 			else
 			{
 				hasChanges = true;
-				Trace.WriteLine($"XML-Datei nicht gefunden, erstelle neue Liste für {system.Name}.");
+				Trace.WriteLine($"XML-Datei nicht gefunden, erstelle neue Liste für {system.Name_eu}.");
 			}
 		}
 		catch (Exception ex)
@@ -433,14 +433,14 @@ public static class GameListLoader
 
 					loadedList.Games.Add(newEntry);
 					hasChanges = true;
-					Trace.WriteLine($"{system.Name}: Neuen Eintrag hinzugefügt: \"{newEntry.Name}\"");
+					Trace.WriteLine($"{system.Name_eu}: Neuen Eintrag hinzugefügt: \"{newEntry.Name}\"");
 				}
 			}
 		}
 
 		// Sortieren Sie die gesamte Liste nach dem Dateinamen
 		loadedList.Games.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
-		Trace.WriteLine("Load success " + system.Name + ": Gesamtanzahl der Einträge in der gamelist.xml: " + loadedList.Games.Count);
+		Trace.WriteLine("Load success " + system.Name_eu + ": Gesamtanzahl der Einträge in der gamelist.xml: " + loadedList.Games.Count);
 		return (loadedList, hasChanges);
 	}
 }
@@ -469,7 +469,10 @@ public class GameEntry
 {
 	[XmlIgnore]
 	public int RetroSystemId { get; set; } = -1;
-	
+
+	[XmlIgnore]
+	public string? FileName { get { if (string.IsNullOrEmpty(Path)) return null; else return System.IO.Path.GetFileName(Path); } }
+
 	[XmlIgnore]
 	public eState State { get; set; } = eState.None;
 

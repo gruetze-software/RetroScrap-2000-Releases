@@ -52,11 +52,18 @@ namespace RetroScrap2000
 			Region = "eu";
 		}
 
-		public static List<string> GetStandardMediaFolderAndXmlTagList()
+		public static Dictionary<eMediaType, string> GetStandardMediaFolderAndXmlTagList()
 		{
-			return new List<string>()
+			return new Dictionary<eMediaType, string>
 			{
-				"image", "video", "marquee", "fanart", "screenshot", "wheel", "manual", "map"
+				{ eMediaType.BoxImage, "image" },
+				{ eMediaType.Video, "video" },
+				{ eMediaType.Marquee, "marquee" },
+				{ eMediaType.Fanart, "fanart" },
+				{ eMediaType.Screenshot, "screenshot" },
+				{ eMediaType.Wheel, "wheel" },
+				{ eMediaType.Manual, "manual" },
+				{ eMediaType.Map, "map" }
 			};
 		}
 

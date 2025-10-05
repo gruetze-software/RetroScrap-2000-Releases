@@ -2,6 +2,7 @@
 using RetroScrap2000.Tools;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
@@ -15,6 +16,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Linq;
 
 namespace RetroScrap2000
 {
@@ -78,6 +80,7 @@ namespace RetroScrap2000
 			return obj;
 		}
 
+		
 		/// <summary>
 		/// Liefert (ok, daten, fehler). Bei ok=false ist daten leer und fehler enthält den Grund.
 		/// </summary>
@@ -141,7 +144,7 @@ namespace RetroScrap2000
 				var batfoldername = BatoceraFolders.MapToBatoceraFolder(sys.noms);
 				if (string.IsNullOrEmpty(batfoldername))
 				{
-					Trace.WriteLine("[ScrapperManager::DownloadSystemImagesAsync()] Skip " + sys.Name);
+					Trace.WriteLine("[ScrapperManager::DownloadSystemImagesAsync()] Skip " + sys.Name_eu);
 					continue;
 				}
 				// beide Typen (icon, wheel) sichern
@@ -150,12 +153,12 @@ namespace RetroScrap2000
 					string file = Path.Combine(diricons.FullName, $"{batfoldername}.png");
 					if (!File.Exists(file))
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name}: Dowmload Icon \"{batfoldername}\"");
+						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Icon \"{batfoldername}\"");
 						await DownloadOne(sys.Media.icon, file);
 					}
 					else
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name}: Skip Icon \"{batfoldername}\" (Always exist)");
+						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Icon \"{batfoldername}\" (Always exist)");
 					}
 				}
 				if (sys.Media.wheel != null)
@@ -163,12 +166,12 @@ namespace RetroScrap2000
 					string file = Path.Combine(dirwheels.FullName, $"{batfoldername}.png");
 					if (!File.Exists(file))
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name}: Dowmload Wheel \"{batfoldername}\"");
+						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Wheel \"{batfoldername}\"");
 						await DownloadOne(sys.Media.wheel, file);
 					}
 					else
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name}: Skip Wheel \"{batfoldername}\" (Always exist)");
+						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Wheel \"{batfoldername}\" (Always exist)");
 					}
 				}
 				// kleine Pause, um die API nicht zu überlasten
@@ -189,6 +192,35 @@ namespace RetroScrap2000
 			}
 		}
 
+
+		public async Task<(bool ok, List<GameDataRecherce>? possibleGames, string? error)> GetGameRechercheListAsync(
+			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default)
+		{
+			if (string.IsNullOrEmpty(romFileName))
+				return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
+
+			var url = $"{BaseUrl}jeuRecherche.php?{BuildAuthQuery()}&systemeid={systemId}&recherche={Uri.EscapeDataString(romFileName)}";
+			Trace.WriteLine(url);
+			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
+			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
+			if (!resp.IsSuccessStatusCode)
+			{
+				return (false, null, $"HTTP {(int)resp.StatusCode}: {body}");
+			}
+			// JSON?
+			var head = body.TrimStart();
+			if (!(head.StartsWith("{") || head.StartsWith("[")))
+				return (false, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
+
+			var root = System.Text.Json.JsonSerializer.Deserialize<GameRechercheRoot>(body, _jsonOpts);
+			var jeux = root?.response?.jeux;
+			if (jeux == null) return (false, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+
+			return (ok: true, possibleGames: jeux.ToList(), null);
+		}
+
+
+		// Dient dazu, Loops zu vermeiden
 		private static int _countScrapGame = 0;
 		/// <summary>
 		/// Scrapt ein Spiel
@@ -197,12 +229,62 @@ namespace RetroScrap2000
 		/// <param name="systemId">Die Id des Systems</param>
 		/// <param name="ct"></param>
 		/// <returns></returns>
-		public async Task<(bool ok, ScrapeGame? data, string? error)> GetGameAsync(
-			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default)
+		public async Task<(bool ok, ScrapeGame? data, List<GameDataRecherce>? gameRechercheList, string? error)> GetGameAsync(
+			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
 		{
 			if (string.IsNullOrEmpty(romFileName))
-				return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
+				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
 
+			if (UseRecherche)
+			{
+				Trace.WriteLine($"Recherche nach \"{romFileName}\" ...");
+				_countScrapGame++;
+				var recherche = await GetGameRechercheListAsync(romFileName, systemId, opt, ct);
+				if (recherche.ok)
+				{
+					if (recherche.possibleGames == null || recherche.possibleGames.Count == 0)
+						return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+					// Es gab nur einen Treffer, den ziehen wir uns
+					if (recherche.possibleGames.Count == 1)
+					{
+						GameDataRecherce r = recherche.possibleGames[0];
+						string? name = r.GetName(opt);
+						if (string.IsNullOrEmpty(name))
+						{
+							return (false, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+						}
+						else
+						{
+							// Aufruf 3 oder 4
+							///////////////////////////////////////////////////////////////////////
+							// Rekursiver Aufruf, aber nicht mehr als Recherche
+							return await GetGameAsync(name, systemId, opt, ct, UseRecherche: false);
+						}
+					}
+					else
+					{
+						// Mehr als ein Treffer, wir liefern alle Treffer zurück
+						return ( ok: true, data: null, gameRechercheList: recherche.possibleGames, error: null);
+					}
+
+				}
+				else
+				{
+					return (ok: false, data: null, gameRechercheList: null, recherche.error);
+				}
+			}
+
+			// Aufruf 1
+			///////////////////////////////////////////////////////////////////////
+			
+			// Kein Recherche Aufruf, sondern direkte Nutzung mit RomName
+			_countScrapGame++;
+			// Loop verhindern
+			if (_countScrapGame > 4) // Max. vier Aufrufe: 1: romName direkt, 2: romname angepasst, 3: Recherche mit einem Treffer, 4: der ein Treffer
+			{
+				_countScrapGame++;
+				return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound); 
+			}
 			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(romFileName)}";
 			Trace.WriteLine(url);
 			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
@@ -210,30 +292,39 @@ namespace RetroScrap2000
 
 			if (!resp.IsSuccessStatusCode)
 			{
-				if (((int)resp.StatusCode) == 404 && body == "Erreur : Rom/Iso/Dossier non trouvée !  ")
+				// Nicht gefunden, wir versuchen einen anderen Namen, und dann rufen wir uns selbst als Recherche-Funktion auf.
+				if (((int)resp.StatusCode) == 404)
 				{
-					_countScrapGame++;
-					if (_countScrapGame >= 2)
+					string romname = CleanPrefix(romFileName);
+					if (string.Compare(romname, romFileName, StringComparison.OrdinalIgnoreCase) != 0)
 					{
-						_countScrapGame = 0;
-						return (true, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
-					}
-					else 
-					{
-						Trace.WriteLine("Unter dem Namen \"" + romFileName + "\" wurde kein Spiel gefunden. Versuche anderen Namen...");
-						string romname = CleanPrefix(romFileName);
+						Trace.WriteLine($"Unter dem Namen \"{romFileName}\" wurde kein Spiel gefunden. Versuche Name \"{romname}\"...");
+						// Aufruf 2
+						///////////////////////////////////////////////////////////////////////
 						return await GetGameAsync(romname, systemId, opt, ct);
 					}
+					else
+					{
+						// Aufruf 2 oder 3
+						///////////////////////////////////////////////////////////////////////
+						return await GetGameAsync(romFileName, systemId, opt, ct, UseRecherche: true);
+					}
+				}
+				else
+				{
+					_countScrapGame = 0;
+					return (ok: false, data: null, gameRechercheList: null, $"HTTP {(int)resp.StatusCode}: {body}");
 				}
 			}
+
 			// JSON?
 			var head = body.TrimStart();
 			if (!(head.StartsWith("{") || head.StartsWith("[")))
-				return (false, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
+				return (false, null, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
 
 			var root = System.Text.Json.JsonSerializer.Deserialize<GameRoot>(body, _jsonOpts);
 			var jeu = root?.response?.jeu;
-			if (jeu == null) return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
+			if (jeu == null) return (false, null, null, Properties.Resources.Txt_Log_Scrap_NoName);
 
 			var sg = new ScrapeGame();
 			sg.Id = jeu.romid;
@@ -308,8 +399,8 @@ namespace RetroScrap2000
 			// Medien
 			///////////////////////////////////////////////////////////////////////
 			SetMedia(jeu, sg, opt);
-			
-			return (true, sg, null);
+			_countScrapGame = 0;
+			return (ok: true, data: sg, gameRechercheList: null, null);
 		}
 
 		private void SetMedia(GameData jeu, ScrapeGame sg, RetroScrapOptions opt)
@@ -380,6 +471,8 @@ namespace RetroScrap2000
 				if (media == null && opt.Region != "eu" )
 					media = medien.FirstOrDefault(x => x.region != null && x.region == "eu"); // Default
 				if (media == null)
+					media = medien.FirstOrDefault(x => x.region != null && x.region == "wor");
+				if (media == null)
 					media = medien.FirstOrDefault();
 			}
 			return media?.url ?? string.Empty; 
@@ -405,7 +498,7 @@ namespace RetroScrap2000
 			return step3_Final;
 		}
 
-		public async Task ScrapGamesAsync(GameList gameList, int systemid, string baseDir,
+		public async Task ScrapGamesAsync(GameList gameList, bool onlyLocalMedias, int systemid, string baseDir,
 			IProgress<ProgressObj> progress, RetroScrapOptions opt, CancellationToken ct = default)
 		{
 			int iGesamt = gameList.Games.Count;
@@ -444,11 +537,11 @@ namespace RetroScrap2000
 					else if (result.data == null)
 					{
 						// 2. Versuch über Rom-Filename
-						string filename = Utils.GetNameFromFile(game.Path!);
+						string filename = Utils.GetNameFromFile(game.FileName!);
 						Trace.WriteLine($"--> await GetGameAsync \"{filename}\"");
 						result = await GetGameAsync(filename, gameList.RetroSys.Id, opt, ct);
 						// Ergebnis prüfen
-						if (!result.ok || result.data == null)
+						if (!result.ok || (result.data == null || result.gameRechercheList == null || result.gameRechercheList.Count == 0 ))
 						{
 							game.State = eState.NoData;
 							ProgressObj warning = new ProgressObj(iPerc, i + 1,
@@ -459,99 +552,81 @@ namespace RetroScrap2000
 						}
 					}
 					// Daten prüfen und übernehmen
+					if (result.gameRechercheList != null && result.gameRechercheList.Count > 1 )
+					{
+						game.State = eState.NoData;
+						ProgressObj warning = new ProgressObj(iPerc, i + 1,
+								game.Name!, Properties.Resources.Txt_Log_Scrap_MoreThenOneMatch);
+						warning.Typ = ProgressObj.eTyp.Warning;
+						progress.Report(warning);
+						continue;
+					}
+
+					var scrapgame = result.data;
 					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
-					if (!string.IsNullOrEmpty(result.data.Id) && int.TryParse(result.data.Id, out int id) && id > 0)
+					if (!string.IsNullOrEmpty(scrapgame.Id) && int.TryParse(scrapgame.Id, out int id) && id > 0)
 						game.Id = id;
-					game.Source = result.data.Source ?? "screenscraper.fr";
-					if (!string.IsNullOrEmpty(result.data.Description))
-						game.Description = Utils.DecodeTextFromApi(result.data.Description);
-					if (!string.IsNullOrEmpty(result.data.Developer))
-						game.Developer = result.data.Developer;
-					if (!string.IsNullOrEmpty(result.data.Genre))
-						game.Genre = result.data.Genre;
-					if (!string.IsNullOrEmpty(result.data.Name))
-						game.Name = result.data.Name;
-					if (!string.IsNullOrEmpty(result.data.Players))
-						game.Players = result.data.Players;
-					if (!string.IsNullOrEmpty(result.data.Publisher))
-						game.Publisher = result.data.Publisher;
-					if (result.data.RatingNormalized.HasValue && game.Rating <= 0)
-						game.Rating = result.data.RatingNormalized.Value;
-					if (result.data.ReleaseDate != null && result.data.ReleaseDate != DateTime.MinValue)
-						game.ReleaseDate = result.data.ReleaseDate;
+					game.Source = scrapgame.Source ?? "screenscraper.fr";
+					if (!string.IsNullOrEmpty(scrapgame.Description))
+						game.Description = Utils.DecodeTextFromApi(scrapgame.Description);
+					if (!string.IsNullOrEmpty(scrapgame.Developer))
+						game.Developer = scrapgame.Developer;
+					if (!string.IsNullOrEmpty(scrapgame.Genre))
+						game.Genre = scrapgame.Genre;
+					if (!string.IsNullOrEmpty(scrapgame.Name))
+						game.Name = scrapgame.Name;
+					if (!string.IsNullOrEmpty(scrapgame.Players))
+						game.Players = scrapgame.Players;
+					if (!string.IsNullOrEmpty(scrapgame.Publisher))
+						game.Publisher = scrapgame.Publisher;
+					if (scrapgame.RatingNormalized.HasValue && game.Rating <= 0)
+						game.Rating = scrapgame.RatingNormalized.Value;
+					if (scrapgame.ReleaseDate != null && scrapgame.ReleaseDate != DateTime.MinValue)
+						game.ReleaseDate = scrapgame.ReleaseDate;
 
 					game.State = eState.Scraped;
 
-					// Images vom Scraped-Objekt temporär laden
-					System.Drawing.Image? img = null;
-					string? absolutPath = null;
-					foreach (var kvp in result.data.MediaUrls)
+					if (!onlyLocalMedias)
 					{
-						// Wünscht der Anwender dieses Medium?
-						if (!opt.IsMediaTypeEnabled(kvp.Key) || string.IsNullOrEmpty(kvp.Value))
-							continue;
-						progress.Report(new ProgressObj(iPerc, i + 1,
-							game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + $" {kvp.Key.ToString()}..."));
+						// Images vom Scraped-Objekt temporär laden
+						System.Drawing.Image? img = null;
+						string? absolutPath = null;
 
-						if (ct.IsCancellationRequested)
+						foreach (var kvp in scrapgame.MediaUrls)
 						{
-							progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
-							Properties.Resources.Txt_Log_Scrap_CancelRequest));
-							break;
-						}
+							// Wünscht der Anwender dieses Medium?
+							if (!opt.IsMediaTypeEnabled(kvp.Key) || string.IsNullOrEmpty(kvp.Value))
+								continue;
+							progress.Report(new ProgressObj(iPerc, i + 1,
+								game.Name!, Properties.Resources.Txt_Log_Scrap_Loading + $" {kvp.Key.ToString()}..."));
 
-						var loadres = await Utils.LoadMediaAsync(kvp.Key, kvp.Value, baseDir, ct);
-						img = loadres.img;
-						absolutPath = loadres.absPath;
-						if (img == null || string.IsNullOrEmpty(absolutPath) || !File.Exists(absolutPath))
-						{
-							ProgressObj err = new ProgressObj(iPerc, i + 1,
-								game.Name!, $"Fail to load {kvp.Key.ToString()}!");
-							err.Typ = ProgressObj.eTyp.Error;
-							progress.Report(err);
-							continue;
-						}
-
-						// Wenn es kein Original gibt, dann einfach speichern
-						if (!game.MediaTypeDictionary.TryGetValue(kvp.Key, out string? oldRelPath)
-							|| string.IsNullOrEmpty(oldRelPath))
-						{
-							progress.Report(new ProgressObj(iPerc, i + 1, game.Name!, $"{Properties.Resources.Txt_Log_Scrap_New_Media} {kvp.Key.ToString()}."));
-							var res = FileTools.MoveOrCopyScrapFileRom(true,
-								game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
-							if (res.ok && !string.IsNullOrEmpty(res.file))
+							if (ct.IsCancellationRequested)
 							{
-								game.SetMediaPath(kvp.Key, res.file);
+								progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+								Properties.Resources.Txt_Log_Scrap_CancelRequest));
+								break;
 							}
-							else
+
+							var loadres = await Utils.LoadMediaAsync(kvp.Key, kvp.Value, baseDir, ct);
+							img = loadres.img;
+							absolutPath = loadres.absPath;
+							if (img == null || string.IsNullOrEmpty(absolutPath) || !File.Exists(absolutPath))
 							{
 								ProgressObj err = new ProgressObj(iPerc, i + 1,
-									game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Media_Move_Fail} {kvp.Key.ToString()}!");
+									game.Name!, $"Fail to load {kvp.Key.ToString()}!");
 								err.Typ = ProgressObj.eTyp.Error;
 								progress.Report(err);
-							}
-						}
-						else // Es gibt ein Original, also vergleichen
-						{
-							var identical = Utils.IsMediaIdentical(kvp.Key, absolutPath, oldRelPath, baseDir);
-							if (identical == true)
-							{
-								ProgressObj info = new ProgressObj(iPerc, i + 1,
-									game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Identical_Skip} {kvp.Key.ToString()}.");
-								info.Typ = ProgressObj.eTyp.Info;
-								progress.Report(info);
 								continue;
 							}
-							else if (identical == false)
-							{
-								ProgressObj info = new ProgressObj(iPerc, i + 1,
-									game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Different_Replace} {kvp.Key.ToString()}.");
-								info.Typ = ProgressObj.eTyp.Info;
-								progress.Report(info);
 
+							// Wenn es kein Original gibt, dann einfach speichern
+							if (!game.MediaTypeDictionary.TryGetValue(kvp.Key, out string? oldRelPath)
+								|| string.IsNullOrEmpty(oldRelPath))
+							{
+								progress.Report(new ProgressObj(iPerc, i + 1, game.Name!, $"{Properties.Resources.Txt_Log_Scrap_New_Media} {kvp.Key.ToString()}."));
 								var res = FileTools.MoveOrCopyScrapFileRom(true,
-									game.Name, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
+									game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
 								if (res.ok && !string.IsNullOrEmpty(res.file))
 								{
 									game.SetMediaPath(kvp.Key, res.file);
@@ -564,11 +639,49 @@ namespace RetroScrap2000
 									progress.Report(err);
 								}
 							}
-							else
+							else // Es gibt ein Original, also vergleichen
 							{
-								// Do ntohing
+								var identical = Utils.IsMediaIdentical(kvp.Key, absolutPath, oldRelPath, baseDir);
+								if (identical == true)
+								{
+									ProgressObj info = new ProgressObj(iPerc, i + 1,
+										game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Identical_Skip} {kvp.Key.ToString()}.");
+									info.Typ = ProgressObj.eTyp.Info;
+									progress.Report(info);
+									continue;
+								}
+								else if (identical == false)
+								{
+									ProgressObj info = new ProgressObj(iPerc, i + 1,
+										game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Different_Replace} {kvp.Key.ToString()}.");
+									info.Typ = ProgressObj.eTyp.Info;
+									progress.Report(info);
+
+									var res = FileTools.MoveOrCopyScrapFileRom(true,
+										game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key)}/");
+									if (res.ok && !string.IsNullOrEmpty(res.file))
+									{
+										game.SetMediaPath(kvp.Key, res.file);
+									}
+									else
+									{
+										ProgressObj err = new ProgressObj(iPerc, i + 1,
+											game.Name!, $"{Properties.Resources.Txt_Log_Scrap_Media_Move_Fail} {kvp.Key.ToString()}!");
+										err.Typ = ProgressObj.eTyp.Error;
+										progress.Report(err);
+									}
+								}
+								else
+								{
+									// Do ntohing
+								}
 							}
 						}
+					}
+					else
+					{
+						// Medien lokal suchen und zuordnen
+						var res = FileTools.SetLocalMediaFilesToGame(game, baseDir);
 					}
 				}
 				catch (Exception e)
@@ -615,14 +728,20 @@ namespace RetroScrap2000
 	{
 		public int id { get; set; }
 		public SystemNoms? noms { get; set; }
+		public string? extensions { get; set; }
 		public string? compagnie { get; set; }
 		public string? type { get; set; }
 		public string? datedebut { get; set; }
 		public string? datefin { get; set; }
+		public string? romtype { get; set; }
+		public string? supporttype { get; set; }
 		public SystemMediaEntry[]? medias { get; set; }
 
 		[System.Text.Json.Serialization.JsonIgnore]
-		public string? Name => noms?.nom_eu;
+		public string? Name_eu => noms?.nom_eu;
+		
+		[System.Text.Json.Serialization.JsonIgnore]
+		public string? Name_us => noms?.nom_us;
 
 		[System.Text.Json.Serialization.JsonIgnore]
 		public string? SystemRom => noms?.nom_recalbox;
@@ -933,6 +1052,14 @@ public sealed class ScrapeGame
 	};
 }
 
+public class GameRechercheRoot { public GameRechercheResponse? response { get; set; } }
+public class GameRechercheResponse
+{
+	public object? serveurs { get; set; }
+	public object? ssuser { get; set; }
+	public GameDataRecherce[]? jeux { get; set; }
+}
+
 public class GameRoot { public GameResponse? response { get; set; } }
 public class GameResponse
 {
@@ -952,11 +1079,49 @@ public class GameData
 	public RegTxtObj[]? dates { get; set; } 
 	public Medium[]? medias { get; set; }
 }
+
+public class GameDataRecherce
+{
+	public string? id { get; set; }
+	public RegTxtObj[]? noms { get; set; }
+	public IdText? systeme { get; set; }
+	public IdText? editeur { get; set; }
+	public IdText? developpeur { get; set; }
+	public TxtObj? joueurs { get; set; }
+	public string? topstaff { get; set; }
+	public string? rotation { get; set; }
+	public string? controles { get; set; }
+	public string? couleurs { get; set; }
+	public LangTextObj[]? synopsis { get; set; }
+	public RegTxtObj[]? dates { get; set; }
+	public Genre[]? genres { get; set; }
+	public Family[]? familles { get; set; }
+	public Medium[]? medias { get; set; }
+
+	public string? GetName(RetroScrapOptions opt)
+	{
+		if (noms != null)
+		{
+			var rrname = noms.FirstOrDefault(x => x.region != null && x.region == opt.Region);
+			if (rrname == null)
+				rrname = noms.FirstOrDefault(x => x.region != null && x.region.ToLower() == "wor");
+			if (rrname == null)
+				rrname = noms[0];
+
+			return rrname.text;
+		}
+
+		return null;
+	}
+
+}
+
 public class IdText { public string? id { get; set; } public string? text { get; set; } }
 public class RegTxtObj { public string? region { get; set; } public string? text { get; set; } }
 public class TxtObj { public string? text { get; set; } }
 public class Genre { public string? id { get; set; } public string? principale { get; set; } public LangTextObj[]? noms { get; set; } }
 public class Medium { public string? type { get; set; } public string? url { get; set; } public string? parent { get; set; } public string? region { get; set; } }
+public class Family { public string? id { get; set; } public string? nomcourt { get; set; } public string? principale { get; set; } public string? parentid { get; set; } public List<RegTxtObj>? noms { get; set; } }
 public class LangTextObj { public string? langue { get; set; } public string? text { get; set; } }
 
 
