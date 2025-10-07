@@ -26,6 +26,7 @@ namespace RetroScrap2000
 		private readonly ScrapeGame _scraped;
 		private readonly string _systemRomPath;
 		private readonly RetroScrapOptions _options;
+		private CancellationTokenSource? _romCts;
 
 		public ScrapeSelection Selection { get; } = new();
 		public StarRatingControl starRatingControlRomOld { get; set; } = new StarRatingControl();
@@ -71,7 +72,7 @@ namespace RetroScrap2000
 			panelLeft.AutoScroll = true; // Ermöglicht das Scrollen, wenn der Inhalt größer als der sichtbare Bereich ist
 			this.flowLayoutPanelMediaLeft.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
 			this.flowLayoutPanelMediaLeft.AutoScroll = false;
-			this.flowLayoutPanelMediaLeft.WrapContents = false; 
+			this.flowLayoutPanelMediaLeft.WrapContents = false;
 			this.flowLayoutPanelMediaLeft.AutoSize = false;      // **Muss True sein** -> Erlaubt es, horizontal über die Grenzen des Formulars hinauszuwachsen.
 			this.flowLayoutPanelMediaLeft.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
 
@@ -80,7 +81,7 @@ namespace RetroScrap2000
 			this.flowLayoutPanelMediaRight.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
 			this.flowLayoutPanelMediaRight.AutoScroll = false;
 			this.flowLayoutPanelMediaRight.WrapContents = false; // **Muss False sein**
-			this.flowLayoutPanelMediaRight.AutoSize = false;       
+			this.flowLayoutPanelMediaRight.AutoSize = false;
 			this.flowLayoutPanelMediaRight.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
 		}
 
@@ -104,6 +105,11 @@ namespace RetroScrap2000
 			else
 				textBoxRomOldRelease.Text = "";
 			starRatingControlRomOld.Rating = _current.RatingStars;
+
+			// laufende System-Ladevorgänge abbrechen
+			_romCts?.Cancel();
+			_romCts = new CancellationTokenSource();
+			var ct = _romCts.Token;
 
 			try
 			{
@@ -141,7 +147,12 @@ namespace RetroScrap2000
 						continue; // diese Media-Art ist nicht gewünscht
 					}
 
-					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, CancellationToken.None, true);
+					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, ct, true);
+					if (ct.IsCancellationRequested)
+					{
+						return;
+					}
+
 					flowLayoutPanelMediaRight.Controls.Add(control);
 				}
 				Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMediaRight);
@@ -159,10 +170,10 @@ namespace RetroScrap2000
 				// Media-Checkboxen: nur wenn rechts was da ist UND es ist anders als links
 				foreach (var control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
 				{
-					if (control != null 
-						&& control.MediaType != eMediaType.Unknown 
-						&& !string.IsNullOrEmpty(control.AbsolutPath) 
-						&& File.Exists(control.AbsolutPath) )
+					if (control != null
+						&& control.MediaType != eMediaType.Unknown
+						&& !string.IsNullOrEmpty(control.AbsolutPath)
+						&& File.Exists(control.AbsolutPath))
 					{
 						Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: false));
 						// Gibt es diese Media-Art in alt?
@@ -174,10 +185,9 @@ namespace RetroScrap2000
 					}
 				} // Next control
 			}
-			catch (OperationCanceledException)
+			catch (Exception ex)
 			{
-				// okay – wird vom Aufrufer gefangen
-				throw;
+				MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 			}
 			finally
 			{
@@ -197,10 +207,10 @@ namespace RetroScrap2000
 		private string? ConvertDateFormat(string dt)
 		{
 			// Parsen des Eingabe-Strings mit dem Format "dd.mm.yyyy"
-			if ( string.IsNullOrEmpty(dt))
+			if (string.IsNullOrEmpty(dt))
 				return null;
 
-			if ( DateTime.TryParseExact(dt, "dd.MM.yyyy", CultureInfo.InvariantCulture, 
+			if (DateTime.TryParseExact(dt, "dd.MM.yyyy", CultureInfo.InvariantCulture,
 				DateTimeStyles.None, out var parsedDate))
 			{
 				// Formatieren des DateTime-Objekts in das Zielformat "yyyyMMddT000000"
@@ -224,7 +234,7 @@ namespace RetroScrap2000
 			_scraped.Publisher = textBoxRomNewPub.Text.Trim();
 			_scraped.ReleaseDateRaw = ConvertDateFormat(textBoxRomNewRelease.Text.Trim());
 			_scraped.RatingNormalized = starRatingControlRomNew.Rating > 0.0 ? starRatingControlRomNew.Rating / 5.0 : 0.0;
-			
+
 			Selection.NewData = _scraped;
 			Selection.TakeName = checkBoxName.Checked;
 			Selection.TakeDesc = checkBoxDesc.Checked;
@@ -234,11 +244,11 @@ namespace RetroScrap2000
 			Selection.TakePub = checkBoxPub.Checked;
 			Selection.TakeRating = checkBoxRating.Checked;
 			Selection.TakeRelease = checkBoxRelease.Checked;
-			
-			foreach ( MediaPreviewControl control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
+
+			foreach (MediaPreviewControl control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
 			{
-				if (control.CheckBox.Checked 
-					&& !string.IsNullOrEmpty(control.AbsolutPath) 
+				if (control.CheckBox.Checked
+					&& !string.IsNullOrEmpty(control.AbsolutPath)
 					&& Selection.MediaTempPaths.ContainsKey(control.MediaType))
 				{
 					var tuple = Selection.MediaTempPaths[control.MediaType];
@@ -256,8 +266,36 @@ namespace RetroScrap2000
 			var control = new MediaPreviewControl();
 			control.MediaType = type;
 			control.DisplayMode = checkboxen ? MediaPreviewControl.ControlDisplayMode.Checkbox : MediaPreviewControl.ControlDisplayMode.None;
+
+			if (ct.IsCancellationRequested)
+				return control;
+
 			await control.LoadMediaAsync(url, baseDir, ct, false);
 			return control;
+		}
+
+		private void Cancel()
+		{
+			// laufende System-Ladevorgänge abbrechen
+			Trace.WriteLine("_romCts?.CancelAsync().Wait(2000);");
+			_romCts?.CancelAsync().Wait(2000);
+		}
+
+		private void buttonCancel_Click(object sender, EventArgs e)
+		{
+			Cancel();
+			this.DialogResult = DialogResult.Cancel;
+			this.Close();
+		}
+
+		private void FormScrapRom_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				e.Cancel = true;
+				Cancel();
+				e.Cancel = false;
+			}
 		}
 	}
 

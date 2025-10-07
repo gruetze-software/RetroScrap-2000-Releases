@@ -259,7 +259,7 @@
     <value>Ouvrez le menu principal dans EmulationStation et allez dans 'Paramètres de l'interface utilisateur'. Définissez l'option 'Parse Gamelists Only' sur OFF. Après ce réglage, EmulationStation affichera les données créées par cet outil comme d'habitude.</value>
   </data>
   <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer le fichier '{0}' avec les informations de Rome qui lui sont associées ?</value>
+    <value>Voulez-vous vraiment supprimer les fichiers listés ci-dessous ainsi que leurs informations ROM associées ?</value>
   </data>
   <data name="Txt_Splash_Loading" xml:space="preserve">
     <value>Chargement</value>
@@ -283,7 +283,7 @@
     <value>L'entrée n'a pas pu être supprimée du 'gamelist.xml'.</value>
   </data>
   <data name="Txt_Msg_Question_DeleteRomMultipleEntries" xml:space="preserve">
-    <value>Il existe plusieurs entrées pour ce ROM dans le 'gamelist.xml'. Appuyez sur 'Oui' pour supprimer toutes les entrées ainsi que le fichier ROM. Appuyez sur 'Non' pour supprimer uniquement l'entrée unique du 'gamelist.xml' sans supprimer le fichier.</value>
+    <value>Il y a {0} entrées dans le 'gamelist.xml' pour ce ROM. Appuyez sur 'Oui' pour supprimer toutes les entrées et le fichier ROM. Appuyez sur 'Non' pour ne supprimer que l'entrée unique du 'gamelist.xml' sans supprimer le fichier.</value>
   </data>
   <data name="Txt_Status_Label_CheckingMedia" xml:space="preserve">
     <value>Vérification des fichiers multimédias...</value>
@@ -344,5 +344,11 @@
   </data>
   <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
     <value>Il y a plus d'un résultat. Mettez à jour le ROM individuellement.</value>
+  </data>
+  <data name="Txt_Msg_Question_ClearSystem" xml:space="preserve">
+    <value>Cette fonction supprime les références aux fichiers qui n'existent plus. Cela rend le 'gamelist.xml' plus léger et plus rapide. Continuer ?</value>
+  </data>
+  <data name="Txt_Msg_Info_CleaningFinish" xml:space="preserve">
+    <value>Nettoyage réussi.</value>
   </data>
 </root>

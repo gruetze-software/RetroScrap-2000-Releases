@@ -53,8 +53,8 @@
 			// 
 			// listViewMonitor
 			// 
-			resources.ApplyResources(listViewMonitor, "listViewMonitor");
 			listViewMonitor.Columns.AddRange(new ColumnHeader[] { colTime, colTyp, colNr, colRom, colMsg });
+			resources.ApplyResources(listViewMonitor, "listViewMonitor");
 			listViewMonitor.FullRowSelect = true;
 			listViewMonitor.GridLines = true;
 			listViewMonitor.Name = "listViewMonitor";
@@ -116,6 +116,7 @@
 			Controls.Add(buttonStart);
 			Controls.Add(groupBox1);
 			Name = "FormScrapAuto";
+			FormClosing += FormScrapAuto_FormClosing;
 			Load += FormScrapAuto_Load;
 			groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).EndInit();

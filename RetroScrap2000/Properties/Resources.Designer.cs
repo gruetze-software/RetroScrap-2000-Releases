@@ -661,6 +661,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cleaning successful..
+        /// </summary>
+        internal static string Txt_Msg_Info_CleaningFinish {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Info_CleaningFinish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The language will be fully adopted after a restart. Would you like to restart the application now?.
         /// </summary>
         internal static string Txt_Msg_Opt_Language_Change {
@@ -751,11 +760,20 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Should the file &apos;{0}&apos; with the associated ROM information really be deleted?.
+        ///   Looks up a localized string similar to Do you really want to delete the files listed below along with their associated ROM information?.
         /// </summary>
         internal static string Txt_Msg_Qestion_DeleteRom {
             get {
                 return ResourceManager.GetString("Txt_Msg_Qestion_DeleteRom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This function removes references to files that no longer exist. This makes the &apos;gamelist.xml&apos; slimmer and faster. Continue?.
+        /// </summary>
+        internal static string Txt_Msg_Question_ClearSystem {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_ClearSystem", resourceCulture);
             }
         }
         
@@ -769,7 +787,7 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are multiple entries for this ROM in the &apos;gamelist.xml&apos;. Press &apos;Yes&apos; to remove all entries and the ROM file. Press &apos;No&apos; to remove only the single entry from the &apos;gamelist.xml&apos; without deleting the file..
+        ///   Looks up a localized string similar to There are {0} entries in the &apos;gamelist.xml&apos; for this ROM. Press &apos;Yes&apos; to remove all entries and the ROM file. Press &apos;No&apos; to remove only the single entry from the &apos;gamelist.xml&apos; without deleting the file..
         /// </summary>
         internal static string Txt_Msg_Question_DeleteRomMultipleEntries {
             get {

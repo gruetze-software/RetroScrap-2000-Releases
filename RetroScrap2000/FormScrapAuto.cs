@@ -22,7 +22,7 @@ namespace RetroScrap2000
 		public bool ScrapWasStarting { get; set; } = false;
 		private bool _isrunning = false;
 
-		public FormScrapAuto(GameList roms, ScrapperManager scrapper, 
+		public FormScrapAuto(GameList roms, ScrapperManager scrapper,
 			string basedir, RetroSystem system, RetroScrapOptions options)
 		{
 			InitializeComponent();
@@ -35,7 +35,7 @@ namespace RetroScrap2000
 
 		private void SetTitle(int index, int total)
 		{
-			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem, 
+			this.Text = string.Format(Properties.Resources.Txt_Scrap_Auto_Title_FromSystem,
 				index, total) + $" \"{Roms.RetroSys.Name_eu}\" ";
 		}
 
@@ -46,7 +46,7 @@ namespace RetroScrap2000
 			colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
 			colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 
-			
+
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
@@ -55,12 +55,14 @@ namespace RetroScrap2000
 			{
 				_scrapCts?.Cancel();
 				buttonStart.Text = "Start";
+				checkBoxOnlyLocal.Enabled = true;
 				_isrunning = false;
 				return;
 			}
 
 			this.pictureBoxAniWait.Image = Properties.Resources.joystickani;
 			buttonStart.Text = "Stop";
+			checkBoxOnlyLocal.Enabled = false;
 			_isrunning = true;
 
 			_scrapCts?.Cancel();
@@ -72,7 +74,7 @@ namespace RetroScrap2000
 			// Erstellen des Progress-Objekts. Die Action-Methode wird auf dem UI-Thread ausgeführt.
 			var progressHandler = new Progress<ProgressObj>(report =>
 			{
-				if (report.ProgressPerc > 0 && report.ProgressPerc <= 100 )
+				if (report.ProgressPerc > 0 && report.ProgressPerc <= 100)
 					progressBarScrap.Value = report.ProgressPerc;
 				if (!string.IsNullOrEmpty(report.MessageText))
 					AddProtokollItem(report);
@@ -82,16 +84,20 @@ namespace RetroScrap2000
 			{
 				ScrapWasStarting = true;
 				// Aufruf der asynchronen Methode und Übergabe des Progress-Objekts
-				await _scrapper.ScrapGamesAsync(Roms, checkBoxOnlyLocal.Checked, Roms.RetroSys.Id, _basedir, 
+				await _scrapper.ScrapGamesAsync(Roms, checkBoxOnlyLocal.Checked, Roms.RetroSys.Id, _basedir,
 					progressHandler, _options, ct);
 				// Speichern
 				AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGameList);
-				bool ok = await Task.Run(() =>
-						_system.SaveAllRomsToGamelistXml(
-								baseDir: _basedir,
-								roms: Roms.Games
-						)
-				);
+				bool ok = false;
+
+				foreach (var g in Roms.Games)
+					ok = await Task.Run(() => _system.SaveRomToGamelistXml(_basedir, g));
+				//bool ok = await Task.Run(() =>
+				//		_system.SaveAllRomsToGamelistXml(
+				//				baseDir: _basedir,
+				//				roms: Roms.Games
+				//		)
+				//);
 				if (ok)
 				{
 					AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGamelist_success);
@@ -111,8 +117,6 @@ namespace RetroScrap2000
 				this.pictureBoxAniWait.Image = null;
 				this.buttonStart.Text = "Start";
 			}
-
-
 		}
 
 		private void AddProtokollItem(ProgressObj report)
@@ -123,7 +127,7 @@ namespace RetroScrap2000
 			it.SubItems.Add(report.RomName);
 			it.SubItems.Add(report.MessageText);
 			it.ImageKey = report.Typ.ToString();
-			if ( report.Typ == ProgressObj.eTyp.Error )
+			if (report.Typ == ProgressObj.eTyp.Error)
 				it.ForeColor = Color.Red;
 			else if (report.Typ == ProgressObj.eTyp.Warning)
 				it.ForeColor = Color.Orange;
@@ -140,6 +144,19 @@ namespace RetroScrap2000
 		private void buttonStopp_Click(object sender, EventArgs e)
 		{
 			_scrapCts?.Cancel();
+			_scrapCts = new CancellationTokenSource();
+		}
+
+		private void FormScrapAuto_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				UseWaitCursor = true;
+				e.Cancel = true;
+				_scrapCts?.CancelAsync().Wait(2000);
+				e.Cancel = false;
+				UseWaitCursor = false;
+			}
 		}
 	}
 }

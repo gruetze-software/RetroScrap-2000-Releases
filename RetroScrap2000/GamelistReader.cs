@@ -1,4 +1,6 @@
 ﻿using RetroScrap2000;
+using RetroScrap2000.Tools;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Xml.Linq;
@@ -15,27 +17,44 @@ public class RomStatus
 
 public class GameManager
 {
+	public event EventHandler<LoadXmlActionEventArgs>? LoadXmlActionStart;
+	public event EventHandler<LoadXmlActionEventArgs>? LoadXmlActionEnde;
+
 	public Dictionary<string, GameList> SystemList { get; set; } = new Dictionary<string, GameList>();
 	public string? RomPath { get; set; }
-	public GameManager() { }
+	public GameListLoader Loader { get; set; }
+	public GameManager() 
+	{
+		Loader = new GameListLoader();
+	}
 
 	private void LoadSystem(string xmlpath, RetroSystem sys)
 	{
 		if ( string.IsNullOrEmpty(RomPath) )
 			throw new ApplicationException("RomPath is null!");
-
+		
 		var key = Directory.GetParent(xmlpath)!.Name;
+		LoadXmlActionStart?.Invoke(this, new LoadXmlActionEventArgs(sys));
+
+		// WICHTIG: Cache vor dem Laden leeren, falls die XML-Datei extern geändert wurde
+		// (obwohl die Cache-Logik dies prüft, ist es hier gut, vor einem Ladevorgang sicher zu sein).
+		GameListXmlCache.ClearCache();
+
 		// Die Load-Methode liefert immer eine GameList zurück, auch wenn die XML-Datei nicht existiert oder leer ist.
-		var loadresult = GameListLoader.Load(xmlpath, sys);
+		var loadresult = Loader.Load(xmlpath, sys);
 		GameList gl = loadresult.Games;
+
 		if (gl.Games.Count > 0)
 			SystemList.Add(key, gl);
+		
 		if (loadresult.HasChanges && gl.Games.Count > 0)
 		{
 			Trace.WriteLine("" + sys.Name_eu + ": Änderungen in der gamelist.xml erkannt. Save...");
-			// Es gab Änderungen, also speichern wir die aktualisierte Liste zurück in die XML-Datei.
 			sys.SaveAllRomsToGamelistXml(RomPath, gl.Games);
+			// KRITISCH: Den Cache leeren, da die Datei auf der Platte geändert wurde!
+			GameListXmlCache.ClearCache();
 		}
+		LoadXmlActionEnde?.Invoke(this, new LoadXmlActionEventArgs(sys));
 	}
 
 	public RetroSystem? GetSystemById(int id)
@@ -78,11 +97,16 @@ public class GameManager
 	}
 }
 
-public static class GameListLoader
+public class GameListLoader
 {
+	public GameListLoader()
+	{
+		
+	}
+
 	private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
 
-	private static string NormalizeRelativePath(string path)
+	public static string NormalizeRelativePath(string path)
 	{
 		if (string.IsNullOrEmpty(path))
 			return string.Empty;
@@ -114,18 +138,17 @@ public static class GameListLoader
 	public static bool DeleteGame(string xmlPath, GameEntry rom, bool deleteAllReferences = false)
 	{
 		// Sicherstellen, dass die XML-Datei existiert.
-		if (!File.Exists(xmlPath) || string.IsNullOrEmpty(rom.Path) )
+		if (!File.Exists(xmlPath) || string.IsNullOrEmpty(rom.Path))
 		{
 			return false;
 		}
 
 		// Stellen Sie sicher, dass das Lock-Objekt verfügbar ist.
-		// Falls es in einer anderen Klasse liegt, muss es entsprechend referenziert werden.
 		lock (_xmlFileLock)
 		{
 			try
 			{
-				// XML-Dokument laden.
+				// MUSS HIER GELADEN WERDEN, da wir den XML-Baum modifizieren und speichern.
 				XDocument doc = XDocument.Load(xmlPath);
 				var root = doc.Element("gameList");
 				if (root == null)
@@ -133,84 +156,97 @@ public static class GameListLoader
 					return false;
 				}
 
-				// Prüfen, ob die Datei mehrfach vorhanden ist
+				// Normalisiere den Pfad einmal für alle Vergleiche
 				string normalizedRomPath = NormalizeRelativePath(rom.Path);
-				// Prüfen, ob die Datei mehrfach vorhanden ist
+				bool changesMade = false;
+
+				// --- 1. Prüfen und Löschen aller Duplikate (wenn deleteAllReferences = true) ---
+
 				var duplicates = root.Elements("game")
 						.Where(g =>
 						{
-							var pathElem = g.Element("path");
-							if (pathElem == null)
-							{
-								return false;
-							}
+							string? xmlPathValue = g.Element("path")?.Value;
+							if (xmlPathValue == null) return false;
 
-							// Normalisiere den Pfad aus der XML
-							string normalizedXmlPath = NormalizeRelativePath(pathElem.Value);
-
-							// Führe den Vergleich mit den bereinigten Werten durch
+							string normalizedXmlPath = NormalizeRelativePath(xmlPathValue);
 							return normalizedXmlPath.Equals(normalizedRomPath, StringComparison.OrdinalIgnoreCase);
 						})
 						.ToList();
 
-				if (deleteAllReferences)
+				if (deleteAllReferences && duplicates.Count > 1)
 				{
-					if (duplicates.Count > 1)
+					Trace.WriteLine($"Warnung: Mehrere Einträge ({duplicates.Count}) mit dem Pfad '{rom.Path}' gefunden. Lösche alle...");
+					foreach (var dup in duplicates)
 					{
-						Trace.WriteLine($"Warnung: Mehrere Einträge ({duplicates.Count}) mit dem Pfad '{rom.Path}' in der gamelist.xml " +
-							"gefunden. Versuche, alle Einträge zu löschen.");
-						foreach (var dup in duplicates)
-						{
-							dup.Remove();
-						}
-						doc.Save(xmlPath);
-						return true;
+						dup.Remove();
+						changesMade = true;
 					}
 				}
 
-				// Finden Sie das <game>-Element mit dem passenden <path>-Tag.
+				// Wenn alle Referenzen gelöscht wurden, speichern wir und beenden die Methode.
+				if (changesMade)
+				{
+					doc.Save(xmlPath);
+					
+					// Cache inkrementell aktualisieren, nicht komplett löschen!
+					// Wir müssen wissen, wie oft gelöscht wurde.
+					int deletedCount = deleteAllReferences ? duplicates.Count : 1;
+					for (int i = 0; i < deletedCount; i++)
+					{
+						GameListXmlCache.DecrementEntryCount(xmlPath, rom.Path);
+					}
+
+					// Falls nur ein spezifischer Eintrag gelöscht wurde:
+					// GameListXmlCache.DecrementEntryCount(xmlPath, rom.Path);
+
+					return true;
+				}
+
+				// --- 2. Finden und Löschen des spezifischen Eintrags (mit zusätzlichen Kriterien) ---
+
+				// Wir verwenden FirstOrDefault nur, wenn deleteAllReferences FALSE ist.
 				var gameToDelete = root.Elements("game")
 						.FirstOrDefault(g =>
 						{
 							// 1. Pfad aus XML extrahieren und normalisieren
-							string? xmlPath = g.Element("path")?.Value;
-							string normalizedXmlPath = NormalizeRelativePath(xmlPath!);
+							string? xmlPathValue = g.Element("path")?.Value;
+							string normalizedXmlPath = NormalizeRelativePath(xmlPathValue!);
 
-							// 2. Vergleich
-							bool pathMatches = normalizedXmlPath == normalizedRomPath;
+							// 2. Vergleich des Pfades
+							if (normalizedXmlPath != normalizedRomPath) return false;
 
-							// 3. Optional: Wenn der Pfad nicht übereinstimmt, sofort false zurückgeben
-							if (!pathMatches) return false;
-
-							// 4. Zusätzliche Kriterien (nur prüfen, wenn Pfad übereinstimmt)
+							// 3. Zusätzliche Kriterien (nur prüfen, wenn Pfad übereinstimmt)
 							return g.Element("name")?.Value == rom.Name
-									&& g.Element("developer")?.Value == rom.Developer
-									&& g.Element("publisher")?.Value == rom.Publisher
-									// Hinweis: Bei releasedate/genre/etc. können ebenfalls Formatierungsprobleme auftreten,
-									// wenn diese nicht standardisiert gespeichert werden.
-									&& g.Element("genre")?.Value == rom.Genre
-									&& g.Element("releasedate")?.Value == rom.ReleaseDateRaw
-									;
+													&& g.Element("developer")?.Value == rom.Developer
+													&& g.Element("publisher")?.Value == rom.Publisher
+													&& g.Element("genre")?.Value == rom.Genre
+													&& g.Element("releasedate")?.Value == rom.ReleaseDateRaw;
 						});
 
 				if (gameToDelete != null)
 				{
 					// Das Element aus dem Baum entfernen.
 					gameToDelete.Remove();
+					changesMade = true;
+				}
 
+				if (changesMade)
+				{
 					// Die Änderungen in der XML-Datei speichern.
 					doc.Save(xmlPath);
+					// KRITISCH: Den Cache leeren!
+					GameListXmlCache.ClearCache();
 					return true;
 				}
 				else
 				{
-					// Eintrag wurde nicht gefunden. Das ist okay, da vermutlich nur das File gelöscht werden soll.
+					// Eintrag wurde nicht gefunden. Das ist okay.
 					return true;
 				}
 			}
-			catch
+			catch (Exception ex)
 			{
-				// Fehler beim Laden oder Speichern.
+				Trace.WriteLine($"Fehler beim Löschen oder Speichern der XML: {ex.Message}");
 				return false;
 			}
 		}
@@ -218,50 +254,14 @@ public static class GameListLoader
 
 	public static int GetNumbersOfEntriesInXml(string xmlPath, GameEntry rom)
 	{
-		// Sicherstellen, dass die XML-Datei existiert.
-		if (!File.Exists(xmlPath))
+		// Sicherheitsprüfung, ob der Pfad der ROM überhaupt vorhanden ist
+		if (string.IsNullOrEmpty(rom.Path))
 		{
 			return 0;
 		}
 
-		// Stellen Sie sicher, dass das Lock-Objekt verfügbar ist.
-		// Falls es in einer anderen Klasse liegt, muss es entsprechend referenziert werden.
-		lock (_xmlFileLock)
-		{
-			try
-			{
-				// XML-Dokument laden.
-				XDocument doc = XDocument.Load(xmlPath);
-				var root = doc.Element("gameList");
-				if (root == null)
-				{
-					return 0;
-				}
-
-				// Prüfen, wie oft die Datei über den NORMALISIERTEN Pfad vorhanden ist.
-				string normalizedRomPath = NormalizeRelativePath(rom.Path!);
-				var duplicates = root.Elements("game")
-						.Where(g =>
-						{
-							// 1. Pfad aus XML extrahieren
-							string? xmlPath = g.Element("path")?.Value;
-
-							// 2. Den XML-Pfad normalisieren
-							string normalizedXmlPath = NormalizeRelativePath(xmlPath!);
-
-							// 3. Den normalisierten Pfad mit dem normalisierten Zielpfad vergleichen
-							return normalizedXmlPath == normalizedRomPath;
-						})
-						.ToList();
-
-					return duplicates.Count;
-			}
-			catch
-			{
-				// Fehler beim Laden
-				return 0;
-			}
-		}
+		// Übergabe an die Cache-Methode. Diese ist schnell, da sie den Index nutzt.
+		return GameListXmlCache.GetNumbersOfEntriesInXmlCached(xmlPath, rom.Path);
 	}
 
 	public static List<IGrouping<string, XElement>>? GetDuplicates(string xmlPath)
@@ -303,50 +303,124 @@ public static class GameListLoader
 		}
 	}
 
-	public static bool CleanGamelistXml(string xmlPath)
+	/// <summary>
+	/// Bereinigt die gamelist.xml, indem Einträge entfernt werden, deren ROM- oder Mediendateien nicht mehr existieren.
+	/// </summary>
+	/// <param name="xmlPath">Der vollständige Pfad zur gamelist.xml.</param>
+	/// <param name="romDirectory">Das Basisverzeichnis der ROMs (normalerweise das übergeordnete Verzeichnis der XML-Datei).</param>
+	/// <returns>True, wenn Änderungen vorgenommen und gespeichert wurden, andernfalls false.</returns>
+	public static (int anzRomDelete, int anzMediaDelete) CleanGamelistXmlByExistence(string xmlPath)
 	{
-		if (!File.Exists(xmlPath) )
+		if (!File.Exists(xmlPath))
 		{
-			return false;
+			return (0 ,0);
 		}
 
-		var duplicates = GetDuplicates(xmlPath);
-		if ( duplicates == null || duplicates.Count == 0)
-			return false;
-
-		try
+		var romDirectory = Path.GetDirectoryName(xmlPath);
+		if (string.IsNullOrEmpty(romDirectory) || !Directory.Exists(romDirectory))
 		{
-			// XML-Dokument laden
-			XDocument doc = XDocument.Load(xmlPath);
-			var root = doc.Element("gameList");
-			if (root == null)
-			{
-				return false;
-			}
+			Trace.WriteLine("Fehler: Das ROM-Verzeichnis konnte nicht gefunden werden.");
+			return (0, 0); 
+		}
 
-			// Alle doppelten Einträge entfernen und nur den ersten behalten
-			foreach (var group in duplicates)
+		// Lock-Objekt ist erforderlich, da wir mit der Datei arbeiten.
+		lock (_xmlFileLock)
+		{
+			try
 			{
-				// Alle doppelten Einträge entfernen
-				foreach (var element in group.Skip(1))
+				XDocument doc = XDocument.Load(xmlPath);
+				var root = doc.Element("gameList");
+				if (root == null)
+				{
+					return (0, 0);
+				}
+
+				bool changesMade = false;
+				int anzRoms = 0;
+				int anzMedia = 0;
+				// Eine Liste, um die zu entfernenden Elemente zu sammeln
+				List<XElement> elementsToRemove = new List<XElement>();
+
+				foreach (var gameElement in root.Elements("game"))
+				{
+					// --- A. Existenz der ROM-Datei prüfen (im <path>-Tag) ---
+					var pathElement = gameElement.Element("path");
+					if (pathElement != null && !string.IsNullOrEmpty(pathElement.Value))
+					{
+						// Relativen Pfad (aus XML) zu einem absoluten Pfad auflösen
+						string? absoluteRomPath = FileTools.ResolveMediaPath(romDirectory, pathElement.Value);
+
+						if (!File.Exists(absoluteRomPath))
+						{
+							Trace.WriteLine($"Entferne Eintrag, da ROM-Datei nicht existiert: {pathElement.Value}");
+							elementsToRemove.Add(gameElement);
+							anzRoms++;
+							changesMade = true;
+							continue; // Gehe zum nächsten Game-Eintrag, wenn ROM fehlt
+						}
+					}
+
+					// --- B. Existenz der Mediendateien prüfen (z.B. <image>, <video>) ---
+
+					// Wir nehmen an, dass NUR gelöscht wird, wenn die ROM fehlt. 
+					// Wenn jedoch ALLE Mediendateien fehlen und die ROM existiert, soll nur das Media-Tag entfernt werden.
+
+					var imageElement = gameElement.Element("image");
+					if (imageElement != null && !string.IsNullOrEmpty(imageElement.Value))
+					{
+						string? absoluteImagePath = FileTools.ResolveMediaPath(romDirectory, imageElement.Value);
+						if (!File.Exists(absoluteImagePath))
+						{
+							imageElement.Remove();
+							changesMade = true;
+							anzMedia++;
+							Trace.WriteLine($"Entferne <image>-Tag für {gameElement.Element("name")?.Value}, da Mediendatei fehlt.");
+						}
+					}
+
+					var videoElement = gameElement.Element("video");
+					if (videoElement != null && !string.IsNullOrEmpty(videoElement.Value))
+					{
+						string? absoluteVideoPath = FileTools.ResolveMediaPath(romDirectory, videoElement.Value);
+						if (!File.Exists(absoluteVideoPath))
+						{
+							videoElement.Remove();
+							changesMade = true;
+							anzMedia++;
+							Trace.WriteLine($"Entferne <video>-Tag für {gameElement.Element("name")?.Value}, da Mediendatei fehlt.");
+						}
+					}
+
+					// Fügen Sie hier weitere Mediendateien (z.B. <manual>) hinzu.
+				}
+
+				// Alle gesammelten Elemente aus dem XML-Baum entfernen
+				foreach (var element in elementsToRemove)
 				{
 					element.Remove();
 				}
-			}
 
-			// Die bereinigte XML-Datei speichern
-			doc.Save(xmlPath);
-			return true;
-		}
-		catch (Exception ex)
-		{
-			// Fehlerbehandlung, falls das Laden der XML fehlschlägt
-			// Sie können hier eine Meldung loggen
-			Trace.WriteLine($"Fehler beim Bereinigen der XML-Datei: {Utils.GetExcMsg(ex)}");
-			return false;
+				if (changesMade)
+				{
+					doc.Save(xmlPath);
+
+					// KRITISCH: Den Cache leeren, da die Datei geändert wurde!
+					GameListXmlCache.ClearCache();
+
+					return (anzRomDelete: anzRoms, anzMediaDelete: anzMedia);
+				}
+
+				return (0, 0); // Keine Änderungen vorgenommen
+			}
+			catch (Exception ex)
+			{
+				Trace.WriteLine($"Fehler beim Bereinigen der XML: {ex.Message}");
+				return (0, 0);
+			}
 		}
 	}
-	public static (GameList Games, bool HasChanges) Load(string? xmlPath, RetroSystem? system)
+
+	public (GameList Games, bool HasChanges) Load(string? xmlPath, RetroSystem? system)
 	{
 		if (string.IsNullOrEmpty(xmlPath) || system == null)
 			return (new GameList(), false);
@@ -364,10 +438,14 @@ public static class GameListLoader
 
 		bool hasChanges = false;
 		// Schritt 1: Versuchen, die gamelist.xml zu laden
+		
 		try
 		{
 			if (File.Exists(xmlPath))
 			{
+				// Erstmal bereinigen TODO: Das dauert ewig und sollte als extra Methode auf der GUI sein
+				// Vielleicht als "Experten-Tab" iun den Optionenß
+				//CleanGamelistXmlByExistence(xmlPath);
 				var serializer = new XmlSerializer(typeof(GameList));
 				using var fs = new FileStream(xmlPath, FileMode.Open);
 				loadedList = (GameList)serializer.Deserialize(fs)!;
@@ -385,8 +463,9 @@ public static class GameListLoader
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Fehler beim Laden der XML: {ex.Message}");
+			Trace.WriteLine($"Fehler beim Laden der XML: {Utils.GetExcMsg(ex)}");
 			loadedList = new GameList { RetroSys = system }; // Leere Liste bei Fehler
+			
 		}
 
 		// Definieren der Dateierweiterungen, die ausgeschlossen werden 
@@ -397,7 +476,7 @@ public static class GameListLoader
 		};
 
 		// Schritt 2: Scannen des Dateisystems und Ausschließen von Dateien
-		var existingRomsOnDisk = Directory.EnumerateFiles(romDirectory, "*.*", SearchOption.AllDirectories)
+		var existingRomsOnDisk = Directory.EnumerateFiles(romDirectory, "*.*", SearchOption.TopDirectoryOnly)
 				.Where(filePath => !excludedExtensions.Contains(Path.GetExtension(filePath)))
 				.ToList();
 
@@ -441,204 +520,19 @@ public static class GameListLoader
 		// Sortieren Sie die gesamte Liste nach dem Dateinamen
 		loadedList.Games.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
 		Trace.WriteLine("Load success " + system.Name_eu + ": Gesamtanzahl der Einträge in der gamelist.xml: " + loadedList.Games.Count);
+
 		return (loadedList, hasChanges);
 	}
 }
 
-[XmlRoot("gameList")]
-public class GameList
+public class LoadXmlActionEventArgs : EventArgs
 {
-	[XmlIgnore]
-	public RetroSystem RetroSys { get; set; } = new();
+	public RetroSystem? System { get; }
 
-	[XmlElement("game")]
-	public List<GameEntry> Games { get; set; } = new();
-	
+	public LoadXmlActionEventArgs(RetroSystem sys)
+	{
+		System = sys;
+	}
 }
 
-public enum eState : byte
-{
-	None = 0,
-	NoData,
-	Scraped,
-	Error
-};
-
-[XmlRoot("game")]
-public class GameEntry
-{
-	[XmlIgnore]
-	public int RetroSystemId { get; set; } = -1;
-
-	[XmlIgnore]
-	public string? FileName { get { if (string.IsNullOrEmpty(Path)) return null; else return System.IO.Path.GetFileName(Path); } }
-
-	[XmlIgnore]
-	public eState State { get; set; } = eState.None;
-
-	[XmlAttribute("id")]
-	public int Id { get; set; }
-
-	[XmlAttribute("source")]
-	public string? Source { get; set; }
-
-	[XmlElement("path")]
-	public string? Path { get; set; }
-
-	[XmlElement("name")]
-	public string? Name { get; set; }
-
-	[XmlElement("desc")]
-	public string? Description { get; set; }
-
-	[XmlElement("rating")]
-	public double Rating { get; set; }
-
-	[XmlIgnore]
-	public double RatingStars { get => ( Rating > 0.0 && Rating <= 1.0 ? Rating * 5.0 : 0.0 ); }  // nur lesend: 0..5
-																																			
-
-	[XmlElement("releasedate")]
-	public string? ReleaseDateRaw { get; set; }
-
-	[XmlIgnore]
-	public DateTime? ReleaseDate
-	{
-		get
-		{
-			if (DateTime.TryParseExact(
-							ReleaseDateRaw,
-							"yyyyMMdd'T'HHmmss",
-							null,
-							System.Globalization.DateTimeStyles.None,
-							out var dt))
-				return dt;
-			else if ( int.TryParse(ReleaseDateRaw, out int year ) && year > 1900 && year < 3000 )
-			return new DateTime(year, 1, 1);
-			else
-				return null;
-		}
-		set
-		{
-			ReleaseDateRaw = value.HasValue
-					? value.Value.ToString("yyyyMMdd'T'HHmmss", CultureInfo.InvariantCulture)
-					: null;
-		}
-	}
-
-	[XmlElement("developer")]
-	public string? Developer { get; set; }
-
-	[XmlElement("publisher")]
-	public string? Publisher { get; set; }
-
-	[XmlElement("genre")]
-	public string? Genre { get; set; }
-
-	[XmlElement("players")]
-	public string? Players { get; set; }
-
-	[XmlElement("image")]
-	public string? MediaImageBoxPath { get; set; }
-
-	[XmlElement("video")]
-	public string? MediaVideoPath { get; set; }
-	[XmlElement("marquee")]
-	public string? MediaMarqueePath { get; set; }
-
-	[XmlElement("fanart")]
-	public string? MediaFanArtPath { get; set; }
-	[XmlElement("screenshot")]
-	public string? MediaScreenshotPath { get; set; }
-	[XmlElement("wheel")]
-	public string? MediaWheelPath { get; set; }
-	[XmlElement("manual")]
-	public string? MediaManualPath { get; set; }
-	[XmlElement("map")]
-	public string? MediaMapPath { get; set; }
-
-
-	/// <summary>
-	/// Liefert den relativen Pfad zum Preview-JPG für ein Video. 
-	/// </summary>
-	/// <param name="relVideoPath"></param>
-	/// <returns></returns>
-	public static string? GetMediaVideoPreviewImagePath(string relVideoPath)
-	{
-		if (string.IsNullOrEmpty(relVideoPath))
-			return null;
-
-		// Absoluten Pfad zum Video bauen
-		var videoPath = relVideoPath.TrimStart('.', '/', '\\');
-
-		// Verzeichnis des Videos
-		var dir = System.IO.Path.GetDirectoryName(videoPath);
-		if (string.IsNullOrEmpty(dir))
-			return null;
-
-		// Dateiname ohne .mp4
-		var baseName = Utils.GetNameFromFile(videoPath);
-
-		// Vorschau-Dateiname anhängen
-		return System.IO.Path.Combine(dir, baseName + "_preview.jpg");
-	}
-
-	
-	[XmlElement("genreid")]
-	public int GenreId { get; set; }
-
-	[XmlIgnore]
-	public Dictionary<eMediaType, string?> MediaTypeDictionary 
-	{
-		get 
-		{
-			return new Dictionary<eMediaType, string?>()
-			{
-				{ eMediaType.BoxImage, this.MediaImageBoxPath },
-				{ eMediaType.Screenshot, this.MediaScreenshotPath },
-				{ eMediaType.Fanart, this.MediaFanArtPath },
-				{ eMediaType.Marquee, this.MediaMarqueePath },
-				{ eMediaType.Manual, this.MediaManualPath },
-				{ eMediaType.Map, this.MediaMapPath },
-				{ eMediaType.Video, this.MediaVideoPath },
-				{ eMediaType.Wheel, this.MediaWheelPath }
-			};
-		} 
-	}
-
-	public void SetMediaPath(eMediaType type, string? path)
-	{
-		switch ( type )
-		{
-			case eMediaType.BoxImage:
-				this.MediaImageBoxPath = path;
-				break;
-			case eMediaType.Screenshot:
-				this.MediaScreenshotPath = path;
-				break;
-			case eMediaType.Fanart:
-				this.MediaFanArtPath = path;
-				break;
-			case eMediaType.Marquee:
-				this.MediaMarqueePath = path;
-				break;
-			case eMediaType.Manual:
-				this.MediaManualPath = path;
-				break;
-			case eMediaType.Map:
-				this.MediaMapPath = path;
-				break;
-			case eMediaType.Video:
-				this.MediaVideoPath = path;
-				break;
-			case eMediaType.Wheel:
-				this.MediaWheelPath = path;
-				break;
-			default:
-			Debug.Assert(false, "Unbekannter Medientyp");
-				break;
-		}
-	}
-
-}
 

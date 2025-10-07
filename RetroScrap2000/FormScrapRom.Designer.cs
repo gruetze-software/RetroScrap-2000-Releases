@@ -219,6 +219,7 @@
 			resources.ApplyResources(buttonCancel, "buttonCancel");
 			buttonCancel.Name = "buttonCancel";
 			buttonCancel.UseVisualStyleBackColor = true;
+			buttonCancel.Click += buttonCancel_Click;
 			// 
 			// buttonOK
 			// 
@@ -378,6 +379,7 @@
 			Controls.Add(buttonCancel);
 			MinimizeBox = false;
 			Name = "FormScrapRom";
+			FormClosing += FormScrapRom_FormClosing;
 			Load += FormScrapRom_Load;
 			groupBox1.ResumeLayout(false);
 			tableLayoutPanelGroupboxRight.ResumeLayout(false);

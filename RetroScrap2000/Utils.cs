@@ -75,7 +75,7 @@ namespace RetroScrap2000
 			return (int)((current / (double)total) * 100);
 		}
 
-		public static string GetNameFromFile(string filePath)
+		public static string GetNameFromFile(string? filePath)
 		{
 			// Liefert den Dateinamen OHNE Erweiterung zurück.
 			// Path.GetFileNameWithoutExtension() kann das auch, aber bei

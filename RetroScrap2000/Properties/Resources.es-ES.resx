@@ -259,7 +259,7 @@
     <value>Abre el menú principal en EmulationStation y ve a 'Configuraciones de UI'.Configura la opción 'Parse Gamelists Only' en DESACTIVADO. Después de este ajuste, EmulationStation mostrará los datos creados por esta herramienta como de costumbre.</value>
   </data>
   <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
-    <value>¿Realmente se debería eliminar el archivo '{0}' con la información relacionada de Rom?</value>
+    <value>¿Realmente quieres eliminar los archivos listados a continuación junto con su información ROM asociada?</value>
   </data>
   <data name="Txt_Splash_Loading" xml:space="preserve">
     <value>Cargando</value>
@@ -283,7 +283,7 @@
     <value>No se pudo eliminar la entrada del 'gamelist.xml'.</value>
   </data>
   <data name="Txt_Msg_Question_DeleteRomMultipleEntries" xml:space="preserve">
-    <value>Hay múltiples entradas para este ROM en el 'gamelist.xml'. Presiona 'Sí' para eliminar todas las entradas y el archivo ROM. Presiona 'No' para eliminar solo una entrada del 'gamelist.xml' sin borrar el archivo.</value>
+    <value>Hay {0} entradas en el 'gamelist.xml' para este ROM. Presiona 'Sí' para eliminar todas las entradas y el archivo ROM. Presiona 'No' para eliminar solo la entrada individual del 'gamelist.xml' sin borrar el archivo.</value>
   </data>
   <data name="Txt_Status_Label_CheckingMedia" xml:space="preserve">
     <value>Comprobando archivos multimedia...</value>
@@ -344,5 +344,11 @@
   </data>
   <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
     <value>Hay más de un resultado. Actualiza el ROM individualmente.</value>
+  </data>
+  <data name="Txt_Msg_Question_ClearSystem" xml:space="preserve">
+    <value>Esta función elimina las referencias a archivos que ya no existen. Esto hace que 'gamelist.xml' sea más ligero y rápido. ¿Continuar?</value>
+  </data>
+  <data name="Txt_Msg_Info_CleaningFinish" xml:space="preserve">
+    <value>Limpieza exitosa.</value>
   </data>
 </root>

@@ -233,7 +233,10 @@ namespace RetroScrap2000
 			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
 		{
 			if (string.IsNullOrEmpty(romFileName))
+			{
+				_countScrapGame = 0;
 				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
+			}
 
 			if (UseRecherche)
 			{
@@ -243,7 +246,10 @@ namespace RetroScrap2000
 				if (recherche.ok)
 				{
 					if (recherche.possibleGames == null || recherche.possibleGames.Count == 0)
+					{
+						_countScrapGame = 0;
 						return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
+					}
 					// Es gab nur einen Treffer, den ziehen wir uns
 					if (recherche.possibleGames.Count == 1)
 					{
@@ -251,6 +257,7 @@ namespace RetroScrap2000
 						string? name = r.GetName(opt);
 						if (string.IsNullOrEmpty(name))
 						{
+							_countScrapGame = 0;
 							return (false, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
 						}
 						else
@@ -264,12 +271,14 @@ namespace RetroScrap2000
 					else
 					{
 						// Mehr als ein Treffer, wir liefern alle Treffer zurück
+						_countScrapGame = 0;
 						return ( ok: true, data: null, gameRechercheList: recherche.possibleGames, error: null);
 					}
 
 				}
 				else
 				{
+					_countScrapGame = 0;
 					return (ok: false, data: null, gameRechercheList: null, recherche.error);
 				}
 			}
@@ -282,7 +291,7 @@ namespace RetroScrap2000
 			// Loop verhindern
 			if (_countScrapGame > 4) // Max. vier Aufrufe: 1: romName direkt, 2: romname angepasst, 3: Recherche mit einem Treffer, 4: der ein Treffer
 			{
-				_countScrapGame++;
+				_countScrapGame = 0;
 				return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound); 
 			}
 			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(romFileName)}";
@@ -320,12 +329,17 @@ namespace RetroScrap2000
 			// JSON?
 			var head = body.TrimStart();
 			if (!(head.StartsWith("{") || head.StartsWith("[")))
+			{
+				_countScrapGame = 0;
 				return (false, null, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
-
+			}
 			var root = System.Text.Json.JsonSerializer.Deserialize<GameRoot>(body, _jsonOpts);
 			var jeu = root?.response?.jeu;
-			if (jeu == null) return (false, null, null, Properties.Resources.Txt_Log_Scrap_NoName);
-
+			if (jeu == null)
+			{
+				_countScrapGame = 0;
+				return (false, null, null, Properties.Resources.Txt_Log_Scrap_NoName);
+			}
 			var sg = new ScrapeGame();
 			sg.Id = jeu.romid;
 			
@@ -1112,6 +1126,45 @@ public class GameDataRecherce
 		}
 
 		return null;
+	}
+
+	public string? GetDesc(RetroScrapOptions opt)
+	{
+		string? retVal = null;
+		if (synopsis != null && synopsis.Length > 0)
+		{
+			var desc = synopsis.FirstOrDefault(x => x.langue != null && x.langue.ToLower() == opt.GetLanguageShortCode());
+			if (desc != null)
+			{
+				retVal = desc.text;
+			}
+			else
+			{
+				// Default ist englisch
+				desc = synopsis.FirstOrDefault(x => x.langue != null && x.langue.ToLower() == "en");
+				if (desc != null)
+					retVal = desc.text;
+			}
+		}
+		return retVal;
+	}
+
+	public string? GetGenre(RetroScrapOptions opt)
+	{
+		LangTextObj? retVal = null;
+		if (genres != null && genres.Length > 0 )
+		{
+			foreach (var g in genres)
+			{
+				retVal = g.noms?.FirstOrDefault(x => x.langue != null && x.langue == opt.GetLanguageShortCode());
+				if (retVal == null)
+					retVal = g.noms?.FirstOrDefault(x => x.langue != null && x.langue == "en");
+				if (retVal != null)
+					break;
+			}
+		}
+
+		return retVal?.text;
 	}
 
 }

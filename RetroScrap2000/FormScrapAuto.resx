@@ -117,231 +117,216 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;buttonStart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonStart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;buttonStart.Name" xml:space="preserve">
-    <value>buttonStart</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listViewMonitor.Name" xml:space="preserve">
-    <value>listViewMonitor</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pictureBoxAniWait.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="progressBarScrap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+  <data name="colTime.Text" xml:space="preserve">
+    <value>Zeitpunkt</value>
   </data>
-  <data name="&gt;&gt;colMsg.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="colTime.Width" type="System.Int32, mscorlib">
+    <value>80</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 60</value>
+  <data name="colTyp.Text" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="colTyp.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="colNr.Text" xml:space="preserve">
+    <value>Nr.</value>
+  </data>
+  <data name="colNr.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="colRom.Text" xml:space="preserve">
+    <value>Rom</value>
+  </data>
+  <data name="colRom.Width" type="System.Int32, mscorlib">
+    <value>160</value>
+  </data>
+  <data name="colMsg.Text" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="colMsg.Width" type="System.Int32, mscorlib">
+    <value>430</value>
   </data>
   <data name="listViewMonitor.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;progressBarScrap.Name" xml:space="preserve">
-    <value>progressBarScrap</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="listViewMonitor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 18</value>
   </data>
-  <data name="&gt;&gt;colMsg.Name" xml:space="preserve">
-    <value>colMsg</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="listViewMonitor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
-  <data name="checkBoxOnlyLocal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>178, 3</value>
+  <data name="listViewMonitor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>850, 388</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>FormScrapAuto</value>
+  <data name="listViewMonitor.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;listViewMonitor.Name" xml:space="preserve">
+    <value>listViewMonitor</value>
+  </data>
+  <data name="&gt;&gt;listViewMonitor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listViewMonitor.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;listViewMonitor.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 60</value>
+  </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>856, 408</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Monitor</value>
   </data>
-  <data name="pictureBoxAniWait.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="buttonStart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 9</value>
+  </data>
+  <data name="buttonStart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
-  <data name="pictureBoxAniWait.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="buttonStart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 46</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="listViewMonitor.TabIndex" type="System.Int32, mscorlib">
+  <data name="buttonStart.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="buttonStart.Text" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
+  <data name="&gt;&gt;buttonStart.Name" xml:space="preserve">
+    <value>buttonStart</value>
   </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxAniWait.Name" xml:space="preserve">
-    <value>pictureBoxAniWait</value>
-  </data>
-  <data name="&gt;&gt;listViewMonitor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 46</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormScrapAuto</value>
-  </data>
-  <data name="&gt;&gt;listViewMonitor.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="buttonStart.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;colNr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colTime.Name" xml:space="preserve">
-    <value>colTime</value>
-  </data>
-  <data name="listViewMonitor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>850, 388</value>
-  </data>
-  <data name="listViewMonitor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBoxAniWait.Location" type="System.Drawing.Point, System.Drawing">
-    <value>797, 9</value>
-  </data>
-  <data name="buttonStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 9</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxAniWait.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxAniWait.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colTyp.Text" xml:space="preserve">
-    <value>Typ</value>
-  </data>
-  <data name="colTime.Width" type="System.Int32, mscorlib">
-    <value>80</value>
+  <data name="&gt;&gt;buttonStart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;buttonStart.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;colTyp.Name" xml:space="preserve">
-    <value>colTyp</value>
-  </data>
-  <data name="colNr.Text" xml:space="preserve">
-    <value>Nr.</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
-  </data>
-  <data name="progressBarScrap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>390, 46</value>
-  </data>
-  <data name="colTyp.Width" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>856, 408</value>
-  </data>
-  <data name="pictureBoxAniWait.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 46</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="&gt;&gt;buttonStart.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="&gt;&gt;progressBarScrap.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;colTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colTime.Text" xml:space="preserve">
-    <value>Zeitpunkt</value>
-  </data>
-  <data name="checkBoxOnlyLocal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 61</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="checkBoxOnlyLocal.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;colRom.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="listViewMonitor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 18</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;colRom.Name" xml:space="preserve">
-    <value>colRom</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOnlyLocal.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colRom.Width" type="System.Int32, mscorlib">
-    <value>160</value>
-  </data>
-  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="&gt;&gt;colTyp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colMsg.Text" xml:space="preserve">
-    <value>Message</value>
-  </data>
-  <data name="&gt;&gt;pictureBoxAniWait.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="colRom.Text" xml:space="preserve">
-    <value>Rom</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOnlyLocal.Name" xml:space="preserve">
-    <value>checkBoxOnlyLocal</value>
-  </data>
-  <data name="pictureBoxAniWait.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;listViewMonitor.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;progressBarScrap.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="progressBarScrap.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
   </data>
   <data name="progressBarScrap.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="progressBarScrap.Location" type="System.Drawing.Point, System.Drawing">
     <value>403, 9</value>
+  </data>
+  <data name="progressBarScrap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="progressBarScrap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>390, 46</value>
+  </data>
+  <data name="progressBarScrap.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;progressBarScrap.Name" xml:space="preserve">
+    <value>progressBarScrap</value>
+  </data>
+  <data name="&gt;&gt;progressBarScrap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progressBarScrap.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;progressBarScrap.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pictureBoxAniWait.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="pictureBoxAniWait.Location" type="System.Drawing.Point, System.Drawing">
+    <value>797, 9</value>
+  </data>
+  <data name="pictureBoxAniWait.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="pictureBoxAniWait.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 46</value>
+  </data>
+  <data name="pictureBoxAniWait.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBoxAniWait.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxAniWait.Name" xml:space="preserve">
+    <value>pictureBoxAniWait</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxAniWait.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxAniWait.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxAniWait.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxOnlyLocal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 3</value>
+  </data>
+  <data name="checkBoxOnlyLocal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 61</value>
+  </data>
+  <data name="checkBoxOnlyLocal.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkBoxOnlyLocal.Text" xml:space="preserve">
+    <value>Do not download media online; browse and assign local media</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOnlyLocal.Name" xml:space="preserve">
+    <value>checkBoxOnlyLocal</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOnlyLocal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOnlyLocal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOnlyLocal.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>877, 477</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1515,34 +1500,49 @@
         TTTRRBNNNNFEE0000UQTTTTRRBNNNNFEE010zOh/ANLRKPxZKpwFAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="&gt;&gt;checkBoxOnlyLocal.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
-  <data name="&gt;&gt;checkBoxOnlyLocal.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormScrapAuto</value>
   </data>
-  <data name="&gt;&gt;progressBarScrap.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;colTime.Name" xml:space="preserve">
+    <value>colTime</value>
   </data>
-  <data name="colMsg.Width" type="System.Int32, mscorlib">
-    <value>430</value>
+  <data name="&gt;&gt;colTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="checkBoxOnlyLocal.Text" xml:space="preserve">
-    <value>Do not download media online; browse and assign local media</value>
+  <data name="&gt;&gt;colTyp.Name" xml:space="preserve">
+    <value>colTyp</value>
   </data>
-  <data name="colNr.Width" type="System.Int32, mscorlib">
-    <value>80</value>
+  <data name="&gt;&gt;colTyp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colNr.Name" xml:space="preserve">
     <value>colNr</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>877, 477</value>
+  <data name="&gt;&gt;colNr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="&gt;&gt;colRom.Name" xml:space="preserve">
+    <value>colRom</value>
+  </data>
+  <data name="&gt;&gt;colRom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colMsg.Name" xml:space="preserve">
+    <value>colMsg</value>
+  </data>
+  <data name="&gt;&gt;colMsg.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormScrapAuto</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

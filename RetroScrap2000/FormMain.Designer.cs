@@ -41,6 +41,8 @@
 			contextMenuStripSystems = new ContextMenuStrip(components);
 			alleRomsScrapenToolStripMenuItem = new ToolStripMenuItem();
 			detailsToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator3 = new ToolStripSeparator();
+			cleanToolStripMenuItem = new ToolStripMenuItem();
 			tableLayoutPanelRomsControls = new TableLayoutPanel();
 			buttonRomPath = new Button();
 			buttonRomsRead = new Button();
@@ -53,9 +55,11 @@
 			colRomsRating = new ColumnHeader();
 			colRomsFile = new ColumnHeader();
 			contextMenuStripRoms = new ContextMenuStrip(components);
-			scrapToolStripMenuItem = new ToolStripMenuItem();
-			detailsToolStripMenuItem1 = new ToolStripMenuItem();
-			löschenToolStripMenuItem = new ToolStripMenuItem();
+			RomscrapToolStripMenuItem = new ToolStripMenuItem();
+			RomdetailsToolStripMenuItem1 = new ToolStripMenuItem();
+			RomfavoriteToolStripMenuItem = new ToolStripMenuItem();
+			toolStripSeparator2 = new ToolStripSeparator();
+			RomDeleteToolStripMenuItem = new ToolStripMenuItem();
 			splitContainerRight = new SplitContainer();
 			splitContainerRightRom = new SplitContainer();
 			tableLayoutPanelRightInnen = new TableLayoutPanel();
@@ -83,9 +87,9 @@
 			statusStripMain = new StatusStrip();
 			toolStripStatusLabelMain = new ToolStripStatusLabel();
 			contextMenuStripMedia = new ContextMenuStrip(components);
-			viewToolStripMenuItem = new ToolStripMenuItem();
-			newToolStripMenuItem = new ToolStripMenuItem();
-			deleteToolStripMenuItem = new ToolStripMenuItem();
+			MediaviewToolStripMenuItem = new ToolStripMenuItem();
+			MedianewToolStripMenuItem = new ToolStripMenuItem();
+			MediadeleteToolStripMenuItem = new ToolStripMenuItem();
 			toolStripSeparator1 = new ToolStripSeparator();
 			addType1ToolStripMenuItem = new ToolStripMenuItem();
 			addType2ToolStripMenuItem = new ToolStripMenuItem();
@@ -181,7 +185,7 @@
 			// contextMenuStripSystems
 			// 
 			contextMenuStripSystems.ImageScalingSize = new Size(20, 20);
-			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { alleRomsScrapenToolStripMenuItem, detailsToolStripMenuItem });
+			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { alleRomsScrapenToolStripMenuItem, detailsToolStripMenuItem, toolStripSeparator3, cleanToolStripMenuItem });
 			contextMenuStripSystems.Name = "contextMenuStripSystems";
 			resources.ApplyResources(contextMenuStripSystems, "contextMenuStripSystems");
 			// 
@@ -196,6 +200,17 @@
 			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
 			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
 			detailsToolStripMenuItem.Click += SystemDetailsToolStripMenuItem_Click;
+			// 
+			// toolStripSeparator3
+			// 
+			toolStripSeparator3.Name = "toolStripSeparator3";
+			resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
+			// 
+			// cleanToolStripMenuItem
+			// 
+			cleanToolStripMenuItem.Name = "cleanToolStripMenuItem";
+			resources.ApplyResources(cleanToolStripMenuItem, "cleanToolStripMenuItem");
+			cleanToolStripMenuItem.Click += cleanToolStripMenuItem_Click;
 			// 
 			// tableLayoutPanelRomsControls
 			// 
@@ -237,7 +252,6 @@
 			resources.ApplyResources(listViewRoms, "listViewRoms");
 			listViewRoms.FullRowSelect = true;
 			listViewRoms.GridLines = true;
-			listViewRoms.MultiSelect = false;
 			listViewRoms.Name = "listViewRoms";
 			listViewRoms.UseCompatibleStateImageBehavior = false;
 			listViewRoms.View = View.Details;
@@ -271,27 +285,37 @@
 			// contextMenuStripRoms
 			// 
 			contextMenuStripRoms.ImageScalingSize = new Size(20, 20);
-			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { scrapToolStripMenuItem, detailsToolStripMenuItem1, löschenToolStripMenuItem });
+			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { RomscrapToolStripMenuItem, RomdetailsToolStripMenuItem1, RomfavoriteToolStripMenuItem, toolStripSeparator2, RomDeleteToolStripMenuItem });
 			contextMenuStripRoms.Name = "contextMenuStripRoms";
 			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
 			// 
-			// scrapToolStripMenuItem
+			// RomscrapToolStripMenuItem
 			// 
-			scrapToolStripMenuItem.Name = "scrapToolStripMenuItem";
-			resources.ApplyResources(scrapToolStripMenuItem, "scrapToolStripMenuItem");
-			scrapToolStripMenuItem.Click += RomScrapToolStripMenuItem_Click;
+			RomscrapToolStripMenuItem.Name = "RomscrapToolStripMenuItem";
+			resources.ApplyResources(RomscrapToolStripMenuItem, "RomscrapToolStripMenuItem");
+			RomscrapToolStripMenuItem.Click += RomScrapToolStripMenuItem_Click;
 			// 
-			// detailsToolStripMenuItem1
+			// RomdetailsToolStripMenuItem1
 			// 
-			detailsToolStripMenuItem1.Name = "detailsToolStripMenuItem1";
-			resources.ApplyResources(detailsToolStripMenuItem1, "detailsToolStripMenuItem1");
-			detailsToolStripMenuItem1.Click += RomDetailsToolStripMenuItem_Click;
+			RomdetailsToolStripMenuItem1.Name = "RomdetailsToolStripMenuItem1";
+			resources.ApplyResources(RomdetailsToolStripMenuItem1, "RomdetailsToolStripMenuItem1");
+			RomdetailsToolStripMenuItem1.Click += RomDetailsToolStripMenuItem_Click;
 			// 
-			// löschenToolStripMenuItem
+			// RomfavoriteToolStripMenuItem
 			// 
-			löschenToolStripMenuItem.Name = "löschenToolStripMenuItem";
-			resources.ApplyResources(löschenToolStripMenuItem, "löschenToolStripMenuItem");
-			löschenToolStripMenuItem.Click += RomLöschenToolStripMenuItem_Click;
+			RomfavoriteToolStripMenuItem.Name = "RomfavoriteToolStripMenuItem";
+			resources.ApplyResources(RomfavoriteToolStripMenuItem, "RomfavoriteToolStripMenuItem");
+			// 
+			// toolStripSeparator2
+			// 
+			toolStripSeparator2.Name = "toolStripSeparator2";
+			resources.ApplyResources(toolStripSeparator2, "toolStripSeparator2");
+			// 
+			// RomDeleteToolStripMenuItem
+			// 
+			RomDeleteToolStripMenuItem.Name = "RomDeleteToolStripMenuItem";
+			resources.ApplyResources(RomDeleteToolStripMenuItem, "RomDeleteToolStripMenuItem");
+			RomDeleteToolStripMenuItem.Click += RomLöschenToolStripMenuItem_Click;
 			// 
 			// splitContainerRight
 			// 
@@ -474,27 +498,28 @@
 			// 
 			// contextMenuStripMedia
 			// 
-			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { viewToolStripMenuItem, newToolStripMenuItem, deleteToolStripMenuItem, toolStripSeparator1, addType1ToolStripMenuItem, addType2ToolStripMenuItem, addType3ToolStripMenuItem, addType4ToolStripMenuItem, addType5ToolStripMenuItem, addType6ToolStripMenuItem, addType7ToolStripMenuItem, addType8ToolStripMenuItem, addType9ToolStripMenuItem });
+			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
+			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { MediaviewToolStripMenuItem, MedianewToolStripMenuItem, MediadeleteToolStripMenuItem, toolStripSeparator1, addType1ToolStripMenuItem, addType2ToolStripMenuItem, addType3ToolStripMenuItem, addType4ToolStripMenuItem, addType5ToolStripMenuItem, addType6ToolStripMenuItem, addType7ToolStripMenuItem, addType8ToolStripMenuItem, addType9ToolStripMenuItem });
 			contextMenuStripMedia.Name = "contextMenuStripMedia";
 			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");
 			// 
-			// viewToolStripMenuItem
+			// MediaviewToolStripMenuItem
 			// 
-			viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-			resources.ApplyResources(viewToolStripMenuItem, "viewToolStripMenuItem");
-			viewToolStripMenuItem.Click += viewToolStripMenuItem_Click;
+			MediaviewToolStripMenuItem.Name = "MediaviewToolStripMenuItem";
+			resources.ApplyResources(MediaviewToolStripMenuItem, "MediaviewToolStripMenuItem");
+			MediaviewToolStripMenuItem.Click += viewToolStripMenuItem_Click;
 			// 
-			// newToolStripMenuItem
+			// MedianewToolStripMenuItem
 			// 
-			newToolStripMenuItem.Name = "newToolStripMenuItem";
-			resources.ApplyResources(newToolStripMenuItem, "newToolStripMenuItem");
-			newToolStripMenuItem.Click += newToolStripMenuItem_Click;
+			MedianewToolStripMenuItem.Name = "MedianewToolStripMenuItem";
+			resources.ApplyResources(MedianewToolStripMenuItem, "MedianewToolStripMenuItem");
+			MedianewToolStripMenuItem.Click += newToolStripMenuItem_Click;
 			// 
-			// deleteToolStripMenuItem
+			// MediadeleteToolStripMenuItem
 			// 
-			deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			resources.ApplyResources(deleteToolStripMenuItem, "deleteToolStripMenuItem");
-			deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+			MediadeleteToolStripMenuItem.Name = "MediadeleteToolStripMenuItem";
+			resources.ApplyResources(MediadeleteToolStripMenuItem, "MediadeleteToolStripMenuItem");
+			MediadeleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator1
 			// 
@@ -643,15 +668,15 @@
 		private ToolStripMenuItem alleRomsScrapenToolStripMenuItem;
 		private ToolStripMenuItem detailsToolStripMenuItem;
 		private ContextMenuStrip contextMenuStripRoms;
-		private ToolStripMenuItem scrapToolStripMenuItem;
-		private ToolStripMenuItem detailsToolStripMenuItem1;
-		private ToolStripMenuItem löschenToolStripMenuItem;
+		private ToolStripMenuItem RomscrapToolStripMenuItem;
+		private ToolStripMenuItem RomdetailsToolStripMenuItem1;
+		private ToolStripMenuItem RomDeleteToolStripMenuItem;
 		private Panel panelMedia;
 		private FlowLayoutPanel flowLayoutPanelMedia;
 		private ContextMenuStrip contextMenuStripMedia;
-		private ToolStripMenuItem viewToolStripMenuItem;
-		private ToolStripMenuItem newToolStripMenuItem;
-		private ToolStripMenuItem deleteToolStripMenuItem;
+		private ToolStripMenuItem MediaviewToolStripMenuItem;
+		private ToolStripMenuItem MedianewToolStripMenuItem;
+		private ToolStripMenuItem MediadeleteToolStripMenuItem;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem addType1ToolStripMenuItem;
 		private ToolStripMenuItem addType2ToolStripMenuItem;
@@ -662,5 +687,9 @@
 		private ToolStripMenuItem addType7ToolStripMenuItem;
 		private ToolStripMenuItem addType8ToolStripMenuItem;
 		private ToolStripMenuItem addType9ToolStripMenuItem;
+		private ToolStripMenuItem RomfavoriteToolStripMenuItem;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripSeparator toolStripSeparator3;
+		private ToolStripMenuItem cleanToolStripMenuItem;
 	}
 }

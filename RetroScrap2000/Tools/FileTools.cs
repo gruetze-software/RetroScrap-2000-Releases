@@ -78,8 +78,11 @@ namespace RetroScrap2000.Tools
 			}
 		}
 
-		public static string? ResolveMediaPath(string systemDir, string? xmlValue)
+		public static string? ResolveMediaPath(string? systemDir, string? xmlValue)
 		{
+			if (string.IsNullOrEmpty(systemDir))
+				return null;
+
 			if (string.IsNullOrWhiteSpace(xmlValue)) return null;
 
 			// Bereits absolut?

@@ -305,7 +305,7 @@
     <value>Open the main menu in EmulationStation and go to 'UI Settings.' Set the option 'Parse Gamelists Only' to OFF. After this setting, EmulationStation will display the data created by this tool as usual.</value>
   </data>
   <data name="Txt_Msg_Qestion_DeleteRom" xml:space="preserve">
-    <value>Should the file '{0}' with the associated ROM information really be deleted?</value>
+    <value>Do you really want to delete the files listed below along with their associated ROM information?</value>
   </data>
   <data name="Txt_Splash_Loading" xml:space="preserve">
     <value>Loading</value>
@@ -329,7 +329,7 @@
     <value>The entry could not be removed from the 'gamelist.xml'.</value>
   </data>
   <data name="Txt_Msg_Question_DeleteRomMultipleEntries" xml:space="preserve">
-    <value>There are multiple entries for this ROM in the 'gamelist.xml'. Press 'Yes' to remove all entries and the ROM file. Press 'No' to remove only the single entry from the 'gamelist.xml' without deleting the file.</value>
+    <value>There are {0} entries in the 'gamelist.xml' for this ROM. Press 'Yes' to remove all entries and the ROM file. Press 'No' to remove only the single entry from the 'gamelist.xml' without deleting the file.</value>
   </data>
   <data name="RetroK" xml:space="preserve">
     <value>71377235643368326B396D3667317434663878306A3370356332763962317A36</value>
@@ -428,5 +428,11 @@
   </data>
   <data name="Txt_Log_Scrap_MoreThenOneMatch" xml:space="preserve">
     <value>There is more than one match. Scrape the ROM individually.</value>
+  </data>
+  <data name="Txt_Msg_Question_ClearSystem" xml:space="preserve">
+    <value>This function removes references to files that no longer exist. This makes the 'gamelist.xml' slimmer and faster. Continue?</value>
+  </data>
+  <data name="Txt_Msg_Info_CleaningFinish" xml:space="preserve">
+    <value>Cleaning successful.</value>
   </data>
 </root>
