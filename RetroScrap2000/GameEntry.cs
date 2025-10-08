@@ -46,7 +46,7 @@ namespace RetroScrap2000
 		[XmlAttribute("source")]
 		public string? Source { get; set; }
 		
-		[XmlAttribute("favorite")]
+		[XmlElement("favorite")]
 		public string? FavoriteString { get; set; }
 
 		[XmlIgnore]

@@ -156,16 +156,16 @@
   <metadata name="contextMenuStripSystems.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>799, 16</value>
   </metadata>
-  <data name="alleRomsScrapenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SystemAlleRomsScrapenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 24</value>
   </data>
-  <data name="alleRomsScrapenToolStripMenuItem.Text" xml:space="preserve">
+  <data name="SystemAlleRomsScrapenToolStripMenuItem.Text" xml:space="preserve">
     <value>Scrap all Roms...</value>
   </data>
-  <data name="detailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SystemDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 24</value>
   </data>
-  <data name="detailsToolStripMenuItem.Text" xml:space="preserve">
+  <data name="SystemDetailsToolStripMenuItem.Text" xml:space="preserve">
     <value>Details...</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
@@ -379,34 +379,34 @@
     <value>356, 21</value>
   </metadata>
   <data name="RomscrapToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="RomscrapToolStripMenuItem.Text" xml:space="preserve">
     <value>Scrap...</value>
   </data>
-  <data name="RomdetailsToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 24</value>
+  <data name="RomDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 24</value>
   </data>
-  <data name="RomdetailsToolStripMenuItem1.Text" xml:space="preserve">
+  <data name="RomDetailsToolStripMenuItem.Text" xml:space="preserve">
     <value>Details...</value>
   </data>
   <data name="RomfavoriteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="RomfavoriteToolStripMenuItem.Text" xml:space="preserve">
     <value>Favorite</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 6</value>
+    <value>207, 6</value>
   </data>
   <data name="RomDeleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="RomDeleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="contextMenuStripRoms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 106</value>
+    <value>211, 134</value>
   </data>
   <data name="&gt;&gt;contextMenuStripRoms.Name" xml:space="preserve">
     <value>contextMenuStripRoms</value>
@@ -2637,16 +2637,16 @@
   <data name="&gt;&gt;colSystemAnzRoms.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;alleRomsScrapenToolStripMenuItem.Name" xml:space="preserve">
-    <value>alleRomsScrapenToolStripMenuItem</value>
+  <data name="&gt;&gt;SystemAlleRomsScrapenToolStripMenuItem.Name" xml:space="preserve">
+    <value>SystemAlleRomsScrapenToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;alleRomsScrapenToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;SystemAlleRomsScrapenToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;detailsToolStripMenuItem.Name" xml:space="preserve">
-    <value>detailsToolStripMenuItem</value>
+  <data name="&gt;&gt;SystemDetailsToolStripMenuItem.Name" xml:space="preserve">
+    <value>SystemDetailsToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;detailsToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;SystemDetailsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
@@ -2703,10 +2703,10 @@
   <data name="&gt;&gt;RomscrapToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RomdetailsToolStripMenuItem1.Name" xml:space="preserve">
-    <value>RomdetailsToolStripMenuItem1</value>
+  <data name="&gt;&gt;RomDetailsToolStripMenuItem.Name" xml:space="preserve">
+    <value>RomDetailsToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;RomdetailsToolStripMenuItem1.Type" xml:space="preserve">
+  <data name="&gt;&gt;RomDetailsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RomfavoriteToolStripMenuItem.Name" xml:space="preserve">

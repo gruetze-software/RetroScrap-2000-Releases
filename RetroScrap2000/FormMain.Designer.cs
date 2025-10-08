@@ -39,8 +39,8 @@
 			colSystemBis = new ColumnHeader();
 			colSystemAnzRoms = new ColumnHeader();
 			contextMenuStripSystems = new ContextMenuStrip(components);
-			alleRomsScrapenToolStripMenuItem = new ToolStripMenuItem();
-			detailsToolStripMenuItem = new ToolStripMenuItem();
+			SystemAlleRomsScrapenToolStripMenuItem = new ToolStripMenuItem();
+			SystemDetailsToolStripMenuItem = new ToolStripMenuItem();
 			toolStripSeparator3 = new ToolStripSeparator();
 			cleanToolStripMenuItem = new ToolStripMenuItem();
 			tableLayoutPanelRomsControls = new TableLayoutPanel();
@@ -56,7 +56,7 @@
 			colRomsFile = new ColumnHeader();
 			contextMenuStripRoms = new ContextMenuStrip(components);
 			RomscrapToolStripMenuItem = new ToolStripMenuItem();
-			RomdetailsToolStripMenuItem1 = new ToolStripMenuItem();
+			RomDetailsToolStripMenuItem = new ToolStripMenuItem();
 			RomfavoriteToolStripMenuItem = new ToolStripMenuItem();
 			toolStripSeparator2 = new ToolStripSeparator();
 			RomDeleteToolStripMenuItem = new ToolStripMenuItem();
@@ -185,21 +185,21 @@
 			// contextMenuStripSystems
 			// 
 			contextMenuStripSystems.ImageScalingSize = new Size(20, 20);
-			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { alleRomsScrapenToolStripMenuItem, detailsToolStripMenuItem, toolStripSeparator3, cleanToolStripMenuItem });
+			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { SystemAlleRomsScrapenToolStripMenuItem, SystemDetailsToolStripMenuItem, toolStripSeparator3, cleanToolStripMenuItem });
 			contextMenuStripSystems.Name = "contextMenuStripSystems";
 			resources.ApplyResources(contextMenuStripSystems, "contextMenuStripSystems");
 			// 
-			// alleRomsScrapenToolStripMenuItem
+			// SystemAlleRomsScrapenToolStripMenuItem
 			// 
-			alleRomsScrapenToolStripMenuItem.Name = "alleRomsScrapenToolStripMenuItem";
-			resources.ApplyResources(alleRomsScrapenToolStripMenuItem, "alleRomsScrapenToolStripMenuItem");
-			alleRomsScrapenToolStripMenuItem.Click += SystemAllRomsScrapToolStripMenuItem_Click;
+			SystemAlleRomsScrapenToolStripMenuItem.Name = "SystemAlleRomsScrapenToolStripMenuItem";
+			resources.ApplyResources(SystemAlleRomsScrapenToolStripMenuItem, "SystemAlleRomsScrapenToolStripMenuItem");
+			SystemAlleRomsScrapenToolStripMenuItem.Click += SystemAllRomsScrapToolStripMenuItem_Click;
 			// 
-			// detailsToolStripMenuItem
+			// SystemDetailsToolStripMenuItem
 			// 
-			detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
-			resources.ApplyResources(detailsToolStripMenuItem, "detailsToolStripMenuItem");
-			detailsToolStripMenuItem.Click += SystemDetailsToolStripMenuItem_Click;
+			SystemDetailsToolStripMenuItem.Name = "SystemDetailsToolStripMenuItem";
+			resources.ApplyResources(SystemDetailsToolStripMenuItem, "SystemDetailsToolStripMenuItem");
+			SystemDetailsToolStripMenuItem.Click += SystemDetailsToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator3
 			// 
@@ -285,7 +285,7 @@
 			// contextMenuStripRoms
 			// 
 			contextMenuStripRoms.ImageScalingSize = new Size(20, 20);
-			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { RomscrapToolStripMenuItem, RomdetailsToolStripMenuItem1, RomfavoriteToolStripMenuItem, toolStripSeparator2, RomDeleteToolStripMenuItem });
+			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { RomscrapToolStripMenuItem, RomDetailsToolStripMenuItem, RomfavoriteToolStripMenuItem, toolStripSeparator2, RomDeleteToolStripMenuItem });
 			contextMenuStripRoms.Name = "contextMenuStripRoms";
 			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
 			// 
@@ -295,16 +295,17 @@
 			resources.ApplyResources(RomscrapToolStripMenuItem, "RomscrapToolStripMenuItem");
 			RomscrapToolStripMenuItem.Click += RomScrapToolStripMenuItem_Click;
 			// 
-			// RomdetailsToolStripMenuItem1
+			// RomDetailsToolStripMenuItem
 			// 
-			RomdetailsToolStripMenuItem1.Name = "RomdetailsToolStripMenuItem1";
-			resources.ApplyResources(RomdetailsToolStripMenuItem1, "RomdetailsToolStripMenuItem1");
-			RomdetailsToolStripMenuItem1.Click += RomDetailsToolStripMenuItem_Click;
+			RomDetailsToolStripMenuItem.Name = "RomDetailsToolStripMenuItem";
+			resources.ApplyResources(RomDetailsToolStripMenuItem, "RomDetailsToolStripMenuItem");
+			RomDetailsToolStripMenuItem.Click += RomDetailsToolStripMenuItem_Click;
 			// 
 			// RomfavoriteToolStripMenuItem
 			// 
 			RomfavoriteToolStripMenuItem.Name = "RomfavoriteToolStripMenuItem";
 			resources.ApplyResources(RomfavoriteToolStripMenuItem, "RomfavoriteToolStripMenuItem");
+			RomfavoriteToolStripMenuItem.Click += RomfavoriteToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator2
 			// 
@@ -665,11 +666,11 @@
 		private ColumnHeader colRomsFile;
 		private SplitContainer splitContainerRightRom;
 		private ContextMenuStrip contextMenuStripSystems;
-		private ToolStripMenuItem alleRomsScrapenToolStripMenuItem;
-		private ToolStripMenuItem detailsToolStripMenuItem;
+		private ToolStripMenuItem SystemAlleRomsScrapenToolStripMenuItem;
+		private ToolStripMenuItem SystemDetailsToolStripMenuItem;
 		private ContextMenuStrip contextMenuStripRoms;
 		private ToolStripMenuItem RomscrapToolStripMenuItem;
-		private ToolStripMenuItem RomdetailsToolStripMenuItem1;
+		private ToolStripMenuItem RomDetailsToolStripMenuItem;
 		private ToolStripMenuItem RomDeleteToolStripMenuItem;
 		private Panel panelMedia;
 		private FlowLayoutPanel flowLayoutPanelMedia;

@@ -26,12 +26,14 @@ namespace RetroScrap2000
 		private readonly ScrapeGame _scraped;
 		private readonly string _systemRomPath;
 		private readonly RetroScrapOptions _options;
+		private ScrapperManager _scraper;
 		private CancellationTokenSource? _romCts;
+
 
 		public ScrapeSelection Selection { get; } = new();
 		public StarRatingControl starRatingControlRomOld { get; set; } = new StarRatingControl();
 		public StarRatingControl starRatingControlRomNew { get; set; } = new StarRatingControl();
-		public FormScrapRom(string systemRomPath, GameEntry current, ScrapeGame scraped, RetroScrapOptions options)
+		public FormScrapRom(string systemRomPath, GameEntry current, ScrapeGame scraped, RetroScrapOptions options, ScrapperManager scraper	)
 		{
 			InitializeComponent();
 
@@ -65,6 +67,7 @@ namespace RetroScrap2000
 
 			_current = current;
 			_scraped = scraped;
+			_scraper = scraper;
 			_systemRomPath = systemRomPath;
 			_options = options;
 
@@ -83,6 +86,7 @@ namespace RetroScrap2000
 			this.flowLayoutPanelMediaRight.WrapContents = false; // **Muss False sein**
 			this.flowLayoutPanelMediaRight.AutoSize = false;
 			this.flowLayoutPanelMediaRight.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
+			
 		}
 
 		private async void FormScrapRom_Load(object sender, EventArgs e)
@@ -270,7 +274,7 @@ namespace RetroScrap2000
 			if (ct.IsCancellationRequested)
 				return control;
 
-			await control.LoadMediaAsync(url, baseDir, ct, false);
+			await control.LoadMediaAsync(url, baseDir, ct, _scraper, false);
 			return control;
 		}
 

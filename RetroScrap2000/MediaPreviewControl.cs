@@ -91,9 +91,9 @@ namespace RetroScrap2000
 			this.PerformLayout();
 		}
 
-		public async Task LoadMediaAsync(string? mediaPath, string baseDir, CancellationToken ct, bool byPassCache)
+		public async Task LoadMediaAsync(string? mediaPath, string baseDir, CancellationToken ct, ScrapperManager scraper, bool byPassCache)
 		{
-			var result = await Utils.LoadMediaAsync(MediaType, mediaPath, baseDir, ct, byPassCache);
+			var result = await scraper.LoadMediaAsync(MediaType, mediaPath, baseDir, ct, byPassCache);
 			AbsolutPath = result.absPath;
 			// Aufräumen vorm Setzen
 			if (pictureBoxMedium.Image != null)

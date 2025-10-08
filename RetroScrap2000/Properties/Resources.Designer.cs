@@ -123,6 +123,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap favorite16 {
+            get {
+                object obj = ResourceManager.GetObject("favorite16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap flag_de {
             get {
                 object obj = ResourceManager.GetObject("flag_de", resourceCulture);
@@ -193,6 +203,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap info16 {
+            get {
+                object obj = ResourceManager.GetObject("info16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap info32 {
             get {
                 object obj = ResourceManager.GetObject("info32", resourceCulture);
@@ -206,6 +226,16 @@ namespace RetroScrap2000.Properties {
         internal static System.Drawing.Bitmap joystick_32 {
             get {
                 object obj = ResourceManager.GetObject("joystick_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap joystick16 {
+            get {
+                object obj = ResourceManager.GetObject("joystick16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

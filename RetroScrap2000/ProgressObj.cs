@@ -21,6 +21,7 @@ namespace RetroScrap2000
 		public string RomName { get; set; }
 		public int RomNumber { get; set; }
 		public string? MessageText { get; set; }
+		public int ThreadId { get; set; } = 0;
 		public ProgressObj() 
 		{
 			Typ = eTyp.Info;
