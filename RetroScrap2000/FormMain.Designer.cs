@@ -42,7 +42,7 @@
 			SystemAlleRomsScrapenToolStripMenuItem = new ToolStripMenuItem();
 			SystemDetailsToolStripMenuItem = new ToolStripMenuItem();
 			toolStripSeparator3 = new ToolStripSeparator();
-			cleanToolStripMenuItem = new ToolStripMenuItem();
+			SystemCleanToolStripMenuItem = new ToolStripMenuItem();
 			tableLayoutPanelRomsControls = new TableLayoutPanel();
 			buttonRomPath = new Button();
 			buttonRomsRead = new Button();
@@ -185,7 +185,7 @@
 			// contextMenuStripSystems
 			// 
 			contextMenuStripSystems.ImageScalingSize = new Size(20, 20);
-			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { SystemAlleRomsScrapenToolStripMenuItem, SystemDetailsToolStripMenuItem, toolStripSeparator3, cleanToolStripMenuItem });
+			contextMenuStripSystems.Items.AddRange(new ToolStripItem[] { SystemAlleRomsScrapenToolStripMenuItem, SystemDetailsToolStripMenuItem, toolStripSeparator3, SystemCleanToolStripMenuItem });
 			contextMenuStripSystems.Name = "contextMenuStripSystems";
 			resources.ApplyResources(contextMenuStripSystems, "contextMenuStripSystems");
 			// 
@@ -206,11 +206,11 @@
 			toolStripSeparator3.Name = "toolStripSeparator3";
 			resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
 			// 
-			// cleanToolStripMenuItem
+			// SystemCleanToolStripMenuItem
 			// 
-			cleanToolStripMenuItem.Name = "cleanToolStripMenuItem";
-			resources.ApplyResources(cleanToolStripMenuItem, "cleanToolStripMenuItem");
-			cleanToolStripMenuItem.Click += cleanToolStripMenuItem_Click;
+			SystemCleanToolStripMenuItem.Name = "SystemCleanToolStripMenuItem";
+			resources.ApplyResources(SystemCleanToolStripMenuItem, "SystemCleanToolStripMenuItem");
+			SystemCleanToolStripMenuItem.Click += cleanToolStripMenuItem_Click;
 			// 
 			// tableLayoutPanelRomsControls
 			// 
@@ -691,6 +691,6 @@
 		private ToolStripMenuItem RomfavoriteToolStripMenuItem;
 		private ToolStripSeparator toolStripSeparator2;
 		private ToolStripSeparator toolStripSeparator3;
-		private ToolStripMenuItem cleanToolStripMenuItem;
+		private ToolStripMenuItem SystemCleanToolStripMenuItem;
 	}
 }

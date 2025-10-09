@@ -28,7 +28,7 @@ public class GameManager
 		Loader = new GameListLoader();
 	}
 
-	private void LoadSystem(string xmlpath, RetroSystem sys)
+	public GameList LoadSystem(string xmlpath, RetroSystem sys)
 	{
 		if ( string.IsNullOrEmpty(RomPath) )
 			throw new ApplicationException("RomPath is null!");
@@ -45,8 +45,11 @@ public class GameManager
 		GameList gl = loadresult.Games;
 
 		if (gl.Games.Count > 0)
+		{
+			if ( SystemList.ContainsKey(key) )
+				SystemList.Remove(key);
 			SystemList.Add(key, gl);
-		
+		}
 		if (loadresult.HasChanges && gl.Games.Count > 0)
 		{
 			Trace.WriteLine("" + sys.Name_eu + ": Änderungen in der gamelist.xml erkannt. Save...");
@@ -55,6 +58,7 @@ public class GameManager
 			GameListXmlCache.ClearCache();
 		}
 		LoadXmlActionEnde?.Invoke(this, new LoadXmlActionEventArgs(sys));
+		return gl;
 	}
 
 	public RetroSystem? GetSystemById(int id)

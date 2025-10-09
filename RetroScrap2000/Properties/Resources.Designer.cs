@@ -83,6 +83,16 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clear16 {
+            get {
+                object obj = ResourceManager.GetObject("clear16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap custom32 {
             get {
                 object obj = ResourceManager.GetObject("custom32", resourceCulture);

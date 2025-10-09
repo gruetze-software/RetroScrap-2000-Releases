@@ -137,7 +137,6 @@ namespace RetroScrap2000
 			await Task.Delay(delayMs);
 
 			// Interne Zählung hochsetzen
-			Trace.WriteLine($"[ScrapperManager::WaitForRateLimitAndAddRequestCounter()] - LastReportedRequestsToday++");
 			_quotaState!.LastReportedRequestsToday++;
 		}
 
@@ -591,7 +590,8 @@ namespace RetroScrap2000
 		}
 
 		public async Task<(System.Drawing.Image? img, string? absPath)> LoadMediaAsync(
-			eMediaType type, string? urlOrRelPath, string baseDir, CancellationToken ct, bool byPassCache = false)
+			eMediaType type, string? urlOrRelPath, string baseDir, CancellationToken ct, 
+			bool videoWithPreviewImage, bool byPassCache = false)
 		{
 
 			System.Drawing.Image? img = null;
@@ -626,7 +626,7 @@ namespace RetroScrap2000
 				else
 				{
 					await WaitForRateLimitAndAddRequestCounter();
-					var vidTask = await VideoTools.LoadVideoPreviewFromUrlAsync(urlOrRelPath, ct);
+					var vidTask = await VideoTools.LoadVideoPreviewFromUrlAsync(urlOrRelPath, videoWithPreviewImage, ct);
 					if (vidTask.HasValue)
 					{
 						img = vidTask.Value.overlay;
@@ -667,6 +667,7 @@ namespace RetroScrap2000
 			IProgress<ProgressObj> progress, RetroScrapOptions opt, CancellationToken ct = default)
 		{
 			int iGesamt = gameList.Games.Count;
+			gameList.Games.ForEach(g => g.State = eState.None);
 			int iPerc = 0;
 
 			// Schleife über alle Roms
@@ -804,14 +805,14 @@ namespace RetroScrap2000
 									ct.ThrowIfCancellationRequested();
 
 									// 4. Medien laden (LoadMediaAsync muss die ThreadId annehmen)
-									var loadres = await LoadMediaAsync(kvp.Key, kvp.Value, baseDir, ct);
+									var loadres = await LoadMediaAsync(kvp.Key, kvp.Value, baseDir, ct, false);
 
 									// 5. Daten übernehmen und speichern (KRITISCHER ABSCHNITT)
 									// Der Zugriff auf das 'game'-Objekt muss synchronisiert werden,
 									// da mehrere Threads gleichzeitig schreiben könnten.
 									lock (game)
 									{
-										if (loadres.img != null && !string.IsNullOrEmpty(loadres.absPath) && File.Exists(loadres.absPath))
+										if ( !string.IsNullOrEmpty(loadres.absPath) && File.Exists(loadres.absPath))
 										{
 											// Die gesamte Logik zum Speichern/Vergleichen/Verschieben
 											// wird hier in einer neuen, synchronisierten Methode ausgeführt.
@@ -850,6 +851,14 @@ namespace RetroScrap2000
 
 						// 7. Auf das Ende ALLER Downloads für dieses Spiel warten
 						await Task.WhenAll(downloadTasks);
+
+						if (ct.IsCancellationRequested)
+						{
+							// Melden Sie den Abbruch und brechen Sie dann die Hauptschleife ab
+							progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+									Properties.Resources.Txt_Log_Scrap_CancelRequest));
+							break; // Bricht die for-Schleife ab
+						}
 					}
 					else
 					{

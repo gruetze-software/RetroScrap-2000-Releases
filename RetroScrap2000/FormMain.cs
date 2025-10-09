@@ -198,6 +198,7 @@ namespace RetroScrap2000
 			this.listViewRoms.DrawColumnHeader += (sender, e) => e.DrawDefault = true;
 
 			SystemAlleRomsScrapenToolStripMenuItem.Image = Properties.Resources.joystick16;
+			SystemCleanToolStripMenuItem.Image = Properties.Resources.clear16;
 			RomscrapToolStripMenuItem.Image = Properties.Resources.joystick16;
 			RomDeleteToolStripMenuItem.Image = Properties.Resources.delete16;
 			RomDetailsToolStripMenuItem.Image = Properties.Resources.info16;
@@ -858,6 +859,22 @@ namespace RetroScrap2000
 			}
 		}
 
+		public async Task RefreshGameList()
+		{
+			if (_selectedSystem == null || GetSelectedRomPath() == null )
+				return;
+
+			Splash.ShowSplashScreen();
+			await Splash.WaitForSplashScreenAsync();
+			Splash.UpdateSplashScreenStatus($"{Properties.Resources.Txt_Splash_Loading} \"{_selectedSystem.RomFolderName}\"...");
+			var gl = await Task.Run(() =>
+				_gameManager.LoadSystem(Path.Combine(GetSelectedRomPath()!, "gamelist.xml"), _selectedSystem));
+			listViewSystems.SelectedItems[0].SubItems[4].Text = gl.Games.Count.ToString();
+			listViewSystems.SelectedItems[0].Tag = gl;
+			await SetRomListSync();
+			Splash.CloseSplashScreen();
+		}
+
 		private async Task LoadRomsAsync()
 		{
 			if (!Directory.Exists(_options.RomPath))
@@ -1305,7 +1322,11 @@ namespace RetroScrap2000
 				Splash.UpdateSplashScreenStatus(Properties.Resources.Txt_PleaseWait);
 				var result = GameListLoader.CleanGamelistXmlByExistence(Path.Combine(GetSelectedRomPath()!, "gamelist.xml"));
 				Splash.CloseSplashScreen();
-				MyMsgBox.Show($"{Properties.Resources.Txt_Msg_Info_CleaningFinish}\r\nRoms: {result.anzRomDelete}, Media: {result.anzMediaDelete}");
+				if (result.anzRomDelete > 0 || result.anzMediaDelete > 0)
+				{
+					MyMsgBox.Show($"{Properties.Resources.Txt_Msg_Info_CleaningFinish}\r\nRoms: {result.anzRomDelete}, Media: {result.anzMediaDelete}");
+					await RefreshGameList();
+				}
 			}
 
 		}

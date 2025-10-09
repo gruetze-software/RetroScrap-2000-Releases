@@ -20,8 +20,9 @@ namespace RetroScrap2000.Tools
 		/// Lädt ein Video (URL) einmalig in ein App-Temp-Verzeichnis, erzeugt bei Bedarf ein Preview-JPG
 		/// und liefert ein Play-Overlay-Image + absoluten Pfad zur Temp-Videodatei.
 		/// </summary>
-		public static async Task<(Image overlay, string videoAbsPath, string videoPreviewAbsPath)?> LoadVideoPreviewFromUrlAsync(
-				string? videoUrl, CancellationToken ct)
+		public static async Task<(Image? overlay, string videoAbsPath, string? videoPreviewAbsPath)?> 
+			LoadVideoPreviewFromUrlAsync(
+				string? videoUrl, bool withPreview, CancellationToken ct)
 		{
 			if (string.IsNullOrWhiteSpace(videoUrl))
 				return null;
@@ -37,8 +38,8 @@ namespace RetroScrap2000.Tools
 				await System.IO.File.WriteAllBytesAsync(tempVideo, bytes, ct);
 			}
 
-			// 3) Preview erzeugen (wenn fehlt)
-			if (!System.IO.File.Exists(tempPreview))
+			// 3) Preview erzeugen (wenn gewollt und es fehlt)
+			if (!System.IO.File.Exists(tempPreview) && withPreview)
 			{
 				await ExtractPreviewImage(tempVideo, tempPreview); // deine FFmpeg-Methode (async)
 			}
@@ -46,19 +47,23 @@ namespace RetroScrap2000.Tools
 			ct.ThrowIfCancellationRequested();
 
 			// 4) Preview laden & skalieren (nutze deinen lokalen Loader)
-			var img = await ImageTools.LoadAbsoluteImageCachedAsync(tempPreview, ct);
-			if (img == null) return null;
-
-			// 5) Overlay aus Cache oder neu bauen
-			var overlayKey = $"urlvid-ovl|{tempPreview}";
-			if (!_urlVideoOverlayCache.TryGetValue(overlayKey, out var overlay))
+			if (withPreview)
 			{
-				overlay = ImageTools.DrawPlayOverlay((Bitmap)img);
-				_urlVideoOverlayCache[overlayKey] = overlay;
+				var img = await ImageTools.LoadAbsoluteImageCachedAsync(tempPreview, ct);
+				if (img == null) return null;
+
+				// 5) Overlay aus Cache oder neu bauen
+				var overlayKey = $"urlvid-ovl|{tempPreview}";
+				if (!_urlVideoOverlayCache.TryGetValue(overlayKey, out var overlay))
+				{
+					overlay = ImageTools.DrawPlayOverlay((Bitmap)img);
+					_urlVideoOverlayCache[overlayKey] = overlay;
+				}
+				// 6) Pfad zur Videodatei zurück – gut für „Klick → Player“
+				return (overlay, tempVideo, tempPreview);
 			}
 
-			// 6) Pfad zur Videodatei zurück – gut für „Klick → Player“
-			return (overlay, tempVideo, tempPreview);
+			return (null, tempVideo, null);
 		}
 
 		/// <summary>

@@ -51,37 +51,173 @@ namespace RetroScrap2000
 			return string.Compare(this.Name_eu, other.Name_eu, StringComparison.OrdinalIgnoreCase);
 		}
 
+		public bool SaveAllScrapedRomsToGamelistXml(string romPath, IEnumerable<GameEntry> roms)
+		{
+			// Pfade
+			var xmlPath = Path.Combine(romPath, "gamelist.xml");
+			var backupPath = xmlPath + ".bak";
+			var tempPath = xmlPath + ".tmp";
+
+			// Sperrt den Dateizugriff, um Race Conditions zu verhindern
+			lock (_xmlFileLock)
+			{
+				XDocument doc;
+
+				// 1. DOKUMENT LADEN ODER NEU ERSTELLEN
+				if (File.Exists(xmlPath))
+				{
+					try
+					{
+						// Laden des Originals
+						doc = XDocument.Load(xmlPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+					}
+					catch (System.Xml.XmlException ex)
+					{
+						// Fehler beim Laden (z.B. nach einem unsauberen Abbruch) -> Versuch, Backup zu nutzen
+						if (File.Exists(backupPath))
+						{
+							doc = XDocument.Load(backupPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+							// Beschädigte Originaldatei löschen (optional, aber sauber)
+							File.Delete(xmlPath);
+						}
+						else
+						{
+							// Weder Original noch Backup sind lesbar.
+							throw new Exception($"Fehler beim Laden von {xmlPath}. Das Backup ist ebenfalls fehlerhaft oder nicht vorhanden.", ex);
+						}
+					}
+				}
+				else
+				{
+					// Neue gamelist.xml erstellen
+					doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
+													new XElement("gameList"));
+				}
+
+				var root = doc.Element("gameList") ?? new XElement("gameList");
+
+				// 2. ALLE GEÄNDERTEN ROMS VERARBEITEN (EINZIGES MAL)
+				foreach (var rom in roms.Where(r => r.State == eState.Scraped ))
+				{
+					var relPath = GetRomPathForXml(romPath, rom);
+
+					// <game> anhand <path> suchen
+					var gameEl = root.Elements("game")
+													 .FirstOrDefault(x => string.Equals((string?)x.Element("path"), relPath, StringComparison.OrdinalIgnoreCase));
+
+					// Das game-Element nur erstellen, wenn es nicht existiert
+					if (gameEl == null)
+					{
+						gameEl = new XElement("game");
+						root.Add(gameEl);
+					}
+
+					// Daten des GameEntry-Objekts in das XML-Element schreiben
+					SetRomToXml(gameEl, relPath, romPath, rom);
+				}
+
+				// Bereinige den Dokumentbaum vor dem Speichern (optional)
+				doc.DescendantNodes()
+						.Where(n => n.NodeType == System.Xml.XmlNodeType.Text && string.IsNullOrWhiteSpace(n.ToString()))
+						.Remove();
+
+				// 3. ATOMARES SPEICHERN (EINZIGES MAL)
+				try
+				{
+					// Konfiguration für den XML Writer
+					var xmlWriterSettings = new System.Xml.XmlWriterSettings
+					{
+						Indent = true,
+						IndentChars = "    ",
+						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+						NewLineChars = Environment.NewLine,
+						NewLineHandling = System.Xml.NewLineHandling.Replace,
+						OmitXmlDeclaration = false
+					};
+
+					// Sicherstellen, dass die temporäre Datei nicht existiert
+					if (File.Exists(tempPath))
+					{
+						try { File.Delete(tempPath); } catch { }
+					}
+
+					// 3a. Schreibe IMMER in die temporäre Datei
+					using (var w = System.Xml.XmlWriter.Create(tempPath, xmlWriterSettings))
+						doc.Save(w);
+
+					// 3b. Prüfe auf Existenz der Zieldatei und wähle die Methode
+					if (File.Exists(xmlPath))
+					{
+						// Zieldatei existiert -> ATOMAR ERSETZEN (Sichert das Original)
+						File.Replace(tempPath, xmlPath, backupPath, ignoreMetadataErrors: true);
+					}
+					else
+					{
+						// Zieldatei existiert NICHT -> EINFACH VERSCHIEBEN
+						File.Move(tempPath, xmlPath);
+					}
+
+					return true;
+				}
+				catch (Exception)
+				{
+					// Wenn das Speichern fehlschlägt, wird die Originaldatei nicht beschädigt.
+					throw;
+				}
+				finally
+				{
+					// Cleanup: Temporäre Datei löschen (falls noch vorhanden)
+					if (File.Exists(tempPath))
+					{
+						try { File.Delete(tempPath); } catch { /* Ignorieren */ }
+					}
+				}
+			}
+		}
 
 		public bool SaveRomToGamelistXml(string romPath, GameEntry rom)
 		{
 			// Pfade
 			var xmlPath = Path.Combine(romPath, "gamelist.xml");
 			var backupPath = xmlPath + ".bak";
+			var tempPath = xmlPath + ".tmp"; // NEU: Temporärer Pfad
 
 			// relative <path> bestimmen – Primärschlüssel
 			var relPath = GetRomPathForXml(romPath, rom);
 
 			lock (_xmlFileLock)
 			{
-				// Backup (nur wenn Datei existiert)
-				if (File.Exists(xmlPath))
-				{
-					try { File.Copy(xmlPath, backupPath, overwrite: true); }
-					catch { /* egal – Speicher nicht abbrechen */ }
-				}
+				// 1. BACKUP / DOKUMENT LADEN (Bleibt unverändert)
+				// ... (Backup-Logik) ...
 
-				// Dokument laden oder neu erstellen
 				XDocument doc;
 				if (File.Exists(xmlPath))
 				{
-					doc = XDocument.Load(xmlPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+					try
+					{
+						doc = XDocument.Load(xmlPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+					}
+					catch (Exception ex)
+					{
+						// Wenn die Datei beim Laden beschädigt ist, versuchen Sie, das Backup zu nutzen
+						if (File.Exists(backupPath))
+						{
+							doc = XDocument.Load(backupPath, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo);
+						}
+						else
+						{
+							// Dokument kann nicht geladen werden, egal ob Original oder Backup
+							throw new Exception($"Fehler beim Laden von {xmlPath} und Backup: {ex.Message}");
+						}
+					}
 				}
 				else
 				{
 					doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-									new XElement("gameList"));
+													new XElement("gameList"));
 				}
 
+				// ... (Suchen, Erstellen und Setzen der game-Elemente) ...
 				var root = doc.Element("gameList") ?? new XElement("gameList");
 
 				// <game> anhand <path> suchen
@@ -96,32 +232,67 @@ namespace RetroScrap2000
 				}
 
 				SetRomToXml(gameEl, relPath, romPath, rom);
-				// Bereinige den Dokumentbaum vor dem Speichern.
-				// Entfernt alle leeren Textknoten (Whitespace) und unnötige Kommentare,
-				// die die automatische Einrückung stören könnten.
+
+				// Bereinige den Dokumentbaum vor dem Speichern (optional, aber empfohlen)
 				doc.DescendantNodes()
 						.Where(n => n.NodeType == XmlNodeType.Text && string.IsNullOrWhiteSpace(n.ToString()))
 						.Remove();
 
+				// 2. ATOMARES SPEICHERN
 				try
 				{
+					// Konfiguration für den XML Writer
 					var xmlWriterSettings = new System.Xml.XmlWriterSettings
 					{
-						Indent = true, // Aktiviert die Formatierung
-						IndentChars = "    ", // Normales Leerzeichen verwenden, Normalerweise 2 oder 4 Leerzeichen
+						Indent = true,
+						IndentChars = "    ", // 4 Leerzeichen sind Standard
 						Encoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
 						NewLineChars = Environment.NewLine,
 						NewLineHandling = System.Xml.NewLineHandling.Replace,
 						OmitXmlDeclaration = false
 					};
-					using (var w = System.Xml.XmlWriter.Create(xmlPath, xmlWriterSettings))
+
+					// Sicherstellen, dass die temporäre Datei nicht existiert, um Konflikte zu vermeiden
+					if (File.Exists(tempPath))
+					{
+						try { File.Delete(tempPath); } catch { }
+					}
+
+					// 2a. Schreibe IMMER in die temporäre Datei
+					using (var w = System.Xml.XmlWriter.Create(tempPath, xmlWriterSettings))
 						doc.Save(w);
+
+					// 2b. Prüfe auf Existenz der Zieldatei und wähle die Methode
+					if (File.Exists(xmlPath))
+					{
+						// SZENARIO A: Zieldatei existiert -> ATOMAR ERSETZEN
+						// File.Replace ersetzt xmlPath mit tempPath und sichert das Original in backupPath.
+						// Die manuelle File.Copy am Anfang ist hier NICHT mehr nötig, da Replace das Backup erstellt.
+						File.Replace(tempPath, xmlPath, backupPath, ignoreMetadataErrors: true);
+					}
+					else
+					{
+						// SZENARIO B: Zieldatei existiert NICHT -> EINFACH VERSCHIEBEN (UMBENENNEN)
+						// Das Backup ist hier irrelevant.
+						File.Move(tempPath, xmlPath);
+					}
 
 					return true;
 				}
 				catch
 				{
-					throw; // aufrufende Funktion fängt das ab
+					// Wenn das Speichern in die temporäre Datei fehlschlägt,
+					// bleibt die Originaldatei unberührt und unbeschädigt.
+					// Die Exception wird weitergeleitet.
+					throw;
+				}
+				finally
+				{
+					// Cleanup: Sollte die temporäre Datei noch existieren (z.B. nach einer Exception), löschen
+					if (File.Exists(tempPath))
+					{
+						try { File.Delete(tempPath); } catch { /* Ignorieren */ }
+					}
 				}
 			}
 		}

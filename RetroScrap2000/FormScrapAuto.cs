@@ -83,32 +83,54 @@ namespace RetroScrap2000
 			try
 			{
 				ScrapWasStarting = true;
-				// Aufruf der asynchronen Methode und Übergabe des Progress-Objekts
+
+				// 1. Aufruf der asynchronen Methode und Übergabe des Progress-Objekts
 				await _scrapper.ScrapGamesAsync(Roms, checkBoxOnlyLocal.Checked, Roms.RetroSys.Id, _basedir,
-					progressHandler, _options, ct);
-				// Speichern
+						progressHandler, _options, ct);
+
+				// ----------------------------------------------------------------------
+				// 2. KONSOLIDIERTES SPEICHERN (EINMALIGER AUFRUF) 💾
+				// ----------------------------------------------------------------------
+
+				// Prüfen, ob der Scraping-Vorgang abgebrochen wurde.
+				// Obwohl der Catch-Block die TaskCanceledException fängt, 
+				// wird die Prüfung hier sichergestellt, falls der Abbruch direkt nach dem await erfolgt.
+				ct.ThrowIfCancellationRequested();
+
 				AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGameList);
 				bool ok = false;
 
-				foreach (var g in Roms.Games)
-					ok = await Task.Run(() => _system.SaveRomToGamelistXml(_basedir, g));
-				//bool ok = await Task.Run(() =>
-				//		_system.SaveAllRomsToGamelistXml(
-				//				baseDir: _basedir,
-				//				roms: Roms.Games
-				//		)
-				//);
+				// Führe die einmalige Speicherung asynchron aus
+				ok = await Task.Run(() =>
+				{
+					// Interne Prüfung im Task, falls der Abbruch während des Wartens/Speicherns erfolgt.
+					ct.ThrowIfCancellationRequested();
+
+					// Aufruf der effizienten ALL-IN-ONE-Speichermethode
+					return _system.SaveAllScrapedRomsToGamelistXml(_basedir, Roms.Games);
+
+				}, ct); // WICHTIG: ct an Task.Run übergeben
+
 				if (ok)
 				{
 					AddProtokollItem(ProgressObj.eTyp.Info, Properties.Resources.Txt_Log_Scrap_SaveGamelist_success);
 				}
 				else
 				{
+					// Sollte nur bei einem Fehler in SaveAllScrapedRomsToGamelistXml erreicht werden, 
+					// die keine Exception wirft (was nicht ideal ist, aber die Logik hier abfängt).
 					AddProtokollItem(ProgressObj.eTyp.Error, Properties.Resources.Txt_Log_Scrap_SaveGamelist_fail);
 				}
+
+			}
+			catch (TaskCanceledException) // <-- FÄNGT DEN ABBRUCH AB
+			{
+				// Dies ist der erwartete Abbruch, wenn der Benutzer auf "Stop" klickt.
+				AddProtokollItem(ProgressObj.eTyp.Warning, Properties.Resources.Txt_Log_Scrap_CancelRequest);
 			}
 			catch (Exception ex)
 			{
+				// Fängt alle anderen Fehler (z.B. IO-Fehler beim Speichern, wenn nicht als Tce abgefangen)
 				MyMsgBox.ShowErr($"{Utils.GetExcMsg(ex)}");
 			}
 			finally
@@ -116,6 +138,10 @@ namespace RetroScrap2000
 				progressBarScrap.Value = 0;
 				this.pictureBoxAniWait.Image = null;
 				this.buttonStart.Text = "Start";
+				// WICHTIG: Sicherstellen, dass die UI-Elemente auch hier zurückgesetzt werden, 
+				// da das 'return' am Anfang nur den Start verhindert.
+				checkBoxOnlyLocal.Enabled = true;
+				_isrunning = false;
 			}
 		}
 

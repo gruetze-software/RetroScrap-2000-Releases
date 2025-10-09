@@ -171,10 +171,10 @@
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 6</value>
   </data>
-  <data name="cleanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SystemCleanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 24</value>
   </data>
-  <data name="cleanToolStripMenuItem.Text" xml:space="preserve">
+  <data name="SystemCleanToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear System</value>
   </data>
   <data name="contextMenuStripSystems.Size" type="System.Drawing.Size, System.Drawing">
@@ -2655,10 +2655,10 @@
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cleanToolStripMenuItem.Name" xml:space="preserve">
-    <value>cleanToolStripMenuItem</value>
+  <data name="&gt;&gt;SystemCleanToolStripMenuItem.Name" xml:space="preserve">
+    <value>SystemCleanToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;cleanToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;SystemCleanToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colRomsName.Name" xml:space="preserve">
