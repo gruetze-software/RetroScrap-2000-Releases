@@ -40,8 +40,11 @@
 			progressBarScrap = new ProgressBar();
 			pictureBoxAniWait = new PictureBox();
 			checkBoxOnlyLocal = new CheckBox();
+			statusStrip1 = new StatusStrip();
+			toolStripStatusLabelProgress = new ToolStripStatusLabel();
 			groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).BeginInit();
+			statusStrip1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// groupBox1
@@ -106,10 +109,22 @@
 			checkBoxOnlyLocal.Name = "checkBoxOnlyLocal";
 			checkBoxOnlyLocal.UseVisualStyleBackColor = true;
 			// 
+			// statusStrip1
+			// 
+			statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelProgress });
+			resources.ApplyResources(statusStrip1, "statusStrip1");
+			statusStrip1.Name = "statusStrip1";
+			// 
+			// toolStripStatusLabelProgress
+			// 
+			toolStripStatusLabelProgress.Name = "toolStripStatusLabelProgress";
+			resources.ApplyResources(toolStripStatusLabelProgress, "toolStripStatusLabelProgress");
+			// 
 			// FormScrapAuto
 			// 
 			resources.ApplyResources(this, "$this");
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(statusStrip1);
 			Controls.Add(checkBoxOnlyLocal);
 			Controls.Add(pictureBoxAniWait);
 			Controls.Add(progressBarScrap);
@@ -120,7 +135,10 @@
 			Load += FormScrapAuto_Load;
 			groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).EndInit();
+			statusStrip1.ResumeLayout(false);
+			statusStrip1.PerformLayout();
 			ResumeLayout(false);
+			PerformLayout();
 		}
 
 		#endregion
@@ -136,5 +154,7 @@
 		private ColumnHeader colRom;
 		private PictureBox pictureBoxAniWait;
 		private CheckBox checkBoxOnlyLocal;
+		private StatusStrip statusStrip1;
+		private ToolStripStatusLabel toolStripStatusLabelProgress;
 	}
 }

@@ -351,4 +351,7 @@
   <data name="Txt_Msg_Info_CleaningFinish" xml:space="preserve">
     <value>Nettoyage réussi.</value>
   </data>
+  <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
+    <value>Sauvegarde en cours...</value>
+  </data>
 </root>

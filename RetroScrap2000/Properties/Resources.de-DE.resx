@@ -351,4 +351,7 @@
   <data name="Txt_Msg_Info_CleaningFinish" xml:space="preserve">
     <value>Erfolgreich gesäubert.</value>
   </data>
+  <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
+    <value>.Speichervorgang läuft...</value>
+  </data>
 </root>

@@ -46,7 +46,7 @@ namespace RetroScrap2000
 			colTime.Text = Properties.Resources.Txt_Column_ScrapAuto_Time;
 			colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 
-
+			toolStripStatusLabelProgress.Text = Properties.Resources.Txt_Status_Label_Ready;
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
@@ -142,6 +142,7 @@ namespace RetroScrap2000
 				// da das 'return' am Anfang nur den Start verhindert.
 				checkBoxOnlyLocal.Enabled = true;
 				_isrunning = false;
+				toolStripStatusLabelProgress.Text = Properties.Resources.Txt_Status_Label_Ready;
 			}
 		}
 
@@ -160,6 +161,7 @@ namespace RetroScrap2000
 			listViewMonitor.Items.Add(it);
 			listViewMonitor.EnsureVisible(listViewMonitor.Items.Count - 1);
 			SetTitle(report.RomNumber, Roms.Games.Count);
+			toolStripStatusLabelProgress.Text = _scrapper.LatestSsUser?.GetQuotaToday();
 		}
 
 		private void AddProtokollItem(ProgressObj.eTyp typ, string message)

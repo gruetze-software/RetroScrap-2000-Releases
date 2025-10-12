@@ -1043,6 +1043,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saving in progress....
+        /// </summary>
+        internal static string Txt_Status_Label_RomSaving {
+            get {
+                return ResourceManager.GetString("Txt_Status_Label_RomSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The online search via screenscraper.fr is running....
         /// </summary>
         internal static string Txt_Status_Label_Scrap_Running {

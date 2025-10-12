@@ -175,7 +175,7 @@ namespace RetroScrap2000
 
 			// Images und Icons in ListViews und MenuItems setzen
 			/////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 			var imgListSystems = new ImageList { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			var baseDir = RetroSystems.FolderIcons;
 			if (Directory.Exists(baseDir))
@@ -427,6 +427,9 @@ namespace RetroScrap2000
 						}
 					}
 
+					if (data == null)
+						return false;
+
 					var sc = data!;
 					sc.Source = "ScreenScraper.fr";
 
@@ -586,6 +589,9 @@ namespace RetroScrap2000
 					!= DialogResult.Yes)
 				return;
 
+			Splash.ShowSplashScreen();
+			await Splash.WaitForSplashScreenAsync();
+			await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_PleaseWait, 100);
 			int listviewselindexrom = listViewRoms.SelectedItems[0].Index;
 			fileMsg.Clear();
 			foreach (var rom in _selectedRoms)
@@ -603,7 +609,11 @@ namespace RetroScrap2000
 				int numberofentries = GameListLoader.GetNumbersOfEntriesInXml(Path.Combine(baseDir, "gamelist.xml"), rom);
 				if (numberofentries > 1)
 				{
+					Splash.CloseSplashScreen();
 					var decision = MyMsgBox.ShowQuestion(string.Format(Properties.Resources.Txt_Msg_Question_DeleteRomMultipleEntries, numberofentries));
+					Splash.ShowSplashScreen();
+					await Splash.WaitForSplashScreenAsync();
+					await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_PleaseWait, 100);
 					if (decision == DialogResult.Yes)
 					{
 						// Alles löschen
@@ -671,6 +681,8 @@ namespace RetroScrap2000
 			GetSeletedGameList()?.Games.AddRange(loadres.Games.Games);
 			// UI neu setzen
 			await SetRomListSync(listviewselindexrom);
+
+			Splash.CloseSplashScreen();
 		}
 
 
@@ -826,7 +838,10 @@ namespace RetroScrap2000
 			try
 			{
 				buttonRomSave.Enabled = false;
-
+				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomSaving);
+				Splash.ShowSplashScreen();
+				await Splash.WaitForSplashScreenAsync();
+				await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Status_Label_RomSaving, 100);
 				bool ok = await Task.Run(() =>
 						_selectedSystem!.SaveRomToGamelistXml(
 								romPath: sysFolder,
@@ -850,18 +865,20 @@ namespace RetroScrap2000
 			}
 			catch (Exception ex)
 			{
+				Splash.CloseSplashScreen();
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Status_Label_RomNotSaved + "\r\n\r\n" + Utils.GetExcMsg(ex));
 				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
 			}
 			finally
 			{
 				buttonRomSave.Enabled = true;
+				Splash.CloseSplashScreen();
 			}
 		}
 
 		public async Task RefreshGameList()
 		{
-			if (_selectedSystem == null || GetSelectedRomPath() == null )
+			if (_selectedSystem == null || GetSelectedRomPath() == null)
 				return;
 
 			Splash.ShowSplashScreen();
@@ -1333,7 +1350,7 @@ namespace RetroScrap2000
 
 		private async void RomfavoriteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (_selectedSystem == null || GetSelectedRomPath() == null) 
+			if (_selectedSystem == null || GetSelectedRomPath() == null)
 				return;
 			if (_selectedRoms != null && _selectedRoms.Count > 0)
 			{
@@ -1347,6 +1364,12 @@ namespace RetroScrap2000
 				}
 				await SetRomListSync();
 			}
+		}
+
+		private async void RomStartGameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// TODO
+			await EmulatorLauncher.StartMameGame(Path.Combine(GetSelectedRomPath(), _selectedRoms[0].FileName!));
 		}
 	}
 

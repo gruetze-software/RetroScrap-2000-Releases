@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -65,6 +66,14 @@ namespace RetroScrap2000
 					DateTimeStyles.AssumeLocal,
 					out var dt)
 					? dt : null;
+		}
+
+		public string GetQuotaToday()
+		{
+			return string.Format(Properties.Resources.Txt_Api_SsUser_RequestPerDay,
+								requeststoday != null ? requeststoday : "-",
+								maxrequestsperday != null ? maxrequestsperday : "-",
+								UsedTodayPercent());
 		}
 	}
 

@@ -218,10 +218,7 @@ namespace RetroScrap2000
 					listBoxApiTest.Items.Add(string.Format(Properties.Resources.Txt_Api_SsUser_Region, user.favregion ?? ""));
 					listBoxApiTest.Items.Add(string.Format(Properties.Resources.Txt_Api_SsUser_MaxThreads, user.maxthreads != null ? user.maxthreads : "-"));
 					listBoxApiTest.Items.Add(string.Format(Properties.Resources.Txt_Api_SsUser_DownloadKBS, user.maxdownloadspeed != null ? user.maxdownloadspeed : "-"));
-					listBoxApiTest.Items.Add(string.Format(Properties.Resources.Txt_Api_SsUser_RequestPerDay,
-						user.requeststoday != null ? user.requeststoday : "-",
-						user.maxrequestsperday != null ? user.maxrequestsperday : "-",
-						user.UsedTodayPercent()));
+					listBoxApiTest.Items.Add(user.GetQuotaToday());
 				}
 			}
 			catch (Exception ex)

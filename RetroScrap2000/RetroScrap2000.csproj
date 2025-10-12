@@ -10,10 +10,10 @@
 	<Company>Grütze-Software</Company>
     <Product>RetroScrap 2000</Product>
     <Copyright>Copyright © 2025 Grütze-Software</Copyright>
-    <Version>1.1.6</Version>
-    <AssemblyVersion>1.1.6.0</AssemblyVersion>
-    <FileVersion>1.1.6.0</FileVersion>
-    <InformationalVersion>1.1.6-20251009</InformationalVersion>
+    <Version>1.1.7</Version>
+    <AssemblyVersion>1.1.7.0</AssemblyVersion>
+    <FileVersion>1.1.7.0</FileVersion>
+    <InformationalVersion>1.1.7-20251009</InformationalVersion>
 	<PublishSingleFile>true</PublishSingleFile> 
     <PublishReadyToRun>false</PublishReadyToRun> 
 	<SelfContained>false</SelfContained>
