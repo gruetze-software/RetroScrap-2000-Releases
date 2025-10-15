@@ -836,6 +836,24 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following files are grouped into a ROM entry in an m3u file. The files are not deleted, but instead of these files, only the m3u file is displayed. So make sure that the files really belong together:.
+        /// </summary>
+        internal static string Txt_Msg_Question_GroupFilesM3U {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_GroupFilesM3U", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to continue?.
+        /// </summary>
+        internal static string Txt_Msg_Question_GroupFilesM3U_2 {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Question_GroupFilesM3U_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If you select a new file, the existing file will be replaced. Do you want to do that?.
         /// </summary>
         internal static string Txt_Msg_Question_NewMedia {

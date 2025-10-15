@@ -311,6 +311,9 @@ namespace RetroScrap2000
 				return false;
 			}
 
+			/////////////////////////////////////////////////////////////////////////////////////
+			// Mehrere Roms sind zu scrapen, da starten wir den Automatic-Modus
+			////////////////////////////////////////////////////////////////////////////////////
 			if (_selectedRoms.Count > 1)
 			{
 				FormScrapAuto frm = new FormScrapAuto(new GameList() { Games = _selectedRoms, RetroSys = _selectedSystem! },
@@ -325,18 +328,16 @@ namespace RetroScrap2000
 					listViewRoms.Items[0].Selected = true;
 					listViewRoms.SelectedItems[0].EnsureVisible();
 				}
-
 				return true;
 			}
 			else
 			{
+				/////////////////////////////////////////////////////////////////////////////////////
+				// Ein Rom ist zu scrapen
+				////////////////////////////////////////////////////////////////////////////////////
 				GameEntry rom = _selectedRoms[0];
-				// Rom-Basisname als romnom
-				string? romFileName = rom.Name;
-				if (string.IsNullOrEmpty(romFileName))
-					romFileName = Utils.GetNameFromFile(rom.Path);
 
-				if (string.IsNullOrWhiteSpace(romFileName))
+				if (string.IsNullOrEmpty(rom.Name) && string.IsNullOrEmpty(rom.FileName))
 				{
 					MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_WrongRomFile);
 					return false;
@@ -350,22 +351,23 @@ namespace RetroScrap2000
 
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Scrap_Running);
 					await Splash.ShowStatusWithDelayAsync(string.Format(
-						Properties.Resources.Txt_Status_Label_Scrap_Running, rom.Name), 300);
+						Properties.Resources.Txt_Status_Label_Scrap_Running, rom.Name ?? rom.FileName), 300);
 
 					// Rom scrappen
-					Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
-					var (ok, data, gameRecherceList, err) = await _scraper.GetGameAsync(romFileName, rom.RetroSystemId, _options);
+					Trace.WriteLine($"--> await GetGameAsync \"{rom.Name ?? rom.FileName}\"");
+					var (ok, data, gameRecherceList, err) = await _scraper.GetGameAsync(rom.Name, rom.FileName, 
+						rom.RetroSystemId, _options);
 					if (!ok)
 					{
 						rom.State = eState.Error;
 
 						Splash.CloseSplashScreen();
 						string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
-						MyMsgBox.ShowErr($"\"{romFileName}\": {errMsg}");
-						SetStatusToolStripLabel($"\"{rom.Name}\": {err}.");
+						MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
+						SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
 						return false;
 					}
-					else if (data == null)
+					else
 					{
 						// Gab es mehrere Treffer?
 						if (gameRecherceList != null && gameRecherceList.Count > 1)
@@ -380,56 +382,32 @@ namespace RetroScrap2000
 								if (!result)
 								{
 									rom.Name = oldName;
+									rom.State = eState.Error;
 									return false;
 								}
 							}
 							else
-							{
+							{	
+								// User hat abgebrochen, also ohne Fehler zurück
 								return false;
 							}
 						}
-						else
+						else if (data == null)
 						{
-							// Wenn der Name bereits gesetzt war und wir damit keinen Erfolg hatten, versuchen wir nun den Filename
-							if (!string.IsNullOrEmpty(rom.Name))
-							{
-								romFileName = Utils.GetNameFromFile(rom.Path);
-								Trace.WriteLine($"--> await GetGameAsync \"{romFileName}\"");
-								(ok, data, gameRecherceList, err) = await _scraper.GetGameAsync(romFileName, rom.RetroSystemId, _options);
-								if (!ok)
-								{
-									Splash.CloseSplashScreen();
-									MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_NoDataFoundFor + " " + romFileName);
-									SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Ready);
-									return false;
-								}
-								else if (data == null && gameRecherceList?.Count > 1)
-								{
-									Splash.CloseSplashScreen();
-									FormScrapRomSelection frm = new FormScrapRomSelection(gameRecherceList, _options);
-									if (frm.ShowDialog() == DialogResult.OK && frm.SelectedGame != null)
-									{
-										var oldName = rom.Name;
-										rom.Name = frm.SelectedGame.GetName(_options);
-										var result = await ScrapRomAsync();
-										if (!result)
-										{
-											rom.Name = oldName;
-											return false;
-										}
-									}
-									else
-									{
-										return false;
-									}
-								}
-							}
+							rom.State = eState.Error;
+
+							Splash.CloseSplashScreen();
+							string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
+							MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
+							SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
+							return false;
 						}
 					}
 
-					if (data == null)
-						return false;
-
+					/////////////////////////////////////////////////////////////////////////////////////
+					// Scrapdaten übernehmen
+					////////////////////////////////////////////////////////////////////////////////////
+					
 					var sc = data!;
 					sc.Source = "ScreenScraper.fr";
 
@@ -477,6 +455,7 @@ namespace RetroScrap2000
 					await SetRomOnGuiAsync(rom, CancellationToken.None);
 					await SaveRomAsync();
 
+					
 					return true;
 				}
 				catch (Exception ex)
@@ -640,7 +619,7 @@ namespace RetroScrap2000
 				if (deletefromxml)
 				{
 					if (!GameListLoader.DeleteGame(
-						xmlPath: Path.Combine(baseDir, "gamelist.xml"),
+						xmlp: baseDir,
 						rom: rom,
 						deleteAllReferences: deleteAllRefs))
 					{
@@ -720,6 +699,11 @@ namespace RetroScrap2000
 			it.SubItems.Add(Path.GetFileName(g.Path ?? ""));
 			if (g.Favorite)
 				it.ImageKey = "fav";
+			else if (g.State == eState.Error)
+				it.ImageKey = "fail";
+			else if (g.State == eState.Scraped)
+				it.ImageKey = "check";
+
 			it.Tag = g;
 
 			return it;
@@ -856,6 +840,12 @@ namespace RetroScrap2000
 					var selitem = listViewRoms.SelectedItems[0];
 					for (int i = 0; i < selitem.SubItems.Count; i++)
 						selitem.SubItems[i].Text = tempLv.SubItems[i].Text;
+					if (rom.State == eState.Scraped)
+						selitem.ImageKey = "check";
+					else if (rom.State == eState.Error)
+						selitem.ImageKey = "fail";
+					else if (rom.Favorite)
+						selitem.ImageKey = "fav";
 				}
 				else
 				{
@@ -1366,10 +1356,39 @@ namespace RetroScrap2000
 			}
 		}
 
-		private async void RomStartGameToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void RomGrouptoolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// TODO
-			await EmulatorLauncher.StartMameGame(Path.Combine(GetSelectedRomPath(), _selectedRoms[0].FileName!));
+			int selcount = listViewRoms.SelectedItems.Count;
+			if (selcount > 1)
+			{
+				string nachfrage = Properties.Resources.Txt_Msg_Question_GroupFilesM3U + Environment.NewLine + Environment.NewLine;
+				for (int i = 0; i < selcount; i++)
+					nachfrage += $"- {((GameEntry)listViewRoms.SelectedItems[i].Tag!).FileName}{Environment.NewLine}";
+				nachfrage += Environment.NewLine;
+				nachfrage += Properties.Resources.Txt_Msg_Question_GroupFilesM3U_2;
+				if (MyMsgBox.ShowQuestion(nachfrage) != DialogResult.Yes)
+					return;
+
+				var rompath = GetSelectedRomPath()!;
+				int newindexentry = listViewRoms.SelectedItems[selcount - 1].Index + 1 - selcount;
+				GameEntry? newEntry = GetSeletedGameList()!.GenerateM3uForSelectedGames(rompath, _selectedRoms!);
+				if (newEntry != null )
+				{
+					foreach (var g in _selectedRoms!)
+					{
+						GameListLoader.DeleteGame(
+								xmlp: rompath,
+								rom: g,
+								deleteAllReferences: true);
+					}
+
+					_selectedSystem!.SaveRomToGamelistXml(
+								romPath: rompath,
+								rom: newEntry);
+
+					await SetRomListSync(newindexentry);
+				}
+			}
 		}
 	}
 

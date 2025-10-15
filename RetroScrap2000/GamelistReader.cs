@@ -3,17 +3,10 @@ using RetroScrap2000.Tools;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-
-public class RomStatus
-{
-	public GameEntry Game { get; set; } = new();
-	public bool CoverExists { get; set; }
-	public bool ScreenshotExists { get; set; }
-	public bool VideoExists { get; set; }
-}
 
 public class GameManager
 {
@@ -110,28 +103,6 @@ public class GameListLoader
 
 	private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
 
-	public static string NormalizeRelativePath(string path)
-	{
-		if (string.IsNullOrEmpty(path))
-			return string.Empty;
-
-		// 1. Alle Backslashes (\) durch Forward Slashes (/) ersetzen (Standard in Batocera/Linux)
-		string normalizedPath = path.Replace('\\', '/');
-
-		// 2. Führendes "./" oder nur "." entfernen, falls vorhanden
-		if (normalizedPath.StartsWith("./"))
-		{
-			normalizedPath = normalizedPath.Substring(2);
-		}
-		else if (normalizedPath.StartsWith("."))
-		{
-			// Falls nur ein Punkt ohne Slash vorkommt
-			normalizedPath = normalizedPath.Substring(1);
-		}
-
-		return normalizedPath;
-	}
-
 	/// <summary>
 	/// Löscht einen Eintrag aus der gamelist.xml basierend auf dem relativen Pfad der ROM-Datei.
 	/// </summary>
@@ -139,10 +110,14 @@ public class GameListLoader
 	/// <param name="romPath">Der relative Pfad der ROM-Datei, wie in <path> gespeichert.</param>
 	/// <param name="deleteAllReferences">Kommt der path mehrfach vor, werden alle Einträge dazu gelöscht, wenn true gesetzt</param>
 	/// <returns>True bei Erfolg, andernfalls false.</returns>
-	public static bool DeleteGame(string xmlPath, GameEntry rom, bool deleteAllReferences = false)
+	public static bool DeleteGame(string xmlp, GameEntry rom, bool deleteAllReferences = false)
 	{
 		// Sicherstellen, dass die XML-Datei existiert.
-		if (!File.Exists(xmlPath) || string.IsNullOrEmpty(rom.Path))
+		string xmlfile = xmlp;
+		if (!xmlfile.EndsWith(".xml"))
+			xmlfile = Path.Combine(xmlp, "gamelist.xml");
+
+		if (!File.Exists(xmlfile) || string.IsNullOrEmpty(rom.Path))
 		{
 			return false;
 		}
@@ -153,7 +128,7 @@ public class GameListLoader
 			try
 			{
 				// MUSS HIER GELADEN WERDEN, da wir den XML-Baum modifizieren und speichern.
-				XDocument doc = XDocument.Load(xmlPath);
+				XDocument doc = XDocument.Load(xmlfile);
 				var root = doc.Element("gameList");
 				if (root == null)
 				{
@@ -161,7 +136,7 @@ public class GameListLoader
 				}
 
 				// Normalisiere den Pfad einmal für alle Vergleiche
-				string normalizedRomPath = NormalizeRelativePath(rom.Path);
+				string normalizedRomPath = FileTools.NormalizeRelativePath(rom.Path);
 				bool changesMade = false;
 
 				// --- 1. Prüfen und Löschen aller Duplikate (wenn deleteAllReferences = true) ---
@@ -172,7 +147,7 @@ public class GameListLoader
 							string? xmlPathValue = g.Element("path")?.Value;
 							if (xmlPathValue == null) return false;
 
-							string normalizedXmlPath = NormalizeRelativePath(xmlPathValue);
+							string normalizedXmlPath = FileTools.NormalizeRelativePath(xmlPathValue);
 							return normalizedXmlPath.Equals(normalizedRomPath, StringComparison.OrdinalIgnoreCase);
 						})
 						.ToList();
@@ -190,14 +165,14 @@ public class GameListLoader
 				// Wenn alle Referenzen gelöscht wurden, speichern wir und beenden die Methode.
 				if (changesMade)
 				{
-					doc.Save(xmlPath);
+					doc.Save(xmlfile);
 					
 					// Cache inkrementell aktualisieren, nicht komplett löschen!
 					// Wir müssen wissen, wie oft gelöscht wurde.
 					int deletedCount = deleteAllReferences ? duplicates.Count : 1;
 					for (int i = 0; i < deletedCount; i++)
 					{
-						GameListXmlCache.DecrementEntryCount(xmlPath, rom.Path);
+						GameListXmlCache.DecrementEntryCount(xmlfile, rom.Path);
 					}
 
 					// Falls nur ein spezifischer Eintrag gelöscht wurde:
@@ -214,7 +189,7 @@ public class GameListLoader
 						{
 							// 1. Pfad aus XML extrahieren und normalisieren
 							string? xmlPathValue = g.Element("path")?.Value;
-							string normalizedXmlPath = NormalizeRelativePath(xmlPathValue!);
+							string normalizedXmlPath = FileTools.NormalizeRelativePath(xmlPathValue!);
 
 							// 2. Vergleich des Pfades
 							if (normalizedXmlPath != normalizedRomPath) return false;
@@ -237,7 +212,7 @@ public class GameListLoader
 				if (changesMade)
 				{
 					// Die Änderungen in der XML-Datei speichern.
-					doc.Save(xmlPath);
+					doc.Save(xmlfile);
 					// KRITISCH: Den Cache leeren!
 					GameListXmlCache.ClearCache();
 					return true;
@@ -250,7 +225,7 @@ public class GameListLoader
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Fehler beim Löschen oder Speichern der XML: {ex.Message}");
+				Trace.WriteLine($"Fehler beim Löschen oder Speichern der XML: {Utils.GetExcMsg(ex)}");
 				return false;
 			}
 		}
@@ -344,6 +319,80 @@ public class GameListLoader
 				int anzMedia = 0;
 				// Eine Liste, um die zu entfernenden Elemente zu sammeln
 				List<XElement> elementsToRemove = new List<XElement>();
+				// Dictionary, um den tatsächlichen Pfad (Case-sensitiv) und die dazugehörigen XML-Elemente zu speichern.
+				var actualPathRegistry = new Dictionary<string, XElement>(StringComparer.OrdinalIgnoreCase);
+				// Liste, um Elemente zu sammeln, die den FALSCHEN Case-sensitiven Pfad haben
+				List<XElement> elementsWithWrongCase = new List<XElement>();
+
+				// ----------------------------------------------------------------------------------------
+				// ERSTER SCHRITT: DUPLIKAT- UND CASE-FEHLER-BEREINIGUNG
+				// ----------------------------------------------------------------------------------------
+
+				foreach (var gameElement in root.Elements("game"))
+				{
+					var pathElement = gameElement.Element("path");
+					string? relativePathInXml = pathElement?.Value;
+
+					if (string.IsNullOrEmpty(relativePathInXml))
+						continue;
+
+					// 1. Case-Insensitiven Pfad auflösen (für die Existenzprüfung)
+					string? absoluteRomPath = FileTools.ResolveMediaPath(romDirectory, relativePathInXml);
+
+					// ***************************************************************************************
+					// ** WICHTIG: Prüfen, ob die ROM-Datei überhaupt existiert und den tatsächlichen Pfad holen **
+					// ***************************************************************************************
+					if (!File.Exists(absoluteRomPath))
+					{
+						// Wenn die ROM fehlt, wird der Eintrag im nächsten Schritt entfernt.
+						continue;
+					}
+
+					// Ermitteln des tatsächlichen, Case-sensitiven, relativen Pfades der Datei auf der Platte.
+					string? actualCaseSensitiveRelativePath = FileTools.GetActualCaseSensitivePath(romDirectory, absoluteRomPath);
+
+					if (string.IsNullOrEmpty(actualCaseSensitiveRelativePath))
+					{
+						// Sollte nicht passieren, wenn File.Exists(absoluteRomPath) True war.
+						continue;
+					}
+
+					if (relativePathInXml.StartsWith("."))
+						relativePathInXml = relativePathInXml.Substring(1, relativePathInXml.Length - 1);
+
+					// 2. Vergleich des XML-Pfades mit dem tatsächlichen Pfad (Case-sensitiv)
+					if (relativePathInXml != actualCaseSensitiveRelativePath)
+					{
+						// FEHLER: Der XML-Eintrag hat die falsche Case-Schreibweise!
+						Trace.WriteLine($"Entferne Eintrag (falsche Case-Schreibweise): XML: {relativePathInXml}, Richtig: {actualCaseSensitiveRelativePath}");
+						elementsWithWrongCase.Add(gameElement);
+						anzRoms++;
+						changesMade = true;
+					}
+
+					// 3. Duplikat-Erkennung (Case-Insensitiv)
+					// Verwenden Sie den tatsächlichen Case-sensitiven Pfad als eindeutigen Schlüssel in der Registry,
+					// um Duplikate zu erkennen, die denselben echten ROM-Pfad haben.
+					if (actualPathRegistry.ContainsKey(actualCaseSensitiveRelativePath))
+					{
+						// Ein zweites XML-Element verweist auf dieselbe reale Datei.
+						Trace.WriteLine($"Entferne Duplikat-Eintrag (doppelter ROM-Pfad): {relativePathInXml}");
+						elementsToRemove.Add(gameElement);
+						anzRoms++;
+						changesMade = true;
+					}
+					else
+					{
+						actualPathRegistry.Add(actualCaseSensitiveRelativePath, gameElement);
+					}
+				}
+
+				// Fügen Sie alle fehlerhaften Case-Einträge zur Haupt-Entfernungsliste hinzu
+				elementsToRemove.AddRange(elementsWithWrongCase);
+
+				// ----------------------------------------------------------------------------------------
+				// ZWEITER SCHRITT: Existenz-Prüfung der Dateien
+				// ----------------------------------------------------------------------------------------
 
 				foreach (var gameElement in root.Elements("game"))
 				{
@@ -472,23 +521,77 @@ public class GameListLoader
 			
 		}
 
+		var pathsInXml = new HashSet<string>(
+				loadedList.Games
+						.Select(g => g.Path)
+						.Where(p => p != null)
+						.Select(p => FileTools.NormalizeRelativePath(p!)));
+
 		// Definieren der Dateierweiterungen, die ausgeschlossen werden 
 		var excludedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 		{
 				".db", ".xml", ".bak", ".sav", ".cfg", ".p2k", ".tmp", ".temp", ".txt", ".nfo", ".jpg", ".png", ".bmp",
-				".jpeg", ".avi", ".mp4", ".mkv", ".m3u", ".cue", ".doc", ".pdf", ".keep"
+				".jpeg", ".avi", ".mp4", ".mkv", ".cue", ".doc", ".pdf", ".keep"
 		};
 
-		// Schritt 2: Scannen des Dateisystems und Ausschließen von Dateien
-		var existingRomsOnDisk = Directory.EnumerateFiles(romDirectory, "*.*", SearchOption.TopDirectoryOnly)
-				.Where(filePath => !excludedExtensions.Contains(Path.GetExtension(filePath)))
-				.ToList();
+		// ----------------------------------------------------------------------------------
+		// M3U-Logik-Vorbereitung
+		// ----------------------------------------------------------------------------------
 
-		var pathsInXml = new HashSet<string>(
-			loadedList.Games
-				.Select(g => g.Path)
-				.Where(p => p != null)
-				.Select(p => NormalizeRelativePath(p!)));
+		// Wir sammeln alle Dateipfade, die IN EINER M3U-Datei REFERENZIERT werden.
+		// Diese ROMs dürfen später NICHT als eigenständige Einträge hinzugefügt werden.
+		var m3uReferencedPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+		// 1. Alle M3U-Dateien auf der Festplatte finden
+		var existingM3uFiles = Directory.EnumerateFiles(romDirectory, "*.m3u", SearchOption.TopDirectoryOnly).ToList();
+
+		// 2. Inhalte der M3U-Dateien einlesen und referenzierte Dateien sammeln
+		foreach (var m3uFile in existingM3uFiles)
+		{
+			// Hilfsmethode, um alle relativen Pfade aus der M3U zu extrahieren
+			var referencedDiscs = FileTools.GetM3uReferencedFiles(m3uFile);
+
+			foreach (var relativeDiscPath in referencedDiscs)
+			{
+				// Speichere den NORMALISIERTEN Pfad der Disc-Datei (relativ zum romDirectory)
+				// um später festzustellen, welche ROMs übersprungen werden müssen.
+				var normalizedDiscPath = FileTools.NormalizeRelativePath(relativeDiscPath);
+				m3uReferencedPaths.Add(normalizedDiscPath);
+			}
+
+			// Füge die M3U-Datei SELBST als spielbaren Eintrag hinzu, wenn sie nicht schon in der XML ist
+			var m3uRelativePath = "./" + Path.GetRelativePath(romDirectory, m3uFile).Replace('\\', '/');
+			var m3uNormalizedPath = FileTools.NormalizeRelativePath(m3uRelativePath);
+
+			if (!pathsInXml.Contains(m3uNormalizedPath))
+			{
+				string fileNameWithoutExt = Utils.GetNameFromFile(m3uFile);
+				if (!string.IsNullOrEmpty(fileNameWithoutExt))
+				{
+					var newEntry = new GameEntry
+					{
+						Path = m3uNormalizedPath, // Pfad zur M3U-Datei speichern
+						Name = fileNameWithoutExt,
+						RetroSystemId = system.Id
+					};
+
+					loadedList.Games.Add(newEntry);
+					hasChanges = true;
+					Trace.WriteLine($"{system.Name_eu}: Neuen M3U-Eintrag hinzugefügt: \"{newEntry.Name}\"");
+				}
+			}
+		}
+
+		// ----------------------------------------------------------------------------------
+		// Scannen des Dateisystems und Hinzufügen von ROMs
+		// ----------------------------------------------------------------------------------
+
+
+		// Schließe M3U-Dateien aus, da sie bereits in der Schleife oben verarbeitet wurden
+		var existingRomsOnDisk = Directory.EnumerateFiles(romDirectory, "*.*", SearchOption.TopDirectoryOnly)
+						.Where(filePath => !excludedExtensions.Contains(Path.GetExtension(filePath).ToLowerInvariant()))
+						.Where(filePath => Path.GetExtension(filePath).ToLowerInvariant() != ".m3u")
+						.ToList();
 
 		foreach (var romFile in existingRomsOnDisk)
 		{
@@ -496,7 +599,14 @@ public class GameListLoader
 			var relativePathWithPrefix = "./" + Path.GetRelativePath(romDirectory, romFile).Replace('\\', '/');
 
 			// 2. Normalisiere diesen Pfad für den Vergleich
-			var normalizedPathForComparison = NormalizeRelativePath(relativePathWithPrefix);
+			var normalizedPathForComparison = FileTools.NormalizeRelativePath(relativePathWithPrefix);
+
+			// Überspringe ROMs, die in einer M3U referenziert werden!
+			if (m3uReferencedPaths.Contains(normalizedPathForComparison))
+			{
+				Trace.WriteLine($"Ignoriere Disc-ROM {Path.GetFileName(romFile)}, da in M3U referenziert.");
+				continue;
+			}
 
 			// Jetzt prüfen: Ist der NORMALISIERTE Pfad bereits in der normalisierten XML-Liste?
 			if (!pathsInXml.Contains(normalizedPathForComparison))

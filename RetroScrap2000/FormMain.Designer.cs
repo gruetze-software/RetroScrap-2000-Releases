@@ -58,6 +58,7 @@
 			RomscrapToolStripMenuItem = new ToolStripMenuItem();
 			RomDetailsToolStripMenuItem = new ToolStripMenuItem();
 			RomfavoriteToolStripMenuItem = new ToolStripMenuItem();
+			RomGrouptoolStripMenuItem = new ToolStripMenuItem();
 			toolStripSeparator2 = new ToolStripSeparator();
 			RomDeleteToolStripMenuItem = new ToolStripMenuItem();
 			splitContainerRight = new SplitContainer();
@@ -285,7 +286,7 @@
 			// contextMenuStripRoms
 			// 
 			contextMenuStripRoms.ImageScalingSize = new Size(20, 20);
-			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { RomscrapToolStripMenuItem, RomDetailsToolStripMenuItem, RomfavoriteToolStripMenuItem, toolStripSeparator2, RomDeleteToolStripMenuItem });
+			contextMenuStripRoms.Items.AddRange(new ToolStripItem[] { RomscrapToolStripMenuItem, RomDetailsToolStripMenuItem, RomfavoriteToolStripMenuItem, RomGrouptoolStripMenuItem, toolStripSeparator2, RomDeleteToolStripMenuItem });
 			contextMenuStripRoms.Name = "contextMenuStripRoms";
 			resources.ApplyResources(contextMenuStripRoms, "contextMenuStripRoms");
 			// 
@@ -306,6 +307,12 @@
 			RomfavoriteToolStripMenuItem.Name = "RomfavoriteToolStripMenuItem";
 			resources.ApplyResources(RomfavoriteToolStripMenuItem, "RomfavoriteToolStripMenuItem");
 			RomfavoriteToolStripMenuItem.Click += RomfavoriteToolStripMenuItem_Click;
+			// 
+			// RomGrouptoolStripMenuItem
+			// 
+			RomGrouptoolStripMenuItem.Name = "RomGrouptoolStripMenuItem";
+			resources.ApplyResources(RomGrouptoolStripMenuItem, "RomGrouptoolStripMenuItem");
+			RomGrouptoolStripMenuItem.Click += RomGrouptoolStripMenuItem_Click;
 			// 
 			// toolStripSeparator2
 			// 
@@ -692,5 +699,6 @@
 		private ToolStripSeparator toolStripSeparator2;
 		private ToolStripSeparator toolStripSeparator3;
 		private ToolStripMenuItem SystemCleanToolStripMenuItem;
+		private ToolStripMenuItem RomGrouptoolStripMenuItem;
 	}
 }

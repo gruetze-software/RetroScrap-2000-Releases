@@ -303,9 +303,17 @@ namespace RetroScrap2000
 		/// <param name="ct"></param>
 		/// <returns></returns>
 		public async Task<(bool ok, ScrapeGame? data, List<GameDataRecherce>? gameRechercheList, string? error)> GetGameAsync(
-			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
+			string? romname, string? filename, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
 		{
-			if (string.IsNullOrEmpty(romFileName))
+			if (string.IsNullOrEmpty(romname))
+			{
+				_countScrapGame = 0;
+				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
+			}
+
+			// Der Suchstring wird angepasst
+			string seachstring = FileTools.CleanSearchName(romname);
+			if (string.IsNullOrEmpty(seachstring))
 			{
 				_countScrapGame = 0;
 				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
@@ -313,11 +321,12 @@ namespace RetroScrap2000
 
 			if (UseRecherche)
 			{
-				Trace.WriteLine($"Recherche nach \"{romFileName}\" ...");
+				Trace.WriteLine($"Recherche nach \"{seachstring}\" ...");
 				_countScrapGame++;
-				var recherche = await GetGameRechercheListAsync(romFileName, systemId, opt, ct);
+				var recherche = await GetGameRechercheListAsync(seachstring, systemId, opt, ct);
 				if (recherche.ok)
 				{
+					
 					if (recherche.possibleGames == null || recherche.possibleGames.Count == 0)
 					{
 						_countScrapGame = 0;
@@ -338,7 +347,7 @@ namespace RetroScrap2000
 							// Aufruf 3 oder 4
 							///////////////////////////////////////////////////////////////////////
 							// Rekursiver Aufruf, aber nicht mehr als Recherche
-							return await GetGameAsync(name, systemId, opt, ct, UseRecherche: false);
+							return await GetGameAsync(name, filename, systemId, opt, ct, UseRecherche: false);
 						}
 					}
 					else
@@ -356,18 +365,18 @@ namespace RetroScrap2000
 				}
 			}
 
-			// Aufruf 1
-			///////////////////////////////////////////////////////////////////////
-			
-			// Kein Recherche Aufruf, sondern direkte Nutzung mit RomName
 			_countScrapGame++;
+			
 			// Loop verhindern
-			if (_countScrapGame > 4) // Max. vier Aufrufe: 1: romName direkt, 2: romname angepasst, 3: Recherche mit einem Treffer, 4: der ein Treffer
+			if (_countScrapGame > 4) // Max. vier Aufrufe: 1: romName, 2: filename, 3: Recherche mit einem Treffer, 4: der eine Treffer
 			{
 				_countScrapGame = 0;
 				return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound); 
 			}
-			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(romFileName)}";
+
+			// Aufruf 1
+			///////////////////////////////////////////////////////////////////////
+			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(seachstring)}";
 			Trace.WriteLine(url);
 			await WaitForRateLimitAndAddRequestCounter();
 			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
@@ -375,22 +384,22 @@ namespace RetroScrap2000
 
 			if (!resp.IsSuccessStatusCode)
 			{
-				// Nicht gefunden, wir versuchen einen anderen Namen, und dann rufen wir uns selbst als Recherche-Funktion auf.
+				// Nicht gefunden, wir versuchen den FileNamen, und dann rufen wir uns selbst als Recherche-Funktion auf.
 				if (((int)resp.StatusCode) == 404)
 				{
-					string romname = CleanPrefix(romFileName);
-					if (string.Compare(romname, romFileName, StringComparison.OrdinalIgnoreCase) != 0)
+					// Aufruf 2
+					///////////////////////////////////////////////////////////////////////
+					string seachfilestring = FileTools.CleanSearchName(filename);
+					if (string.Compare(seachstring, seachfilestring, StringComparison.OrdinalIgnoreCase) != 0)
 					{
-						Trace.WriteLine($"Unter dem Namen \"{romFileName}\" wurde kein Spiel gefunden. Versuche Name \"{romname}\"...");
-						// Aufruf 2
-						///////////////////////////////////////////////////////////////////////
-						return await GetGameAsync(romname, systemId, opt, ct);
+						Trace.WriteLine($"Unter dem Namen \"{seachstring}\" wurde kein Spiel gefunden. Versuche Name \"{seachfilestring}\"...");
+						return await GetGameAsync(seachfilestring, filename, systemId, opt, ct);
 					}
 					else
 					{
-						// Aufruf 2 oder 3
+						// Aufruf 2 oder 3 für Recherche-Aufruf
 						///////////////////////////////////////////////////////////////////////
-						return await GetGameAsync(romFileName, systemId, opt, ct, UseRecherche: true);
+						return await GetGameAsync(seachstring, seachfilestring, systemId, opt, ct, UseRecherche: true);
 					}
 				}
 				else
@@ -692,9 +701,9 @@ namespace RetroScrap2000
 
 				try
 				{
-					// Rom scrappen (1. Versuch über Rom.Name)
+					// Rom scrappen
 					Trace.WriteLine($"--> await GetGameAsync \"{game.Name}\"");
-					var result = await GetGameAsync(game.Name, gameList.RetroSys.Id, opt, ct);
+					var result = await GetGameAsync(game.Name, game.FileName, gameList.RetroSys.Id, opt, ct);
 					// Ergebnis prüfen
 					if (!result.ok)
 					{
@@ -705,25 +714,8 @@ namespace RetroScrap2000
 						progress.Report(error);
 						continue;
 					}
-					else if (result.data == null)
-					{
-						// 2. Versuch über Rom-Filename
-						string filename = Utils.GetNameFromFile(game.FileName!);
-						Trace.WriteLine($"--> await GetGameAsync \"{filename}\"");
-						result = await GetGameAsync(filename, gameList.RetroSys.Id, opt, ct);
-						// Ergebnis prüfen
-						if (!result.ok || (result.data == null || result.gameRechercheList == null || result.gameRechercheList.Count == 0 ))
-						{
-							game.State = eState.NoData;
-							ProgressObj warning = new ProgressObj(iPerc, i + 1,
-								game.Name!, $"{Properties.Resources.Txt_Log_Scrap_NoDataFoundFor} \"{game.Name}\".");
-							warning.Typ = ProgressObj.eTyp.Warning;
-							progress.Report(warning);
-							continue;
-						}
-					}
-					// Daten prüfen und übernehmen
-					if (result.gameRechercheList != null && result.gameRechercheList.Count > 1 )
+					// Mehrfach-Ergebnisse können wir nicht im Automatik-Modus anzeigen
+					if (result.gameRechercheList != null && result.gameRechercheList.Count > 1)
 					{
 						game.State = eState.NoData;
 						ProgressObj warning = new ProgressObj(iPerc, i + 1,
@@ -732,8 +724,17 @@ namespace RetroScrap2000
 						progress.Report(warning);
 						continue;
 					}
-
+					
 					var scrapgame = result.data;
+					if (scrapgame == null)
+					{
+						ProgressObj err = new ProgressObj(iPerc, i + 1,
+								game.Name!, Properties.Resources.Txt_Log_Scrap_NoGameFound);
+						err.Typ = ProgressObj.eTyp.Error;
+						progress.Report(err);
+						continue;
+					}
+
 					progress.Report(new ProgressObj(iPerc, i + 1,
 						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
 					if (!string.IsNullOrEmpty(scrapgame.Id) && int.TryParse(scrapgame.Id, out int id) && id > 0)

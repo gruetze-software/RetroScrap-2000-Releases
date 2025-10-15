@@ -354,4 +354,10 @@
   <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
     <value>Sauvegarde en cours...</value>
   </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U" xml:space="preserve">
+    <value>Les fichiers suivants sont regroupés dans un fichier m3u pour une entrée de ROM. Les fichiers ne sont pas supprimés, mais à la place, seul le fichier m3u sera affiché. Assurez-vous donc que les fichiers appartiennent réellement ensemble:</value>
+  </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
+    <value>Voulez-vous continuer ?</value>
+  </data>
 </root>

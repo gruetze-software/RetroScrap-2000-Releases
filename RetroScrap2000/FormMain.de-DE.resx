@@ -151,4 +151,16 @@
   <data name="buttonRomSave.Text" xml:space="preserve">
     <value>Speichern</value>
   </data>
+	<data name="RomDeleteToolStripMenuItem.Text" xml:space="preserve">
+  <value>Löschen</value>
+  </data>
+	<data name="SystemCleanToolStripMenuItem.Text" xml:space="preserve">
+  <value>System aufräumen</value>
+  </data>
+	<data name="RomfavoriteToolStripMenuItem.Text" xml:space="preserve">
+  <value>Favorit</value>
+  </data>
+	<data name="RomGrouptoolStripMenuItem.Text" xml:space="preserve">
+  <value>Als einzelnen Eintrag gruppieren</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroScrap2000.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,7 @@ namespace RetroScrap2000
 				return 0;
 			}
 
-			string normalizedRomPath = GameListLoader.NormalizeRelativePath(romPath);
+			string normalizedRomPath = FileTools.NormalizeRelativePath(romPath);
 
 			// Dictionary-Lookup: Ist der Pfad enthalten? Wenn ja, gib die Anzahl zurück, sonst 0.
 			if (_pathCountIndex.TryGetValue(normalizedRomPath, out int count))
@@ -71,7 +72,7 @@ namespace RetroScrap2000
 					return;
 				}
 
-				string normalizedRomPath = GameListLoader.NormalizeRelativePath(romPath);
+				string normalizedRomPath = FileTools.NormalizeRelativePath(romPath);
 
 				if (_pathCountIndex.TryGetValue(normalizedRomPath, out int count))
 				{
@@ -142,7 +143,7 @@ namespace RetroScrap2000
 			_pathCountIndex = doc.Element("gameList")?
 				 .Elements("game")
 				 // Den Pfad aus dem XML holen und normalisieren
-				 .Select(g => GameListLoader.NormalizeRelativePath(g.Element("path")?.Value ?? string.Empty))
+				 .Select(g => FileTools.NormalizeRelativePath(g.Element("path")?.Value ?? string.Empty))
 				 .Where(p => !string.IsNullOrEmpty(p)) // Leere Pfade ignorieren
 																							 // Nach dem Pfad gruppieren und zählen
 				 .GroupBy(path => path, StringComparer.Ordinal)

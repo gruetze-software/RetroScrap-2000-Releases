@@ -354,4 +354,10 @@
   <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
     <value>.Speichervorgang läuft...</value>
   </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U" xml:space="preserve">
+    <value>Folgende Dateien werden in einer m3u-Datei gruppiert zu einem Rom-Eintrag. Die Dateien werden nicht gelöscht, aber anstelle dieser Dateien wird nur noch die m3u-Datei angezeigt . Stellen Sie also sicher, dass die Dateien wirklich zusammengehören:</value>
+  </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
+    <value>Möchten Sie fortfahren?</value>
+  </data>
 </root>

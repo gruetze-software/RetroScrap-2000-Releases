@@ -450,4 +450,10 @@
   <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
     <value>Saving in progress...</value>
   </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U" xml:space="preserve">
+    <value>The following files are grouped into a ROM entry in an m3u file. The files are not deleted, but instead of these files, only the m3u file is displayed. So make sure that the files really belong together:</value>
+  </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
+    <value>Would you like to continue?</value>
+  </data>
 </root>

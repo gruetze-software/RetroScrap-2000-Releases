@@ -354,4 +354,10 @@
   <data name="Txt_Status_Label_RomSaving" xml:space="preserve">
     <value>Guardando en progreso...</value>
   </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U" xml:space="preserve">
+    <value>Los siguientes archivos se agrupan en un archivo m3u como una entrada de ROM. Los archivos no se eliminan, pero en lugar de estos archivos, solo se mostrará el archivo m3u. Por lo tanto, asegúrese de que los archivos realmente pertenezcan juntos:</value>
+  </data>
+  <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
+    <value>¿Te gustaría continuar?</value>
+  </data>
 </root>
