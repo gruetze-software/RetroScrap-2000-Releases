@@ -34,9 +34,18 @@ namespace RetroScrap2000
 		public int? uploadmedia { get; set; }
 		public int? propositionok { get; set; }
 		public int? propositionko { get; set; }
-		public int? quotarefu { get; set; }
+
+		// Das ursächliche Problemfeld muss ein String sein, um fehlerhafte JSON-Werte aufzunehmen
+		[JsonPropertyName("quotarefu")]
+		public string? quotarefuRaw { get; set; } // NEU: Speichert den rohen JSON-Wert (z.B. "" oder "12")
+		[JsonIgnore]
+		public int? QuotaRefu => int.TryParse(quotarefuRaw, out var val) ? val : (int?)null;
 		public int? maxthreads { get; set; }
-		public int? maxdownloadspeed { get; set; }        // Download-Geschwindigkeit (in KB/s), die für den Benutzer zulässig ist
+		// Wir lassen maxdownloadspeed ebenfalls als Raw-String, falls es auch fehlerhaft ist
+		[JsonPropertyName("maxdownloadspeed")]
+		public string? maxdownloadspeedRaw { get; set; }
+		[JsonIgnore]
+		public int? MaxDownloadSpeed => int.TryParse(maxdownloadspeedRaw, out var val) ? val : (int?)null;
 		public int? requeststoday { get; set; } // Gesamtzahl der Aufrufe der API während des Tages in Kürze
 		public int? requestskotoday { get; set; } // Anzahl der Aufrufe der API mit negativem Return (rom/set nicht gefunden) im Laufe des Tages kurz
 		public int? maxrequestspermin { get; set; } // Anzahl der Aufrufe der maximal erlaubten API pro Minute für den Benutzer
