@@ -512,6 +512,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The daily limit has been reached..
+        /// </summary>
+        internal static string Txt_Log_DailyLimitReached {
+            get {
+                return ResourceManager.GetString("Txt_Log_DailyLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancellation has been requested. Please wait..
         /// </summary>
         internal static string Txt_Log_Scrap_CancelRequest {
@@ -697,6 +706,24 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Msg_Err_DeleteRomXml {
             get {
                 return ResourceManager.GetString("Txt_Msg_Err_DeleteRomXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A critical error has occurred and the entire application will be terminated..
+        /// </summary>
+        internal static string Txt_Msg_Error_CriticalShutdown {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Error_CriticalShutdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A critical error has occurred and the entire application will be terminated. Details have been logged..
+        /// </summary>
+        internal static string Txt_Msg_Error_CriticalShutdownWithLog {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Error_CriticalShutdownWithLog", resourceCulture);
             }
         }
         

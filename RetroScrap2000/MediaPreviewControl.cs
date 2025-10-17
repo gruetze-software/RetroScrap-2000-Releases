@@ -122,7 +122,6 @@ namespace RetroScrap2000
 			if (!string.IsNullOrEmpty(this.AbsolutPath))
 			{
 				// Übergibt den aktuell im Control geladenen Pfad
-				Trace.WriteLine($"MediaPreviewControl: throw Event ViewMediaClicked {this.MediaType}");
 				ViewMediaClicked?.Invoke(this, new MediaActionEventArgs(this.MediaType, this.AbsolutPath));
 			}
 		}
@@ -146,7 +145,6 @@ namespace RetroScrap2000
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
 				// WICHTIG: Übergibt den PFAD ZUR NEU GEWÄHLTEN DATEI
-				Trace.WriteLine($"MediaPreviewControl: throw Event NewMediaSelected {this.MediaType}");
 				NewMediaClicked?.Invoke(this, new MediaActionEventArgs(this.MediaType, ofd.FileName));
 			}
 		}
@@ -161,7 +159,6 @@ namespace RetroScrap2000
 
 				// YES: Alles löschen, deleteOnlyXmlInfo = false; NO: Nur XML-Info löschen, deleteOnlyXmlInfo = true
 				bool deleteOnlyXmlInfo = userChoice == DialogResult.No;
-				Trace.WriteLine($"MediaPreviewControl: throw Event DeleteMediaClicked {this.MediaType}, deleteOnlyXmlInfo: {deleteOnlyXmlInfo}");
 				DeleteMediaClicked?.Invoke(this, new MediaDeleteActionEventArgs(this.MediaType, this.AbsolutPath, deleteOnlyXmlInfo));
 			}
 		}
@@ -171,7 +168,6 @@ namespace RetroScrap2000
 			if ( e.Button == MouseButtons.Left && sender is PictureBox pb && !string.IsNullOrEmpty(this.AbsolutPath))
 			{
 				// Übergibt den aktuell im Control geladenen Pfad
-				Trace.WriteLine($"MediaPreviewControl: Mouse Left Click: throw Event ViewMediaClicked {this.MediaType}");
 				ViewMediaClicked?.Invoke(this, new MediaActionEventArgs(this.MediaType, this.AbsolutPath));
 			}
 		}

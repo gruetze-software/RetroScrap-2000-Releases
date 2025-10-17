@@ -1,4 +1,5 @@
 ﻿using RetroScrap2000.Tools;
+using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
@@ -82,12 +83,12 @@ namespace RetroScrap2000
 
 		private void _gameManager_LoadXmlActionEnde(object? sender, LoadXmlActionEventArgs e)
 		{
-			Trace.WriteLine("Ende Loading: " + e.System?.Name_eu);
+			Log.Debug("End Loading: " + e.System?.Name_eu);
 		}
 
 		private void _gameManager_LoadXmlActionStart(object? sender, LoadXmlActionEventArgs e)
 		{
-			Trace.WriteLine("Start Loading: " + e.System?.Name_eu);
+			Log.Information($"Scan {e.System?.Name_eu} (\"{e.System?.RomFolderName}\")");
 			Splash.UpdateSplashScreenStatus($"Scan {e.System?.Name_eu} (\"{e.System?.RomFolderName}\")");
 		}
 
@@ -129,9 +130,13 @@ namespace RetroScrap2000
 					 && !string.IsNullOrEmpty(_options.ApiUser))
 					{
 						_scraper.RefreshSecrets(_options!.ApiUser!, pwd!);
-						//if (!string.IsNullOrEmpty(_options.RomPath)
-						//&& Directory.Exists(_options.RomPath))
-						//	await LoadRomsAsync();
+						
+						// Einlesen der Roms der Systeme, wenn gewünscht
+						if ( _options.ScanRomStartup == true 
+							&& !string.IsNullOrEmpty(_options.RomPath)
+							&& Directory.Exists(_options.RomPath))
+							await LoadRomsAsync();
+
 						Splash.CloseSplashScreen();
 					}
 					else
@@ -219,6 +224,7 @@ namespace RetroScrap2000
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			Log.Information("FormMain_FormClosed");
 			// Image Cache aufräumen
 			foreach (var kv in _imageCache)
 			{
@@ -354,7 +360,7 @@ namespace RetroScrap2000
 						Properties.Resources.Txt_Status_Label_Scrap_Running, rom.Name ?? rom.FileName), 300);
 
 					// Rom scrappen
-					Trace.WriteLine($"--> await GetGameAsync \"{rom.Name ?? rom.FileName}\"");
+					Log.Information($"await GetGameAsync \"{rom.Name ?? rom.FileName}\"");
 					var (ok, data, gameRecherceList, err) = await _scraper.GetGameAsync(rom.Name, rom.FileName, 
 						rom.RetroSystemId, _options);
 					if (!ok)
@@ -363,6 +369,7 @@ namespace RetroScrap2000
 
 						Splash.CloseSplashScreen();
 						string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
+						Log.Error(errMsg);
 						MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
 						SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
 						return false;
@@ -398,6 +405,7 @@ namespace RetroScrap2000
 
 							Splash.CloseSplashScreen();
 							string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
+							Log.Error(errMsg);
 							MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
 							SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
 							return false;
@@ -461,6 +469,7 @@ namespace RetroScrap2000
 				catch (Exception ex)
 				{
 					Splash.CloseSplashScreen();
+					Log.Error(Utils.GetExcMsg(ex));
 					MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 					SetStatusToolStripLabel(Properties.Resources.Txt_Msg_Scrap_Fail);
 					return false;
@@ -623,7 +632,7 @@ namespace RetroScrap2000
 						rom: rom,
 						deleteAllReferences: deleteAllRefs))
 					{
-						Trace.WriteLine("Failed to delete from gamelist.xml " + rom.FileName!);
+						Log.Error("Failed to delete from gamelist.xml " + rom.FileName!);
 					}
 				}
 
@@ -633,19 +642,20 @@ namespace RetroScrap2000
 					{
 						try
 						{
-							Trace.WriteLine($"Lösche Rom-Datei \"{file}\" ...");
+							Log.Information($"Delete Rom-File \"{file}\" ...");
 							File.Delete(file);
-							Trace.WriteLine("... Rom-Datei gelöscht.");
+							Log.Information("... Rom-File deleted.");
 						}
 						catch (Exception ex)
 						{
-							Trace.WriteLine(Utils.GetExcMsg(ex));
+							Log.Error(Utils.GetExcMsg(ex));
 							fileMsg.AppendLine("-  " + rom.FileName! + " " + ex.Message);
 						}
 					}
 					else
 					{
 						fileMsg.AppendLine("-  " + rom.FileName! + " not exist");
+						Log.Information($"Rom-Datei \"{file}\" not exist.");
 					}
 				}
 			} // Next Rom
@@ -856,6 +866,7 @@ namespace RetroScrap2000
 			catch (Exception ex)
 			{
 				Splash.CloseSplashScreen();
+				Log.Error(Properties.Resources.Txt_Status_Label_RomNotSaved + " " + Utils.GetExcMsg(ex));
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Status_Label_RomNotSaved + "\r\n\r\n" + Utils.GetExcMsg(ex));
 				SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_RomNotSaved);
 			}
@@ -886,7 +897,7 @@ namespace RetroScrap2000
 		{
 			if (!Directory.Exists(_options.RomPath))
 				return;
-
+			Log.Information("LoadRomsAsync()");
 			SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_ReadRoms);
 			listViewSystems.BeginUpdate();
 			listViewRoms.BeginUpdate();
@@ -928,6 +939,10 @@ namespace RetroScrap2000
 					items.Add(it);
 				}
 				listViewSystems.Items.AddRange(items.ToArray());
+			}
+			catch (Exception ex)
+			{
+				Log.Error("LoadRomsAsync: " + Utils.GetExcMsg(ex));
 			}
 			finally
 			{
@@ -984,6 +999,7 @@ namespace RetroScrap2000
 
 		private async Task SetSystemOnGuiAsync(RetroSystem? system, CancellationToken ct)
 		{
+			Log.Information("SetSystemOnGuiAsync(): " + system ?? "Null");
 			if (system == null)
 			{
 				pictureBoxRomSystem.Image = null;
@@ -1028,10 +1044,13 @@ namespace RetroScrap2000
 
 		private async Task UpdateMediaPanelAsync(GameEntry? rom, string baseDir, CancellationToken ct)
 		{
+			
 			// Alle vorhandenen TabPages entfernen, um eine saubere Ansicht zu gewährleisten
 			flowLayoutPanelMedia.Controls.Clear();
 			if (rom == null)
 				return;
+
+			Log.Information($"Update MediaPanelAsync: \"{rom?.FileName ?? "Null"}\"");
 
 			// Das Kontextmenü für die MediaPreviewControls setzen
 			List<ToolStripMenuItem> addTypeMenuItems = new List<ToolStripMenuItem>()
@@ -1069,7 +1088,7 @@ namespace RetroScrap2000
 					control.DeleteMediaClicked += MediaControl_DeleteMediaClicked;
 
 					await control.LoadMediaAsync(mediaPath, baseDir, ct, _scraper, true);
-					Trace.WriteLine("Adding media control for " + kvp.Key);
+					Log.Information("Adding media control for " + kvp.Key);
 					flowLayoutPanelMedia.Controls.Add(control);
 				}
 				else
@@ -1228,11 +1247,13 @@ namespace RetroScrap2000
 			if (result.ok && !string.IsNullOrEmpty(result.file))
 			{
 				_selectedRoms[0].SetMediaPath(type, result.file);
+				Log.Information($"SetNewFile() success: Rom: {_selectedRoms[0].FileName}, Type: {type.ToString()}, Mediafile: {result.file}");
 				await SaveRomAsync();
 				await SetRomOnGuiAsync(_selectedRoms[0], CancellationToken.None);
 			}
 			else
 			{
+				Log.Error($"SetNewFile() fail: Rom: {_selectedRoms[0].FileName}, Type: {type.ToString()}, Mediafile: {sourcefile}");
 				MyMsgBox.ShowErr(Properties.Resources.Txt_Log_Scrap_Media_Move_Fail + " " + sourcefile);
 			}
 		}
@@ -1249,6 +1270,7 @@ namespace RetroScrap2000
 
 		private async Task SetRomOnGuiAsync(GameEntry? rom, CancellationToken ct)
 		{
+			Log.Information($"SetRomOnGuiAsync: \"{rom?.FileName ?? "Null"}\"");
 			if (rom == null)
 			{
 				flowLayoutPanelMedia.Controls.Clear();

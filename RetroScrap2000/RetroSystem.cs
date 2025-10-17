@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -54,7 +55,9 @@ namespace RetroScrap2000
 		public bool SaveAllScrapedRomsToGamelistXml(string romPath, IEnumerable<GameEntry> roms)
 		{
 			// Pfade
-			var xmlPath = Path.Combine(romPath, "gamelist.xml");
+			string xmlPath = romPath;
+			if (!romPath.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+				xmlPath = Path.Combine(romPath, "gamelist.xml");
 			var backupPath = xmlPath + ".bak";
 			var tempPath = xmlPath + ".tmp";
 
@@ -306,6 +309,7 @@ namespace RetroScrap2000
 
 			lock (_xmlFileLock)
 			{
+				Log.Information($"[{this.Name_eu}]: RetroSystem::SaveAllRomsToGamelistXml()");
 				// Backup (nur wenn Datei existiert)
 				if (File.Exists(xmlPath))
 				{
@@ -351,7 +355,7 @@ namespace RetroScrap2000
 				}
 				catch (Exception ex)
 				{
-					Trace.WriteLine(Utils.GetExcMsg(ex));
+					Log.Error(Utils.GetExcMsg(ex));
 					return false;
 				}
 			}
@@ -360,7 +364,6 @@ namespace RetroScrap2000
 		private static readonly object _xmlFileLock = new(); // primitive Sperre pro Prozess
 		private static void SetRomToXml(XElement gameEl, string relPath, string sysDir, GameEntry rom)
 		{
-			Trace.WriteLine("[RetroSystem::SetRomToXml] Adding rom " + relPath);
 			// Hilfsmethode, um ein Element zu setzen oder zu entfernen
 			void SetElementValue(XElement parent, string name, string? value)
 			{
@@ -494,7 +497,7 @@ namespace RetroScrap2000
 			var sys = SystemList.FirstOrDefault(x => x.Id == systemid);
 			if (sys == null)
 			{
-				Trace.WriteLine("[RetroSystem::GetRomFolder] skip Id " + systemid.ToString());
+				Log.Information("[RetroSystem::GetRomFolder] skip Id " + systemid.ToString());
 				return "";
 			}
 			else

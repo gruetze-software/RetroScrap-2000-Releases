@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -81,6 +82,7 @@ namespace RetroScrap2000.Tools
 				}
 				catch (Exception ex)
 				{
+					Log.Error($"UITools::OpenFileWithDefaultApp(\"{absPathFile}\"): Error: {Utils.GetExcMsg(ex)}");
 					MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
 				}
 			}

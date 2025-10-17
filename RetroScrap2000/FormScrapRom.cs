@@ -1,5 +1,6 @@
 ﻿using RetroScrap2000.Properties;
 using RetroScrap2000.Tools;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -147,7 +148,7 @@ namespace RetroScrap2000
 
 					if (_options.IsMediaTypeEnabled(kvp.Key) != true)
 					{
-						Trace.WriteLine($"Skip Download {kvp.Key.ToString()}, it's not checked in Options...");
+						Log.Information($"Skip Download {kvp.Key.ToString()}, it's not checked in Options...");
 						continue; // diese Media-Art ist nicht gewünscht
 					}
 
@@ -281,7 +282,7 @@ namespace RetroScrap2000
 		private void Cancel()
 		{
 			// laufende System-Ladevorgänge abbrechen
-			Trace.WriteLine("_romCts?.CancelAsync().Wait(2000);");
+			Log.Debug("_romCts?.CancelAsync().Wait(2000);");
 			_romCts?.CancelAsync().Wait(2000);
 		}
 

@@ -1,5 +1,6 @@
 ﻿using RetroScrap2000;
 using RetroScrap2000.Tools;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -67,8 +68,10 @@ namespace RetroScrap2000
 
 		public async Task<SsUserInfosResponse> FetchSsUserInfosAsync()
 		{
+			Log.Information($"FetchSsUserInfosAsync() Call Api {BaseUrl}ssuserInfos.php?xxxxxxx");
 			var url = $"{BaseUrl}ssuserInfos.php?{BuildAuthQuery()}";
-			Trace.WriteLine(url);
+			Log.Debug(url);
+			
 			using var resp = await _http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 			if (!resp.IsSuccessStatusCode)
 			{
@@ -99,7 +102,7 @@ namespace RetroScrap2000
 			if (ssUser == null)
 				return;
 
-			Trace.WriteLine("[ScrapperManager::UpdateStateAndSsUser()]");
+			Log.Debug("[ScrapperManager::UpdateStateAndSsUser()]");
 			LatestSsUser = ssUser;
 
 			// Speichern des aktuellen Status
@@ -121,15 +124,15 @@ namespace RetroScrap2000
 			if (LatestSsUser == null || LatestSsUser.maxrequestspermin == null)
 			{
 				// Fallback-Drosselung, falls noch kein SsUser geladen wurde
-				Trace.WriteLine($"[ScrapperManager::WaitForRateLimitAndAddRequestCounter()] - 1000ms, SsUser is null");
+				Log.Debug($"[ScrapperManager::WaitForRateLimitAndAddRequestCounter()] - 1000ms, SsUser is null");
 				await Task.Delay(1000);
 				return;
 			}
 
-			Trace.WriteLine($"[ScrapperManager::WaitForRateLimitAndAddRequestCounter()] - MaxRequestsForDay: {LatestSsUser.maxrequestsperday} - Today: {_quotaState!.LastReportedRequestsToday}");
+			Log.Debug($"[ScrapperManager::WaitForRateLimitAndAddRequestCounter()] - MaxRequestsForDay: {LatestSsUser.maxrequestsperday} - Today: {_quotaState!.LastReportedRequestsToday}");
 			if (_quotaState!.LastReportedRequestsToday >= LatestSsUser.maxrequestsperday)
 			{
-				throw new Exception("Geschätztes Tageslimit erreicht.");
+				throw new Exception(Properties.Resources.Txt_Log_DailyLimitReached);
 			}
 
 			// Berechnung der Wartezeit (wie zuvor: 60s / maxReq + Puffer)
@@ -156,8 +159,9 @@ namespace RetroScrap2000
 		/// </summary>
 		public async Task<(bool ok, Systeme[] data, string? error)> GetSystemsAsync(CancellationToken ct = default)
 		{
+			Log.Information($"GetSystemsAsync() Call Api {BaseUrl}systemesListe.php?xxxxxxx");
 			var url = $"{BaseUrl}systemesListe.php?{BuildAuthQueryWithOutSs()}";
-			Trace.WriteLine(url);
+			Log.Debug(url);
 			try
 			{
 				using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
@@ -214,7 +218,7 @@ namespace RetroScrap2000
 				var batfoldername = BatoceraFolders.MapToBatoceraFolder(sys.noms);
 				if (string.IsNullOrEmpty(batfoldername))
 				{
-					Trace.WriteLine("[ScrapperManager::DownloadSystemImagesAsync()] Skip " + sys.Name_eu);
+					Log.Debug("[ScrapperManager::DownloadSystemImagesAsync()] Skip " + sys.Name_eu);
 					continue;
 				}
 				// beide Typen (icon, wheel) sichern
@@ -223,12 +227,12 @@ namespace RetroScrap2000
 					string file = Path.Combine(diricons.FullName, $"{batfoldername}.png");
 					if (!File.Exists(file))
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Icon \"{batfoldername}\"");
+						Log.Debug($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Icon \"{batfoldername}\"");
 						await DownloadOne(sys.Media.icon, file);
 					}
 					else
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Icon \"{batfoldername}\" (Always exist)");
+						Log.Debug($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Icon \"{batfoldername}\" (Always exist)");
 					}
 				}
 				if (sys.Media.wheel != null)
@@ -236,12 +240,12 @@ namespace RetroScrap2000
 					string file = Path.Combine(dirwheels.FullName, $"{batfoldername}.png");
 					if (!File.Exists(file))
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Wheel \"{batfoldername}\"");
+						Log.Debug($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Dowmload Wheel \"{batfoldername}\"");
 						await DownloadOne(sys.Media.wheel, file);
 					}
 					else
 					{
-						Trace.WriteLine($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Wheel \"{batfoldername}\" (Always exist)");
+						Log.Debug($"[ScrapperManager::DownloadSystemImagesAsync()] {sys.Name_eu}: Skip Wheel \"{batfoldername}\" (Always exist)");
 					}
 				}
 				// kleine Pause, um die API nicht zu überlasten
@@ -253,12 +257,15 @@ namespace RetroScrap2000
 		{
 			try
 			{
+				string urllogstring = url.Substring(0, url.IndexOf("?") + 1) + "xxxxxx";
+				Log.Information($"ScrapperManager::DownloadOne(\"{urllogstring}\")");
 				var data = await _http.GetByteArrayAsync(url);
+				Log.Debug(url);
 				await File.WriteAllBytesAsync(path, data);
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Fail Download {url}: {Utils.GetExcMsg(ex)}");
+				Log.Debug($"Fail Download {url}: {Utils.GetExcMsg(ex)}");
 			}
 		}
 
@@ -268,8 +275,9 @@ namespace RetroScrap2000
 			if (string.IsNullOrEmpty(romFileName))
 				return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
 
+			Log.Information($"GetGameRechercheListAsync(\"{romFileName}\") Call Api {BaseUrl}jeuRecherche.php?xxxxxxx");
 			var url = $"{BaseUrl}jeuRecherche.php?{BuildAuthQuery()}&systemeid={systemId}&recherche={Uri.EscapeDataString(romFileName)}";
-			Trace.WriteLine(url);
+			Log.Debug(url);
 			await WaitForRateLimitAndAddRequestCounter();
 			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
 			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
@@ -302,7 +310,8 @@ namespace RetroScrap2000
 		/// <param name="systemId">Die Id des Systems</param>
 		/// <param name="ct"></param>
 		/// <returns></returns>
-		public async Task<(bool ok, ScrapeGame? data, List<GameDataRecherce>? gameRechercheList, string? error)> GetGameAsync(
+		public async Task<(bool ok, ScrapeGame? data, 
+			List<GameDataRecherce>? gameRechercheList, string? error)> GetGameAsync(
 			string? romname, string? filename, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
 		{
 			if (string.IsNullOrEmpty(romname))
@@ -321,7 +330,6 @@ namespace RetroScrap2000
 
 			if (UseRecherche)
 			{
-				Trace.WriteLine($"Recherche nach \"{seachstring}\" ...");
 				_countScrapGame++;
 				var recherche = await GetGameRechercheListAsync(seachstring, systemId, opt, ct);
 				if (recherche.ok)
@@ -376,8 +384,9 @@ namespace RetroScrap2000
 
 			// Aufruf 1
 			///////////////////////////////////////////////////////////////////////
+			Log.Information($"GetGameAsync(\"{Uri.EscapeDataString(seachstring)}\") {_countScrapGame}. Call Api {BaseUrl}jeuInfos.php?xxxxxxx");
 			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(seachstring)}";
-			Trace.WriteLine(url);
+			Log.Debug(url);
 			await WaitForRateLimitAndAddRequestCounter();
 			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
 			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
@@ -392,7 +401,7 @@ namespace RetroScrap2000
 					string seachfilestring = FileTools.CleanSearchName(filename);
 					if (string.Compare(seachstring, seachfilestring, StringComparison.OrdinalIgnoreCase) != 0)
 					{
-						Trace.WriteLine($"Unter dem Namen \"{seachstring}\" wurde kein Spiel gefunden. Versuche Name \"{seachfilestring}\"...");
+						Log.Information($"No game was found under the name \"{seachstring}\". Trying name \"{seachfilestring}\"...");
 						return await GetGameAsync(seachfilestring, filename, systemId, opt, ct);
 					}
 					else
@@ -653,7 +662,7 @@ namespace RetroScrap2000
 				else
 				{
 					await WaitForRateLimitAndAddRequestCounter();
-					img = await ImageTools.LoadImageFromUrlCachedAsync(urlOrRelPath, CancellationToken.None);
+					img = await ImageTools.LoadImageFromUrlCachedAsync(urlOrRelPath, type, CancellationToken.None);
 					absPath = FileTools.SaveImageToTempFile(img);
 				}
 			}
@@ -702,7 +711,7 @@ namespace RetroScrap2000
 				try
 				{
 					// Rom scrappen
-					Trace.WriteLine($"--> await GetGameAsync \"{game.Name}\"");
+					Log.Information($"--> await GetGameAsync \"{game.Name}\"");
 					var result = await GetGameAsync(game.Name, game.FileName, gameList.RetroSys.Id, opt, ct);
 					// Ergebnis prüfen
 					if (!result.ok)
@@ -822,7 +831,7 @@ namespace RetroScrap2000
 										else
 										{
 											ProgressObj err = new ProgressObj(iPerc, i + 1,
-													game.Name!, $"Fehler beim Laden von {kvp.Key.ToString()}! (Thread {threadId})");
+													game.Name!, $"File not found for {kvp.Key.ToString()}. (Thread {threadId})");
 											err.Typ = ProgressObj.eTyp.Error;
 											progress.Report(err);
 										}
@@ -838,7 +847,7 @@ namespace RetroScrap2000
 								{
 									// Fehlerbehandlung für den Thread
 									ProgressObj err = new ProgressObj(iPerc, i + 1,
-											game.Name!, $"Fehler im Thread {threadId} für {kvp.Key.ToString()}: {Utils.GetExcMsg(ex)}");
+											game.Name!, $"Error Thread {threadId} for {kvp.Key.ToString()}: {Utils.GetExcMsg(ex)}");
 									err.Typ = ProgressObj.eTyp.Error;
 									progress.Report(err);
 								}

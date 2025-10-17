@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32.SafeHandles;
+using Serilog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -292,7 +293,7 @@ namespace RetroScrap2000.Tools
 			DirectoryInfo dirMedien = new DirectoryInfo(dirMedienStrg);
 			if (!dirMedien.Exists)
 			{
-				Trace.WriteLine($"{dirMedienStrg} not exist!");
+				Log.Error($"FileTools::SetLocalMediaFilesToGame(\"{game.FileName}\") \"{dirMedienStrg}\" not exist.");
 				return false;
 			}
 
@@ -341,12 +342,12 @@ namespace RetroScrap2000.Tools
 					string destfile = Path.Combine(abspath, destfilename);
 					if (move)
 					{
-						Trace.WriteLine($"FileMove: \"{sourcefile}\" -> \"{destfile}\"");
+						Log.Information($"FileMove: \"{sourcefile}\" -> \"{destfile}\"");
 						File.Move(sourcefile, destfile, overwrite: true);
 					}
 					else
 					{
-						Trace.WriteLine($"FileCopy: \"{sourcefile}\" -> \"{destfile}\"");
+						Log.Information($"FileCopy: \"{sourcefile}\" -> \"{destfile}\"");
 						File.Copy(sourcefile, destfile, overwrite: true);
 					}
 						
@@ -383,7 +384,7 @@ namespace RetroScrap2000.Tools
 				try
 				{
 					// 3. Datei löschen
-					Trace.WriteLine($"FileDelete: \"{abspath}\"");
+					Log.Information($"FileDelete: \"{abspath}\"");
 					File.Delete(abspath);
 					ImageTools.InvalidateCacheEntry(abspath); // Cache-Eintrag entfernen, falls vorhanden
 					return true;
@@ -392,7 +393,7 @@ namespace RetroScrap2000.Tools
 				{
 					// 4. Fehlerbehandlung (z.B. Datei wird von einem anderen Prozess verwendet)
 					// Hier könnten Sie auch ein MessageBox.Show() einfügen.
-					Trace.WriteLine($"ERROR deleting file \"{abspath}\": {Utils.GetExcMsg(ex)}");
+					Log.Error($"Error deleting file \"{abspath}\": {Utils.GetExcMsg(ex)}");
 					return false;
 				}
 			}
@@ -453,7 +454,7 @@ namespace RetroScrap2000.Tools
 			catch (Exception ex)
 			{
 				// Fehlerbehandlung
-				Trace.WriteLine($"Fehler beim Erstellen der M3U: {ex.Message}");
+				Log.Error($"Error create m3u-entry: {Utils.GetExcMsg(ex)}");
 				return null;
 			}
 		}
@@ -517,7 +518,7 @@ namespace RetroScrap2000.Tools
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Fehler beim Lesen der M3U-Datei {m3uPath}: {ex.Message}");
+				Log.Error($"Error reading M3U-File \"{m3uPath}\": {Utils.GetExcMsg(ex)}");
 			}
 
 			return referencedFiles;

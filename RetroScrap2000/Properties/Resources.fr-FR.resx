@@ -360,4 +360,13 @@
   <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
     <value>Voulez-vous continuer ?</value>
   </data>
+  <data name="Txt_Msg_Error_CriticalShutdown" xml:space="preserve">
+    <value>Une erreur critique est survenue et toute l'application sera fermée.</value>
+  </data>
+  <data name="Txt_Msg_Error_CriticalShutdownWithLog" xml:space="preserve">
+    <value>Une erreur critique est survenue et toute l'application va être arrêtée. Les détails ont été enregistrés.</value>
+  </data>
+  <data name="Txt_Log_DailyLimitReached" xml:space="preserve">
+    <value>La limite quotidienne est atteinte.</value>
+  </data>
 </root>

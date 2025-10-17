@@ -1,4 +1,5 @@
 ﻿using RetroScrap2000.Tools;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -77,7 +78,11 @@ namespace RetroScrap2000
 				comboBoxLanguage.SelectedIndex = l;
 			else
 				comboBoxLanguage.SelectedIndex = 0; // Default to first language if not found
+
+			checkBoxOptRomScanStartup.Checked = Options.ScanRomStartup == true;
+			checkBoxOptLogging.Checked = Options.Logging == true;
 			pictureBoxDonation.Image = Properties.Resources.donate48;
+
 			linkLabelDonate.LinkClicked += LinkLabelInfo_LinkClicked;
 			// Scrap User
 			textBoxApiLogin.Text = Options.ApiUser ?? "";
@@ -89,8 +94,12 @@ namespace RetroScrap2000
 			// Scrap Data
 			checkBoxMediaFanart.Checked = Options.MediaFanart == true;
 			checkBoxMediaImageBox.Checked = Options.MediaBoxImage == true;
-			checkBoxMediaManual.Checked = Options.MediaManual == true;
-			checkBoxMediaMap.Checked = Options.MediaMap == true;
+			// TODO:
+			checkBoxMediaManual.Checked = false;
+			checkBoxMediaMap.Checked = false;
+			checkBoxMediaManual.Enabled = false;
+			checkBoxMediaMap.Enabled = false;
+
 			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
 			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
 			checkBoxMediaWheel.Checked = Options.MediaWheel == true;
@@ -226,6 +235,7 @@ namespace RetroScrap2000
 				listBoxApiTest.Items.Clear();
 				listBoxApiTest.Items.Add("Fail!");
 				listBoxApiTest.Items.Add(ex.Message);
+				Log.Error($"{Utils.GetExcMsg(ex)}");
 			}
 
 		}
@@ -235,12 +245,12 @@ namespace RetroScrap2000
 			Options.ApiUser = textBoxApiLogin.Text;
 			if (string.IsNullOrEmpty(textBoxApiPwd.Text))
 			{
-				Trace.WriteLine($"Delete secret-file...");
+				Log.Information($"Delete secret-file...");
 				Options.Secret?.Delete();
 			}
 			else
 			{
-				Trace.WriteLine($"Save secret-file...");
+				Log.Information($"Save secret-file...");
 				Options.Secret?.Save(textBoxApiPwd.Text);
 			}
 		}
@@ -256,7 +266,14 @@ namespace RetroScrap2000
 				Options.Region = "jp";
 			else
 				Options.Region = "eu"; // default
-
+			
+			Options.ScanRomStartup = checkBoxOptRomScanStartup.Checked;
+			if (Options.Logging != checkBoxOptLogging.Checked)
+			{
+				Options.Logging = checkBoxOptLogging.Checked;
+				// Logger neu initialisieren
+				LogManager.Initialize(Options.Logging == true);
+			}
 			Options.MediaFanart = checkBoxMediaFanart.Checked;
 			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
 			Options.MediaManual = checkBoxMediaManual.Checked;

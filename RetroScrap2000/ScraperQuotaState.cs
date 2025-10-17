@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace RetroScrap2000
 
 		public void Save()
 		{
-			Trace.WriteLine("[ScraperQuotaState::Save()]");
+			Log.Debug("[ScraperQuotaState::Save()]");
 			var options = new JsonSerializerOptions
 			{
 				WriteIndented = true // hübsch formatiert
@@ -39,7 +40,7 @@ namespace RetroScrap2000
 		/// </summary>
 		public static ScraperQuotaState? Load()
 		{
-			Trace.WriteLine("[ScraperQuotaState::Load()]");
+			Log.Debug("[ScraperQuotaState::Load()]");
 			var file = GetQuotaFile();
 			if (!File.Exists(file))
 			{

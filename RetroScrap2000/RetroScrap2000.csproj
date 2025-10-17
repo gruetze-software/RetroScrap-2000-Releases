@@ -10,10 +10,10 @@
 	<Company>Grütze-Software</Company>
     <Product>RetroScrap 2000</Product>
     <Copyright>Copyright © 2025 Grütze-Software</Copyright>
-    <Version>1.1.8</Version>
-    <AssemblyVersion>1.1.8.0</AssemblyVersion>
-    <FileVersion>1.1.8.0</FileVersion>
-    <InformationalVersion>1.1.8-20251012</InformationalVersion>
+    <Version>1.1.9</Version>
+    <AssemblyVersion>1.1.9.0</AssemblyVersion>
+    <FileVersion>1.1.9.0</FileVersion>
+    <InformationalVersion>1.1.9-20251017</InformationalVersion>
 	<PublishSingleFile>true</PublishSingleFile> 
     <PublishReadyToRun>false</PublishReadyToRun> 
 	<SelfContained>false</SelfContained>
@@ -2833,6 +2833,13 @@
 
   <ItemGroup>
     <Folder Include="Properties\Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.Trace" Version="4.0.0" />
   </ItemGroup>
 
 </Project>

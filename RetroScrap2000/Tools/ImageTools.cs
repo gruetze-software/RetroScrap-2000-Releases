@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace RetroScrap2000.Tools
 		/// <summary>
 		/// Lädt ein Bild von einer URL, cached es und liefert ein Image.
 		/// </summary>
-		public static async Task<Image?> LoadImageFromUrlCachedAsync(string? url, CancellationToken ct)
+		public static async Task<Image?> LoadImageFromUrlCachedAsync(string? url, eMediaType type, CancellationToken ct)
 		{
 			if (string.IsNullOrWhiteSpace(url))
 				return null;
@@ -28,7 +29,10 @@ namespace RetroScrap2000.Tools
 			if (_urlImageCache.TryGetValue(key, out var cached))
 				return cached;
 
+			string urllogstring = url.Substring(0, url.IndexOf("?") + 1) + "xxxxxx";
+			Log.Information($"[{type.ToString()}]: ImageTools::LoadImageFromUrlCachedAsync(\"{urllogstring}\")");
 			var bytes = await _http.GetByteArrayAsync(url, ct);
+			Log.Debug(url);
 			using var ms = new MemoryStream(bytes);
 			// WICHTIG: vom Stream entkoppeln → Bitmap-Kopie erstellen
 			// (sonst bleibt eine Abhängigkeit zum Stream und/oder wird disposed)
@@ -64,12 +68,12 @@ namespace RetroScrap2000.Tools
 			var abs = FileTools.ResolveMediaPath(baseDir, relOrAbsPath);
 			if (string.IsNullOrEmpty(abs) )
 			{
-				Trace.WriteLine($"[Tools.LoadImageCachedAsync]: ResolveMediaPath() from {relOrAbsPath} not success!");
+				Log.Debug($"[Tools::LoadImageCachedAsync]: ResolveMediaPath() from {relOrAbsPath} not success!");
 				return null;
 			}
 			else if ( !System.IO.File.Exists(abs))
 			{
-				Trace.WriteLine($"[Tools.LoadImageCachedAsync]: File not found: {abs}");
+				Log.Debug($"[Tools.LoadImageCachedAsync]: File not found: {abs}");
 				return null;
 			}
 
@@ -191,11 +195,11 @@ namespace RetroScrap2000.Tools
 				// Wichtig: Das entfernte Image-Objekt muss freigegeben werden,
 				// damit die Systemressourcen (Handles) nicht hängen bleiben.
 				removedImage.Dispose();
-				Trace.WriteLine($"Cache Invalidate: {absoluteFilePath} removed and disposed.");
+				Log.Debug($"Cache Invalidate: {absoluteFilePath} removed and disposed.");
 			}
 			else
 			{
-				Trace.WriteLine($"Cache Invalidate: {absoluteFilePath} not found in cache or removal failed.");
+				Log.Debug($"Cache Invalidate: {absoluteFilePath} not found in cache or removal failed.");
 			}
 		}
 
@@ -256,7 +260,7 @@ namespace RetroScrap2000.Tools
 			if (string.IsNullOrWhiteSpace(absolutePath) || !System.IO.File.Exists(absolutePath))
 				return null;
 
-			Trace.WriteLine("LoadBitmapNoLock(" + absolutePath + ")");
+			Log.Debug($"LoadBitmapNoLock(\"{absolutePath}\")");
 			try
 			{
 				using var fs = new FileStream(absolutePath, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -265,7 +269,7 @@ namespace RetroScrap2000.Tools
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine(ex.Message);
+				Log.Debug(Utils.GetExcMsg(ex));
 				return null;
 			}
 		}

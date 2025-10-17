@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
@@ -34,7 +36,10 @@ namespace RetroScrap2000.Tools
 			if (!System.IO.File.Exists(tempVideo))
 			{
 				Directory.CreateDirectory(Path.GetDirectoryName(tempVideo)!);
+				string urllogstring = videoUrl.Substring(videoUrl.IndexOf("?") + 1) + "xxxxxx";
+				Log.Information($"VideoTools::LoadVideoPreviewFromUrlAsync(\"{urllogstring}\")");
 				var bytes = await _http.GetByteArrayAsync(videoUrl, ct);
+				Log.Debug(videoUrl);
 				await System.IO.File.WriteAllBytesAsync(tempVideo, bytes, ct);
 			}
 
@@ -135,8 +140,8 @@ namespace RetroScrap2000.Tools
 
 			using var proc = new Process { StartInfo = psi, EnableRaisingEvents = true };
 
-			proc.OutputDataReceived += (_, e) => { if (e.Data != null) Trace.WriteLine("[FFMPEG-OUT] " + e.Data); };
-			proc.ErrorDataReceived += (_, e) => { if (e.Data != null) Trace.WriteLine("[FFMPEG-ERR] " + e.Data); };
+			proc.OutputDataReceived += (_, e) => { if (e.Data != null) Log.Debug("[FFMPEG-OUT] " + e.Data); };
+			proc.ErrorDataReceived += (_, e) => { if (e.Data != null) Log.Debug("[FFMPEG-OUT] " + e.Data); };
 
 			if (!proc.Start())
 				throw new InvalidOperationException("FFmpeg could not started.");

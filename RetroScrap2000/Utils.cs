@@ -140,7 +140,7 @@ namespace RetroScrap2000
 			int totalWidth = (flowLayoutPanel.Controls.Count * CONTROL_WIDTH) +
 											 (flowLayoutPanel.Controls.Count * MARGIN) +
 											 SCROLLBAR_SAFETY_MARGIN;
-			Trace.WriteLine($"ForceHorizontalScroll: Widht: {totalWidth}");
+
 			// Nur setzen, wenn die berechnete Breite größer ist als die aktuelle Breite des Host-Panels.
 			// Wir setzen hier die Breite des FlowLayoutPanel (des Kindes)
 			if (totalWidth > flowLayoutPanel.Parent!.ClientRectangle.Width)

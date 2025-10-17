@@ -456,4 +456,13 @@
   <data name="Txt_Msg_Question_GroupFilesM3U_2" xml:space="preserve">
     <value>Would you like to continue?</value>
   </data>
+  <data name="Txt_Msg_Error_CriticalShutdown" xml:space="preserve">
+    <value>A critical error has occurred and the entire application will be terminated.</value>
+  </data>
+  <data name="Txt_Msg_Error_CriticalShutdownWithLog" xml:space="preserve">
+    <value>A critical error has occurred and the entire application will be terminated. Details have been logged.</value>
+  </data>
+  <data name="Txt_Log_DailyLimitReached" xml:space="preserve">
+    <value>The daily limit has been reached.</value>
+  </data>
 </root>

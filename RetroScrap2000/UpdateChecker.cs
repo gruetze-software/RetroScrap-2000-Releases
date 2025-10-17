@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -79,7 +80,7 @@ namespace RetroScrap2000
 
 			try
 			{
-				Trace.WriteLine($"Checking for new version at {_githuburl}/{_githubrepo}/releases/latest");
+				Log.Information($"Checking for new version at {_githuburl}/{_githubrepo}/releases/latest");
 
 				var response = await client.GetStringAsync($"{_githuburl}/{_githubrepo}/releases/latest");
 				// Der response-String ist ein JSON-Objekt
@@ -87,7 +88,7 @@ namespace RetroScrap2000
 			}
 			catch (HttpRequestException e)
 			{
-				Trace.WriteLine("Exception!!! [UpdateChecker::GetLatestGitHubVersion()] " + Utils.GetExcMsg(e));
+				Log.Error("Error [UpdateChecker::GetLatestGitHubVersion()]: " + Utils.GetExcMsg(e));
 				// Fehlerbehandlung bei fehlgeschlagener Anfrage
 				return null;
 			}

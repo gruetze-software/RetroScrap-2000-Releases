@@ -89,6 +89,7 @@
 			colMMSystem = new ColumnHeader();
 			colMMXML = new ColumnHeader();
 			colMMPath = new ColumnHeader();
+			colMMRelPath = new ColumnHeader();
 			tabPageAppInfo = new TabPage();
 			tableLayoutPanelInfo = new TableLayoutPanel();
 			tableLayoutPanelIcons = new TableLayoutPanel();
@@ -113,7 +114,9 @@
 			label3 = new Label();
 			labelInfoProduct = new Label();
 			linkLabel1 = new LinkLabel();
-			colMMRelPath = new ColumnHeader();
+			groupBox7 = new GroupBox();
+			checkBoxOptRomScanStartup = new CheckBox();
+			checkBoxOptLogging = new CheckBox();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
 			tabControlOptions.SuspendLayout();
@@ -134,6 +137,7 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxAppIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).BeginInit();
 			tableLayoutPanelAppText.SuspendLayout();
+			groupBox7.SuspendLayout();
 			SuspendLayout();
 			// 
 			// buttonCancel
@@ -246,6 +250,7 @@
 			// 
 			// tabPageLang
 			// 
+			tabPageLang.Controls.Add(groupBox7);
 			tabPageLang.Controls.Add(groupBox4);
 			tabPageLang.Controls.Add(groupBox3);
 			tabPageLang.Controls.Add(groupBox1);
@@ -552,6 +557,10 @@
 			// 
 			resources.ApplyResources(colMMPath, "colMMPath");
 			// 
+			// colMMRelPath
+			// 
+			resources.ApplyResources(colMMRelPath, "colMMRelPath");
+			// 
 			// tabPageAppInfo
 			// 
 			tabPageAppInfo.Controls.Add(tableLayoutPanelInfo);
@@ -709,9 +718,25 @@
 			linkLabel1.Name = "linkLabel1";
 			linkLabel1.TabStop = true;
 			// 
-			// colMMRelPath
+			// groupBox7
 			// 
-			resources.ApplyResources(colMMRelPath, "colMMRelPath");
+			resources.ApplyResources(groupBox7, "groupBox7");
+			groupBox7.Controls.Add(checkBoxOptLogging);
+			groupBox7.Controls.Add(checkBoxOptRomScanStartup);
+			groupBox7.Name = "groupBox7";
+			groupBox7.TabStop = false;
+			// 
+			// checkBoxOptRomScanStartup
+			// 
+			resources.ApplyResources(checkBoxOptRomScanStartup, "checkBoxOptRomScanStartup");
+			checkBoxOptRomScanStartup.Name = "checkBoxOptRomScanStartup";
+			checkBoxOptRomScanStartup.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxOptLogging
+			// 
+			resources.ApplyResources(checkBoxOptLogging, "checkBoxOptLogging");
+			checkBoxOptLogging.Name = "checkBoxOptLogging";
+			checkBoxOptLogging.UseVisualStyleBackColor = true;
 			// 
 			// FormOptions
 			// 
@@ -750,6 +775,8 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).EndInit();
 			tableLayoutPanelAppText.ResumeLayout(false);
 			tableLayoutPanelAppText.PerformLayout();
+			groupBox7.ResumeLayout(false);
+			groupBox7.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -840,5 +867,8 @@
 		private Button buttonOptMMScan;
 		private CheckBox checkBoxOptMMRelPath;
 		private ColumnHeader colMMRelPath;
+		private GroupBox groupBox7;
+		private CheckBox checkBoxOptLogging;
+		private CheckBox checkBoxOptRomScanStartup;
 	}
 }

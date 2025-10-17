@@ -1,4 +1,5 @@
 ﻿using RetroScrap2000.Tools;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,7 +33,7 @@ namespace RetroScrap2000
 			var gameList = selectedGames.ToList();
 			if (gameList.Count < 2)
 			{
-				Trace.WriteLine("M3U-Generierung abgebrochen: Es müssen mindestens zwei Einträge ausgewählt sein.");
+				Log.Error("M3U generation canceled: At least two entries must be selected.");
 				return null;
 			}
 
@@ -41,7 +42,7 @@ namespace RetroScrap2000
 
 			if (string.IsNullOrEmpty(m3uFileName))
 			{
-				Trace.WriteLine("Fehler: Die M3U-Datei konnte nicht erstellt werden.");
+				Log.Error("M3U-File does not created.");
 				return null;
 			}
 
@@ -61,7 +62,7 @@ namespace RetroScrap2000
 
 			if (deletedCount != gameList.Count)
 			{
-				Trace.WriteLine($"Warnung: {gameList.Count - deletedCount} der Quell-Einträge konnten nicht aus der In-Memory-Liste entfernt werden.");
+				Log.Warning($"{gameList.Count - deletedCount} of the source entries could not be removed from the in-memory list.");
 			}
 
 			// 3. Neuen GameEntry für die M3U-Datei erstellen und hinzufügen
@@ -103,7 +104,7 @@ namespace RetroScrap2000
 			// Sortieren Sie die gesamte Liste neu, damit der neue M3U-Eintrag korrekt einsortiert wird
 			this.Games.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
 
-			Trace.WriteLine($"Erfolg: M3U '{m3uFileName}' erstellt und {deletedCount} Quell-Einträge entfernt.");
+			Log.Information($"Success: M3U '{m3uFileName}' is created and {deletedCount} source entries deleted.");
 
 			// Wichtig: Setzen Sie ein Flag, das dem Hauptprogramm signalisiert, dass die XML-Datei 
 			// gespeichert werden muss.

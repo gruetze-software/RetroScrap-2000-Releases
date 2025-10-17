@@ -1,5 +1,6 @@
 ﻿using RetroScrap2000;
 using RetroScrap2000.Tools;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -43,10 +44,13 @@ public class GameManager
 				SystemList.Remove(key);
 			SystemList.Add(key, gl);
 		}
-		if (loadresult.HasChanges && gl.Games.Count > 0)
+		if (loadresult.NewRoms != null && loadresult.NewRoms.Count > 0 )
 		{
-			Trace.WriteLine("" + sys.Name_eu + ": Änderungen in der gamelist.xml erkannt. Save...");
-			sys.SaveAllRomsToGamelistXml(RomPath, gl.Games);
+			Log.Information($"[{sys}]: new roms detected. Save gamelist.xml...");
+			// Wir tun so, als wäre diese bereits gescrapt:
+			foreach (var rom in loadresult.NewRoms)
+				rom.State = eState.Scraped;
+			sys.SaveAllScrapedRomsToGamelistXml(xmlpath, loadresult.NewRoms);
 			// KRITISCH: Den Cache leeren, da die Datei auf der Platte geändert wurde!
 			GameListXmlCache.ClearCache();
 		}
@@ -84,7 +88,7 @@ public class GameManager
 				RetroSystem? system = systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == key.ToLower());
 				if (system == null)
 				{
-					Trace.WriteLine($"Warnung: Kein System für den Ordner '{key}' gefunden. Überspringe...");
+					Log.Warning($"No system found for the folder '{key}'. Skipping...");
 					continue;
 				}
 				var xmlfile = Path.Combine(RomPath, sysDir, "gamelist.xml");
@@ -154,7 +158,7 @@ public class GameListLoader
 
 				if (deleteAllReferences && duplicates.Count > 1)
 				{
-					Trace.WriteLine($"Warnung: Mehrere Einträge ({duplicates.Count}) mit dem Pfad '{rom.Path}' gefunden. Lösche alle...");
+					Log.Warning($"Multiple entries ({duplicates.Count}) with the path '{rom.Path}' found. Deleting all...");
 					foreach (var dup in duplicates)
 					{
 						dup.Remove();
@@ -225,7 +229,7 @@ public class GameListLoader
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Fehler beim Löschen oder Speichern der XML: {Utils.GetExcMsg(ex)}");
+				Log.Error($"Error deleting or saving the XML: {Utils.GetExcMsg(ex)}");
 				return false;
 			}
 		}
@@ -277,7 +281,7 @@ public class GameListLoader
 		{
 			// Fehlerbehandlung, falls das Laden der XML fehlschlägt
 			// Sie können hier eine Meldung loggen
-			Trace.WriteLine($"Fehler beim Prüfen der XML-Datei: {Utils.GetExcMsg(ex)}");
+			Log.Information($"Error checking the XML: {Utils.GetExcMsg(ex)}");
 			return null;
 		}
 	}
@@ -290,15 +294,17 @@ public class GameListLoader
 	/// <returns>True, wenn Änderungen vorgenommen und gespeichert wurden, andernfalls false.</returns>
 	public static (int anzRomDelete, int anzMediaDelete) CleanGamelistXmlByExistence(string xmlPath)
 	{
+		Log.Information("Start CleanGamelistXmlByExistence()...");
 		if (!File.Exists(xmlPath))
 		{
+			Log.Error($"{xmlPath} not exist.");
 			return (0 ,0);
 		}
 
 		var romDirectory = Path.GetDirectoryName(xmlPath);
 		if (string.IsNullOrEmpty(romDirectory) || !Directory.Exists(romDirectory))
 		{
-			Trace.WriteLine("Fehler: Das ROM-Verzeichnis konnte nicht gefunden werden.");
+			Log.Error("Rom-Path not found.");
 			return (0, 0); 
 		}
 
@@ -364,7 +370,7 @@ public class GameListLoader
 					if (relativePathInXml != actualCaseSensitiveRelativePath)
 					{
 						// FEHLER: Der XML-Eintrag hat die falsche Case-Schreibweise!
-						Trace.WriteLine($"Entferne Eintrag (falsche Case-Schreibweise): XML: {relativePathInXml}, Richtig: {actualCaseSensitiveRelativePath}");
+						Log.Information($"Remove entry (false case-sentive spelling): XML: {relativePathInXml}, right: {actualCaseSensitiveRelativePath}");
 						elementsWithWrongCase.Add(gameElement);
 						anzRoms++;
 						changesMade = true;
@@ -376,7 +382,7 @@ public class GameListLoader
 					if (actualPathRegistry.ContainsKey(actualCaseSensitiveRelativePath))
 					{
 						// Ein zweites XML-Element verweist auf dieselbe reale Datei.
-						Trace.WriteLine($"Entferne Duplikat-Eintrag (doppelter ROM-Pfad): {relativePathInXml}");
+						Log.Information($"Remove duplicate entry (duplicate ROM path): \"{relativePathInXml}\"");
 						elementsToRemove.Add(gameElement);
 						anzRoms++;
 						changesMade = true;
@@ -405,7 +411,7 @@ public class GameListLoader
 
 						if (!File.Exists(absoluteRomPath))
 						{
-							Trace.WriteLine($"Entferne Eintrag, da ROM-Datei nicht existiert: {pathElement.Value}");
+							Log.Information($"Remove entry, rom file not exist: {pathElement.Value}");
 							elementsToRemove.Add(gameElement);
 							anzRoms++;
 							changesMade = true;
@@ -427,7 +433,7 @@ public class GameListLoader
 							imageElement.Remove();
 							changesMade = true;
 							anzMedia++;
-							Trace.WriteLine($"Entferne <image>-Tag für {gameElement.Element("name")?.Value}, da Mediendatei fehlt.");
+							Log.Information($"Remove <image>-Tag for \"{gameElement.Element("name")?.Value}\", \"{absoluteImagePath}\" not exist.");
 						}
 					}
 
@@ -440,7 +446,7 @@ public class GameListLoader
 							videoElement.Remove();
 							changesMade = true;
 							anzMedia++;
-							Trace.WriteLine($"Entferne <video>-Tag für {gameElement.Element("name")?.Value}, da Mediendatei fehlt.");
+							Log.Information($"Remove <video>-Tag for \"{gameElement.Element("name")?.Value}\", \"{absoluteVideoPath}\" not exist.");
 						}
 					}
 
@@ -467,38 +473,37 @@ public class GameListLoader
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Fehler beim Bereinigen der XML: {ex.Message}");
+				Log.Error(Utils.GetExcMsg(ex));
 				return (0, 0);
 			}
 		}
 	}
 
-	public (GameList Games, bool HasChanges) Load(string? xmlPath, RetroSystem? system)
+	public (GameList Games, List<GameEntry>? NewRoms) Load(string? xmlPath, RetroSystem? system)
 	{
-		if (string.IsNullOrEmpty(xmlPath) || system == null)
-			return (new GameList(), false);
+		List<GameEntry> newroms = new List<GameEntry>();
 
+		if (string.IsNullOrEmpty(xmlPath) || system == null || system == null)
+			return (new GameList(), newroms);
+
+		Log.Information($"[{system}]: GameListLoader::Load() starting... (path: \"{xmlPath}\")");
 		// Die ROMs werden typischerweise im selben Ordner wie die XML-Datei gespeichert.
 		var romDirectory = Path.GetDirectoryName(xmlPath);
 		if (string.IsNullOrEmpty(romDirectory) || !Directory.Exists(romDirectory))
 		{
-			Trace.WriteLine("ROM-Verzeichnis nicht gefunden.");
-			return (new GameList(), false);
+			Log.Error($"[{system}]: ROM-Path not found.");
+			return (new GameList(), newroms);
 		}
 
 		// Die Liste, die wir aufbauen werden. Starten mit einer leeren Liste.
 		GameList loadedList = new GameList { RetroSys = system };
 
-		bool hasChanges = false;
 		// Schritt 1: Versuchen, die gamelist.xml zu laden
 		
 		try
 		{
 			if (File.Exists(xmlPath))
 			{
-				// Erstmal bereinigen TODO: Das dauert ewig und sollte als extra Methode auf der GUI sein
-				// Vielleicht als "Experten-Tab" iun den Optionenß
-				//CleanGamelistXmlByExistence(xmlPath);
 				var serializer = new XmlSerializer(typeof(GameList));
 				using var fs = new FileStream(xmlPath, FileMode.Open);
 				loadedList = (GameList)serializer.Deserialize(fs)!;
@@ -510,13 +515,13 @@ public class GameListLoader
 			}
 			else
 			{
-				hasChanges = true;
-				Trace.WriteLine($"XML-Datei nicht gefunden, erstelle neue Liste für {system.Name_eu}.");
+				Log.Information($"[{system}]: No xml-File found");
+				loadedList = new GameList { RetroSys = system };
 			}
 		}
 		catch (Exception ex)
 		{
-			Trace.WriteLine($"Fehler beim Laden der XML: {Utils.GetExcMsg(ex)}");
+			Log.Error(Utils.GetExcMsg(ex));
 			loadedList = new GameList { RetroSys = system }; // Leere Liste bei Fehler
 			
 		}
@@ -525,7 +530,8 @@ public class GameListLoader
 				loadedList.Games
 						.Select(g => g.Path)
 						.Where(p => p != null)
-						.Select(p => FileTools.NormalizeRelativePath(p!)));
+						.Select(p => FileTools.NormalizeRelativePath(p!)),
+						StringComparer.OrdinalIgnoreCase);
 
 		// Definieren der Dateierweiterungen, die ausgeschlossen werden 
 		var excludedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -576,8 +582,8 @@ public class GameListLoader
 					};
 
 					loadedList.Games.Add(newEntry);
-					hasChanges = true;
-					Trace.WriteLine($"{system.Name_eu}: Neuen M3U-Eintrag hinzugefügt: \"{newEntry.Name}\"");
+					newroms.Add(newEntry);
+					Log.Information($"[{system}]: New M3U-Entry added: \"{newEntry.FileName}\"");
 				}
 			}
 		}
@@ -593,6 +599,8 @@ public class GameListLoader
 						.Where(filePath => Path.GetExtension(filePath).ToLowerInvariant() != ".m3u")
 						.ToList();
 
+		Log.Information($"[{system}]: roms with path in xml: {pathsInXml.Count}.");
+
 		foreach (var romFile in existingRomsOnDisk)
 		{
 			// 1. Erzeuge den relativen Pfad (dieser enthält dein "./" oder den relativen Ordner)
@@ -604,11 +612,11 @@ public class GameListLoader
 			// Überspringe ROMs, die in einer M3U referenziert werden!
 			if (m3uReferencedPaths.Contains(normalizedPathForComparison))
 			{
-				Trace.WriteLine($"Ignoriere Disc-ROM {Path.GetFileName(romFile)}, da in M3U referenziert.");
+				Log.Debug($"[{system}]: Ignore Disc-ROM {Path.GetFileName(romFile)}, as referenced in m3u file.");
 				continue;
 			}
-
-			// Jetzt prüfen: Ist der NORMALISIERTE Pfad bereits in der normalisierten XML-Liste?
+					
+			// Rom noch nicht in xml?
 			if (!pathsInXml.Contains(normalizedPathForComparison))
 			{
 				string fileNameWithoutExt = Utils.GetNameFromFile(romFile);
@@ -625,17 +633,18 @@ public class GameListLoader
 					};
 
 					loadedList.Games.Add(newEntry);
-					hasChanges = true;
-					Trace.WriteLine($"{system.Name_eu}: Neuen Eintrag hinzugefügt: \"{newEntry.Name}\"");
+					newroms.Add(newEntry);
+					Log.Information($"[{system}]: new entry add: \"{newEntry.FileName}\"");
 				}
 			}
 		}
 
+		Log.Information($"[{system}]: new roms without path in xml: {newroms.Count}.");
 		// Sortieren Sie die gesamte Liste nach dem Dateinamen
 		loadedList.Games.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
-		Trace.WriteLine("Load success " + system.Name_eu + ": Gesamtanzahl der Einträge in der gamelist.xml: " + loadedList.Games.Count);
+		Log.Information($"[{system}]: Load {loadedList.Games.Count} entries.");
 
-		return (loadedList, hasChanges);
+		return (loadedList, newroms);
 	}
 }
 

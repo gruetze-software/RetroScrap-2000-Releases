@@ -27,6 +27,8 @@ namespace RetroScrap2000
 		public string? RomPath { get; set; }
 		public string? Language { get; set; }
 		public string? Region { get; set; }
+		public bool? ScanRomStartup { get; set; }
+		public bool? Logging { get; set; }
 		public string? ApiUser { get; set; }
 		public bool? MediaBoxImage { get; set; }
 		public bool? MediaVideo { get; set; }
@@ -110,6 +112,11 @@ namespace RetroScrap2000
 		private static string GetOptionsFile()
 		{
 			return Path.Combine(GetOptionsPath(), "options.json");
+		}
+
+		public static string GetLoggingFile()
+		{
+			return Path.Combine(GetOptionsPath(), "logs", "retroscrap.log");
 		}
 
 		public string GetLanguageShortCode()
