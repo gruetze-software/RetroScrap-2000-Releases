@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -123,8 +123,44 @@
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Paramètre de langue</value>
   </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Région :</value>
+  </data>
   <data name="labelHelpLang.Text" xml:space="preserve">
     <value>Paramétrage de la langue de l'application et des données à extraire.</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Mot de passe :</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Nom :</value>
+  </data>
+  <data name="checkBoxOptLogging.Text" xml:space="preserve">
+    <value>Exploitation forestière</value>
+  </data>
+  <data name="checkBoxOptRomScanStartup.Text" xml:space="preserve">
+    <value>Analyse du ROM au démarrage</value>
+  </data>
+  <data name="groupBox7.Text" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Soutien</value>
+  </data>
+  <data name="tabPageLang.Text" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="tabPageScrap.Text" xml:space="preserve">
+    <value>Scrap Données utilisateur</value>
+  </data>
+  <data name="tabPageScrapData.Text" xml:space="preserve">
+    <value>Scrap données</value>
+  </data>
+  <data name="tabPageCustom.Text" xml:space="preserve">
+    <value>Support manuel</value>
+  </data>
+  <data name="tabPageAppInfo.Text" xml:space="preserve">
+    <value>Infos</value>
   </data>
   <data name="labelDonText.Text" xml:space="preserve">
     <value>RetroScrap 2000 est un projet passion pour moi. J'apprécie chaque petit don qui m'aide à investir plus de temps personnel dans le développement de l'application. Suivez le lien pour faire un petit don :</value>
@@ -144,9 +180,6 @@
   <data name="checkBoxMediaVideo.Text" xml:space="preserve">
     <value>Video (aperçu du gameplay)</value>
   </data>
-  <data name="checkBoxMediaThumbnail.Text" xml:space="preserve">
-    <value>Thumbnail (image réduite pour les vues de liste)</value>
-  </data>
   <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
     <value>Image (souvent la jaquette de face ou une capture d'écran)</value>
   </data>
@@ -161,5 +194,69 @@
   </data>
   <data name="checkBoxMediaFanart.Text" xml:space="preserve">
     <value>Fanart (Grande image de fond / Wallpaper pour les détails)</value>
+  </data>
+  <data name="buttonOptMMScan.Text" xml:space="preserve">
+    <value>Analysez les Roms et configurez les médias manuels...</value>
+  </data>
+  <data name="buttonOptDelete.Text" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>Données du répertoire personnalisé</value>
+  </data>
+  <data name="checkBoxOptMMRelPath.Text" xml:space="preserve">
+    <value>utiliser comme chemin relatif</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>ROM Système :</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Nom :</value>
+  </data>
+  <data name="radioButtonOptMMAllSystems.Text" xml:space="preserve">
+    <value>Tous les systèmes</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>Modèles de fichiers :</value>
+  </data>
+  <data name="radioButtonOptMMSystem.Text" xml:space="preserve">
+    <value>Seulement pour</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Répertoire de base :</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonOptMMPath.Text" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Clé XML :</value>
+  </data>
+  <data name="buttonOptMMAdd.Text" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="colMMName.Text" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="colMMSystem.Text" xml:space="preserve">
+    <value>Système</value>
+  </data>
+  <data name="colMMXML.Text" xml:space="preserve">
+    <value>Clé XML</value>
+  </data>
+  <data name="colMMPath.Text" xml:space="preserve">
+    <value>Répertoire de base</value>
+  </data>
+  <data name="colMMRelPath.Text" xml:space="preserve">
+    <value>Chemin relatif</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Entreprise :</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Produit :</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Options</value>
   </data>
 </root>

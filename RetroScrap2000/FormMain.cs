@@ -209,6 +209,7 @@ namespace RetroScrap2000
 			RomDetailsToolStripMenuItem.Image = Properties.Resources.info16;
 			SystemDetailsToolStripMenuItem.Image = Properties.Resources.info16;
 			RomfavoriteToolStripMenuItem.Image = Properties.Resources.favorite16;
+			RomGrouptoolStripMenuItem.Image = Properties.Resources.group16;
 
 			_loadTimer.Enabled = true;
 			_loadTimer.Start();
