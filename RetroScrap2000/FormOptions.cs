@@ -57,16 +57,14 @@ namespace RetroScrap2000
 
 			ImageList imgTab = new ImageList() { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			imgTab.Images.Add("general", Properties.Resources.general32); // Allgemein
-			imgTab.Images.Add("scrapuser", Properties.Resources.user32); // Scrap
 			imgTab.Images.Add("scrapdata", Properties.Resources.media32); // Scrap-Daten
 			imgTab.Images.Add("custom", Properties.Resources.custom32); // Info
 			imgTab.Images.Add("info", Properties.Resources.info32); // Info
 			tabControlOptions.ImageList = imgTab;
 			tabControlOptions.TabPages[0].ImageKey = "general";
-			tabControlOptions.TabPages[1].ImageKey = "scrapuser";
-			tabControlOptions.TabPages[2].ImageKey = "scrapdata";
-			tabControlOptions.TabPages[3].ImageKey = "custom";
-			tabControlOptions.TabPages[4].ImageKey = "info";
+			tabControlOptions.TabPages[1].ImageKey = "scrapdata";
+			tabControlOptions.TabPages[2].ImageKey = "custom";
+			tabControlOptions.TabPages[3].ImageKey = "info";
 			RetroSystemList = retroSystemList;
 		}
 

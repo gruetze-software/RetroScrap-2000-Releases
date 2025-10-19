@@ -57,7 +57,7 @@ namespace RetroScrap2000
 			// Pfade
 			string xmlPath = romPath;
 			if (!romPath.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
-				xmlPath = Path.Combine(romPath, "gamelist.xml");
+					xmlPath = Path.Combine(romPath, "gamelist.xml");
 			var backupPath = xmlPath + ".bak";
 			var tempPath = xmlPath + ".tmp";
 

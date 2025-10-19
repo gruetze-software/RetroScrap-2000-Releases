@@ -37,14 +37,19 @@
 			labelHelpLang = new Label();
 			comboBoxLanguage = new ComboBox();
 			groupBox2 = new GroupBox();
+			tableLayoutPanelScrapLogin = new TableLayoutPanel();
 			listBoxApiTest = new ListBox();
-			buttonApiTest = new Button();
-			textBoxApiPwd = new TextBox();
-			textBoxApiLogin = new TextBox();
-			label2 = new Label();
+			tableLayoutPanelScrapLoginLeft = new TableLayoutPanel();
 			label1 = new Label();
+			textBoxApiLogin = new TextBox();
+			textBoxApiPwd = new TextBox();
+			label2 = new Label();
+			buttonApiTest = new Button();
 			tabControlOptions = new TabControl();
 			tabPageLang = new TabPage();
+			groupBox7 = new GroupBox();
+			checkBoxOptLogging = new CheckBox();
+			checkBoxOptRomScanStartup = new CheckBox();
 			groupBox4 = new GroupBox();
 			linkLabelDonate = new LinkLabel();
 			labelDonText = new Label();
@@ -55,16 +60,17 @@
 			radioButtonRetroArch = new RadioButton();
 			radioButtonBatocera = new RadioButton();
 			tabPageScrap = new TabPage();
-			tabPageScrapData = new TabPage();
+			splitContainerScrapData = new SplitContainer();
 			groupBox5 = new GroupBox();
-			checkBoxMediaMap = new CheckBox();
-			checkBoxMediaManual = new CheckBox();
-			checkBoxMediaVideo = new CheckBox();
+			tableLayoutPanelScrapMedia = new TableLayoutPanel();
 			checkBoxMediaImageBox = new CheckBox();
-			checkBoxMediaWheel = new CheckBox();
-			checkBoxMediaScreenshot = new CheckBox();
-			checkBoxMediaMarquee = new CheckBox();
+			checkBoxMediaMap = new CheckBox();
+			checkBoxMediaVideo = new CheckBox();
+			checkBoxMediaManual = new CheckBox();
 			checkBoxMediaFanart = new CheckBox();
+			checkBoxMediaWheel = new CheckBox();
+			checkBoxMediaMarquee = new CheckBox();
+			checkBoxMediaScreenshot = new CheckBox();
 			tabPageCustom = new TabPage();
 			buttonOptMMScan = new Button();
 			buttonOptDelete = new Button();
@@ -94,7 +100,7 @@
 			tableLayoutPanelInfo = new TableLayoutPanel();
 			tableLayoutPanelIcons = new TableLayoutPanel();
 			pictureBoxScrap = new PictureBox();
-			tableLayoutPanel1 = new TableLayoutPanel();
+			tableLayoutPanelInfoLeft = new TableLayoutPanel();
 			pictureBoxAppIcon = new PictureBox();
 			pictureBoxCompany = new PictureBox();
 			tableLayoutPanelAppText = new TableLayoutPanel();
@@ -114,30 +120,33 @@
 			label3 = new Label();
 			labelInfoProduct = new Label();
 			linkLabel1 = new LinkLabel();
-			groupBox7 = new GroupBox();
-			checkBoxOptRomScanStartup = new CheckBox();
-			checkBoxOptLogging = new CheckBox();
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
+			tableLayoutPanelScrapLogin.SuspendLayout();
+			tableLayoutPanelScrapLoginLeft.SuspendLayout();
 			tabControlOptions.SuspendLayout();
 			tabPageLang.SuspendLayout();
+			groupBox7.SuspendLayout();
 			groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxDonation).BeginInit();
 			groupBox3.SuspendLayout();
 			tabPageScrap.SuspendLayout();
-			tabPageScrapData.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)splitContainerScrapData).BeginInit();
+			splitContainerScrapData.Panel1.SuspendLayout();
+			splitContainerScrapData.Panel2.SuspendLayout();
+			splitContainerScrapData.SuspendLayout();
 			groupBox5.SuspendLayout();
+			tableLayoutPanelScrapMedia.SuspendLayout();
 			tabPageCustom.SuspendLayout();
 			groupBox6.SuspendLayout();
 			tabPageAppInfo.SuspendLayout();
 			tableLayoutPanelInfo.SuspendLayout();
 			tableLayoutPanelIcons.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxScrap).BeginInit();
-			tableLayoutPanel1.SuspendLayout();
+			tableLayoutPanelInfoLeft.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxAppIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).BeginInit();
 			tableLayoutPanelAppText.SuspendLayout();
-			groupBox7.SuspendLayout();
 			SuspendLayout();
 			// 
 			// buttonCancel
@@ -193,21 +202,54 @@
 			// 
 			// groupBox2
 			// 
+			groupBox2.Controls.Add(tableLayoutPanelScrapLogin);
 			resources.ApplyResources(groupBox2, "groupBox2");
-			groupBox2.Controls.Add(listBoxApiTest);
-			groupBox2.Controls.Add(buttonApiTest);
-			groupBox2.Controls.Add(textBoxApiPwd);
-			groupBox2.Controls.Add(textBoxApiLogin);
-			groupBox2.Controls.Add(label2);
-			groupBox2.Controls.Add(label1);
 			groupBox2.Name = "groupBox2";
 			groupBox2.TabStop = false;
+			// 
+			// tableLayoutPanelScrapLogin
+			// 
+			resources.ApplyResources(tableLayoutPanelScrapLogin, "tableLayoutPanelScrapLogin");
+			tableLayoutPanelScrapLogin.Controls.Add(listBoxApiTest, 1, 0);
+			tableLayoutPanelScrapLogin.Controls.Add(tableLayoutPanelScrapLoginLeft, 0, 0);
+			tableLayoutPanelScrapLogin.Name = "tableLayoutPanelScrapLogin";
 			// 
 			// listBoxApiTest
 			// 
 			resources.ApplyResources(listBoxApiTest, "listBoxApiTest");
 			listBoxApiTest.FormattingEnabled = true;
 			listBoxApiTest.Name = "listBoxApiTest";
+			// 
+			// tableLayoutPanelScrapLoginLeft
+			// 
+			resources.ApplyResources(tableLayoutPanelScrapLoginLeft, "tableLayoutPanelScrapLoginLeft");
+			tableLayoutPanelScrapLoginLeft.Controls.Add(label1, 0, 0);
+			tableLayoutPanelScrapLoginLeft.Controls.Add(textBoxApiLogin, 0, 1);
+			tableLayoutPanelScrapLoginLeft.Controls.Add(textBoxApiPwd, 0, 3);
+			tableLayoutPanelScrapLoginLeft.Controls.Add(label2, 0, 2);
+			tableLayoutPanelScrapLoginLeft.Controls.Add(buttonApiTest, 0, 5);
+			tableLayoutPanelScrapLoginLeft.Name = "tableLayoutPanelScrapLoginLeft";
+			// 
+			// label1
+			// 
+			resources.ApplyResources(label1, "label1");
+			label1.Name = "label1";
+			// 
+			// textBoxApiLogin
+			// 
+			resources.ApplyResources(textBoxApiLogin, "textBoxApiLogin");
+			textBoxApiLogin.Name = "textBoxApiLogin";
+			// 
+			// textBoxApiPwd
+			// 
+			resources.ApplyResources(textBoxApiPwd, "textBoxApiPwd");
+			textBoxApiPwd.Name = "textBoxApiPwd";
+			textBoxApiPwd.UseSystemPasswordChar = true;
+			// 
+			// label2
+			// 
+			resources.ApplyResources(label2, "label2");
+			label2.Name = "label2";
 			// 
 			// buttonApiTest
 			// 
@@ -216,33 +258,11 @@
 			buttonApiTest.UseVisualStyleBackColor = true;
 			buttonApiTest.Click += buttonApiTest_Click;
 			// 
-			// textBoxApiPwd
-			// 
-			resources.ApplyResources(textBoxApiPwd, "textBoxApiPwd");
-			textBoxApiPwd.Name = "textBoxApiPwd";
-			textBoxApiPwd.UseSystemPasswordChar = true;
-			// 
-			// textBoxApiLogin
-			// 
-			resources.ApplyResources(textBoxApiLogin, "textBoxApiLogin");
-			textBoxApiLogin.Name = "textBoxApiLogin";
-			// 
-			// label2
-			// 
-			resources.ApplyResources(label2, "label2");
-			label2.Name = "label2";
-			// 
-			// label1
-			// 
-			resources.ApplyResources(label1, "label1");
-			label1.Name = "label1";
-			// 
 			// tabControlOptions
 			// 
 			resources.ApplyResources(tabControlOptions, "tabControlOptions");
 			tabControlOptions.Controls.Add(tabPageLang);
 			tabControlOptions.Controls.Add(tabPageScrap);
-			tabControlOptions.Controls.Add(tabPageScrapData);
 			tabControlOptions.Controls.Add(tabPageCustom);
 			tabControlOptions.Controls.Add(tabPageAppInfo);
 			tabControlOptions.Name = "tabControlOptions";
@@ -257,6 +277,26 @@
 			resources.ApplyResources(tabPageLang, "tabPageLang");
 			tabPageLang.Name = "tabPageLang";
 			tabPageLang.UseVisualStyleBackColor = true;
+			// 
+			// groupBox7
+			// 
+			resources.ApplyResources(groupBox7, "groupBox7");
+			groupBox7.Controls.Add(checkBoxOptLogging);
+			groupBox7.Controls.Add(checkBoxOptRomScanStartup);
+			groupBox7.Name = "groupBox7";
+			groupBox7.TabStop = false;
+			// 
+			// checkBoxOptLogging
+			// 
+			resources.ApplyResources(checkBoxOptLogging, "checkBoxOptLogging");
+			checkBoxOptLogging.Name = "checkBoxOptLogging";
+			checkBoxOptLogging.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxOptRomScanStartup
+			// 
+			resources.ApplyResources(checkBoxOptRomScanStartup, "checkBoxOptRomScanStartup");
+			checkBoxOptRomScanStartup.Name = "checkBoxOptRomScanStartup";
+			checkBoxOptRomScanStartup.UseVisualStyleBackColor = true;
 			// 
 			// groupBox4
 			// 
@@ -322,49 +362,43 @@
 			// 
 			// tabPageScrap
 			// 
-			tabPageScrap.Controls.Add(groupBox2);
+			tabPageScrap.Controls.Add(splitContainerScrapData);
 			resources.ApplyResources(tabPageScrap, "tabPageScrap");
 			tabPageScrap.Name = "tabPageScrap";
 			tabPageScrap.UseVisualStyleBackColor = true;
 			// 
-			// tabPageScrapData
+			// splitContainerScrapData
 			// 
-			tabPageScrapData.Controls.Add(groupBox5);
-			resources.ApplyResources(tabPageScrapData, "tabPageScrapData");
-			tabPageScrapData.Name = "tabPageScrapData";
-			tabPageScrapData.UseVisualStyleBackColor = true;
+			resources.ApplyResources(splitContainerScrapData, "splitContainerScrapData");
+			splitContainerScrapData.Name = "splitContainerScrapData";
+			// 
+			// splitContainerScrapData.Panel1
+			// 
+			splitContainerScrapData.Panel1.Controls.Add(groupBox2);
+			// 
+			// splitContainerScrapData.Panel2
+			// 
+			splitContainerScrapData.Panel2.Controls.Add(groupBox5);
 			// 
 			// groupBox5
 			// 
-			groupBox5.Controls.Add(checkBoxMediaMap);
-			groupBox5.Controls.Add(checkBoxMediaManual);
-			groupBox5.Controls.Add(checkBoxMediaVideo);
-			groupBox5.Controls.Add(checkBoxMediaImageBox);
-			groupBox5.Controls.Add(checkBoxMediaWheel);
-			groupBox5.Controls.Add(checkBoxMediaScreenshot);
-			groupBox5.Controls.Add(checkBoxMediaMarquee);
-			groupBox5.Controls.Add(checkBoxMediaFanart);
+			groupBox5.Controls.Add(tableLayoutPanelScrapMedia);
 			resources.ApplyResources(groupBox5, "groupBox5");
 			groupBox5.Name = "groupBox5";
 			groupBox5.TabStop = false;
 			// 
-			// checkBoxMediaMap
+			// tableLayoutPanelScrapMedia
 			// 
-			resources.ApplyResources(checkBoxMediaMap, "checkBoxMediaMap");
-			checkBoxMediaMap.Name = "checkBoxMediaMap";
-			checkBoxMediaMap.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaManual
-			// 
-			resources.ApplyResources(checkBoxMediaManual, "checkBoxMediaManual");
-			checkBoxMediaManual.Name = "checkBoxMediaManual";
-			checkBoxMediaManual.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaVideo
-			// 
-			resources.ApplyResources(checkBoxMediaVideo, "checkBoxMediaVideo");
-			checkBoxMediaVideo.Name = "checkBoxMediaVideo";
-			checkBoxMediaVideo.UseVisualStyleBackColor = true;
+			resources.ApplyResources(tableLayoutPanelScrapMedia, "tableLayoutPanelScrapMedia");
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaImageBox, 0, 0);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaMap, 1, 3);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaVideo, 0, 1);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaManual, 1, 2);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaFanart, 0, 3);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaWheel, 1, 1);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaMarquee, 0, 2);
+			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaScreenshot, 1, 0);
+			tableLayoutPanelScrapMedia.Name = "tableLayoutPanelScrapMedia";
 			// 
 			// checkBoxMediaImageBox
 			// 
@@ -372,17 +406,35 @@
 			checkBoxMediaImageBox.Name = "checkBoxMediaImageBox";
 			checkBoxMediaImageBox.UseVisualStyleBackColor = true;
 			// 
+			// checkBoxMediaMap
+			// 
+			resources.ApplyResources(checkBoxMediaMap, "checkBoxMediaMap");
+			checkBoxMediaMap.Name = "checkBoxMediaMap";
+			checkBoxMediaMap.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaVideo
+			// 
+			resources.ApplyResources(checkBoxMediaVideo, "checkBoxMediaVideo");
+			checkBoxMediaVideo.Name = "checkBoxMediaVideo";
+			checkBoxMediaVideo.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaManual
+			// 
+			resources.ApplyResources(checkBoxMediaManual, "checkBoxMediaManual");
+			checkBoxMediaManual.Name = "checkBoxMediaManual";
+			checkBoxMediaManual.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaFanart
+			// 
+			resources.ApplyResources(checkBoxMediaFanart, "checkBoxMediaFanart");
+			checkBoxMediaFanart.Name = "checkBoxMediaFanart";
+			checkBoxMediaFanart.UseVisualStyleBackColor = true;
+			// 
 			// checkBoxMediaWheel
 			// 
 			resources.ApplyResources(checkBoxMediaWheel, "checkBoxMediaWheel");
 			checkBoxMediaWheel.Name = "checkBoxMediaWheel";
 			checkBoxMediaWheel.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaScreenshot
-			// 
-			resources.ApplyResources(checkBoxMediaScreenshot, "checkBoxMediaScreenshot");
-			checkBoxMediaScreenshot.Name = "checkBoxMediaScreenshot";
-			checkBoxMediaScreenshot.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMediaMarquee
 			// 
@@ -390,11 +442,11 @@
 			checkBoxMediaMarquee.Name = "checkBoxMediaMarquee";
 			checkBoxMediaMarquee.UseVisualStyleBackColor = true;
 			// 
-			// checkBoxMediaFanart
+			// checkBoxMediaScreenshot
 			// 
-			resources.ApplyResources(checkBoxMediaFanart, "checkBoxMediaFanart");
-			checkBoxMediaFanart.Name = "checkBoxMediaFanart";
-			checkBoxMediaFanart.UseVisualStyleBackColor = true;
+			resources.ApplyResources(checkBoxMediaScreenshot, "checkBoxMediaScreenshot");
+			checkBoxMediaScreenshot.Name = "checkBoxMediaScreenshot";
+			checkBoxMediaScreenshot.UseVisualStyleBackColor = true;
 			// 
 			// tabPageCustom
 			// 
@@ -579,7 +631,7 @@
 			// 
 			resources.ApplyResources(tableLayoutPanelIcons, "tableLayoutPanelIcons");
 			tableLayoutPanelIcons.Controls.Add(pictureBoxScrap, 0, 1);
-			tableLayoutPanelIcons.Controls.Add(tableLayoutPanel1, 0, 0);
+			tableLayoutPanelIcons.Controls.Add(tableLayoutPanelInfoLeft, 0, 0);
 			tableLayoutPanelIcons.Name = "tableLayoutPanelIcons";
 			// 
 			// pictureBoxScrap
@@ -590,12 +642,12 @@
 			pictureBoxScrap.TabStop = false;
 			pictureBoxScrap.Click += pictureBoxScrap_Click;
 			// 
-			// tableLayoutPanel1
+			// tableLayoutPanelInfoLeft
 			// 
-			resources.ApplyResources(tableLayoutPanel1, "tableLayoutPanel1");
-			tableLayoutPanel1.Controls.Add(pictureBoxAppIcon, 0, 0);
-			tableLayoutPanel1.Controls.Add(pictureBoxCompany, 1, 0);
-			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			resources.ApplyResources(tableLayoutPanelInfoLeft, "tableLayoutPanelInfoLeft");
+			tableLayoutPanelInfoLeft.Controls.Add(pictureBoxAppIcon, 0, 0);
+			tableLayoutPanelInfoLeft.Controls.Add(pictureBoxCompany, 1, 0);
+			tableLayoutPanelInfoLeft.Name = "tableLayoutPanelInfoLeft";
 			// 
 			// pictureBoxAppIcon
 			// 
@@ -718,26 +770,6 @@
 			linkLabel1.Name = "linkLabel1";
 			linkLabel1.TabStop = true;
 			// 
-			// groupBox7
-			// 
-			resources.ApplyResources(groupBox7, "groupBox7");
-			groupBox7.Controls.Add(checkBoxOptLogging);
-			groupBox7.Controls.Add(checkBoxOptRomScanStartup);
-			groupBox7.Name = "groupBox7";
-			groupBox7.TabStop = false;
-			// 
-			// checkBoxOptRomScanStartup
-			// 
-			resources.ApplyResources(checkBoxOptRomScanStartup, "checkBoxOptRomScanStartup");
-			checkBoxOptRomScanStartup.Name = "checkBoxOptRomScanStartup";
-			checkBoxOptRomScanStartup.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxOptLogging
-			// 
-			resources.ApplyResources(checkBoxOptLogging, "checkBoxOptLogging");
-			checkBoxOptLogging.Name = "checkBoxOptLogging";
-			checkBoxOptLogging.UseVisualStyleBackColor = true;
-			// 
 			// FormOptions
 			// 
 			AcceptButton = buttonOK;
@@ -752,17 +784,25 @@
 			groupBox1.ResumeLayout(false);
 			groupBox1.PerformLayout();
 			groupBox2.ResumeLayout(false);
-			groupBox2.PerformLayout();
+			tableLayoutPanelScrapLogin.ResumeLayout(false);
+			tableLayoutPanelScrapLoginLeft.ResumeLayout(false);
+			tableLayoutPanelScrapLoginLeft.PerformLayout();
 			tabControlOptions.ResumeLayout(false);
 			tabPageLang.ResumeLayout(false);
+			groupBox7.ResumeLayout(false);
+			groupBox7.PerformLayout();
 			groupBox4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxDonation).EndInit();
 			groupBox3.ResumeLayout(false);
 			groupBox3.PerformLayout();
 			tabPageScrap.ResumeLayout(false);
-			tabPageScrapData.ResumeLayout(false);
+			splitContainerScrapData.Panel1.ResumeLayout(false);
+			splitContainerScrapData.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)splitContainerScrapData).EndInit();
+			splitContainerScrapData.ResumeLayout(false);
 			groupBox5.ResumeLayout(false);
-			groupBox5.PerformLayout();
+			tableLayoutPanelScrapMedia.ResumeLayout(false);
+			tableLayoutPanelScrapMedia.PerformLayout();
 			tabPageCustom.ResumeLayout(false);
 			groupBox6.ResumeLayout(false);
 			groupBox6.PerformLayout();
@@ -770,13 +810,11 @@
 			tableLayoutPanelInfo.ResumeLayout(false);
 			tableLayoutPanelIcons.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxScrap).EndInit();
-			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanelInfoLeft.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)pictureBoxAppIcon).EndInit();
 			((System.ComponentModel.ISupportInitialize)pictureBoxCompany).EndInit();
 			tableLayoutPanelAppText.ResumeLayout(false);
 			tableLayoutPanelAppText.PerformLayout();
-			groupBox7.ResumeLayout(false);
-			groupBox7.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -812,7 +850,7 @@
 		private Label labelInfoProduct;
 		private TableLayoutPanel tableLayoutPanelIcons;
 		private PictureBox pictureBoxScrap;
-		private TableLayoutPanel tableLayoutPanel1;
+		private TableLayoutPanel tableLayoutPanelInfoLeft;
 		private Label label13;
 		private Label label11;
 		private Label label9;
@@ -830,16 +868,6 @@
 		private GroupBox groupBox4;
 		private PictureBox pictureBoxDonation;
 		private LinkLabel linkLabelDonate;
-		private TabPage tabPageScrapData;
-		private GroupBox groupBox5;
-		private CheckBox checkBoxMediaWheel;
-		private CheckBox checkBoxMediaScreenshot;
-		private CheckBox checkBoxMediaMarquee;
-		private CheckBox checkBoxMediaFanart;
-		private CheckBox checkBoxMediaImageBox;
-		private CheckBox checkBoxMediaVideo;
-		private CheckBox checkBoxMediaMap;
-		private CheckBox checkBoxMediaManual;
 		private ComboBox comboBoxLangRegion;
 		private Label label8;
 		private TabPage tabPageCustom;
@@ -870,5 +898,18 @@
 		private GroupBox groupBox7;
 		private CheckBox checkBoxOptLogging;
 		private CheckBox checkBoxOptRomScanStartup;
+		private GroupBox groupBox5;
+		private CheckBox checkBoxMediaMap;
+		private CheckBox checkBoxMediaManual;
+		private CheckBox checkBoxMediaVideo;
+		private CheckBox checkBoxMediaImageBox;
+		private CheckBox checkBoxMediaWheel;
+		private CheckBox checkBoxMediaScreenshot;
+		private CheckBox checkBoxMediaMarquee;
+		private CheckBox checkBoxMediaFanart;
+		private TableLayoutPanel tableLayoutPanelScrapMedia;
+		private TableLayoutPanel tableLayoutPanelScrapLogin;
+		private TableLayoutPanel tableLayoutPanelScrapLoginLeft;
+		private SplitContainer splitContainerScrapData;
 	}
 }

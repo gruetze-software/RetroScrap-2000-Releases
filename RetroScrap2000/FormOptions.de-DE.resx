@@ -120,17 +120,17 @@
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Spracheinstellung</value>
-  </data>
   <data name="labelHelpLang.Text" xml:space="preserve">
     <value>Einstellen der Sprache der Anwendung und der Daten, die beim Scraping geholt werden sollen.</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Passwort:</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Spracheinstellung</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Name:</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Passwort:</value>
   </data>
   <data name="checkBoxOptLogging.Text" xml:space="preserve">
     <value>Protokollierung</value>
@@ -141,26 +141,11 @@
   <data name="groupBox7.Text" xml:space="preserve">
     <value>Anwendung</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Unterstützung</value>
-  </data>
-  <data name="tabPageLang.Text" xml:space="preserve">
-    <value>Allgemein</value>
-  </data>
-  <data name="tabPageScrap.Text" xml:space="preserve">
-    <value>Scrap Nutzerdaten</value>
-  </data>
-  <data name="tabPageScrapData.Text" xml:space="preserve">
-    <value>Scrap Daten</value>
-  </data>
-  <data name="tabPageCustom.Text" xml:space="preserve">
-    <value>Manuelle Medien</value>
-  </data>
-  <data name="tabPageAppInfo.Text" xml:space="preserve">
-    <value>Info</value>
-  </data>
   <data name="labelDonText.Text" xml:space="preserve">
     <value>RetroScrap 2000 ist ein Herzensprojekt von mir. Ich schätze jede kleine Spende, die mir hilft, mehr persönliche Zeit in die Entwicklung der App zu investieren. Folge dem Link für eine kleine Spende:</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Unterstützung</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>RetroArch (in Arbeit)</value>
@@ -168,38 +153,41 @@
   <data name="buttonInfoRetroPie.Text" xml:space="preserve">
     <value>Info für RetroPie-Nutzer</value>
   </data>
+  <data name="tabPageLang.Text" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
+    <value>Image (Box-Art Vorderseite)</value>
+  </data>
   <data name="checkBoxMediaMap.Text" xml:space="preserve">
     <value>Map (digitale Spielkarte)</value>
-  </data>
-  <data name="checkBoxMediaManual.Text" xml:space="preserve">
-    <value>Manual (digitale Spielanleitung)</value>
   </data>
   <data name="checkBoxMediaVideo.Text" xml:space="preserve">
     <value>Video (Gameplay-Vorschau)</value>
   </data>
-  <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
-    <value>Image (oft das Box-Art der Vorderseite oder ein Screenshot)</value>
-  </data>
-  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
-    <value>Wheel / Logo (transparentes Rad-Logo für spezielle Menüs)</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
-    <value>Screenshot (Dedizierter Screenshot (für den Fall, dass Hauptbild die Box ist))</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
-    <value>Marquee (Banner- oder Logobild für Menü-Kopfzeile)</value>
+  <data name="checkBoxMediaManual.Text" xml:space="preserve">
+    <value>Manual (digitale Spielanleitung)</value>
   </data>
   <data name="checkBoxMediaFanart.Text" xml:space="preserve">
-    <value>Fanart (Großes Hintergrundbild / Wallpaper für Details)</value>
+    <value>Fanart (Wallpaper)</value>
+  </data>
+  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
+    <value>Wheel / Logo (transparentes Logo)</value>
+  </data>
+  <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
+    <value>Marquee (Banner- oder Logobild)</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
+    <value>Screenshot (Dedizierter Screenshot)</value>
+  </data>
+  <data name="tabPageScrap.Text" xml:space="preserve">
+    <value>Scrap Nutzerdaten</value>
   </data>
   <data name="buttonOptMMScan.Text" xml:space="preserve">
     <value>Scan alle Roms und stelle die manuellen Medien ein...</value>
   </data>
   <data name="buttonOptDelete.Text" xml:space="preserve">
     <value>Löschen</value>
-  </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Benutzerdefinierte Verzeichnisdaten</value>
   </data>
   <data name="checkBoxOptMMRelPath.Text" xml:space="preserve">
     <value>als relativen Pfad verwenden</value>
@@ -222,12 +210,11 @@
   <data name="label14.Text" xml:space="preserve">
     <value>Basisverzeichnis:</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonOptMMPath.Text" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="label15.Text" xml:space="preserve">
     <value>XML-Key:</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>Benutzerdefinierte Verzeichnisdaten</value>
   </data>
   <data name="buttonOptMMAdd.Text" xml:space="preserve">
     <value>Hinzufügen</value>
@@ -247,13 +234,22 @@
   <data name="colMMRelPath.Text" xml:space="preserve">
     <value>Relativer Pfad</value>
   </data>
+  <data name="tabPageCustom.Text" xml:space="preserve">
+    <value>Manuelle Medien</value>
+  </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Firma:</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Produkt:</value>
   </data>
+  <data name="tabPageAppInfo.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Optionen</value>
+  </data>
+  <data name="tabPageScrapData.Text" xml:space="preserve">
+    <value>Scrap Daten</value>
   </data>
 </root>
