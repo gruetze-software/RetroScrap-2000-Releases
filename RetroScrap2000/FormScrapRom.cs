@@ -141,18 +141,18 @@ namespace RetroScrap2000
 				if (_scraped.RatingNormalized != null && _scraped.RatingNormalized.HasValue && _scraped.RatingNormalized.Value > 0)
 					starRatingControlRomNew.Rating = _scraped.RatingNormalized.Value * 5.0;
 
-				foreach (var kvp in _scraped.MediaUrls)
+				foreach (var medium in _scraped.PossibleMedien)
 				{
-					if (string.IsNullOrEmpty(kvp.Value))
+					if (string.IsNullOrEmpty(medium.Url))
 						continue;
 
-					if (_options.IsMediaTypeEnabled(kvp.Key) != true)
+					if (_options.IsMediaTypeEnabled(medium) != true)
 					{
-						Log.Information($"Skip Download {kvp.Key.ToString()}, it's not checked in Options...");
+						Log.Information($"Skip Download \"{medium}\", it's not checked in Options...");
 						continue; // diese Media-Art ist nicht gewünscht
 					}
 
-					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, ct, true);
+					var control = await CreateMediaPreviewPanel(medium.Type, medium.Url, _systemRomPath, ct, true);
 					if (ct.IsCancellationRequested)
 					{
 						return;

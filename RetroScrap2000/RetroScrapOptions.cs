@@ -9,19 +9,6 @@ using System.Threading.Tasks;
 
 namespace RetroScrap2000
 {
-	public enum eMediaType
-	{
-		BoxImage = 0,
-		Video,
-		Marquee,
-		Fanart,
-		Screenshot,
-		Wheel,
-		Manual,
-		Map,
-		Unknown
-	}
-
 	public class RetroScrapOptions
 	{
 		public string? RomPath { get; set; }
@@ -31,11 +18,21 @@ namespace RetroScrap2000
 		public bool? Logging { get; set; }
 		public string? ApiUser { get; set; }
 		public bool? MediaBoxImage { get; set; }
+		public bool? MediaBox2DFront { get; set; }
+		public bool? MediaBox3DFront { get; set; }
+		public bool? MediaBoxSide { get; set; }
+		public bool? MediaBoxBack { get; set; }
+		public bool? MediaBoxTextures { get; set; }
+		public bool? MediaBoxMix1 { get; set; }
+		public bool? MediaBoxMix2 { get; set; }
 		public bool? MediaVideo { get; set; }
 		public bool? MediaMarquee { get; set; }
 		public bool? MediaFanart { get; set; }
 		public bool? MediaScreenshot { get; set; }
+		public bool? MediaScreenshotTitle { get; set; }
 		public bool? MediaWheel { get; set; }
+		public bool? MediaWheelSteel { get; set; }
+		public bool? MediaWheelCarbon { get; set; }
 		public bool? MediaManual { get; set; }
 		public bool? MediaMap { get; set; }
 		public List<MediaManualSystem> MediaManualSystemList { get; set; } = new();
@@ -49,58 +46,83 @@ namespace RetroScrap2000
 		{ 
 			Secret = new PasswordVault(Path.Combine(GetOptionsPath(), "vault.dat"));
 			MediaBoxImage = true;
+			MediaBox2DFront = true;
 			MediaScreenshot = true;
 			MediaVideo = true;
 			Region = "eu";
 		}
 
-		public static Dictionary<eMediaType, string> GetStandardMediaFolderAndXmlTagList()
+		public static GameMediaSettings? GetMediaSettings(eMediaType mediaType)
 		{
-			return new Dictionary<eMediaType, string>
+			return GetMediaSettingsList().FirstOrDefault(x => x.Type == mediaType);
+		}
+
+		public static List<GameMediaSettings> GetMediaSettingsList()
+		{
+			return new List<GameMediaSettings>
 			{
-				{ eMediaType.BoxImage, "image" },
-				{ eMediaType.Video, "video" },
-				{ eMediaType.Marquee, "marquee" },
-				{ eMediaType.Fanart, "fanart" },
-				{ eMediaType.Screenshot, "screenshot" },
-				{ eMediaType.Wheel, "wheel" },
-				{ eMediaType.Manual, "manual" },
-				{ eMediaType.Map, "map" }
+				{ new GameMediaSettings(eMediaType.ScreenshotTitle, "sstitle", "title" ) },
+				{ new GameMediaSettings(eMediaType.ScreenshotGame, "ss", "screenshot") },
+				{ new GameMediaSettings(eMediaType.Fanart, "fanart", "fanart") },
+				{ new GameMediaSettings(eMediaType.Video, "video", "video") },
+				{ new GameMediaSettings(eMediaType.Marquee, "screenmarquee", "marquee") },
+				{ new GameMediaSettings(eMediaType.Manual, "manuel", "manual") },
+				{ new GameMediaSettings(eMediaType.Map, "map", "map") },
+				{ new GameMediaFront(eMediaBoxFrontType.TwoDim) },
+				{ new GameMediaFront(eMediaBoxFrontType.ThreeDim) },
+				{ new GameMediaFront(eMediaBoxFrontType.Mix1) },
+				{ new GameMediaFront(eMediaBoxFrontType.Mix2) },
+				{ new GameMediaSettings(eMediaType.BoxImageSide, "box-2D-side", "side") },
+				{ new GameMediaSettings(eMediaType.BoxImageBack, "box-2D-back", "back") },
+				{ new GameMediaSettings(eMediaType.BoxImageTexture, "box-texture", "texture") },
+				{ new GameMediaWheel(eMediaWheelType.Normal) },
+				{ new GameMediaWheel(eMediaWheelType.Steel) },
+				{ new GameMediaWheel(eMediaWheelType.Carbon) },
 			};
 		}
 
-		public static string GetStandardMediaFolderAndXmlTag(eMediaType type)
+		public bool IsMediaTypeEnabled(GameMediaSettings media)
 		{
-			return type switch
+			if (media.Type == eMediaType.Wheel)
 			{
-				eMediaType.BoxImage => "image",
-				eMediaType.Video => "video",
-				eMediaType.Marquee => "marquee",
-				eMediaType.Fanart => "fanart",
-				eMediaType.Screenshot => "screenshot",
-				eMediaType.Wheel => "wheel",
-				eMediaType.Manual => "manual",
-				eMediaType.Map => "map",
-				_ => "unknown",
-			};
-		}
-
-		public bool IsMediaTypeEnabled(eMediaType type)
-		{
-			return type switch
+				GameMediaWheel wheel = (GameMediaWheel)media;
+				if ( wheel.WheelType == eMediaWheelType.Normal )
+					return this.MediaWheel.HasValue && this.MediaWheel.Value == true ? true : false;
+				else if (wheel.WheelType == eMediaWheelType.Steel)
+					return this.MediaWheelSteel.HasValue && this.MediaWheelSteel.Value == true ? true : false;
+				if (wheel.WheelType == eMediaWheelType.Carbon)
+					return this.MediaWheelCarbon.HasValue && this.MediaWheelCarbon.Value == true ? true : false;
+				else
+					return false;
+			}
+			else if (media.Type == eMediaType.Fanart) return this.MediaFanart.HasValue && this.MediaFanart.Value == true ? true : false;
+			else if (media.Type == eMediaType.Marquee) return this.MediaMarquee.HasValue && this.MediaMarquee.Value == true ? true : false;
+			else if (media.Type == eMediaType.Map) return this.MediaMap.HasValue && this.MediaMap.Value == true ? true : false;
+			else if (media.Type == eMediaType.Manual) return this.MediaManual.HasValue && this.MediaManual.Value == true ? true : false;
+			else if (media.Type == eMediaType.Video) return this.MediaVideo.HasValue && this.MediaVideo.Value == true ? true : false;
+			else if (media.Type == eMediaType.ScreenshotTitle) return this.MediaScreenshotTitle.HasValue && this.MediaScreenshotTitle.Value == true ? true : false;
+			else if (media.Type == eMediaType.ScreenshotGame) return this.MediaScreenshot.HasValue && this.MediaScreenshot.Value == true ? true : false;
+			else if (media.Type == eMediaType.BoxImageFront) 
 			{
-				eMediaType.BoxImage => MediaBoxImage ?? false,
-				eMediaType.Video => MediaVideo ?? false,
-				eMediaType.Marquee => MediaMarquee ?? false,
-				eMediaType.Fanart => MediaFanart ?? false,
-				eMediaType.Screenshot => MediaScreenshot ?? false,
-				eMediaType.Wheel => MediaWheel ?? false,
-				eMediaType.Manual => MediaManual ?? false,
-				eMediaType.Map => MediaMap ?? false,
-				_ => false,
-			};
-		}
+				if (!this.MediaBoxImage.HasValue || this.MediaBoxImage.Value == false)
+					return false;
 
+				GameMediaFront front = (GameMediaFront)media;
+				if ( front.FrontType == eMediaBoxFrontType.TwoDim )
+					return this.MediaBox2DFront.HasValue && this.MediaBox2DFront.Value == true ? true : false;
+				else if (front.FrontType == eMediaBoxFrontType.ThreeDim )
+					return this.MediaBox3DFront.HasValue && this.MediaBox3DFront.Value == true ? true : false;
+				else if (front.FrontType == eMediaBoxFrontType.Mix1)
+					return this.MediaBoxMix1.HasValue && this.MediaBoxMix1.Value == true ? true : false;
+				else if (front.FrontType == eMediaBoxFrontType.Mix2)
+					return this.MediaBoxMix2.HasValue && this.MediaBoxMix2.Value == true ? true : false;
+				else return false;
+			}
+			else if (media.Type == eMediaType.BoxImageBack) return this.MediaBoxBack.HasValue && this.MediaBoxBack.Value == true ? true : false;
+			else if (media.Type == eMediaType.BoxImageSide) return this.MediaBoxSide.HasValue && this.MediaBoxSide.Value == true ? true : false;
+			else if (media.Type == eMediaType.BoxImageTexture) return this.MediaBoxTextures.HasValue && this.MediaBoxTextures.Value == true ? true : false;
+			else return false;
+		}
 		private static string GetOptionsPath()
 		{
 			var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -153,7 +175,31 @@ namespace RetroScrap2000
 				return new RetroScrapOptions();
 
 			var json = File.ReadAllText(GetOptionsFile());
-			return JsonSerializer.Deserialize<RetroScrapOptions>(json) ?? new RetroScrapOptions();
+			var loadobj = JsonSerializer.Deserialize<RetroScrapOptions>(json) ?? new RetroScrapOptions();
+			// Aufräumen, machen wir vorsichtshalber immer
+			if (loadobj.MediaBoxImage == null || loadobj.MediaBoxImage == false)
+			{
+				loadobj.MediaBoxMix1 = false;
+				loadobj.MediaBoxMix2 = false;
+				loadobj.MediaBoxBack = false;
+				loadobj.MediaBoxSide = false;
+				loadobj.MediaBoxTextures = false;
+			}
+			else if (loadobj.MediaBoxImage == true)
+			{
+				// 3D oder 2D muss aktiv sein
+				if ( (loadobj.MediaBox2DFront == null || loadobj.MediaBox2DFront == false )
+					&& (loadobj.MediaBox3DFront == null || loadobj.MediaBox3DFront == false ) )
+					loadobj.MediaBox2DFront = true;
+			}
+
+			if (loadobj.MediaWheel == null || loadobj.MediaWheel == false)
+			{
+				loadobj.MediaWheelCarbon = false;
+				loadobj.MediaWheelSteel = false;
+			}
+			
+			return loadobj;
 		}
 	}
 

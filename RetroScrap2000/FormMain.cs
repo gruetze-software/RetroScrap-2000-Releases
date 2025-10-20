@@ -452,7 +452,7 @@ namespace RetroScrap2000
 							if (val.takeit && !string.IsNullOrEmpty(val.tempPath))
 							{
 								var result = CopyOrMoveMediaFileToRom(true, val.tempPath,
-									$"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(med.Key)}/", sysFolder);
+									$"./media/{RetroScrapOptions.GetMediaSettings(med.Key)!.XmlFolderAndKey}/", sysFolder);
 								if (result.ok && !string.IsNullOrEmpty(result.file))
 									rom.SetMediaPath(med.Key, result.file);
 							}
@@ -1064,7 +1064,10 @@ namespace RetroScrap2000
 				addType6ToolStripMenuItem,
 				addType7ToolStripMenuItem,
 				addType8ToolStripMenuItem,
-				addType9ToolStripMenuItem
+				addType9ToolStripMenuItem,
+				addType10ToolStripMenuItem,
+				addType11ToolStripMenuItem,
+				addType12ToolStripMenuItem
 			};
 			// Zunächst alle für neue Medienarten ausblenden
 			foreach (var item in addTypeMenuItems)
@@ -1072,7 +1075,7 @@ namespace RetroScrap2000
 
 			// Durch die Map iterieren und Tabs nur für vorhandene Medien erstellen
 			int index = 0;
-			foreach (var kvp in rom.MediaTypeDictionary)
+			foreach (var kvp in rom!.MediaTypeDictionary)
 			{
 				string? mediaPath = kvp.Value;
 				// Nur wenn der Pfad vorhanden (nicht null, nicht leer) ist, einen Tab erstellen
@@ -1094,6 +1097,7 @@ namespace RetroScrap2000
 				}
 				else
 				{
+					Log.Debug("addTypeMenuItems " + index.ToString());
 					addTypeMenuItems[index].Visible = true;
 					addTypeMenuItems[index].Text = string.Format(Properties.Resources.Txt_Menu_AddMedium, kvp.Key.ToString());
 					addTypeMenuItems[index].Tag = kvp.Key;
@@ -1244,7 +1248,7 @@ namespace RetroScrap2000
 				return;
 
 			var result = CopyOrMoveMediaFileToRom(false, sourcefile,
-				$"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(type)}/", baseDir);
+				$"./media/{RetroScrapOptions.GetMediaSettings(type)!.XmlFolderAndKey}/", baseDir);
 			if (result.ok && !string.IsNullOrEmpty(result.file))
 			{
 				_selectedRoms[0].SetMediaPath(type, result.file);

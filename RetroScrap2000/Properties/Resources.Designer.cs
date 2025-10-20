@@ -193,6 +193,26 @@ namespace RetroScrap2000.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FrontBoxMix1Example {
+            get {
+                object obj = ResourceManager.GetObject("FrontBoxMix1Example", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FrontBoxMix2Example {
+            get {
+                object obj = ResourceManager.GetObject("FrontBoxMix2Example", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap general32 {
             get {
                 object obj = ResourceManager.GetObject("general32", resourceCulture);
@@ -1130,6 +1150,36 @@ namespace RetroScrap2000.Properties {
         internal static System.Drawing.Bitmap user32 {
             get {
                 object obj = ResourceManager.GetObject("user32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WheelCarbonExample {
+            get {
+                object obj = ResourceManager.GetObject("WheelCarbonExample", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WheelNormalExample {
+            get {
+                object obj = ResourceManager.GetObject("WheelNormalExample", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WheelSteelExample {
+            get {
+                object obj = ResourceManager.GetObject("WheelSteelExample", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

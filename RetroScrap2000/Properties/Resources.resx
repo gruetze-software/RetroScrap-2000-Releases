@@ -468,4 +468,19 @@
   <data name="group16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\group16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WheelNormalExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WheelNormalExample.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WheelCarbonExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WheelCarbonExample.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WheelSteelExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WheelSteelExample.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FrontBoxMix1Example" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FrontBoxMix1Example.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FrontBoxMix2Example" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FrontBoxMix2Example.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

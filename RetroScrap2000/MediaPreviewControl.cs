@@ -39,7 +39,25 @@ namespace RetroScrap2000
 
 		[DefaultValue(eMediaType.Unknown)]
 		private eMediaType _type;
-		public eMediaType MediaType { get { return _type; } set { _type = value; labelTitle.Text = _type.ToString(); } }
+		public eMediaType MediaType { get { return _type; } set { _type = value; labelTitle.Text = GetTitle(); } }
+
+		private string GetTitle()
+		{
+			switch (MediaType)
+			{
+				case eMediaType.Unknown: return "???";
+				case eMediaType.Map: return "Map";
+				case eMediaType.Fanart: return "Fanart";
+				case eMediaType.Manual: return "Manual";
+				case eMediaType.BoxImageFront: return "Box Front";
+				case eMediaType.BoxImageBack: return "Box Back";
+				case eMediaType.BoxImageSide: return "Box Side";
+				case eMediaType.BoxImageTexture: return "Box Texture";
+				case eMediaType.ScreenshotGame: return "Screenshot";
+				case eMediaType.ScreenshotTitle: return "Screenshot Title";
+				default: return MediaType.ToString();
+			}
+		}
 
 		public MediaPreviewControl()
 		{

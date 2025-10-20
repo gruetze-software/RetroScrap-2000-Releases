@@ -58,13 +58,15 @@ namespace RetroScrap2000
 			ImageList imgTab = new ImageList() { ImageSize = new Size(32, 32), ColorDepth = ColorDepth.Depth32Bit };
 			imgTab.Images.Add("general", Properties.Resources.general32); // Allgemein
 			imgTab.Images.Add("scrapdata", Properties.Resources.media32); // Scrap-Daten
+			imgTab.Images.Add("scrapuser", Properties.Resources.user32); // Scrap-Daten
 			imgTab.Images.Add("custom", Properties.Resources.custom32); // Info
 			imgTab.Images.Add("info", Properties.Resources.info32); // Info
 			tabControlOptions.ImageList = imgTab;
 			tabControlOptions.TabPages[0].ImageKey = "general";
-			tabControlOptions.TabPages[1].ImageKey = "scrapdata";
-			tabControlOptions.TabPages[2].ImageKey = "custom";
-			tabControlOptions.TabPages[3].ImageKey = "info";
+			tabControlOptions.TabPages[1].ImageKey = "scrapuser";
+			tabControlOptions.TabPages[2].ImageKey = "scrapdata";
+			tabControlOptions.TabPages[3].ImageKey = "custom";
+			tabControlOptions.TabPages[4].ImageKey = "info";
 			RetroSystemList = retroSystemList;
 		}
 
@@ -91,17 +93,36 @@ namespace RetroScrap2000
 			}
 			// Scrap Data
 			checkBoxMediaFanart.Checked = Options.MediaFanart == true;
+			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
+			checkBoxMediaScreenshotTitle.Checked = Options.MediaScreenshotTitle == true;
+			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
+			checkBoxMediaMarquee.Checked = Options.MediaMarquee == true;
+			checkBoxMediaWheel.Checked = Options.MediaWheel == true || Options.MediaWheelCarbon == true || Options.MediaWheelSteel == true;
+			if (checkBoxMediaWheel.Checked)
+			{
+				if (Options.MediaWheelCarbon == true)
+					radioButtonMediaWheelCarbon.Checked = true;
+				else if (Options.MediaWheelSteel == true)
+					radioButtonMediaWheelSteel.Checked = true;
+				else
+					radioButtonMediaWheelNormal.Checked = true;
+			}
 			checkBoxMediaImageBox.Checked = Options.MediaBoxImage == true;
+			radioButtonMediaBoxMix1.Checked = Options.MediaBoxMix1 == true;
+			radioButtonMediaBoxMix2.Checked = Options.MediaBoxMix2 == true;
+			radioButtonMediaBox2D.Checked = Options.MediaBox2DFront == true;
+			radioButtonMediaBox3D.Checked = Options.MediaBox3DFront == true;
+			checkBoxMediaBoxBack.Checked = Options.MediaBoxBack == true;
+			checkBoxMediaBoxSide.Checked = Options.MediaBoxSide == true;
+			checkBoxMediaBoxTexture.Checked = Options.MediaBoxTextures == true;
+
 			// TODO:
 			checkBoxMediaManual.Checked = false;
 			checkBoxMediaMap.Checked = false;
 			checkBoxMediaManual.Enabled = false;
 			checkBoxMediaMap.Enabled = false;
 
-			checkBoxMediaScreenshot.Checked = Options.MediaScreenshot == true;
-			checkBoxMediaVideo.Checked = Options.MediaVideo == true;
-			checkBoxMediaWheel.Checked = Options.MediaWheel == true;
-			checkBoxMediaMarquee.Checked = Options.MediaMarquee == true;
+
 
 			// Media Manual
 			RetroSystemList.Sort();
@@ -135,6 +156,22 @@ namespace RetroScrap2000
 			linkLabel4.Text = "ffmpeg from https://ffmpeg.org/";
 			linkLabel4.LinkArea = new LinkArea(12, linkLabel4.Text.Length - 12);
 			linkLabel4.LinkClicked += LinkLabelInfo_LinkClicked;
+
+			RequeryForm();
+		}
+
+		private void RequeryForm()
+		{
+			checkBoxMediaBoxSide.Enabled = checkBoxMediaImageBox.Checked;
+			checkBoxMediaBoxTexture.Enabled = checkBoxMediaImageBox.Checked;
+			checkBoxMediaBoxBack.Enabled = checkBoxMediaImageBox.Checked;
+			radioButtonMediaBox2D.Enabled = checkBoxMediaImageBox.Checked;
+			radioButtonMediaBox3D.Enabled = checkBoxMediaImageBox.Checked;
+			radioButtonMediaBoxMix1.Enabled = checkBoxMediaImageBox.Checked;
+			radioButtonMediaBoxMix2.Enabled = checkBoxMediaImageBox.Checked;
+			radioButtonMediaWheelNormal.Enabled = checkBoxMediaWheel.Checked;
+			radioButtonMediaWheelSteel.Enabled = checkBoxMediaWheel.Checked;
+			radioButtonMediaWheelCarbon.Enabled = checkBoxMediaWheel.Checked;
 		}
 
 		private void LinkLabelInfo_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
@@ -264,7 +301,7 @@ namespace RetroScrap2000
 				Options.Region = "jp";
 			else
 				Options.Region = "eu"; // default
-			
+
 			Options.ScanRomStartup = checkBoxOptRomScanStartup.Checked;
 			if (Options.Logging != checkBoxOptLogging.Checked)
 			{
@@ -274,11 +311,22 @@ namespace RetroScrap2000
 			}
 			Options.MediaFanart = checkBoxMediaFanart.Checked;
 			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
+			Options.MediaBox2DFront = checkBoxMediaImageBox.Checked && radioButtonMediaBox2D.Checked;
+			Options.MediaBox3DFront = checkBoxMediaImageBox.Checked && radioButtonMediaBox3D.Checked;
+			Options.MediaBoxSide = checkBoxMediaImageBox.Checked && checkBoxMediaBoxSide.Checked;
+			Options.MediaBoxBack = checkBoxMediaImageBox.Checked && checkBoxMediaBoxBack.Checked;
+			Options.MediaBoxTextures = checkBoxMediaImageBox.Checked && checkBoxMediaBoxTexture.Checked;
+			Options.MediaBoxMix1 = checkBoxMediaImageBox.Checked && radioButtonMediaBoxMix1.Checked;
+			Options.MediaBoxMix2 = checkBoxMediaImageBox.Checked && radioButtonMediaBoxMix2.Checked;
+			Options.MediaBoxImage = checkBoxMediaImageBox.Checked;
 			Options.MediaManual = checkBoxMediaManual.Checked;
 			Options.MediaMap = checkBoxMediaMap.Checked;
 			Options.MediaScreenshot = checkBoxMediaScreenshot.Checked;
+			Options.MediaScreenshotTitle = checkBoxMediaScreenshotTitle.Checked;
 			Options.MediaVideo = checkBoxMediaVideo.Checked;
 			Options.MediaWheel = checkBoxMediaWheel.Checked;
+			Options.MediaWheelCarbon = checkBoxMediaWheel.Checked && radioButtonMediaWheelCarbon.Checked;
+			Options.MediaWheelSteel = checkBoxMediaWheel.Checked && radioButtonMediaWheelSteel.Checked;
 			Options.MediaMarquee = checkBoxMediaMarquee.Checked;
 			this.DialogResult = DialogResult.OK;
 			this.Close();
@@ -450,11 +498,11 @@ namespace RetroScrap2000
 			}
 
 			// Ist der Xml-Key bereits im Standard vergeben (z. B. "marquee")?
-			if (RetroScrapOptions.GetStandardMediaFolderAndXmlTagList().ContainsValue(tempEntry.XmlKeyName))
-			{
-				MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_XmlAlwaysExist);
-				return;
-			}
+			//if (RetroScrapOptions.GetStandardMediaFolderAndXmlTagList().ContainsValue(tempEntry.XmlKeyName))
+			//{
+			//	MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Opt_MM_XmlAlwaysExist);
+			//	return;
+			//}
 
 			// Ist der Xml-Key valide?
 			if (!IsValidXmlKeyName(tempEntry.XmlKeyName))
@@ -596,6 +644,27 @@ namespace RetroScrap2000
 		{
 			comboBoxOptMMSystems.SelectedIndex = 0;
 			comboBoxOptMMSystems.Enabled = Enabled;
+		}
+
+		private void MediaCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			RequeryForm();
+		}
+
+		private void LinkMediaExample_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			pictureBoxMediaExample.Image = null;
+			LinkLabel label = (LinkLabel)sender;
+			if ( label == this.linkLabelMediaBoxMix1 )
+				pictureBoxMediaExample.Image = Properties.Resources.FrontBoxMix1Example;
+			else if (label == this.linkLabelMediaBoxMix2)
+				pictureBoxMediaExample.Image = Properties.Resources.FrontBoxMix2Example;
+			else if ( label == this.linkLabelMediaWheelNormal )
+				pictureBoxMediaExample.Image = Properties.Resources.WheelNormalExample;
+			else if (label == this.linkLabelMediaWheelCarbon)
+				pictureBoxMediaExample.Image = Properties.Resources.WheelCarbonExample;
+			else if (label == this.linkLabelMediaWheelSteel)
+				pictureBoxMediaExample.Image = Properties.Resources.WheelSteelExample;
 		}
 	}
 }

@@ -414,8 +414,8 @@ namespace RetroScrap2000
 			SetElementValue(gameEl, "favorite", rom.FavoriteString);
 			foreach (var kvp in rom.MediaTypeDictionary)
 				{
-					string xmlTag = RetroScrapOptions.GetStandardMediaFolderAndXmlTag(kvp.Key);
-					SetElementValue(gameEl, xmlTag, EnsureRelativeMedia(sysDir, kvp.Value));
+					var medium = RetroScrapOptions.GetMediaSettings(kvp.Key)!;
+					SetElementValue(gameEl, medium.XmlFolderAndKey, EnsureRelativeMedia(sysDir, kvp.Value));
 				}
 
 			// Attribute setzen

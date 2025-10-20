@@ -87,10 +87,14 @@ namespace RetroScrap2000
 				Id = data != null ? data.Id : 0,
 				MediaFanArtPath = data != null ? data.MediaFanArtPath : null,
 				MediaImageBoxPath = data != null ? data.MediaImageBoxPath : null,
+				MediaImageBoxBack = data != null ? data.MediaImageBoxPath : null,
+				MediaImageBoxSide = data != null ? data.MediaImageBoxSide : null,
+				MediaImageBoxTexture = data != null ? data.MediaImageBoxTexture : null,
 				MediaManualPath = data != null ? data.MediaManualPath : null,
 				MediaMapPath = data != null ? data.MediaMapPath : null,
 				MediaMarqueePath = data !=null ? data.MediaMarqueePath : null,
 				MediaScreenshotPath = data != null ? data.MediaScreenshotPath : null,
+				MediaScreenshotTitlePath = data != null ? data.MediaScreenshotTitlePath : null,
 				MediaVideoPath = data != null ? data.MediaVideoPath : null,
 				MediaWheelPath = data != null ? data.MediaWheelPath : null,
 				ReleaseDate = data != null ? data.ReleaseDate : null,
@@ -216,6 +220,13 @@ namespace RetroScrap2000
 
 		[XmlElement("image")]
 		public string? MediaImageBoxPath { get; set; }
+		
+		[XmlElement("back")]
+		public string? MediaImageBoxBack { get; set; }
+		[XmlElement("side")]
+		public string? MediaImageBoxSide { get; set; }
+		[XmlElement("texture")]
+		public string? MediaImageBoxTexture { get; set; }
 
 		[XmlElement("video")]
 		public string? MediaVideoPath { get; set; }
@@ -226,6 +237,9 @@ namespace RetroScrap2000
 		public string? MediaFanArtPath { get; set; }
 		[XmlElement("screenshot")]
 		public string? MediaScreenshotPath { get; set; }
+		[XmlElement("title")]
+		public string? MediaScreenshotTitlePath { get; set; }
+
 		[XmlElement("wheel")]
 		public string? MediaWheelPath { get; set; }
 		[XmlElement("manual")]
@@ -274,16 +288,20 @@ namespace RetroScrap2000
 			get
 			{
 				return new Dictionary<eMediaType, string?>()
-			{
-				{ eMediaType.BoxImage, this.MediaImageBoxPath },
-				{ eMediaType.Screenshot, this.MediaScreenshotPath },
-				{ eMediaType.Fanart, this.MediaFanArtPath },
-				{ eMediaType.Marquee, this.MediaMarqueePath },
-				{ eMediaType.Manual, this.MediaManualPath },
-				{ eMediaType.Map, this.MediaMapPath },
-				{ eMediaType.Video, this.MediaVideoPath },
-				{ eMediaType.Wheel, this.MediaWheelPath }
-			};
+				{
+					{ eMediaType.BoxImageFront, this.MediaImageBoxPath },
+					{ eMediaType.BoxImageBack, this.MediaImageBoxBack },
+					{ eMediaType.BoxImageSide, this.MediaImageBoxSide },
+					{ eMediaType.BoxImageTexture, this.MediaImageBoxTexture },
+					{ eMediaType.ScreenshotGame, this.MediaScreenshotPath },
+					{ eMediaType.ScreenshotTitle, this.MediaScreenshotTitlePath },
+					{ eMediaType.Fanart, this.MediaFanArtPath },
+					{ eMediaType.Marquee, this.MediaMarqueePath },
+					{ eMediaType.Manual, this.MediaManualPath },
+					{ eMediaType.Map, this.MediaMapPath },
+					{ eMediaType.Video, this.MediaVideoPath },
+					{ eMediaType.Wheel, this.MediaWheelPath }
+				};
 			}
 		}
 
@@ -291,33 +309,19 @@ namespace RetroScrap2000
 		{
 			switch (type)
 			{
-				case eMediaType.BoxImage:
-					this.MediaImageBoxPath = path;
-					break;
-				case eMediaType.Screenshot:
-					this.MediaScreenshotPath = path;
-					break;
-				case eMediaType.Fanart:
-					this.MediaFanArtPath = path;
-					break;
-				case eMediaType.Marquee:
-					this.MediaMarqueePath = path;
-					break;
-				case eMediaType.Manual:
-					this.MediaManualPath = path;
-					break;
-				case eMediaType.Map:
-					this.MediaMapPath = path;
-					break;
-				case eMediaType.Video:
-					this.MediaVideoPath = path;
-					break;
-				case eMediaType.Wheel:
-					this.MediaWheelPath = path;
-					break;
-				default:
-					Debug.Assert(false, "Unbekannter Medientyp");
-					break;
+				case eMediaType.BoxImageFront: this.MediaImageBoxPath = path;	break;
+				case eMediaType.BoxImageSide: this.MediaImageBoxSide = path; break;
+				case eMediaType.BoxImageBack: this.MediaImageBoxBack = path; break;
+				case eMediaType.BoxImageTexture: this.MediaImageBoxTexture = path; break;
+				case eMediaType.ScreenshotGame: this.MediaScreenshotPath = path; break;
+				case eMediaType.ScreenshotTitle: this.MediaScreenshotTitlePath = path; break;
+				case eMediaType.Fanart: this.MediaFanArtPath = path; break;
+				case eMediaType.Marquee: this.MediaMarqueePath = path; break;
+				case eMediaType.Manual: this.MediaManualPath = path; break;
+				case eMediaType.Map: this.MediaMapPath = path; break;
+				case eMediaType.Video: this.MediaVideoPath = path; break;
+				case eMediaType.Wheel: this.MediaWheelPath = path; break;
+				default: Debug.Assert(false, "Unbekannter Medientyp"); break;
 			}
 		}
 

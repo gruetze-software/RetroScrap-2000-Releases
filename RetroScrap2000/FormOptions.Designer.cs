@@ -59,18 +59,40 @@
 			buttonInfoRetroPie = new Button();
 			radioButtonRetroArch = new RadioButton();
 			radioButtonBatocera = new RadioButton();
-			tabPageScrap = new TabPage();
+			tabPageScrapUser = new TabPage();
 			splitContainerScrapData = new SplitContainer();
-			groupBox5 = new GroupBox();
-			tableLayoutPanelScrapMedia = new TableLayoutPanel();
+			tabPageScrapData = new TabPage();
+			groupBox8 = new GroupBox();
+			pictureBoxMediaExample = new PictureBox();
+			tableLayoutPanel1 = new TableLayoutPanel();
 			checkBoxMediaImageBox = new CheckBox();
-			checkBoxMediaMap = new CheckBox();
 			checkBoxMediaVideo = new CheckBox();
-			checkBoxMediaManual = new CheckBox();
-			checkBoxMediaFanart = new CheckBox();
-			checkBoxMediaWheel = new CheckBox();
 			checkBoxMediaMarquee = new CheckBox();
+			checkBoxMediaFanart = new CheckBox();
 			checkBoxMediaScreenshot = new CheckBox();
+			checkBoxMediaScreenshotTitle = new CheckBox();
+			checkBoxMediaWheel = new CheckBox();
+			flowLayoutPanel1 = new FlowLayoutPanel();
+			labelMediaBoxFront = new Label();
+			radioButtonMediaBox2D = new RadioButton();
+			radioButtonMediaBox3D = new RadioButton();
+			radioButtonMediaBoxMix1 = new RadioButton();
+			linkLabelMediaBoxMix1 = new LinkLabel();
+			radioButtonMediaBoxMix2 = new RadioButton();
+			linkLabelMediaBoxMix2 = new LinkLabel();
+			flowLayoutPanelMediaBox = new FlowLayoutPanel();
+			checkBoxMediaBoxBack = new CheckBox();
+			checkBoxMediaBoxSide = new CheckBox();
+			checkBoxMediaBoxTexture = new CheckBox();
+			checkBoxMediaMap = new CheckBox();
+			checkBoxMediaManual = new CheckBox();
+			flowLayoutPanelMediaWheel = new FlowLayoutPanel();
+			radioButtonMediaWheelNormal = new RadioButton();
+			linkLabelMediaWheelNormal = new LinkLabel();
+			radioButtonMediaWheelSteel = new RadioButton();
+			linkLabelMediaWheelSteel = new LinkLabel();
+			radioButtonMediaWheelCarbon = new RadioButton();
+			linkLabelMediaWheelCarbon = new LinkLabel();
 			tabPageCustom = new TabPage();
 			buttonOptMMScan = new Button();
 			buttonOptDelete = new Button();
@@ -130,13 +152,17 @@
 			groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxDonation).BeginInit();
 			groupBox3.SuspendLayout();
-			tabPageScrap.SuspendLayout();
+			tabPageScrapUser.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)splitContainerScrapData).BeginInit();
 			splitContainerScrapData.Panel1.SuspendLayout();
-			splitContainerScrapData.Panel2.SuspendLayout();
 			splitContainerScrapData.SuspendLayout();
-			groupBox5.SuspendLayout();
-			tableLayoutPanelScrapMedia.SuspendLayout();
+			tabPageScrapData.SuspendLayout();
+			groupBox8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)pictureBoxMediaExample).BeginInit();
+			tableLayoutPanel1.SuspendLayout();
+			flowLayoutPanel1.SuspendLayout();
+			flowLayoutPanelMediaBox.SuspendLayout();
+			flowLayoutPanelMediaWheel.SuspendLayout();
 			tabPageCustom.SuspendLayout();
 			groupBox6.SuspendLayout();
 			tabPageAppInfo.SuspendLayout();
@@ -262,7 +288,8 @@
 			// 
 			resources.ApplyResources(tabControlOptions, "tabControlOptions");
 			tabControlOptions.Controls.Add(tabPageLang);
-			tabControlOptions.Controls.Add(tabPageScrap);
+			tabControlOptions.Controls.Add(tabPageScrapUser);
+			tabControlOptions.Controls.Add(tabPageScrapData);
 			tabControlOptions.Controls.Add(tabPageCustom);
 			tabControlOptions.Controls.Add(tabPageAppInfo);
 			tabControlOptions.Name = "tabControlOptions";
@@ -360,12 +387,12 @@
 			radioButtonBatocera.TabStop = true;
 			radioButtonBatocera.UseVisualStyleBackColor = true;
 			// 
-			// tabPageScrap
+			// tabPageScrapUser
 			// 
-			tabPageScrap.Controls.Add(splitContainerScrapData);
-			resources.ApplyResources(tabPageScrap, "tabPageScrap");
-			tabPageScrap.Name = "tabPageScrap";
-			tabPageScrap.UseVisualStyleBackColor = true;
+			tabPageScrapUser.Controls.Add(splitContainerScrapData);
+			resources.ApplyResources(tabPageScrapUser, "tabPageScrapUser");
+			tabPageScrapUser.Name = "tabPageScrapUser";
+			tabPageScrapUser.UseVisualStyleBackColor = true;
 			// 
 			// splitContainerScrapData
 			// 
@@ -376,41 +403,50 @@
 			// 
 			splitContainerScrapData.Panel1.Controls.Add(groupBox2);
 			// 
-			// splitContainerScrapData.Panel2
+			// tabPageScrapData
 			// 
-			splitContainerScrapData.Panel2.Controls.Add(groupBox5);
+			tabPageScrapData.Controls.Add(groupBox8);
+			resources.ApplyResources(tabPageScrapData, "tabPageScrapData");
+			tabPageScrapData.Name = "tabPageScrapData";
+			tabPageScrapData.UseVisualStyleBackColor = true;
 			// 
-			// groupBox5
+			// groupBox8
 			// 
-			groupBox5.Controls.Add(tableLayoutPanelScrapMedia);
-			resources.ApplyResources(groupBox5, "groupBox5");
-			groupBox5.Name = "groupBox5";
-			groupBox5.TabStop = false;
+			groupBox8.Controls.Add(pictureBoxMediaExample);
+			groupBox8.Controls.Add(tableLayoutPanel1);
+			resources.ApplyResources(groupBox8, "groupBox8");
+			groupBox8.Name = "groupBox8";
+			groupBox8.TabStop = false;
 			// 
-			// tableLayoutPanelScrapMedia
+			// pictureBoxMediaExample
 			// 
-			resources.ApplyResources(tableLayoutPanelScrapMedia, "tableLayoutPanelScrapMedia");
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaImageBox, 0, 0);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaMap, 1, 3);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaVideo, 0, 1);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaManual, 1, 2);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaFanart, 0, 3);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaWheel, 1, 1);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaMarquee, 0, 2);
-			tableLayoutPanelScrapMedia.Controls.Add(checkBoxMediaScreenshot, 1, 0);
-			tableLayoutPanelScrapMedia.Name = "tableLayoutPanelScrapMedia";
+			resources.ApplyResources(pictureBoxMediaExample, "pictureBoxMediaExample");
+			pictureBoxMediaExample.Name = "pictureBoxMediaExample";
+			pictureBoxMediaExample.TabStop = false;
+			// 
+			// tableLayoutPanel1
+			// 
+			resources.ApplyResources(tableLayoutPanel1, "tableLayoutPanel1");
+			tableLayoutPanel1.Controls.Add(checkBoxMediaImageBox, 0, 0);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaVideo, 0, 3);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaMarquee, 0, 4);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaFanart, 0, 5);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaScreenshot, 0, 6);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaScreenshotTitle, 0, 7);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaWheel, 0, 8);
+			tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 1);
+			tableLayoutPanel1.Controls.Add(flowLayoutPanelMediaBox, 0, 2);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaMap, 0, 11);
+			tableLayoutPanel1.Controls.Add(checkBoxMediaManual, 0, 10);
+			tableLayoutPanel1.Controls.Add(flowLayoutPanelMediaWheel, 0, 9);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			// 
 			// checkBoxMediaImageBox
 			// 
 			resources.ApplyResources(checkBoxMediaImageBox, "checkBoxMediaImageBox");
 			checkBoxMediaImageBox.Name = "checkBoxMediaImageBox";
 			checkBoxMediaImageBox.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaMap
-			// 
-			resources.ApplyResources(checkBoxMediaMap, "checkBoxMediaMap");
-			checkBoxMediaMap.Name = "checkBoxMediaMap";
-			checkBoxMediaMap.UseVisualStyleBackColor = true;
+			checkBoxMediaImageBox.CheckedChanged += MediaCheckBox_CheckedChanged;
 			// 
 			// checkBoxMediaVideo
 			// 
@@ -418,11 +454,11 @@
 			checkBoxMediaVideo.Name = "checkBoxMediaVideo";
 			checkBoxMediaVideo.UseVisualStyleBackColor = true;
 			// 
-			// checkBoxMediaManual
+			// checkBoxMediaMarquee
 			// 
-			resources.ApplyResources(checkBoxMediaManual, "checkBoxMediaManual");
-			checkBoxMediaManual.Name = "checkBoxMediaManual";
-			checkBoxMediaManual.UseVisualStyleBackColor = true;
+			resources.ApplyResources(checkBoxMediaMarquee, "checkBoxMediaMarquee");
+			checkBoxMediaMarquee.Name = "checkBoxMediaMarquee";
+			checkBoxMediaMarquee.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMediaFanart
 			// 
@@ -430,23 +466,174 @@
 			checkBoxMediaFanart.Name = "checkBoxMediaFanart";
 			checkBoxMediaFanart.UseVisualStyleBackColor = true;
 			// 
-			// checkBoxMediaWheel
-			// 
-			resources.ApplyResources(checkBoxMediaWheel, "checkBoxMediaWheel");
-			checkBoxMediaWheel.Name = "checkBoxMediaWheel";
-			checkBoxMediaWheel.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxMediaMarquee
-			// 
-			resources.ApplyResources(checkBoxMediaMarquee, "checkBoxMediaMarquee");
-			checkBoxMediaMarquee.Name = "checkBoxMediaMarquee";
-			checkBoxMediaMarquee.UseVisualStyleBackColor = true;
-			// 
 			// checkBoxMediaScreenshot
 			// 
 			resources.ApplyResources(checkBoxMediaScreenshot, "checkBoxMediaScreenshot");
 			checkBoxMediaScreenshot.Name = "checkBoxMediaScreenshot";
 			checkBoxMediaScreenshot.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaScreenshotTitle
+			// 
+			resources.ApplyResources(checkBoxMediaScreenshotTitle, "checkBoxMediaScreenshotTitle");
+			checkBoxMediaScreenshotTitle.Name = "checkBoxMediaScreenshotTitle";
+			checkBoxMediaScreenshotTitle.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaWheel
+			// 
+			resources.ApplyResources(checkBoxMediaWheel, "checkBoxMediaWheel");
+			checkBoxMediaWheel.Name = "checkBoxMediaWheel";
+			checkBoxMediaWheel.UseVisualStyleBackColor = true;
+			checkBoxMediaWheel.CheckedChanged += MediaCheckBox_CheckedChanged;
+			// 
+			// flowLayoutPanel1
+			// 
+			flowLayoutPanel1.Controls.Add(labelMediaBoxFront);
+			flowLayoutPanel1.Controls.Add(radioButtonMediaBox2D);
+			flowLayoutPanel1.Controls.Add(radioButtonMediaBox3D);
+			flowLayoutPanel1.Controls.Add(radioButtonMediaBoxMix1);
+			flowLayoutPanel1.Controls.Add(linkLabelMediaBoxMix1);
+			flowLayoutPanel1.Controls.Add(radioButtonMediaBoxMix2);
+			flowLayoutPanel1.Controls.Add(linkLabelMediaBoxMix2);
+			resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
+			flowLayoutPanel1.Name = "flowLayoutPanel1";
+			// 
+			// labelMediaBoxFront
+			// 
+			resources.ApplyResources(labelMediaBoxFront, "labelMediaBoxFront");
+			labelMediaBoxFront.Name = "labelMediaBoxFront";
+			// 
+			// radioButtonMediaBox2D
+			// 
+			resources.ApplyResources(radioButtonMediaBox2D, "radioButtonMediaBox2D");
+			radioButtonMediaBox2D.Name = "radioButtonMediaBox2D";
+			radioButtonMediaBox2D.TabStop = true;
+			radioButtonMediaBox2D.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonMediaBox3D
+			// 
+			resources.ApplyResources(radioButtonMediaBox3D, "radioButtonMediaBox3D");
+			radioButtonMediaBox3D.Name = "radioButtonMediaBox3D";
+			radioButtonMediaBox3D.TabStop = true;
+			radioButtonMediaBox3D.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonMediaBoxMix1
+			// 
+			resources.ApplyResources(radioButtonMediaBoxMix1, "radioButtonMediaBoxMix1");
+			radioButtonMediaBoxMix1.Name = "radioButtonMediaBoxMix1";
+			radioButtonMediaBoxMix1.TabStop = true;
+			radioButtonMediaBoxMix1.UseVisualStyleBackColor = true;
+			// 
+			// linkLabelMediaBoxMix1
+			// 
+			resources.ApplyResources(linkLabelMediaBoxMix1, "linkLabelMediaBoxMix1");
+			linkLabelMediaBoxMix1.Name = "linkLabelMediaBoxMix1";
+			linkLabelMediaBoxMix1.TabStop = true;
+			linkLabelMediaBoxMix1.LinkClicked += LinkMediaExample_Clicked;
+			// 
+			// radioButtonMediaBoxMix2
+			// 
+			resources.ApplyResources(radioButtonMediaBoxMix2, "radioButtonMediaBoxMix2");
+			radioButtonMediaBoxMix2.Name = "radioButtonMediaBoxMix2";
+			radioButtonMediaBoxMix2.TabStop = true;
+			radioButtonMediaBoxMix2.UseVisualStyleBackColor = true;
+			// 
+			// linkLabelMediaBoxMix2
+			// 
+			resources.ApplyResources(linkLabelMediaBoxMix2, "linkLabelMediaBoxMix2");
+			linkLabelMediaBoxMix2.Name = "linkLabelMediaBoxMix2";
+			linkLabelMediaBoxMix2.TabStop = true;
+			linkLabelMediaBoxMix2.LinkClicked += LinkMediaExample_Clicked;
+			// 
+			// flowLayoutPanelMediaBox
+			// 
+			flowLayoutPanelMediaBox.Controls.Add(checkBoxMediaBoxBack);
+			flowLayoutPanelMediaBox.Controls.Add(checkBoxMediaBoxSide);
+			flowLayoutPanelMediaBox.Controls.Add(checkBoxMediaBoxTexture);
+			resources.ApplyResources(flowLayoutPanelMediaBox, "flowLayoutPanelMediaBox");
+			flowLayoutPanelMediaBox.Name = "flowLayoutPanelMediaBox";
+			// 
+			// checkBoxMediaBoxBack
+			// 
+			resources.ApplyResources(checkBoxMediaBoxBack, "checkBoxMediaBoxBack");
+			checkBoxMediaBoxBack.Name = "checkBoxMediaBoxBack";
+			checkBoxMediaBoxBack.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaBoxSide
+			// 
+			resources.ApplyResources(checkBoxMediaBoxSide, "checkBoxMediaBoxSide");
+			checkBoxMediaBoxSide.Name = "checkBoxMediaBoxSide";
+			checkBoxMediaBoxSide.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaBoxTexture
+			// 
+			resources.ApplyResources(checkBoxMediaBoxTexture, "checkBoxMediaBoxTexture");
+			checkBoxMediaBoxTexture.Name = "checkBoxMediaBoxTexture";
+			checkBoxMediaBoxTexture.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaMap
+			// 
+			resources.ApplyResources(checkBoxMediaMap, "checkBoxMediaMap");
+			checkBoxMediaMap.Name = "checkBoxMediaMap";
+			checkBoxMediaMap.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxMediaManual
+			// 
+			resources.ApplyResources(checkBoxMediaManual, "checkBoxMediaManual");
+			checkBoxMediaManual.Name = "checkBoxMediaManual";
+			checkBoxMediaManual.UseVisualStyleBackColor = true;
+			// 
+			// flowLayoutPanelMediaWheel
+			// 
+			flowLayoutPanelMediaWheel.Controls.Add(radioButtonMediaWheelNormal);
+			flowLayoutPanelMediaWheel.Controls.Add(linkLabelMediaWheelNormal);
+			flowLayoutPanelMediaWheel.Controls.Add(radioButtonMediaWheelSteel);
+			flowLayoutPanelMediaWheel.Controls.Add(linkLabelMediaWheelSteel);
+			flowLayoutPanelMediaWheel.Controls.Add(radioButtonMediaWheelCarbon);
+			flowLayoutPanelMediaWheel.Controls.Add(linkLabelMediaWheelCarbon);
+			resources.ApplyResources(flowLayoutPanelMediaWheel, "flowLayoutPanelMediaWheel");
+			flowLayoutPanelMediaWheel.Name = "flowLayoutPanelMediaWheel";
+			// 
+			// radioButtonMediaWheelNormal
+			// 
+			resources.ApplyResources(radioButtonMediaWheelNormal, "radioButtonMediaWheelNormal");
+			radioButtonMediaWheelNormal.Name = "radioButtonMediaWheelNormal";
+			radioButtonMediaWheelNormal.TabStop = true;
+			radioButtonMediaWheelNormal.UseVisualStyleBackColor = true;
+			// 
+			// linkLabelMediaWheelNormal
+			// 
+			resources.ApplyResources(linkLabelMediaWheelNormal, "linkLabelMediaWheelNormal");
+			linkLabelMediaWheelNormal.Name = "linkLabelMediaWheelNormal";
+			linkLabelMediaWheelNormal.TabStop = true;
+			linkLabelMediaWheelNormal.LinkClicked += LinkMediaExample_Clicked;
+			// 
+			// radioButtonMediaWheelSteel
+			// 
+			resources.ApplyResources(radioButtonMediaWheelSteel, "radioButtonMediaWheelSteel");
+			radioButtonMediaWheelSteel.Name = "radioButtonMediaWheelSteel";
+			radioButtonMediaWheelSteel.TabStop = true;
+			radioButtonMediaWheelSteel.UseVisualStyleBackColor = true;
+			// 
+			// linkLabelMediaWheelSteel
+			// 
+			resources.ApplyResources(linkLabelMediaWheelSteel, "linkLabelMediaWheelSteel");
+			linkLabelMediaWheelSteel.Name = "linkLabelMediaWheelSteel";
+			linkLabelMediaWheelSteel.TabStop = true;
+			linkLabelMediaWheelSteel.LinkClicked += LinkMediaExample_Clicked;
+			// 
+			// radioButtonMediaWheelCarbon
+			// 
+			resources.ApplyResources(radioButtonMediaWheelCarbon, "radioButtonMediaWheelCarbon");
+			radioButtonMediaWheelCarbon.Name = "radioButtonMediaWheelCarbon";
+			radioButtonMediaWheelCarbon.TabStop = true;
+			radioButtonMediaWheelCarbon.UseVisualStyleBackColor = true;
+			// 
+			// linkLabelMediaWheelCarbon
+			// 
+			resources.ApplyResources(linkLabelMediaWheelCarbon, "linkLabelMediaWheelCarbon");
+			linkLabelMediaWheelCarbon.Name = "linkLabelMediaWheelCarbon";
+			linkLabelMediaWheelCarbon.TabStop = true;
+			linkLabelMediaWheelCarbon.LinkClicked += LinkMediaExample_Clicked;
 			// 
 			// tabPageCustom
 			// 
@@ -795,14 +982,21 @@
 			((System.ComponentModel.ISupportInitialize)pictureBoxDonation).EndInit();
 			groupBox3.ResumeLayout(false);
 			groupBox3.PerformLayout();
-			tabPageScrap.ResumeLayout(false);
+			tabPageScrapUser.ResumeLayout(false);
 			splitContainerScrapData.Panel1.ResumeLayout(false);
-			splitContainerScrapData.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)splitContainerScrapData).EndInit();
 			splitContainerScrapData.ResumeLayout(false);
-			groupBox5.ResumeLayout(false);
-			tableLayoutPanelScrapMedia.ResumeLayout(false);
-			tableLayoutPanelScrapMedia.PerformLayout();
+			tabPageScrapData.ResumeLayout(false);
+			groupBox8.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)pictureBoxMediaExample).EndInit();
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
+			flowLayoutPanel1.ResumeLayout(false);
+			flowLayoutPanel1.PerformLayout();
+			flowLayoutPanelMediaBox.ResumeLayout(false);
+			flowLayoutPanelMediaBox.PerformLayout();
+			flowLayoutPanelMediaWheel.ResumeLayout(false);
+			flowLayoutPanelMediaWheel.PerformLayout();
 			tabPageCustom.ResumeLayout(false);
 			groupBox6.ResumeLayout(false);
 			groupBox6.PerformLayout();
@@ -834,7 +1028,7 @@
 		private ListBox listBoxApiTest;
 		private TabControl tabControlOptions;
 		private TabPage tabPageLang;
-		private TabPage tabPageScrap;
+		private TabPage tabPageScrapUser;
 		private TabPage tabPageAppInfo;
 		private TableLayoutPanel tableLayoutPanelInfo;
 		private TableLayoutPanel tableLayoutPanelAppText;
@@ -898,18 +1092,40 @@
 		private GroupBox groupBox7;
 		private CheckBox checkBoxOptLogging;
 		private CheckBox checkBoxOptRomScanStartup;
-		private GroupBox groupBox5;
-		private CheckBox checkBoxMediaMap;
-		private CheckBox checkBoxMediaManual;
-		private CheckBox checkBoxMediaVideo;
-		private CheckBox checkBoxMediaImageBox;
-		private CheckBox checkBoxMediaWheel;
-		private CheckBox checkBoxMediaScreenshot;
-		private CheckBox checkBoxMediaMarquee;
-		private CheckBox checkBoxMediaFanart;
-		private TableLayoutPanel tableLayoutPanelScrapMedia;
 		private TableLayoutPanel tableLayoutPanelScrapLogin;
 		private TableLayoutPanel tableLayoutPanelScrapLoginLeft;
 		private SplitContainer splitContainerScrapData;
+		private TabPage tabPageScrapData;
+		private GroupBox groupBox8;
+		private TableLayoutPanel tableLayoutPanel1;
+		private CheckBox checkBoxMediaImageBox;
+		private FlowLayoutPanel flowLayoutPanelMediaBox;
+		private RadioButton radioButtonMediaBox2D;
+		private RadioButton radioButtonMediaBox3D;
+		private CheckBox checkBoxMediaBoxBack;
+		private CheckBox checkBoxMediaBoxSide;
+		private CheckBox checkBoxMediaBoxTexture;
+		private CheckBox checkBoxMediaMap;
+		private CheckBox checkBoxMediaManual;
+		private CheckBox checkBoxMediaWheel;
+		private CheckBox checkBoxMediaScreenshotTitle;
+		private CheckBox checkBoxMediaScreenshot;
+		private CheckBox checkBoxMediaFanart;
+		private CheckBox checkBoxMediaMarquee;
+		private CheckBox checkBoxMediaVideo;
+		private FlowLayoutPanel flowLayoutPanelMediaWheel;
+		private RadioButton radioButtonMediaWheelNormal;
+		private RadioButton radioButtonMediaWheelSteel;
+		private RadioButton radioButtonMediaWheelCarbon;
+		private FlowLayoutPanel flowLayoutPanel1;
+		private Label labelMediaBoxFront;
+		private RadioButton radioButtonMediaBoxMix1;
+		private RadioButton radioButtonMediaBoxMix2;
+		private LinkLabel linkLabelMediaBoxMix1;
+		private LinkLabel linkLabelMediaBoxMix2;
+		private LinkLabel linkLabelMediaWheelNormal;
+		private LinkLabel linkLabelMediaWheelSteel;
+		private LinkLabel linkLabelMediaWheelCarbon;
+		private PictureBox pictureBoxMediaExample;
 	}
 }

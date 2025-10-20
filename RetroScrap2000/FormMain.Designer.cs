@@ -101,6 +101,9 @@
 			addType7ToolStripMenuItem = new ToolStripMenuItem();
 			addType8ToolStripMenuItem = new ToolStripMenuItem();
 			addType9ToolStripMenuItem = new ToolStripMenuItem();
+			addType10ToolStripMenuItem = new ToolStripMenuItem();
+			addType11ToolStripMenuItem = new ToolStripMenuItem();
+			addType12ToolStripMenuItem = new ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
 			splitContainerMain.Panel1.SuspendLayout();
 			splitContainerMain.Panel2.SuspendLayout();
@@ -507,7 +510,7 @@
 			// contextMenuStripMedia
 			// 
 			contextMenuStripMedia.ImageScalingSize = new Size(20, 20);
-			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { MediaviewToolStripMenuItem, MedianewToolStripMenuItem, MediadeleteToolStripMenuItem, toolStripSeparator1, addType1ToolStripMenuItem, addType2ToolStripMenuItem, addType3ToolStripMenuItem, addType4ToolStripMenuItem, addType5ToolStripMenuItem, addType6ToolStripMenuItem, addType7ToolStripMenuItem, addType8ToolStripMenuItem, addType9ToolStripMenuItem });
+			contextMenuStripMedia.Items.AddRange(new ToolStripItem[] { MediaviewToolStripMenuItem, MedianewToolStripMenuItem, MediadeleteToolStripMenuItem, toolStripSeparator1, addType1ToolStripMenuItem, addType2ToolStripMenuItem, addType3ToolStripMenuItem, addType4ToolStripMenuItem, addType5ToolStripMenuItem, addType6ToolStripMenuItem, addType7ToolStripMenuItem, addType8ToolStripMenuItem, addType9ToolStripMenuItem, addType10ToolStripMenuItem, addType11ToolStripMenuItem, addType12ToolStripMenuItem });
 			contextMenuStripMedia.Name = "contextMenuStripMedia";
 			resources.ApplyResources(contextMenuStripMedia, "contextMenuStripMedia");
 			// 
@@ -587,6 +590,21 @@
 			addType9ToolStripMenuItem.Name = "addType9ToolStripMenuItem";
 			resources.ApplyResources(addType9ToolStripMenuItem, "addType9ToolStripMenuItem");
 			addType9ToolStripMenuItem.Click += addMediaToolStripMenuItem_Click;
+			// 
+			// addType10ToolStripMenuItem
+			// 
+			addType10ToolStripMenuItem.Name = "addType10ToolStripMenuItem";
+			resources.ApplyResources(addType10ToolStripMenuItem, "addType10ToolStripMenuItem");
+			// 
+			// addType11ToolStripMenuItem
+			// 
+			addType11ToolStripMenuItem.Name = "addType11ToolStripMenuItem";
+			resources.ApplyResources(addType11ToolStripMenuItem, "addType11ToolStripMenuItem");
+			// 
+			// addType12ToolStripMenuItem
+			// 
+			addType12ToolStripMenuItem.Name = "addType12ToolStripMenuItem";
+			resources.ApplyResources(addType12ToolStripMenuItem, "addType12ToolStripMenuItem");
 			// 
 			// FormMain
 			// 
@@ -700,5 +718,8 @@
 		private ToolStripSeparator toolStripSeparator3;
 		private ToolStripMenuItem SystemCleanToolStripMenuItem;
 		private ToolStripMenuItem RomGrouptoolStripMenuItem;
+		private ToolStripMenuItem addType10ToolStripMenuItem;
+		private ToolStripMenuItem addType11ToolStripMenuItem;
+		private ToolStripMenuItem addType12ToolStripMenuItem;
 	}
 }

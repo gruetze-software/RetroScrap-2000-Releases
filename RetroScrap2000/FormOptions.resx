@@ -123,14 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>530, 380</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>606, 499</value>
   </data>
   <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 25</value>
+    <value>94, 33</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
@@ -155,13 +151,10 @@
     <value>Bottom, Right</value>
   </data>
   <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 380</value>
-  </data>
-  <data name="buttonOK.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>506, 499</value>
   </data>
   <data name="buttonOK.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 25</value>
+    <value>94, 33</value>
   </data>
   <data name="buttonOK.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -191,13 +184,10 @@
     <value>Japan (jp)</value>
   </data>
   <data name="comboBoxLangRegion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 140</value>
-  </data>
-  <data name="comboBoxLangRegion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>7, 187</value>
   </data>
   <data name="comboBoxLangRegion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 23</value>
+    <value>212, 28</value>
   </data>
   <data name="comboBoxLangRegion.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -218,10 +208,10 @@
     <value>True</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 116</value>
+    <value>7, 155</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 15</value>
+    <value>59, 20</value>
   </data>
   <data name="label8.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -245,10 +235,10 @@
     <value>NoControl</value>
   </data>
   <data name="labelHelpLang.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 22</value>
+    <value>6, 29</value>
   </data>
   <data name="labelHelpLang.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 50</value>
+    <value>246, 67</value>
   </data>
   <data name="labelHelpLang.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -269,13 +259,10 @@
     <value>2</value>
   </data>
   <data name="comboBoxLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 76</value>
-  </data>
-  <data name="comboBoxLanguage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>6, 101</value>
   </data>
   <data name="comboBoxLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>187, 23</value>
+    <value>213, 28</value>
   </data>
   <data name="comboBoxLanguage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -293,16 +280,10 @@
     <value>3</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 5</value>
-  </data>
-  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>7, 7</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 204</value>
+    <value>258, 272</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -334,17 +315,11 @@
   <data name="listBoxApiTest.HorizontalScrollbar" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="listBoxApiTest.ItemHeight" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
   <data name="listBoxApiTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>235, 2</value>
-  </data>
-  <data name="listBoxApiTest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>269, 3</value>
   </data>
   <data name="listBoxApiTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>343, 157</value>
+    <value>395, 318</value>
   </data>
   <data name="listBoxApiTest.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -374,7 +349,7 @@
     <value>3, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 15</value>
+    <value>254, 20</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -398,13 +373,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxApiLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 17</value>
-  </data>
-  <data name="textBoxApiLogin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 23</value>
   </data>
   <data name="textBoxApiLogin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 23</value>
+    <value>254, 27</value>
   </data>
   <data name="textBoxApiLogin.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -425,13 +397,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxApiPwd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 59</value>
-  </data>
-  <data name="textBoxApiPwd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 76</value>
   </data>
   <data name="textBoxApiPwd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 23</value>
+    <value>254, 27</value>
   </data>
   <data name="textBoxApiPwd.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -455,10 +424,10 @@
     <value>Fill</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 42</value>
+    <value>3, 53</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 15</value>
+    <value>254, 20</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -482,13 +451,10 @@
     <value>Fill</value>
   </data>
   <data name="buttonApiTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 106</value>
-  </data>
-  <data name="buttonApiTest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 136</value>
   </data>
   <data name="buttonApiTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 36</value>
+    <value>254, 47</value>
   </data>
   <data name="buttonApiTest.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -512,13 +478,17 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelScrapLoginLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>3, 4</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tableLayoutPanelScrapLoginLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tableLayoutPanelScrapLoginLeft.RowCount" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="tableLayoutPanelScrapLoginLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 155</value>
+    <value>260, 316</value>
   </data>
   <data name="tableLayoutPanelScrapLoginLeft.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -536,19 +506,22 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanelScrapLoginLeft.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxApiLogin" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxApiPwd" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonApiTest" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20,Absolute,40,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="label1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxApiLogin" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxApiPwd" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonApiTest" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,27,Absolute,53,Absolute,27" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanelScrapLogin.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelScrapLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 18</value>
+    <value>3, 23</value>
+  </data>
+  <data name="tableLayoutPanelScrapLogin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tableLayoutPanelScrapLogin.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="tableLayoutPanelScrapLogin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 161</value>
+    <value>667, 324</value>
   </data>
   <data name="tableLayoutPanelScrapLogin.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -574,14 +547,8 @@
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="groupBox2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>587, 181</value>
+    <value>673, 350</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -614,13 +581,10 @@
     <value>NoControl</value>
   </data>
   <data name="checkBoxOptLogging.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 51</value>
-  </data>
-  <data name="checkBoxOptLogging.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>19, 68</value>
   </data>
   <data name="checkBoxOptLogging.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 19</value>
+    <value>86, 24</value>
   </data>
   <data name="checkBoxOptLogging.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -644,13 +608,10 @@
     <value>True</value>
   </data>
   <data name="checkBoxOptRomScanStartup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 28</value>
-  </data>
-  <data name="checkBoxOptRomScanStartup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>19, 37</value>
   </data>
   <data name="checkBoxOptRomScanStartup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 19</value>
+    <value>164, 24</value>
   </data>
   <data name="checkBoxOptRomScanStartup.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -671,16 +632,10 @@
     <value>1</value>
   </data>
   <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 121</value>
-  </data>
-  <data name="groupBox7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="groupBox7.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>271, 161</value>
   </data>
   <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>352, 88</value>
+    <value>402, 117</value>
   </data>
   <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -707,10 +662,10 @@
     <value>Top, Right</value>
   </data>
   <data name="linkLabelDonate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 81</value>
+    <value>88, 97</value>
   </data>
   <data name="linkLabelDonate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 23</value>
+    <value>529, 31</value>
   </data>
   <data name="linkLabelDonate.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -734,10 +689,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="labelDonText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 19</value>
+    <value>88, 25</value>
   </data>
   <data name="labelDonText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>500, 62</value>
+    <value>571, 83</value>
   </data>
   <data name="labelDonText.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -758,10 +713,13 @@
     <value>1</value>
   </data>
   <data name="pictureBoxDonation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
+    <value>7, 29</value>
+  </data>
+  <data name="pictureBoxDonation.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="pictureBoxDonation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 74</value>
+    <value>74, 99</value>
   </data>
   <data name="pictureBoxDonation.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -782,10 +740,16 @@
     <value>2</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 214</value>
+    <value>7, 285</value>
+  </data>
+  <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="groupBox4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>583, 118</value>
+    <value>666, 145</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -812,10 +776,10 @@
     <value>True</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 85</value>
+    <value>39, 113</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 15</value>
+    <value>214, 20</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -839,10 +803,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="buttonInfoRetroPie.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 47</value>
+    <value>39, 63</value>
+  </data>
+  <data name="buttonInfoRetroPie.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="buttonInfoRetroPie.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 30</value>
+    <value>328, 40</value>
   </data>
   <data name="buttonInfoRetroPie.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -872,10 +839,13 @@
     <value>NoControl</value>
   </data>
   <data name="radioButtonRetroArch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 86</value>
+    <value>19, 115</value>
+  </data>
+  <data name="radioButtonRetroArch.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="radioButtonRetroArch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>14, 13</value>
+    <value>17, 16</value>
   </data>
   <data name="radioButtonRetroArch.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -896,10 +866,13 @@
     <value>True</value>
   </data>
   <data name="radioButtonBatocera.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 23</value>
+    <value>19, 31</value>
+  </data>
+  <data name="radioButtonBatocera.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="radioButtonBatocera.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 19</value>
+    <value>306, 24</value>
   </data>
   <data name="radioButtonBatocera.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -920,10 +893,16 @@
     <value>3</value>
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 5</value>
+    <value>271, 7</value>
+  </data>
+  <data name="groupBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>352, 110</value>
+    <value>402, 147</value>
   </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -944,13 +923,16 @@
     <value>2</value>
   </data>
   <data name="tabPageLang.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+    <value>4, 29</value>
+  </data>
+  <data name="tabPageLang.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabPageLang.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabPageLang.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 335</value>
+    <value>679, 443</value>
   </data>
   <data name="tabPageLang.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -974,7 +956,10 @@
     <value>Fill</value>
   </data>
   <data name="splitContainerScrapData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>3, 4</value>
+  </data>
+  <data name="splitContainerScrapData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="splitContainerScrapData.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
@@ -991,366 +976,6 @@
   <data name="&gt;&gt;splitContainerScrapData.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableLayoutPanelScrapMedia.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="checkBoxMediaImageBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaImageBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 2</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 19</value>
-  </data>
-  <data name="checkBoxMediaImageBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
-    <value>Image (main image, box art / front of box) </value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaImageBox.Name" xml:space="preserve">
-    <value>checkBoxMediaImageBox</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaImageBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaImageBox.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaImageBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="checkBoxMediaMap.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaMap.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaMap.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="checkBoxMediaMap.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaMap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 71</value>
-  </data>
-  <data name="checkBoxMediaMap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 19</value>
-  </data>
-  <data name="checkBoxMediaMap.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="checkBoxMediaMap.Text" xml:space="preserve">
-    <value>Map (The path to the digital game map)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMap.Name" xml:space="preserve">
-    <value>checkBoxMediaMap</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMap.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMap.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMap.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="checkBoxMediaVideo.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaVideo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 25</value>
-  </data>
-  <data name="checkBoxMediaVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 19</value>
-  </data>
-  <data name="checkBoxMediaVideo.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="checkBoxMediaVideo.Text" xml:space="preserve">
-    <value>Video (A video clip of the gameplay)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Name" xml:space="preserve">
-    <value>checkBoxMediaVideo</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaVideo.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="checkBoxMediaManual.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaManual.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaManual.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="checkBoxMediaManual.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaManual.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 48</value>
-  </data>
-  <data name="checkBoxMediaManual.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaManual.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 19</value>
-  </data>
-  <data name="checkBoxMediaManual.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="checkBoxMediaManual.Text" xml:space="preserve">
-    <value>Manual (The path to the digital game manual)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaManual.Name" xml:space="preserve">
-    <value>checkBoxMediaManual</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaManual.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaManual.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaManual.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="checkBoxMediaFanart.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaFanart.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaFanart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaFanart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 71</value>
-  </data>
-  <data name="checkBoxMediaFanart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaFanart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 19</value>
-  </data>
-  <data name="checkBoxMediaFanart.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="checkBoxMediaFanart.Text" xml:space="preserve">
-    <value>Fanart (Large background)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFanart.Name" xml:space="preserve">
-    <value>checkBoxMediaFanart</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFanart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFanart.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaFanart.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="checkBoxMediaWheel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaWheel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaWheel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaWheel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 25</value>
-  </data>
-  <data name="checkBoxMediaWheel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaWheel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 19</value>
-  </data>
-  <data name="checkBoxMediaWheel.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
-    <value>Wheel (wheel logo, often transparent)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaWheel.Name" xml:space="preserve">
-    <value>checkBoxMediaWheel</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaWheel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaWheel.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaWheel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="checkBoxMediaMarquee.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaMarquee.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 48</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 19</value>
-  </data>
-  <data name="checkBoxMediaMarquee.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
-    <value>Marquee (banner or logo)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMarquee.Name" xml:space="preserve">
-    <value>checkBoxMediaMarquee</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMarquee.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMarquee.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaMarquee.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 2</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 19</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
-    <value>Screenshot (A dedicated screenshot)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreenshot.Name" xml:space="preserve">
-    <value>checkBoxMediaScreenshot</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreenshot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreenshot.Parent" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;checkBoxMediaScreenshot.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 18</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.RowCount" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 124</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanelScrapMedia.Name" xml:space="preserve">
-    <value>tableLayoutPanelScrapMedia</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanelScrapMedia.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanelScrapMedia.Parent" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanelScrapMedia.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tableLayoutPanelScrapMedia.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="checkBoxMediaImageBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaMap" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaVideo" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaManual" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaFanart" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaWheel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaMarquee" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaScreenshot" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="groupBox5.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>587, 144</value>
-  </data>
-  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>Scrap Media Data</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
-    <value>splitContainerScrapData.Panel2</value>
-  </data>
-  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;splitContainerScrapData.Panel2.Name" xml:space="preserve">
     <value>splitContainerScrapData.Panel2</value>
   </data>
@@ -1364,10 +989,13 @@
     <value>1</value>
   </data>
   <data name="splitContainerScrapData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>587, 329</value>
+    <value>673, 435</value>
   </data>
   <data name="splitContainerScrapData.SplitterDistance" type="System.Int32, mscorlib">
-    <value>181</value>
+    <value>350</value>
+  </data>
+  <data name="splitContainerScrapData.SplitterWidth" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="splitContainerScrapData.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1379,37 +1007,1042 @@
     <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splitContainerScrapData.Parent" xml:space="preserve">
-    <value>tabPageScrap</value>
+    <value>tabPageScrapUser</value>
   </data>
   <data name="&gt;&gt;splitContainerScrapData.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabPageScrap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+  <data name="tabPageScrapUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
   </data>
-  <data name="tabPageScrap.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="tabPageScrapUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="tabPageScrap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 335</value>
+  <data name="tabPageScrapUser.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="tabPageScrap.TabIndex" type="System.Int32, mscorlib">
+  <data name="tabPageScrapUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 443</value>
+  </data>
+  <data name="tabPageScrapUser.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="tabPageScrap.Text" xml:space="preserve">
-    <value>Scrap Data</value>
+  <data name="tabPageScrapUser.Text" xml:space="preserve">
+    <value>Scrap User</value>
   </data>
-  <data name="&gt;&gt;tabPageScrap.Name" xml:space="preserve">
-    <value>tabPageScrap</value>
+  <data name="&gt;&gt;tabPageScrapUser.Name" xml:space="preserve">
+    <value>tabPageScrapUser</value>
   </data>
-  <data name="&gt;&gt;tabPageScrap.Type" xml:space="preserve">
+  <data name="&gt;&gt;tabPageScrapUser.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabPageScrap.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tabPageScrapUser.Parent" xml:space="preserve">
     <value>tabControlOptions</value>
   </data>
-  <data name="&gt;&gt;tabPageScrap.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;tabPageScrapUser.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="pictureBoxMediaExample.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="pictureBoxMediaExample.Location" type="System.Drawing.Point, System.Drawing">
+    <value>434, 24</value>
+  </data>
+  <data name="pictureBoxMediaExample.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="pictureBoxMediaExample.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 404</value>
+  </data>
+  <data name="pictureBoxMediaExample.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBoxMediaExample.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxMediaExample.Name" xml:space="preserve">
+    <value>pictureBoxMediaExample</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxMediaExample.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxMediaExample.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxMediaExample.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkBoxMediaImageBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaImageBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaImageBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaImageBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="checkBoxMediaImageBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaImageBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaImageBox.Name" xml:space="preserve">
+    <value>checkBoxMediaImageBox</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaImageBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaImageBox.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaImageBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxMediaVideo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaVideo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaVideo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaVideo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 99</value>
+  </data>
+  <data name="checkBoxMediaVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaVideo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="checkBoxMediaVideo.Text" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaVideo.Name" xml:space="preserve">
+    <value>checkBoxMediaVideo</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaVideo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaVideo.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaVideo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxMediaMarquee.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaMarquee.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaMarquee.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaMarquee.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 129</value>
+  </data>
+  <data name="checkBoxMediaMarquee.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaMarquee.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
+    <value>Marquee</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMarquee.Name" xml:space="preserve">
+    <value>checkBoxMediaMarquee</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMarquee.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMarquee.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMarquee.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkBoxMediaFanart.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaFanart.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaFanart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaFanart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 159</value>
+  </data>
+  <data name="checkBoxMediaFanart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaFanart.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="checkBoxMediaFanart.Text" xml:space="preserve">
+    <value>Fanart</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaFanart.Name" xml:space="preserve">
+    <value>checkBoxMediaFanart</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaFanart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaFanart.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaFanart.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 189</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
+    <value>Screenshot Game</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshot.Name" xml:space="preserve">
+    <value>checkBoxMediaScreenshot</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshot.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshot.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 220</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="checkBoxMediaScreenshotTitle.Text" xml:space="preserve">
+    <value>Screenshot Title</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshotTitle.Name" xml:space="preserve">
+    <value>checkBoxMediaScreenshotTitle</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshotTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshotTitle.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaScreenshotTitle.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="checkBoxMediaWheel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaWheel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxMediaWheel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaWheel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 251</value>
+  </data>
+  <data name="checkBoxMediaWheel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 24</value>
+  </data>
+  <data name="checkBoxMediaWheel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
+    <value>Wheel</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaWheel.Name" xml:space="preserve">
+    <value>checkBoxMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaWheel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaWheel.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaWheel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="labelMediaBoxFront.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelMediaBoxFront.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 7</value>
+  </data>
+  <data name="labelMediaBoxFront.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 7, 3, 0</value>
+  </data>
+  <data name="labelMediaBoxFront.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="labelMediaBoxFront.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelMediaBoxFront.Text" xml:space="preserve">
+    <value>Front:</value>
+  </data>
+  <data name="&gt;&gt;labelMediaBoxFront.Name" xml:space="preserve">
+    <value>labelMediaBoxFront</value>
+  </data>
+  <data name="&gt;&gt;labelMediaBoxFront.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelMediaBoxFront.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;labelMediaBoxFront.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radioButtonMediaBox2D.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaBox2D.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaBox2D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 4</value>
+  </data>
+  <data name="radioButtonMediaBox2D.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaBox2D.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 24</value>
+  </data>
+  <data name="radioButtonMediaBox2D.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="radioButtonMediaBox2D.Text" xml:space="preserve">
+    <value>Box2D</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox2D.Name" xml:space="preserve">
+    <value>radioButtonMediaBox2D</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox2D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox2D.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox2D.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radioButtonMediaBox3D.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaBox3D.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaBox3D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 4</value>
+  </data>
+  <data name="radioButtonMediaBox3D.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaBox3D.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 24</value>
+  </data>
+  <data name="radioButtonMediaBox3D.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="radioButtonMediaBox3D.Text" xml:space="preserve">
+    <value>Box3D</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox3D.Name" xml:space="preserve">
+    <value>radioButtonMediaBox3D</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox3D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox3D.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBox3D.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="radioButtonMediaBoxMix1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaBoxMix1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 8</value>
+  </data>
+  <data name="radioButtonMediaBoxMix1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 8, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaBoxMix1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 16</value>
+  </data>
+  <data name="radioButtonMediaBoxMix1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix1.Name" xml:space="preserve">
+    <value>radioButtonMediaBoxMix1</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix1.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>238, 5</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 0</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 20</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="linkLabelMediaBoxMix1.Text" xml:space="preserve">
+    <value>Mix1</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix1.Name" xml:space="preserve">
+    <value>linkLabelMediaBoxMix1</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix1.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 8</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 8, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 16</value>
+  </data>
+  <data name="radioButtonMediaBoxMix2.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix2.Name" xml:space="preserve">
+    <value>radioButtonMediaBoxMix2</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix2.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaBoxMix2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>308, 5</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 0</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 20</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="linkLabelMediaBoxMix2.Text" xml:space="preserve">
+    <value>Mix2</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix2.Name" xml:space="preserve">
+    <value>linkLabelMediaBoxMix2</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix2.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaBoxMix2.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="flowLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 30</value>
+  </data>
+  <data name="flowLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>23, 0, 0, 0</value>
+  </data>
+  <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>401, 33</value>
+  </data>
+  <data name="flowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Name" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 5</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 4</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 24</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBoxMediaBoxBack.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxBack.Name" xml:space="preserve">
+    <value>checkBoxMediaBoxBack</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxBack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxBack.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaBox</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxBack.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.Location" type="System.Drawing.Point, System.Drawing">
+    <value>71, 5</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 4</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkBoxMediaBoxSide.Text" xml:space="preserve">
+    <value>Side</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxSide.Name" xml:space="preserve">
+    <value>checkBoxMediaBoxSide</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxSide.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxSide.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaBox</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxSide.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 5</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 4</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 24</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="checkBoxMediaBoxTexture.Text" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxTexture.Name" xml:space="preserve">
+    <value>checkBoxMediaBoxTexture</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxTexture.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxTexture.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaBox</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaBoxTexture.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="flowLayoutPanelMediaBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="flowLayoutPanelMediaBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 63</value>
+  </data>
+  <data name="flowLayoutPanelMediaBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>23, 0, 0, 0</value>
+  </data>
+  <data name="flowLayoutPanelMediaBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>401, 33</value>
+  </data>
+  <data name="flowLayoutPanelMediaBox.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaBox.Name" xml:space="preserve">
+    <value>flowLayoutPanelMediaBox</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaBox.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="checkBoxMediaMap.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaMap.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="checkBoxMediaMap.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 344</value>
+  </data>
+  <data name="checkBoxMediaMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 24</value>
+  </data>
+  <data name="checkBoxMediaMap.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="checkBoxMediaMap.Text" xml:space="preserve">
+    <value>Map (under Construction)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMap.Name" xml:space="preserve">
+    <value>checkBoxMediaMap</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMap.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaMap.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="checkBoxMediaManual.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxMediaManual.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="checkBoxMediaManual.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxMediaManual.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 314</value>
+  </data>
+  <data name="checkBoxMediaManual.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 24</value>
+  </data>
+  <data name="checkBoxMediaManual.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="checkBoxMediaManual.Text" xml:space="preserve">
+    <value>Manual (under Construction)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaManual.Name" xml:space="preserve">
+    <value>checkBoxMediaManual</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaManual.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaManual.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkBoxMediaManual.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 8</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 8, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 16</value>
+  </data>
+  <data name="radioButtonMediaWheelNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelNormal.Name" xml:space="preserve">
+    <value>radioButtonMediaWheelNormal</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelNormal.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelNormal.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 5</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 0</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 20</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="linkLabelMediaWheelNormal.Text" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelNormal.Name" xml:space="preserve">
+    <value>linkLabelMediaWheelNormal</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelNormal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelNormal.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelNormal.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 8</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 8, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 16</value>
+  </data>
+  <data name="radioButtonMediaWheelSteel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelSteel.Name" xml:space="preserve">
+    <value>radioButtonMediaWheelSteel</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelSteel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelSteel.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelSteel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>114, 5</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 0</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 20</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="linkLabelMediaWheelSteel.Text" xml:space="preserve">
+    <value>Steel</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelSteel.Name" xml:space="preserve">
+    <value>linkLabelMediaWheelSteel</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelSteel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelSteel.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelSteel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 8</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 8, 3, 4</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 16</value>
+  </data>
+  <data name="radioButtonMediaWheelCarbon.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelCarbon.Name" xml:space="preserve">
+    <value>radioButtonMediaWheelCarbon</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelCarbon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelCarbon.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;radioButtonMediaWheelCarbon.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 5</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 0</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="linkLabelMediaWheelCarbon.Text" xml:space="preserve">
+    <value>Carbon</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelCarbon.Name" xml:space="preserve">
+    <value>linkLabelMediaWheelCarbon</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelCarbon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelCarbon.Parent" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;linkLabelMediaWheelCarbon.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="flowLayoutPanelMediaWheel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="flowLayoutPanelMediaWheel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 278</value>
+  </data>
+  <data name="flowLayoutPanelMediaWheel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>23, 0, 0, 0</value>
+  </data>
+  <data name="flowLayoutPanelMediaWheel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>401, 33</value>
+  </data>
+  <data name="flowLayoutPanelMediaWheel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaWheel.Name" xml:space="preserve">
+    <value>flowLayoutPanelMediaWheel</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaWheel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaWheel.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanelMediaWheel.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 24</value>
+  </data>
+  <data name="tableLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>424, 404</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="checkBoxMediaImageBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaVideo" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaMarquee" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaFanart" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaScreenshot" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaScreenshotTitle" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaWheel" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="flowLayoutPanel1" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="flowLayoutPanelMediaBox" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaMap" Row="11" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkBoxMediaManual" Row="10" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="flowLayoutPanelMediaWheel" Row="9" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,23" /&gt;&lt;Rows Styles="AutoSize,0,Absolute,33,Absolute,33,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,33,AutoSize,0,AutoSize,0,Absolute,40" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="groupBox8.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupBox8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 4</value>
+  </data>
+  <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>673, 435</value>
+  </data>
+  <data name="groupBox8.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox8.Text" xml:space="preserve">
+    <value>Scrap Media Data</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Name" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Parent" xml:space="preserve">
+    <value>tabPageScrapData</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabPageScrapData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 29</value>
+  </data>
+  <data name="tabPageScrapData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="tabPageScrapData.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="tabPageScrapData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 443</value>
+  </data>
+  <data name="tabPageScrapData.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tabPageScrapData.Text" xml:space="preserve">
+    <value>Scrap Data</value>
+  </data>
+  <data name="&gt;&gt;tabPageScrapData.Name" xml:space="preserve">
+    <value>tabPageScrapData</value>
+  </data>
+  <data name="&gt;&gt;tabPageScrapData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageScrapData.Parent" xml:space="preserve">
+    <value>tabControlOptions</value>
+  </data>
+  <data name="&gt;&gt;tabPageScrapData.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="buttonOptMMScan.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1418,10 +2051,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonOptMMScan.Location" type="System.Drawing.Point, System.Drawing">
-    <value>256, 173</value>
+    <value>293, 231</value>
+  </data>
+  <data name="buttonOptMMScan.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="buttonOptMMScan.Size" type="System.Drawing.Size, System.Drawing">
-    <value>331, 29</value>
+    <value>378, 39</value>
   </data>
   <data name="buttonOptMMScan.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1445,10 +2081,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonOptDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>116, 173</value>
+    <value>133, 231</value>
+  </data>
+  <data name="buttonOptDelete.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="buttonOptDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 29</value>
+    <value>119, 39</value>
   </data>
   <data name="buttonOptDelete.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1475,10 +2114,13 @@
     <value>True</value>
   </data>
   <data name="checkBoxOptMMRelPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 135</value>
+    <value>122, 180</value>
+  </data>
+  <data name="checkBoxOptMMRelPath.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="checkBoxOptMMRelPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 19</value>
+    <value>150, 24</value>
   </data>
   <data name="checkBoxOptMMRelPath.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1505,10 +2147,10 @@
     <value>NoControl</value>
   </data>
   <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
+    <value>7, 25</value>
   </data>
   <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 15</value>
+    <value>98, 20</value>
   </data>
   <data name="label16.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1535,10 +2177,10 @@
     <value>NoControl</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 48</value>
+    <value>7, 64</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 15</value>
+    <value>52, 20</value>
   </data>
   <data name="label12.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1562,10 +2204,13 @@
     <value>Top, Right</value>
   </data>
   <data name="textBoxOptMMFilePatterns.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 45</value>
+    <value>369, 60</value>
+  </data>
+  <data name="textBoxOptMMFilePatterns.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="textBoxOptMMFilePatterns.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 23</value>
+    <value>287, 27</value>
   </data>
   <data name="textBoxOptMMFilePatterns.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1592,10 +2237,13 @@
     <value>NoControl</value>
   </data>
   <data name="radioButtonOptMMAllSystems.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 17</value>
+    <value>122, 23</value>
+  </data>
+  <data name="radioButtonOptMMAllSystems.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="radioButtonOptMMAllSystems.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 19</value>
+    <value>103, 24</value>
   </data>
   <data name="radioButtonOptMMAllSystems.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1625,10 +2273,10 @@
     <value>NoControl</value>
   </data>
   <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 48</value>
+    <value>259, 64</value>
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 15</value>
+    <value>91, 20</value>
   </data>
   <data name="label17.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1658,10 +2306,13 @@
     <value>NoControl</value>
   </data>
   <data name="radioButtonOptMMSystem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 17</value>
+    <value>281, 23</value>
+  </data>
+  <data name="radioButtonOptMMSystem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="radioButtonOptMMSystem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 19</value>
+    <value>83, 24</value>
   </data>
   <data name="radioButtonOptMMSystem.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1682,10 +2333,13 @@
     <value>6</value>
   </data>
   <data name="textBoxOptMMXMLTag.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 74</value>
+    <value>122, 99</value>
+  </data>
+  <data name="textBoxOptMMXMLTag.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="textBoxOptMMXMLTag.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 23</value>
+    <value>63, 27</value>
   </data>
   <data name="textBoxOptMMXMLTag.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1706,10 +2360,13 @@
     <value>Top, Right</value>
   </data>
   <data name="comboBoxOptMMSystems.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 16</value>
+    <value>369, 21</value>
+  </data>
+  <data name="comboBoxOptMMSystems.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="comboBoxOptMMSystems.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 23</value>
+    <value>287, 28</value>
   </data>
   <data name="comboBoxOptMMSystems.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1730,10 +2387,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="textBoxOptMMPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 106</value>
+    <value>122, 141</value>
+  </data>
+  <data name="textBoxOptMMPath.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="textBoxOptMMPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>419, 23</value>
+    <value>478, 27</value>
   </data>
   <data name="textBoxOptMMPath.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -1757,10 +2417,10 @@
     <value>NoControl</value>
   </data>
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 109</value>
+    <value>7, 145</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 15</value>
+    <value>108, 20</value>
   </data>
   <data name="label14.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1781,10 +2441,13 @@
     <value>10</value>
   </data>
   <data name="textBoxOptMMName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 45</value>
+    <value>122, 60</value>
+  </data>
+  <data name="textBoxOptMMName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="textBoxOptMMName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 23</value>
+    <value>95, 27</value>
   </data>
   <data name="textBoxOptMMName.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1808,10 +2471,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonOptMMPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 106</value>
+    <value>608, 141</value>
+  </data>
+  <data name="buttonOptMMPath.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="buttonOptMMPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 23</value>
+    <value>49, 31</value>
   </data>
   <data name="buttonOptMMPath.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1838,10 +2504,10 @@
     <value>NoControl</value>
   </data>
   <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 77</value>
+    <value>7, 103</value>
   </data>
   <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 15</value>
+    <value>69, 20</value>
   </data>
   <data name="label15.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1862,10 +2528,16 @@
     <value>13</value>
   </data>
   <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
+    <value>7, 8</value>
+  </data>
+  <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="groupBox6.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 161</value>
+    <value>664, 215</value>
   </data>
   <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1889,10 +2561,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonOptMMAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 173</value>
+    <value>7, 231</value>
+  </data>
+  <data name="buttonOptMMAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="buttonOptMMAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 29</value>
+    <value>119, 39</value>
   </data>
   <data name="buttonOptMMAdd.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1946,10 +2621,13 @@
     <value>100</value>
   </data>
   <data name="listViewOptManualMedia.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 208</value>
+    <value>7, 277</value>
+  </data>
+  <data name="listViewOptManualMedia.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="listViewOptManualMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 121</value>
+    <value>663, 152</value>
   </data>
   <data name="listViewOptManualMedia.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1967,13 +2645,16 @@
     <value>4</value>
   </data>
   <data name="tabPageCustom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+    <value>4, 29</value>
+  </data>
+  <data name="tabPageCustom.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabPageCustom.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabPageCustom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 335</value>
+    <value>679, 443</value>
   </data>
   <data name="tabPageCustom.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1991,7 +2672,7 @@
     <value>tabControlOptions</value>
   </data>
   <data name="&gt;&gt;tabPageCustom.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="tableLayoutPanelInfo.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2006,10 +2687,13 @@
     <value>NoControl</value>
   </data>
   <data name="pictureBoxScrap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 200</value>
+    <value>3, 265</value>
+  </data>
+  <data name="pictureBoxScrap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="pictureBoxScrap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 126</value>
+    <value>259, 166</value>
   </data>
   <data name="pictureBoxScrap.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -2036,10 +2720,13 @@
     <value>Fill</value>
   </data>
   <data name="pictureBoxAppIcon.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>3, 4</value>
+  </data>
+  <data name="pictureBoxAppIcon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="pictureBoxAppIcon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 185</value>
+    <value>123, 245</value>
   </data>
   <data name="pictureBoxAppIcon.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -2066,10 +2753,13 @@
     <value>NoControl</value>
   </data>
   <data name="pictureBoxCompany.Location" type="System.Drawing.Point, System.Drawing">
-    <value>115, 3</value>
+    <value>132, 4</value>
+  </data>
+  <data name="pictureBoxCompany.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="pictureBoxCompany.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 185</value>
+    <value>124, 245</value>
   </data>
   <data name="pictureBoxCompany.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -2093,13 +2783,16 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelInfoLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>3, 4</value>
+  </data>
+  <data name="tableLayoutPanelInfoLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tableLayoutPanelInfoLeft.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="tableLayoutPanelInfoLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 191</value>
+    <value>259, 253</value>
   </data>
   <data name="tableLayoutPanelInfoLeft.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2117,19 +2810,22 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanelInfoLeft.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBoxAppIcon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxCompany" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100,Absolute,163" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pictureBoxAppIcon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="pictureBoxCompany" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100,Absolute,249" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanelIcons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelIcons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>3, 4</value>
+  </data>
+  <data name="tableLayoutPanelIcons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tableLayoutPanelIcons.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="tableLayoutPanelIcons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 329</value>
+    <value>265, 435</value>
   </data>
   <data name="tableLayoutPanelIcons.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2162,10 +2858,10 @@
     <value>NoControl</value>
   </data>
   <data name="linkLabel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 140</value>
+    <value>86, 189</value>
   </data>
   <data name="linkLabel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="linkLabel4.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -2195,10 +2891,10 @@
     <value>NoControl</value>
   </data>
   <data name="linkLabel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 120</value>
+    <value>86, 162</value>
   </data>
   <data name="linkLabel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="linkLabel3.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -2228,10 +2924,10 @@
     <value>NoControl</value>
   </data>
   <data name="linkLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 100</value>
+    <value>86, 135</value>
   </data>
   <data name="linkLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="linkLabel2.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -2258,10 +2954,10 @@
     <value>NoControl</value>
   </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 140</value>
+    <value>3, 189</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+    <value>0, 20</value>
   </data>
   <data name="label13.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -2285,10 +2981,10 @@
     <value>NoControl</value>
   </data>
   <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 120</value>
+    <value>3, 162</value>
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+    <value>0, 20</value>
   </data>
   <data name="label11.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -2312,10 +3008,10 @@
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 100</value>
+    <value>3, 135</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+    <value>0, 20</value>
   </data>
   <data name="label9.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -2342,10 +3038,10 @@
     <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 80</value>
+    <value>3, 108</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>77, 27</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -2375,10 +3071,10 @@
     <value>NoControl</value>
   </data>
   <data name="labelInfoCopyright.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 60</value>
+    <value>86, 81</value>
   </data>
   <data name="labelInfoCopyright.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="labelInfoCopyright.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2408,10 +3104,10 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 60</value>
+    <value>3, 81</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>77, 27</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2441,10 +3137,10 @@
     <value>NoControl</value>
   </data>
   <data name="labelInfoCompany.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 40</value>
+    <value>86, 54</value>
   </data>
   <data name="labelInfoCompany.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="labelInfoCompany.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2474,10 +3170,10 @@
     <value>NoControl</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 40</value>
+    <value>3, 54</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>77, 27</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2507,10 +3203,10 @@
     <value>NoControl</value>
   </data>
   <data name="labelInfoVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 20</value>
+    <value>86, 27</value>
   </data>
   <data name="labelInfoVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="labelInfoVersion.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2540,10 +3236,10 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 20</value>
+    <value>3, 27</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>77, 27</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2573,7 +3269,7 @@
     <value>3, 0</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>77, 27</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2600,10 +3296,10 @@
     <value>Fill</value>
   </data>
   <data name="labelInfoProduct.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 0</value>
+    <value>86, 0</value>
   </data>
   <data name="labelInfoProduct.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="labelInfoProduct.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2630,10 +3326,10 @@
     <value>Fill</value>
   </data>
   <data name="linkLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 80</value>
+    <value>86, 108</value>
   </data>
   <data name="linkLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>275, 20</value>
+    <value>313, 27</value>
   </data>
   <data name="linkLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2657,16 +3353,16 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelAppText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 9</value>
+    <value>274, 12</value>
   </data>
   <data name="tableLayoutPanelAppText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 9, 3, 9</value>
+    <value>3, 12, 3, 12</value>
   </data>
   <data name="tableLayoutPanelAppText.RowCount" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
   <data name="tableLayoutPanelAppText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 317</value>
+    <value>402, 419</value>
   </data>
   <data name="tableLayoutPanelAppText.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2684,7 +3380,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanelAppText.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="linkLabel4" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel3" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel2" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label13" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoCopyright" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoCompany" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoVersion" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoProduct" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel1" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="linkLabel4" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel3" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel2" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label13" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoCopyright" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoCompany" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoVersion" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelInfoProduct" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="linkLabel1" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="Absolute,27,Absolute,27,Absolute,27,Absolute,27,Absolute,27,Absolute,27,Absolute,27,Absolute,27,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanelInfo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2692,11 +3388,14 @@
   <data name="tableLayoutPanelInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="tableLayoutPanelInfo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="tableLayoutPanelInfo.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="tableLayoutPanelInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 335</value>
+    <value>679, 443</value>
   </data>
   <data name="tableLayoutPanelInfo.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2717,10 +3416,13 @@
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableLayoutPanelIcons" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanelAppText" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,40,Percent,60" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tabPageAppInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
+    <value>4, 29</value>
+  </data>
+  <data name="tabPageAppInfo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabPageAppInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 335</value>
+    <value>679, 443</value>
   </data>
   <data name="tabPageAppInfo.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2738,13 +3440,16 @@
     <value>tabControlOptions</value>
   </data>
   <data name="&gt;&gt;tabPageAppInfo.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="tabControlOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+    <value>14, 16</value>
+  </data>
+  <data name="tabControlOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="tabControlOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>601, 363</value>
+    <value>687, 476</value>
   </data>
   <data name="tabControlOptions.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2765,10 +3470,10 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>8, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>624, 411</value>
+    <value>713, 540</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3941,9 +4646,6 @@
         31HORBNNNNFEE0000UQTTTTRRBNNNNFEE0000UQTTTTRRBNNNNFEE0000UQTTTTRRBNNNNFEE0000UQT
         TTTRRBNNNNFEE0000UQTTTTRRBNNNNFEE010zOh/ANLRKPxZKpwFAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

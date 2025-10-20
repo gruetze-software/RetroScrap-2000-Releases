@@ -26,7 +26,7 @@ namespace RetroScrap2000
 		public static string GetExcMsg(Exception ex)
 		{
 			string msg = ex.Message;
-			if (ex.InnerException != null)
+			if (ex.InnerException != null && ex.InnerException.Message != msg)
 				msg += "\r\n" + GetExcMsg(ex.InnerException);
 			return msg;
 		}

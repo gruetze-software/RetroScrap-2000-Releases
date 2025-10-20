@@ -1,23 +1,11 @@
 ﻿using RetroScrap2000;
 using RetroScrap2000.Tools;
 using Serilog;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Linq;
 
 namespace RetroScrap2000
 {
@@ -507,64 +495,10 @@ namespace RetroScrap2000
 			////////////////////////////////////////////////////////////////////////
 			// Medien
 			///////////////////////////////////////////////////////////////////////
-			SetMedia(jeu, sg, opt);
+			foreach (var medium in sg.PossibleMedien)
+				medium.Url = GetMediumUrl(jeu.medias, medium.ApiKey, opt) ?? string.Empty;
 			_countScrapGame = 0;
 			return (ok: true, data: sg, gameRechercheList: null, null);
-		}
-
-		private void SetMedia(GameData jeu, ScrapeGame sg, RetroScrapOptions opt)
-		{
-			string? box = string.Empty, media = string.Empty;
-			foreach (var kvp in sg.MediaUrls)
-			{
-				switch (kvp.Key)
-				{
-					case eMediaType.BoxImage:
-						box = GetMediumUrl(jeu.medias, "box-2d", opt);
-						if (string.IsNullOrEmpty(box))
-							sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "mixrbv1", opt);
-						else
-							sg.MediaUrls[kvp.Key] = box;
-						break;
-
-					case eMediaType.Screenshot:
-						media = GetMediumUrl(jeu.medias, "ss", opt);
-						if (string.IsNullOrEmpty(media) && !string.IsNullOrEmpty(box)) // Wenn Box gesetzt ist, aber Screenshoz leer, nehmen wir mix
-							media = GetMediumUrl(jeu.medias, "mixrbv1", opt);
-						sg.MediaUrls[kvp.Key] = media;
-						break;
-
-					case eMediaType.Video:
-						sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "video", opt);
-						break;
-
-					case eMediaType.Marquee:
-						// Wenn Marquee leer ist, nehmen wir wheel
-						media = GetMediumUrl(jeu.medias, "marquee", opt);
-						if (string.IsNullOrEmpty(media))
-							media = GetMediumUrl(jeu.medias, "wheel", opt);
-						sg.MediaUrls[kvp.Key] = media;
-						break;
-
-					case eMediaType.Fanart:
-						sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "fanart", opt);
-						break;
-
-					case eMediaType.Map:
-						sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "maps", opt);
-						break;
-
-					case eMediaType.Manual:
-						sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "manuel", opt);
-						break;
-
-					case eMediaType.Wheel: // TODO: Es gibt noch wheel-carbon, wheel-steel, wheel-hd
-						media = GetMediumUrl(jeu.medias, "marquee", opt); // Wenn Marquee leer war, wurde dafür schon wheel genommen
-						if (!string.IsNullOrEmpty(media))
-							sg.MediaUrls[kvp.Key] = GetMediumUrl(jeu.medias, "wheel", opt);
-						break;
-				}
-			}
 		}
 
 		public string? GetMediumUrl(Medium[]? medias, string type, RetroScrapOptions opt)
@@ -572,7 +506,7 @@ namespace RetroScrap2000
 			if (medias == null)
 				return string.Empty;
 
-			var medien = medias.Where(x => x.type != null && x.type.ToLower() == type);
+			var medien = medias.Where(x => x.type != null && x.type.ToLower() == type.ToLower());
 			Medium? media = null;
 			if (medien != null && medien.Any())
 			{
@@ -785,14 +719,14 @@ namespace RetroScrap2000
 						var downloadTasks = new List<Task>();
 
 						// Medien-URLs filtern und Tasks vorbereiten
-						var mediaToDownload = scrapgame.MediaUrls
-								.Where(kvp => opt.IsMediaTypeEnabled(kvp.Key) && !string.IsNullOrEmpty(kvp.Value))
+						var mediaToDownload = scrapgame.PossibleMedien
+								.Where(m => opt.IsMediaTypeEnabled(m) && !string.IsNullOrEmpty(m.Url))
 								.ToList();
 
 						// Starte die Tasks für alle zu ladenden Medien
 						for (int j = 0; j < mediaToDownload.Count; j++)
 						{
-							var kvp = mediaToDownload[j];
+							var medium = mediaToDownload[j];
 							int threadId = (j % maxConcurrentMediaDownloads) + 1; // Einfache, rotierende ID (1, 2, 3...)
 
 							// 1. Auf die Erlaubnis des Thread-Semaphores warten
@@ -809,13 +743,13 @@ namespace RetroScrap2000
 
 									// Progress: Starte Download
 									progress.Report(new ProgressObj(iPerc, i + 1, game.Name!,
-											$"{Properties.Resources.Txt_Log_Scrap_Loading} {kvp.Key.ToString()}... (Thread {threadId})")
+											$"{Properties.Resources.Txt_Log_Scrap_Loading} {medium}... (Thread {threadId})")
 									{ ThreadId = threadId });
 
 									ct.ThrowIfCancellationRequested();
 
 									// 4. Medien laden (LoadMediaAsync muss die ThreadId annehmen)
-									var loadres = await LoadMediaAsync(kvp.Key, kvp.Value, baseDir, ct, false);
+									var loadres = await LoadMediaAsync(medium.Type, medium.Url, baseDir, ct, false);
 
 									// 5. Daten übernehmen und speichern (KRITISCHER ABSCHNITT)
 									// Der Zugriff auf das 'game'-Objekt muss synchronisiert werden,
@@ -826,12 +760,12 @@ namespace RetroScrap2000
 										{
 											// Die gesamte Logik zum Speichern/Vergleichen/Verschieben
 											// wird hier in einer neuen, synchronisierten Methode ausgeführt.
-											ProcessAndSaveMedia(game, kvp.Key, loadres.absPath, baseDir, iPerc, i + 1, progress);
+											ProcessAndSaveMedia(game,medium.Type, loadres.absPath, baseDir, iPerc, i + 1, progress);
 										}
 										else
 										{
 											ProgressObj err = new ProgressObj(iPerc, i + 1,
-													game.Name!, $"File not found for {kvp.Key.ToString()}. (Thread {threadId})");
+													game.Name!, $"File not found for {medium.Type.ToString()}. (Thread {threadId})");
 											err.Typ = ProgressObj.eTyp.Error;
 											progress.Report(err);
 										}
@@ -847,7 +781,7 @@ namespace RetroScrap2000
 								{
 									// Fehlerbehandlung für den Thread
 									ProgressObj err = new ProgressObj(iPerc, i + 1,
-											game.Name!, $"Error Thread {threadId} for {kvp.Key.ToString()}: {Utils.GetExcMsg(ex)}");
+											game.Name!, $"Error Thread {threadId} for {medium.Type.ToString()}: {Utils.GetExcMsg(ex)}");
 									err.Typ = ProgressObj.eTyp.Error;
 									progress.Report(err);
 								}
@@ -917,7 +851,7 @@ namespace RetroScrap2000
 						$"{Properties.Resources.Txt_Log_Scrap_New_Media} {mediaType.ToString()}."));
 
 				var res = FileTools.MoveOrCopyScrapFileRom(true,
-						game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(mediaType)}/");
+						game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetMediaSettings(mediaType)!.XmlFolderAndKey}/");
 
 				if (res.ok && !string.IsNullOrEmpty(res.file))
 				{
@@ -955,7 +889,7 @@ namespace RetroScrap2000
 					progress.Report(info);
 
 					var res = FileTools.MoveOrCopyScrapFileRom(true,
-							game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetStandardMediaFolderAndXmlTag(mediaType)}/");
+							game, absolutPath, baseDir, $"./media/{RetroScrapOptions.GetMediaSettings(mediaType)!.XmlFolderAndKey}/");
 
 					if (res.ok && !string.IsNullOrEmpty(res.file))
 					{
@@ -1293,8 +1227,11 @@ public sealed class ScrapeGame
 	public string? Developer { get; set; }
 	public string? Publisher { get; set; }
 	public double? RatingNormalized { get; set; }  // 0..1
-	public string? ReleaseDateRaw { get; set; }    
-	
+	public string? ReleaseDateRaw { get; set; }
+
+	[JsonIgnore]
+	public List<GameMediaSettings> PossibleMedien { get; private set; } 
+		
 	[JsonIgnore]
 	public DateTime? ReleaseDate 
 	{ 
@@ -1312,21 +1249,13 @@ public sealed class ScrapeGame
 			if (int.TryParse(ReleaseDateRaw, out int year) && year > 1900 && year < 3000)
 				return new DateTime(year, 1, 1);
 			return null;
-		} 
+		}
 	}
 
-	// Medien-URLs
-	public Dictionary<eMediaType, string?> MediaUrls { get; } = new()
+	public ScrapeGame()
 	{
-		{ eMediaType.BoxImage, string.Empty },
-		{ eMediaType.Map, string.Empty },
-		{ eMediaType.Marquee, string.Empty },
-		{ eMediaType.Manual, string.Empty },
-		{ eMediaType.Fanart, string.Empty },
-		{ eMediaType.Screenshot, string.Empty },
-		{ eMediaType.Video, string.Empty },
-		{ eMediaType.Wheel, string.Empty }
-	};
+		PossibleMedien = [.. RetroScrapOptions.GetMediaSettingsList()];
+	}
 }
 
 public class GameRechercheRoot { public GameRechercheResponse? response { get; set; } }

@@ -125,10 +125,6 @@
   <data name="splitContainerMain.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainerMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableLayoutPanelMainLeft.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -161,28 +157,28 @@
     <value>799, 16</value>
   </metadata>
   <data name="SystemAlleRomsScrapenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>185, 24</value>
   </data>
   <data name="SystemAlleRomsScrapenToolStripMenuItem.Text" xml:space="preserve">
     <value>Scrap all Roms...</value>
   </data>
   <data name="SystemDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>185, 24</value>
   </data>
   <data name="SystemDetailsToolStripMenuItem.Text" xml:space="preserve">
     <value>Details...</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 6</value>
+    <value>182, 6</value>
   </data>
   <data name="SystemCleanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>185, 24</value>
   </data>
   <data name="SystemCleanToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear System</value>
   </data>
   <data name="contextMenuStripSystems.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 76</value>
+    <value>186, 82</value>
   </data>
   <data name="&gt;&gt;contextMenuStripSystems.Name" xml:space="preserve">
     <value>contextMenuStripSystems</value>
@@ -194,13 +190,10 @@
     <value>Fill</value>
   </data>
   <data name="listViewSystems.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 60</value>
-  </data>
-  <data name="listViewSystems.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 81</value>
   </data>
   <data name="listViewSystems.Size" type="System.Drawing.Size, System.Drawing">
-    <value>493, 230</value>
+    <value>563, 309</value>
   </data>
   <data name="listViewSystems.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -224,13 +217,10 @@
     <value>Fill</value>
   </data>
   <data name="buttonRomPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 2</value>
-  </data>
-  <data name="buttonRomPath.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 3</value>
   </data>
   <data name="buttonRomPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 50</value>
+    <value>181, 66</value>
   </data>
   <data name="buttonRomPath.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -260,13 +250,10 @@
     <value>Fill</value>
   </data>
   <data name="buttonRomsRead.Location" type="System.Drawing.Point, System.Drawing">
-    <value>167, 2</value>
-  </data>
-  <data name="buttonRomsRead.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>190, 3</value>
   </data>
   <data name="buttonRomsRead.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 50</value>
+    <value>181, 66</value>
   </data>
   <data name="buttonRomsRead.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -296,13 +283,10 @@
     <value>Fill</value>
   </data>
   <data name="buttonOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>331, 2</value>
-  </data>
-  <data name="buttonOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>377, 3</value>
   </data>
   <data name="buttonOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 50</value>
+    <value>183, 66</value>
   </data>
   <data name="buttonOptions.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -332,16 +316,13 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanelRomsControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 2</value>
-  </data>
-  <data name="tableLayoutPanelRomsControls.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 3</value>
   </data>
   <data name="tableLayoutPanelRomsControls.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="tableLayoutPanelRomsControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>493, 54</value>
+    <value>563, 72</value>
   </data>
   <data name="tableLayoutPanelRomsControls.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -359,7 +340,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanelRomsControls.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonRomPath" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomsRead" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonOptions" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,33,333332,Percent,33,333336,Percent,33,333332,Absolute,18" /&gt;&lt;Rows Styles="Percent,100,Absolute,54,Absolute,54" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonRomPath" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomsRead" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonOptions" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,33,333332,Percent,33,333336,Percent,33,333332,Absolute,21" /&gt;&lt;Rows Styles="Percent,100,Absolute,72,Absolute,72" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="colRomsName.Text" xml:space="preserve">
     <value>Name</value>
@@ -398,40 +379,40 @@
     <value>356, 21</value>
   </metadata>
   <data name="RomscrapToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
+    <value>217, 24</value>
   </data>
   <data name="RomscrapToolStripMenuItem.Text" xml:space="preserve">
     <value>Scrap...</value>
   </data>
   <data name="RomDetailsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
+    <value>217, 24</value>
   </data>
   <data name="RomDetailsToolStripMenuItem.Text" xml:space="preserve">
     <value>Details...</value>
   </data>
   <data name="RomfavoriteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
+    <value>217, 24</value>
   </data>
   <data name="RomfavoriteToolStripMenuItem.Text" xml:space="preserve">
     <value>Favorite</value>
   </data>
   <data name="RomGrouptoolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
+    <value>217, 24</value>
   </data>
   <data name="RomGrouptoolStripMenuItem.Text" xml:space="preserve">
     <value>Group as single entry</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 6</value>
+    <value>214, 6</value>
   </data>
   <data name="RomDeleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
+    <value>217, 24</value>
   </data>
   <data name="RomDeleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="contextMenuStripRoms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 120</value>
+    <value>218, 130</value>
   </data>
   <data name="&gt;&gt;contextMenuStripRoms.Name" xml:space="preserve">
     <value>contextMenuStripRoms</value>
@@ -443,13 +424,10 @@
     <value>Fill</value>
   </data>
   <data name="listViewRoms.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 294</value>
-  </data>
-  <data name="listViewRoms.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 396</value>
   </data>
   <data name="listViewRoms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>493, 289</value>
+    <value>563, 390</value>
   </data>
   <data name="listViewRoms.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -472,14 +450,11 @@
   <data name="tableLayoutPanelMainLeft.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="tableLayoutPanelMainLeft.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="tableLayoutPanelMainLeft.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="tableLayoutPanelMainLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 585</value>
+    <value>569, 789</value>
   </data>
   <data name="tableLayoutPanelMainLeft.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -517,9 +492,6 @@
   <data name="splitContainerRight.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="splitContainerRight.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="splitContainerRight.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
@@ -528,9 +500,6 @@
   </data>
   <data name="splitContainerRightRom.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
-  </data>
-  <data name="splitContainerRightRom.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
   </data>
   <data name="splitContainerRightRom.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
@@ -545,13 +514,10 @@
     <value>Segoe UI, 12pt, style=Bold</value>
   </data>
   <data name="textBoxRomName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 78</value>
-  </data>
-  <data name="textBoxRomName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 104</value>
   </data>
   <data name="textBoxRomName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>519, 29</value>
+    <value>597, 34</value>
   </data>
   <data name="textBoxRomName.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -578,13 +544,14 @@
     <value>Fill</value>
   </data>
   <data name="pictureBoxRomSystem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>238, 2</value>
+    <value>273, 3</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pictureBoxRomSystem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>2, 3, 2, 3</value>
   </data>
   <data name="pictureBoxRomSystem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 72</value>
+    <value>328, 95</value>
   </data>
   <data name="pictureBoxRomSystem.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -610,17 +577,14 @@
   <data name="listBoxSystem.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
-  <data name="listBoxSystem.ItemHeight" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
   <data name="listBoxSystem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 9</value>
+    <value>11, 12</value>
   </data>
   <data name="listBoxSystem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 9, 0, 0</value>
+    <value>11, 12, 0, 0</value>
   </data>
   <data name="listBoxSystem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 67</value>
+    <value>260, 89</value>
   </data>
   <data name="listBoxSystem.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -650,7 +614,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanelSystem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>525, 76</value>
+    <value>603, 101</value>
   </data>
   <data name="tableLayoutPanelSystem.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -674,10 +638,7 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 111</value>
-  </data>
-  <data name="textBoxRomDesc.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>3, 144</value>
   </data>
   <data name="textBoxRomDesc.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -686,7 +647,7 @@
     <value>Both</value>
   </data>
   <data name="textBoxRomDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>519, 85</value>
+    <value>597, 145</value>
   </data>
   <data name="textBoxRomDesc.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -709,14 +670,11 @@
   <data name="tableLayoutPanelRightInnen.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="tableLayoutPanelRightInnen.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="tableLayoutPanelRightInnen.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="tableLayoutPanelRightInnen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>525, 198</value>
+    <value>603, 292</value>
   </data>
   <data name="tableLayoutPanelRightInnen.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -757,8 +715,11 @@
   <data name="flowLayoutPanelMedia.Location" type="System.Drawing.Point, System.Drawing">
     <value>-2, 0</value>
   </data>
+  <data name="flowLayoutPanelMedia.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="flowLayoutPanelMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>522, 248</value>
+    <value>603, 314</value>
   </data>
   <data name="flowLayoutPanelMedia.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -784,8 +745,11 @@
   <data name="panelMedia.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="panelMedia.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="panelMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>525, 248</value>
+    <value>603, 314</value>
   </data>
   <data name="panelMedia.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -815,13 +779,10 @@
     <value>1</value>
   </data>
   <data name="splitContainerRightRom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>529, 457</value>
+    <value>607, 618</value>
   </data>
   <data name="splitContainerRightRom.SplitterDistance" type="System.Int32, mscorlib">
-    <value>202</value>
-  </data>
-  <data name="splitContainerRightRom.SplitterWidth" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>296</value>
   </data>
   <data name="splitContainerRightRom.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -857,13 +818,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDetailsAnzPlayer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 54</value>
-  </data>
-  <data name="textBoxRomDetailsAnzPlayer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>389, 73</value>
   </data>
   <data name="textBoxRomDetailsAnzPlayer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 23</value>
+    <value>215, 27</value>
   </data>
   <data name="textBoxRomDetailsAnzPlayer.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -887,10 +845,10 @@
     <value>Fill</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 52</value>
+    <value>311, 70</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 26</value>
+    <value>72, 35</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -917,13 +875,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDetailsGenre.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 54</value>
-  </data>
-  <data name="textBoxRomDetailsGenre.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>90, 73</value>
   </data>
   <data name="textBoxRomDetailsGenre.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 23</value>
+    <value>215, 27</value>
   </data>
   <data name="textBoxRomDetailsGenre.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -947,10 +902,10 @@
     <value>Fill</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 52</value>
+    <value>3, 70</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 26</value>
+    <value>81, 35</value>
   </data>
   <data name="label9.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -977,13 +932,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDetailsPublisher.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 28</value>
-  </data>
-  <data name="textBoxRomDetailsPublisher.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>389, 38</value>
   </data>
   <data name="textBoxRomDetailsPublisher.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 23</value>
+    <value>215, 27</value>
   </data>
   <data name="textBoxRomDetailsPublisher.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -1007,10 +959,10 @@
     <value>Fill</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 26</value>
+    <value>311, 35</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 26</value>
+    <value>72, 35</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1037,13 +989,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDetailsDeveloper.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 28</value>
-  </data>
-  <data name="textBoxRomDetailsDeveloper.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>90, 38</value>
   </data>
   <data name="textBoxRomDetailsDeveloper.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 23</value>
+    <value>215, 27</value>
   </data>
   <data name="textBoxRomDetailsDeveloper.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1067,10 +1016,10 @@
     <value>Fill</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 26</value>
+    <value>3, 35</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 26</value>
+    <value>81, 35</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1100,10 +1049,10 @@
     <value>Fill</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 0</value>
+    <value>311, 0</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 26</value>
+    <value>72, 35</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1136,7 +1085,7 @@
     <value>3, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 26</value>
+    <value>81, 35</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1163,13 +1112,10 @@
     <value>Fill</value>
   </data>
   <data name="textBoxRomDetailsReleaseDate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 2</value>
-  </data>
-  <data name="textBoxRomDetailsReleaseDate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>90, 3</value>
   </data>
   <data name="textBoxRomDetailsReleaseDate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 23</value>
+    <value>215, 27</value>
   </data>
   <data name="textBoxRomDetailsReleaseDate.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1190,13 +1136,13 @@
     <value>Fill</value>
   </data>
   <data name="buttonRomSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 80</value>
+    <value>388, 108</value>
   </data>
   <data name="buttonRomSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>2, 3, 2, 3</value>
   </data>
   <data name="buttonRomSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 43</value>
+    <value>217, 56</value>
   </data>
   <data name="buttonRomSave.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1226,13 +1172,13 @@
     <value>Fill</value>
   </data>
   <data name="buttonRomScrap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 80</value>
+    <value>89, 108</value>
   </data>
   <data name="buttonRomScrap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>2, 3, 2, 3</value>
   </data>
   <data name="buttonRomScrap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 43</value>
+    <value>217, 56</value>
   </data>
   <data name="buttonRomScrap.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1264,14 +1210,11 @@
   <data name="tableLayoutPanelRomDetails.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="tableLayoutPanelRomDetails.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="tableLayoutPanelRomDetails.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="tableLayoutPanelRomDetails.Size" type="System.Drawing.Size, System.Drawing">
-    <value>529, 125</value>
+    <value>607, 167</value>
   </data>
   <data name="tableLayoutPanelRomDetails.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1289,7 +1232,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanelRomDetails.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textBoxRomDetailsAnzPlayer" Row="2" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsPublisher" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsDeveloper" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsReleaseDate" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomSave" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomScrap" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,50,AutoSize,0,Percent,50" /&gt;&lt;Rows Styles="Absolute,26,Absolute,26,Absolute,26,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textBoxRomDetailsAnzPlayer" Row="2" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsGenre" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsPublisher" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsDeveloper" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBoxRomDetailsReleaseDate" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomSave" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="buttonRomScrap" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,50,AutoSize,0,Percent,50" /&gt;&lt;Rows Styles="Absolute,35,Absolute,35,Absolute,35,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="&gt;&gt;splitContainerRight.Panel2.Name" xml:space="preserve">
     <value>splitContainerRight.Panel2</value>
@@ -1307,13 +1250,10 @@
     <value>125</value>
   </data>
   <data name="splitContainerRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>529, 585</value>
+    <value>607, 789</value>
   </data>
   <data name="splitContainerRight.SplitterDistance" type="System.Int32, mscorlib">
-    <value>457</value>
-  </data>
-  <data name="splitContainerRight.SplitterWidth" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>618</value>
   </data>
   <data name="splitContainerRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1343,10 +1283,13 @@
     <value>1</value>
   </data>
   <data name="splitContainerMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1040, 589</value>
+    <value>1189, 793</value>
   </data>
   <data name="splitContainerMain.SplitterDistance" type="System.Int32, mscorlib">
-    <value>503</value>
+    <value>573</value>
+  </data>
+  <data name="splitContainerMain.SplitterWidth" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="splitContainerMain.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1367,16 +1310,13 @@
     <value>17, 17</value>
   </metadata>
   <data name="toolStripStatusLabelMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 17</value>
+    <value>0, 16</value>
   </data>
   <data name="statusStripMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 589</value>
-  </data>
-  <data name="statusStripMain.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 0, 12, 0</value>
+    <value>0, 793</value>
   </data>
   <data name="statusStripMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1040, 22</value>
+    <value>1189, 22</value>
   </data>
   <data name="statusStripMain.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1400,82 +1340,100 @@
     <value>150, 17</value>
   </metadata>
   <data name="MediaviewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="MediaviewToolStripMenuItem.Text" xml:space="preserve">
     <value>View...</value>
   </data>
   <data name="MedianewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="MedianewToolStripMenuItem.Text" xml:space="preserve">
     <value>New...</value>
   </data>
   <data name="MediadeleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="MediadeleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 6</value>
+    <value>156, 6</value>
   </data>
   <data name="addType1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType1ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 1</value>
   </data>
   <data name="addType2ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType2ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 2</value>
   </data>
   <data name="addType3ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType3ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 3</value>
   </data>
   <data name="addType4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType4ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 4</value>
   </data>
   <data name="addType5ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType5ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 5</value>
   </data>
   <data name="addType6ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType6ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 6</value>
   </data>
   <data name="addType7ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType7ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 7</value>
   </data>
   <data name="addType8ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType8ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 8</value>
   </data>
   <data name="addType9ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 22</value>
+    <value>159, 24</value>
   </data>
   <data name="addType9ToolStripMenuItem.Text" xml:space="preserve">
     <value>Add type 9</value>
   </data>
+  <data name="addType10ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 24</value>
+  </data>
+  <data name="addType10ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 10</value>
+  </data>
+  <data name="addType11ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 24</value>
+  </data>
+  <data name="addType11ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 11</value>
+  </data>
+  <data name="addType12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 24</value>
+  </data>
+  <data name="addType12ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 12</value>
+  </data>
   <data name="contextMenuStripMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 274</value>
+    <value>160, 370</value>
   </data>
   <data name="&gt;&gt;contextMenuStripMedia.Name" xml:space="preserve">
     <value>contextMenuStripMedia</value>
@@ -1490,10 +1448,10 @@
     <value>66</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>8, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1040, 611</value>
+    <value>1189, 815</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2667,9 +2625,6 @@
         TTTRRBNNNNFEE0000UQTTTTRRBNNNNFEE010zOh/ANLRKPxZKpwFAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
@@ -2884,6 +2839,24 @@
     <value>addType9ToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;addType9ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addType10ToolStripMenuItem.Name" xml:space="preserve">
+    <value>addType10ToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addType10ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addType11ToolStripMenuItem.Name" xml:space="preserve">
+    <value>addType11ToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addType11ToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addType12ToolStripMenuItem.Name" xml:space="preserve">
+    <value>addType12ToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addType12ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

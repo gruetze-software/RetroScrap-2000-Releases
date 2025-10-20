@@ -298,9 +298,9 @@ namespace RetroScrap2000.Tools
 			}
 
 			var dirs = dirMedien.GetDirectories();
-			foreach (var m in RetroScrapOptions.GetStandardMediaFolderAndXmlTagList())
+			foreach (var m in RetroScrapOptions.GetMediaSettingsList())
 			{
-				var founddir = dirs.FirstOrDefault(x => x.Name.ToLower() == m.Value.ToLower());
+				var founddir = dirs.FirstOrDefault(x => x.Name.ToLower() == m.XmlFolderAndKey.ToLower());
 				if (founddir != null)
 				{
 					var foundgame = Directory.GetFiles(founddir.FullName, game.FileName! + "*", SearchOption.TopDirectoryOnly);
@@ -311,7 +311,7 @@ namespace RetroScrap2000.Tools
 					if (foundgame == null || foundgame.Length == 0)
 						continue;
 					else
-						game.SetMediaPath(m.Key, FileTools.GetRelativePath(foundgame[0], baseDir));
+						game.SetMediaPath(m.Type, FileTools.GetRelativePath(foundgame[0], baseDir));
 				}
 			}
 
