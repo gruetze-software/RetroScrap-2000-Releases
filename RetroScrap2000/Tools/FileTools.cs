@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using Force.Crc32;
+using Microsoft.Win32.SafeHandles;
 using Serilog;
 using System;
 using System.Collections.Concurrent;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -14,6 +16,8 @@ namespace RetroScrap2000.Tools
 {
 	public static class FileTools
 	{
+		#region DllImports
+
 		// Konstanten und DllImport für GetFinalPathNameByHandle
 		private const uint FILE_SHARE_READ = 0x00000001;
 		private const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
@@ -38,6 +42,8 @@ namespace RetroScrap2000.Tools
 				[Out] StringBuilder lpszFilePath,
 				uint cchFilePath,
 				uint dwFlags);
+
+		#endregion
 
 		/// <summary>
 		/// Ermittelt den tatsächlichen, Case-sensitiven Pfad eines existierenden ROMs unter Windows.
@@ -186,9 +192,11 @@ namespace RetroScrap2000.Tools
 			// Wiederhole 2., um verschachtelte oder aufeinanderfolgende Tags zu erfassen
 			cleanedName = Regex.Replace(cleanedName, @"\s+[\(\[]\s*([^\)\]]*?)\s*[\)\]]$", "", RegexOptions.IgnoreCase).Trim();
 
-			// 3. Entferne spezifische, typische ROM-Tags (Regionen, Versionen, Status-Tags)
-			cleanedName = Regex.Replace(cleanedName, @"\s*[\(\[]\s*(?:(?:Europe|USA|Japan|World|En|De|Fr|v\d+\.\d+|Rev\s*\d|\!|Beta|Proto|Hack|Demo)\s*)*[\)\]]", "", RegexOptions.IgnoreCase).Trim();
-
+			// 3. Entferne Versionen- und Status-Tags am Ende, die durch Unterstrich/Bindestrich getrennt sind.
+			// Sucht nach _vX.X, -vX.X, _Beta, -Hack am ENDE.
+			// Muster: [v\d\.] + Passt auf v, Zahlen und Punkte(wie v1.0 oder v2)
+			cleanedName = Regex.Replace(cleanedName, @"[_-]+(v[\d\.]+|Rev\s*\d|Beta|Proto|Hack|Demo|Fix|Final|Update)$", "", RegexOptions.IgnoreCase).Trim();
+			
 			// 4. Bereinige überschüssige Leerzeichen
 			cleanedName = Regex.Replace(cleanedName, @"\s+", " ").Trim();
 
@@ -235,18 +243,18 @@ namespace RetroScrap2000.Tools
 			}
 		}
 
-		public static string? ResolveMediaPath(string? systemDir, string? xmlValue)
+		public static string? ResolveMediaPath(string? systemDir, string? filepath)
 		{
 			if (string.IsNullOrEmpty(systemDir))
 				return null;
 
-			if (string.IsNullOrWhiteSpace(xmlValue)) return null;
+			if (string.IsNullOrWhiteSpace(filepath)) return null;
 
 			// Bereits absolut?
-			if (Path.IsPathRooted(xmlValue)) return xmlValue;
+			if (Path.IsPathRooted(filepath)) return filepath;
 
 			// "./" entfernen und Slashes normalisieren
-			var rel = xmlValue.Trim();
+			var rel = filepath.Trim();
 			if (rel.StartsWith("./") || rel.StartsWith(".\\"))
 				rel = rel.Substring(2);
 
@@ -522,6 +530,56 @@ namespace RetroScrap2000.Tools
 			}
 
 			return referencedFiles;
+		}
+
+		// Struktur, um die Prüfsummen zu speichern
+		public class Checksums
+		{
+			public string? CRC32 { get; set; }
+			public string? MD5 { get; set; }
+			public string? SHA1 { get; set; }
+		}
+
+		/// <summary>
+		/// Berechnet MD5 und SHA1 der angegebenen Datei. CRC32 erfordert eine separate Bibliothek.
+		/// </summary>
+		public static Checksums CalculateChecksums(string filePath, bool withCRC32 = false)
+		{
+			if (!File.Exists(filePath)) 
+				return new Checksums();
+
+			// Hinweis: Die Berechnung der CRC32 ist in .NET nicht nativ enthalten
+			// und erfordert eine Drittanbieterbibliothek (hier von Force.CRC32.NET).
+						
+			string crc32string = string.Empty;
+			if (withCRC32)
+			{
+				// ACHTUNG: Dies kann bei sehr großen Dateien (z.B. > 500 MB) Speicherprobleme verursachen!
+				byte[] fileBytes = File.ReadAllBytes(filePath);
+				uint crc32Value = Crc32Algorithm.Compute(fileBytes);
+				// Konvertierung in Hex-String, oft 8 Zeichen lang (z.B. "A1B2C3D4")
+				crc32string = crc32Value.ToString("X8");
+			}
+
+			using (var stream = File.OpenRead(filePath))
+			{
+				using (var md5 = MD5.Create())
+				using (var sha1 = SHA1.Create())
+				{
+					// MD5 und SHA1 parallel berechnen (optional: nur einmal den Hash berechnen)
+					var md5Hash = md5.ComputeHash(stream);
+					stream.Seek(0, SeekOrigin.Begin); // Stream zurücksetzen
+					var sha1Hash = sha1.ComputeHash(stream);
+
+					// Konvertieren der Hashes in Hex-Strings
+					return new Checksums
+					{
+						MD5 = BitConverter.ToString(md5Hash).Replace("-", "").ToLowerInvariant(),
+						SHA1 = BitConverter.ToString(sha1Hash).Replace("-", "").ToLowerInvariant(),
+						CRC32 = crc32string
+					};
+				}
+			}
 		}
 	}
 }

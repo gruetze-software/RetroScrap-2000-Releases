@@ -70,7 +70,7 @@ namespace RetroScrap2000
 			var ct = _scrapCts.Token;
 
 			listViewMonitor.Items.Clear();
-			this.pictureBoxAniWait.Image = Properties.Resources.joystickani;
+
 			// Erstellen des Progress-Objekts. Die Action-Methode wird auf dem UI-Thread ausgeführt.
 			var progressHandler = new Progress<ProgressObj>(report =>
 			{

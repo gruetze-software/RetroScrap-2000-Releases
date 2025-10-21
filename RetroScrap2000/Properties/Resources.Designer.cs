@@ -587,6 +587,15 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file does not exist..
+        /// </summary>
+        internal static string Txt_Log_Scrap_FileNotExist {
+            get {
+                return ResourceManager.GetString("Txt_Log_Scrap_FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No differences found, skipping.
         /// </summary>
         internal static string Txt_Log_Scrap_Identical_Skip {
@@ -637,15 +646,6 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Log_Scrap_NoDataFoundFor {
             get {
                 return ResourceManager.GetString("Txt_Log_Scrap_NoDataFoundFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This could be because the name doesn&apos;t match the English spelling in the database. Adjust the name manually, save, and try again..
-        /// </summary>
-        internal static string Txt_Log_Scrap_NoGameFound {
-            get {
-                return ResourceManager.GetString("Txt_Log_Scrap_NoGameFound", resourceCulture);
             }
         }
         
@@ -943,6 +943,24 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Msg_Scrap_NoDataFound {
             get {
                 return ResourceManager.GetString("Txt_Msg_Scrap_NoDataFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data found. Please scrape this entry individually..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hash data could not be calculated for the file..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_NoHashesFromFile {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_NoHashesFromFile", resourceCulture);
             }
         }
         

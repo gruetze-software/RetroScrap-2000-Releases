@@ -117,142 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Liste de résultats</value>
+  </data>
+  <data name="colDesc.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="colDeveloper.Text" xml:space="preserve">
+    <value>Développeur</value>
+  </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Région :</value>
-  </data>
-  <data name="labelHelpLang.Text" xml:space="preserve">
-    <value>Paramétrage de la langue de l'application et des données à extraire.</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Paramètre de langue</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Nom :</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Mot de passe :</value>
-  </data>
-  <data name="checkBoxOptLogging.Text" xml:space="preserve">
-    <value>Exploitation forestière</value>
-  </data>
-  <data name="checkBoxOptRomScanStartup.Text" xml:space="preserve">
-    <value>Analyse du ROM au démarrage</value>
-  </data>
-  <data name="groupBox7.Text" xml:space="preserve">
-    <value>Application</value>
-  </data>
-  <data name="labelDonText.Text" xml:space="preserve">
-    <value>RetroScrap 2000 est un projet passion pour moi. J'apprécie chaque petit don qui m'aide à investir plus de temps personnel dans le développement de l'application. Suivez le lien pour faire un petit don :</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Soutien</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>RetroArch (en construcción)</value>
-  </data>
-  <data name="buttonInfoRetroPie.Text" xml:space="preserve">
-    <value>Información para usuarios de RetroPie</value>
-  </data>
-  <data name="tabPageLang.Text" xml:space="preserve">
-    <value>Général</value>
-  </data>
-  <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
-    <value>Image</value>
-  </data>
-  <data name="checkBoxMediaVideo.Text" xml:space="preserve">
-    <value>Video</value>
-  </data>
-  <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
-    <value>Marquee</value>
-  </data>
-  <data name="checkBoxMediaFanart.Text" xml:space="preserve">
-    <value>Fanart</value>
-  </data>
-  <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
-    <value>Screenshot Game</value>
-  </data>
-  <data name="checkBoxMediaScreenshotTitle.Text" xml:space="preserve">
-    <value>Screenshot Title</value>
-  </data>
-  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
-    <value>Wheel</value>
-  </data>
-  <data name="checkBoxMediaMap.Text" xml:space="preserve">
-    <value>Map</value>
-  </data>
-  <data name="checkBoxMediaManual.Text" xml:space="preserve">
-    <value>Manual</value>
-  </data>
-  <data name="tabPageScrapData.Text" xml:space="preserve">
-    <value>Scrap données</value>
-  </data>
-  <data name="buttonOptMMScan.Text" xml:space="preserve">
-    <value>Analysez les Roms et configurez les médias manuels...</value>
-  </data>
-  <data name="buttonOptDelete.Text" xml:space="preserve">
-    <value>Supprimer</value>
-  </data>
-  <data name="checkBoxOptMMRelPath.Text" xml:space="preserve">
-    <value>utiliser comme chemin relatif</value>
-  </data>
-  <data name="label16.Text" xml:space="preserve">
-    <value>ROM Système :</value>
-  </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>Nom :</value>
-  </data>
-  <data name="radioButtonOptMMAllSystems.Text" xml:space="preserve">
-    <value>Tous les systèmes</value>
-  </data>
-  <data name="label17.Text" xml:space="preserve">
-    <value>Modèles de fichiers :</value>
-  </data>
-  <data name="radioButtonOptMMSystem.Text" xml:space="preserve">
-    <value>Seulement pour</value>
-  </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>Répertoire de base :</value>
-  </data>
-  <data name="label15.Text" xml:space="preserve">
-    <value>Clé XML :</value>
-  </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Données du répertoire personnalisé</value>
-  </data>
-  <data name="buttonOptMMAdd.Text" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
-  <data name="colMMName.Text" xml:space="preserve">
+  <data name="colName.Text" xml:space="preserve">
     <value>Nom</value>
   </data>
-  <data name="colMMSystem.Text" xml:space="preserve">
-    <value>Système</value>
+  <data name="colGenre.Text" xml:space="preserve">
+    <value>Genre</value>
   </data>
-  <data name="colMMXML.Text" xml:space="preserve">
-    <value>Clé XML</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Recherche</value>
   </data>
-  <data name="colMMPath.Text" xml:space="preserve">
-    <value>Répertoire de base</value>
+  <data name="colManufacturer.Text" xml:space="preserve">
+    <value>Fabricant</value>
   </data>
-  <data name="colMMRelPath.Text" xml:space="preserve">
-    <value>Chemin relatif</value>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>Appliquer</value>
   </data>
-  <data name="tabPageCustom.Text" xml:space="preserve">
-    <value>Support manuel</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Entreprise :</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Produit :</value>
-  </data>
-  <data name="tabPageAppInfo.Text" xml:space="preserve">
-    <value>Infos</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Options</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Nom:</value>
   </data>
 </root>

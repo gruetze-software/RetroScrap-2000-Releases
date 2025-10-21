@@ -1,6 +1,6 @@
 ﻿namespace RetroScrap2000
 {
-	partial class FormScrapRomSelection
+	partial class FormScrapRomResearch
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScrapRomSelection));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScrapRomResearch));
 			groupBox1 = new GroupBox();
 			listViewData = new ListView();
 			colName = new ColumnHeader();
@@ -38,104 +38,124 @@
 			colDesc = new ColumnHeader();
 			buttonCancel = new Button();
 			buttonOK = new Button();
+			groupBox2 = new GroupBox();
+			pictureBoxAniJoystick = new PictureBox();
+			buttonStartStop = new Button();
+			textBoxSearchName = new TextBox();
+			label1 = new Label();
 			groupBox1.SuspendLayout();
+			groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)pictureBoxAniJoystick).BeginInit();
 			SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			resources.ApplyResources(groupBox1, "groupBox1");
 			groupBox1.Controls.Add(listViewData);
-			groupBox1.Location = new Point(12, 12);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new Size(492, 206);
-			groupBox1.TabIndex = 0;
 			groupBox1.TabStop = false;
-			groupBox1.Text = "Hit list";
 			// 
 			// listViewData
 			// 
+			resources.ApplyResources(listViewData, "listViewData");
 			listViewData.Columns.AddRange(new ColumnHeader[] { colName, colGenre, colDeveloper, colManufacturer, colDesc });
-			listViewData.Dock = DockStyle.Fill;
 			listViewData.FullRowSelect = true;
 			listViewData.GridLines = true;
 			listViewData.HideSelection = true;
-			listViewData.Location = new Point(3, 19);
 			listViewData.MultiSelect = false;
 			listViewData.Name = "listViewData";
-			listViewData.Size = new Size(486, 184);
-			listViewData.TabIndex = 0;
 			listViewData.UseCompatibleStateImageBehavior = false;
 			listViewData.View = View.Details;
 			listViewData.SelectedIndexChanged += listViewData_SelectedIndexChanged;
 			// 
 			// colName
 			// 
-			colName.Text = "Name";
-			colName.Width = 120;
+			resources.ApplyResources(colName, "colName");
 			// 
 			// colGenre
 			// 
-			colGenre.Text = "Genre";
-			colGenre.Width = 90;
+			resources.ApplyResources(colGenre, "colGenre");
 			// 
 			// colDeveloper
 			// 
-			colDeveloper.Text = "Developer";
-			colDeveloper.Width = 90;
+			resources.ApplyResources(colDeveloper, "colDeveloper");
 			// 
 			// colManufacturer
 			// 
-			colManufacturer.Text = "Manufacturer";
-			colManufacturer.Width = 90;
+			resources.ApplyResources(colManufacturer, "colManufacturer");
 			// 
 			// colDesc
 			// 
-			colDesc.Text = "Description";
-			colDesc.Width = 300;
+			resources.ApplyResources(colDesc, "colDesc");
 			// 
 			// buttonCancel
 			// 
-			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			resources.ApplyResources(buttonCancel, "buttonCancel");
 			buttonCancel.DialogResult = DialogResult.Cancel;
-			buttonCancel.Location = new Point(429, 224);
 			buttonCancel.Name = "buttonCancel";
-			buttonCancel.Size = new Size(75, 29);
-			buttonCancel.TabIndex = 1;
-			buttonCancel.Text = "Cancel";
 			buttonCancel.UseVisualStyleBackColor = true;
 			// 
 			// buttonOK
 			// 
-			buttonOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			resources.ApplyResources(buttonOK, "buttonOK");
 			buttonOK.DialogResult = DialogResult.OK;
-			buttonOK.Location = new Point(348, 224);
 			buttonOK.Name = "buttonOK";
-			buttonOK.Size = new Size(75, 29);
-			buttonOK.TabIndex = 2;
-			buttonOK.Text = "Apply";
 			buttonOK.UseVisualStyleBackColor = true;
 			buttonOK.Click += buttonOK_Click;
 			// 
-			// FormScrapRomSelection
+			// groupBox2
+			// 
+			resources.ApplyResources(groupBox2, "groupBox2");
+			groupBox2.Controls.Add(pictureBoxAniJoystick);
+			groupBox2.Controls.Add(buttonStartStop);
+			groupBox2.Controls.Add(textBoxSearchName);
+			groupBox2.Controls.Add(label1);
+			groupBox2.Name = "groupBox2";
+			groupBox2.TabStop = false;
+			// 
+			// pictureBoxAniJoystick
+			// 
+			resources.ApplyResources(pictureBoxAniJoystick, "pictureBoxAniJoystick");
+			pictureBoxAniJoystick.Name = "pictureBoxAniJoystick";
+			pictureBoxAniJoystick.TabStop = false;
+			// 
+			// buttonStartStop
+			// 
+			resources.ApplyResources(buttonStartStop, "buttonStartStop");
+			buttonStartStop.Name = "buttonStartStop";
+			buttonStartStop.UseVisualStyleBackColor = true;
+			buttonStartStop.Click += buttonStartStop_Click;
+			// 
+			// textBoxSearchName
+			// 
+			resources.ApplyResources(textBoxSearchName, "textBoxSearchName");
+			textBoxSearchName.Name = "textBoxSearchName";
+			// 
+			// label1
+			// 
+			resources.ApplyResources(label1, "label1");
+			label1.Name = "label1";
+			// 
+			// FormScrapRomResearch
 			// 
 			AcceptButton = buttonCancel;
-			AutoScaleDimensions = new SizeF(7F, 15F);
+			resources.ApplyResources(this, "$this");
 			AutoScaleMode = AutoScaleMode.Font;
 			CancelButton = buttonCancel;
-			ClientSize = new Size(516, 265);
+			Controls.Add(groupBox2);
 			Controls.Add(buttonOK);
 			Controls.Add(buttonCancel);
 			Controls.Add(groupBox1);
-			Icon = (Icon)resources.GetObject("$this.Icon");
 			MaximizeBox = false;
 			MinimizeBox = false;
-			Name = "FormScrapRomSelection";
+			Name = "FormScrapRomResearch";
 			SizeGripStyle = SizeGripStyle.Show;
-			StartPosition = FormStartPosition.CenterParent;
-			Text = "Selection";
-			FormClosing += FormScrapRomSelection_FormClosing;
-			Load += FormScrapRomSelection_Load;
+			FormClosing += FormScrapRomResearch_FormClosing;
+			Load += FormScrapRomResearch_Load;
 			groupBox1.ResumeLayout(false);
+			groupBox2.ResumeLayout(false);
+			groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)pictureBoxAniJoystick).EndInit();
 			ResumeLayout(false);
 		}
 
@@ -150,5 +170,11 @@
 		private ColumnHeader colDesc;
 		private Button buttonCancel;
 		private Button buttonOK;
+		private GroupBox groupBox2;
+		private CheckBox checkBoxUploadData;
+		private Button buttonStartStop;
+		private TextBox textBoxSearchName;
+		private Label label1;
+		private PictureBox pictureBoxAniJoystick;
 	}
 }

@@ -311,6 +311,7 @@ namespace RetroScrap2000
 
 		private async Task<bool> ScrapRomAsync()
 		{
+			// Mehres Roms ? GoTo Autoscrap Else ScrapRom Hashes --> No Entry? --> Recherche
 			var sysFolder = GetSelectedRomPath();
 			if (_selectedRoms == null || _selectedRoms.Count == 0 || string.IsNullOrEmpty(sysFolder))
 			{
@@ -343,7 +344,8 @@ namespace RetroScrap2000
 				// Ein Rom ist zu scrapen
 				////////////////////////////////////////////////////////////////////////////////////
 				GameEntry rom = _selectedRoms[0];
-
+				Log.Information($"Scrap Rom starting: Name: {rom}, Id: {rom.Id}, Release: {rom.ReleaseDate?.ToString() ?? ""}");
+				bool fail = false;
 				if (string.IsNullOrEmpty(rom.Name) && string.IsNullOrEmpty(rom.FileName))
 				{
 					MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_WrongRomFile);
@@ -351,74 +353,81 @@ namespace RetroScrap2000
 				}
 
 				buttonRomScrap.Enabled = false;
+				ScrapeGame? sc = null;
 				try
 				{
 					Splash.ShowSplashScreen();
 					await Splash.WaitForSplashScreenAsync();
-
 					SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_Scrap_Running);
 					await Splash.ShowStatusWithDelayAsync(string.Format(
-						Properties.Resources.Txt_Status_Label_Scrap_Running, rom.Name ?? rom.FileName), 300);
+						Properties.Resources.Txt_Status_Label_Scrap_Running, rom.FileName), 100);
 
 					// Rom scrappen
-					Log.Information($"await GetGameAsync \"{rom.Name ?? rom.FileName}\"");
-					var (ok, data, gameRecherceList, err) = await _scraper.GetGameAsync(rom.Name, rom.FileName, 
+					FileInfo romFile = new FileInfo(FileTools.ResolveMediaPath(sysFolder, rom.Path)!);
+					Log.Information($"await GetGameAsync \"{romFile.Name}\"");
+					var result = await _scraper.GetGameAsync(romFile, 
 						rom.RetroSystemId, _options);
-					if (!ok)
+					if (!result.Ok)
 					{
-						rom.State = eState.Error;
-
 						Splash.CloseSplashScreen();
-						string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
-						Log.Error(errMsg);
-						MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
-						SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
-						return false;
-					}
+
+						// Bei 404 starten wir einen Recherche-Dialog indem man differenzierter suchen kann
+						if (result.HttpCode == 404)
+						{
+							FormScrapRomResearch formrecherche = new FormScrapRomResearch(romFile.FullName, _scraper,
+								_selectedSystem!, _options);
+							if (formrecherche.ShowDialog() == DialogResult.OK)
+							{
+								// Es wurde tatsächlich zu der Datei ein Eintrag gefunden.
+								// Sollte der Anwender sein Einverständnis geben, laden wir
+								// Informationen über die Api an die Community
+								if (formrecherche.SelectedGame != null)
+								{
+									sc = new ScrapeGame();
+									sc = sc.CopyFrom(formrecherche.SelectedGame, _options);
+								}
+								else
+								{
+									Debug.Assert(false, "FormScrapRomResearch ok, but no selected Entry.");
+									fail = true;
+								}
+							} 
+							else
+							{
+								// Recherche-Dialog abgebrochen
+								fail = true;
+							}
+						} // Error 404 Ende
+						else
+						{
+							// Other Http-Error
+							fail = true;
+						}
+					} // Result Not Okay Ende
 					else
 					{
-						// Gab es mehrere Treffer?
-						if (gameRecherceList != null && gameRecherceList.Count > 1)
-						{
-							Splash.CloseSplashScreen();
-							FormScrapRomSelection frm = new FormScrapRomSelection(gameRecherceList, _options);
-							if (frm.ShowDialog() == DialogResult.OK && frm.SelectedGame != null)
-							{
-								var oldName = rom.Name;
-								rom.Name = frm.SelectedGame.GetName(_options);
-								var result = await ScrapRomAsync();
-								if (!result)
-								{
-									rom.Name = oldName;
-									rom.State = eState.Error;
-									return false;
-								}
-							}
-							else
-							{	
-								// User hat abgebrochen, also ohne Fehler zurück
-								return false;
-							}
-						}
-						else if (data == null)
-						{
-							rom.State = eState.Error;
-
-							Splash.CloseSplashScreen();
-							string errMsg = string.IsNullOrEmpty(err) ? Properties.Resources.Txt_Msg_Scrap_Fail : err;
-							Log.Error(errMsg);
-							MyMsgBox.ShowErr($"\"{rom.Name ?? rom.FileName}\": {errMsg}");
-							SetStatusToolStripLabel($"\"{rom.Name ?? rom.FileName}\": {err}.");
-							return false;
-						}
+						// Result is ok
+						sc = result.ScrapGameResult;
+						fail = false;
 					}
 
+					Splash.CloseSplashScreen();
+
+					if (fail || sc == null )
+					{
+						string err = result.Error ?? Properties.Resources.Txt_Msg_Scrap_Fail;
+						Log.Error(err);
+						MyMsgBox.ShowErr(err);
+						SetStatusToolStripLabel(Properties.Resources.Txt_Msg_Scrap_Fail);
+						return false;
+					}
 					/////////////////////////////////////////////////////////////////////////////////////
 					// Scrapdaten übernehmen
 					////////////////////////////////////////////////////////////////////////////////////
 					
-					var sc = data!;
+					Debug.Assert(sc != null);
 					sc.Source = "ScreenScraper.fr";
+					Log.Information($"Scrap Infos: {sc.Name}, Id: {sc.Id}, Release: {sc.ReleaseDate?.ToString() ?? ""}");
 
 					// Dialog zum Übernehmen der Daten
 					Splash.CloseSplashScreen();
@@ -451,10 +460,10 @@ namespace RetroScrap2000
 						{
 							if (val.takeit && !string.IsNullOrEmpty(val.tempPath))
 							{
-								var result = CopyOrMoveMediaFileToRom(true, val.tempPath,
+								(bool ok, string? file) = CopyOrMoveMediaFileToRom(true, val.tempPath,
 									$"./media/{RetroScrapOptions.GetMediaSettings(med.Key)!.XmlFolderAndKey}/", sysFolder);
-								if (result.ok && !string.IsNullOrEmpty(result.file))
-									rom.SetMediaPath(med.Key, result.file);
+								if (ok && !string.IsNullOrEmpty(file))
+									rom.SetMediaPath(med.Key, file);
 							}
 						}
 					}
@@ -922,28 +931,35 @@ namespace RetroScrap2000
 					var kv = _gameManager.SystemList.ElementAt(i);
 					Splash.UpdateSplashScreenStatus($"{Properties.Resources.Txt_Splash_Loading} \"{kv.Key.ToUpper()}\"... ({i + 1}/{total})");
 					Splash.UpdateSplashScreenProgress(Utils.CalculatePercentage(i + 1, total));
-					Thread.Sleep(100);
-
-					var roms = kv.Value;
-					var sys = roms.RetroSys;
-					if (sys == null) continue;
-
-					var it = new ListViewItem(sys.Name_eu)
+					Thread.Sleep(50);
+					try
 					{
-						Tag = roms,
-						ImageKey = kv.Key
-					};
-					it.SubItems.Add(sys.Hersteller);
-					it.SubItems.Add(sys.Debut > 0 ? sys.Debut.ToString() : "");
-					it.SubItems.Add(sys.Ende > 0 ? sys.Ende.ToString() : "");
-					it.SubItems.Add(roms.Games.Count.ToString());
-					items.Add(it);
+						var roms = kv.Value;
+						var sys = roms.RetroSys;
+						if (sys == null) continue;
+
+						var it = new ListViewItem(sys.Name_eu)
+						{
+							Tag = roms,
+							ImageKey = kv.Key
+						};
+						it.SubItems.Add(sys.Hersteller);
+						it.SubItems.Add(sys.Debut > 0 ? sys.Debut.ToString() : "");
+						it.SubItems.Add(sys.Ende > 0 ? sys.Ende.ToString() : "");
+						it.SubItems.Add(roms.Games.Count.ToString());
+						items.Add(it);
+					}
+					catch (Exception ex)
+					{
+						Log.Error($"Fail LoadRomsAsync \"{kv.Value.RetroSys}\": " + Utils.GetExcMsg(ex));
+						continue;
+					}
 				}
 				listViewSystems.Items.AddRange(items.ToArray());
 			}
 			catch (Exception ex)
 			{
-				Log.Error("LoadRomsAsync: " + Utils.GetExcMsg(ex));
+				Log.Error("Fail LoadRomsAsync: " + Utils.GetExcMsg(ex));
 			}
 			finally
 			{
@@ -1097,7 +1113,6 @@ namespace RetroScrap2000
 				}
 				else
 				{
-					Log.Debug("addTypeMenuItems " + index.ToString());
 					addTypeMenuItems[index].Visible = true;
 					addTypeMenuItems[index].Text = string.Format(Properties.Resources.Txt_Menu_AddMedium, kvp.Key.ToString());
 					addTypeMenuItems[index].Tag = kvp.Key;

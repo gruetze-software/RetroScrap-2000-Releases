@@ -207,9 +207,6 @@
   <data name="Txt_Log_Scrap_SaveGamelist_fail" xml:space="preserve">
     <value>¡Error al guardar Gamelist.xml!</value>
   </data>
-  <data name="Txt_Log_Scrap_NoGameFound" xml:space="preserve">
-    <value>Esto podría deberse a que el nombre no coincide con la ortografía en inglés de la base de datos. Ajústelo manualmente, guárdelo y vuelva a intentarlo.</value>
-  </data>
   <data name="Txt_Msg_Scrap_NoSystem" xml:space="preserve">
     <value>No se encontró ningún sistema adecuado para la ROM.</value>
   </data>
@@ -368,5 +365,14 @@
   </data>
   <data name="Txt_Log_DailyLimitReached" xml:space="preserve">
     <value>Se ha alcanzado el límite diario.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_NoHashesFromFile" xml:space="preserve">
+    <value>No se pudieron calcular los datos hash del archivo.</value>
+  </data>
+  <data name="Txt_Log_Scrap_FileNotExist" xml:space="preserve">
+    <value>El archivo no existe.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually" xml:space="preserve">
+    <value>No se encontraron datos. Por favor, actualice esta entrada individualmente.</value>
   </data>
 </root>

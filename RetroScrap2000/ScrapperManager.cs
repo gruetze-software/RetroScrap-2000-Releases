@@ -1,11 +1,13 @@
 ﻿using RetroScrap2000;
 using RetroScrap2000.Tools;
 using Serilog;
+using System;
 using System.Data;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace RetroScrap2000
 {
@@ -48,11 +50,8 @@ namespace RetroScrap2000
 		}
 
 		private string BuildAuthQuery() => $"devid={getDD().s1}&devpassword={getDD().s2}&softname={_appinfo.ProductName!.Replace(" ", "")}&ssid={_ssid}&sspassword={_sspw}&output=json";
+		private string BuildAuthQueryXml() => $"devid={getDD().s1}&devpassword={getDD().s2}&softname={_appinfo.ProductName!.Replace(" ", "")}&ssid={_ssid}&sspassword={_sspw}";
 		private string BuildAuthQueryWithOutSs() => $"devid={getDD().s1}&devpassword={getDD().s2}&softname={_appinfo.ProductName!.Replace(" ", "")}&output=json";
-
-		/*
-		 * Debug x9d7KXbmycA
-		 */
 
 		public async Task<SsUserInfosResponse> FetchSsUserInfosAsync()
 		{
@@ -257,11 +256,14 @@ namespace RetroScrap2000
 			}
 		}
 
-		public async Task<(bool ok, List<GameDataRecherce>? possibleGames, string? error)> GetGameRechercheListAsync(
+		public async Task<ScrapRechercheApiResponse> GetGameRechercheListAsync(
 			string? romFileName, int systemId, RetroScrapOptions opt, CancellationToken ct = default)
 		{
+
+			ScrapRechercheApiResponse retVal = new ScrapRechercheApiResponse();
+
 			if (string.IsNullOrEmpty(romFileName))
-				return (false, null, Properties.Resources.Txt_Log_Scrap_NoName);
+				return retVal;
 
 			Log.Information($"GetGameRechercheListAsync(\"{romFileName}\") Call Api {BaseUrl}jeuRecherche.php?xxxxxxx");
 			var url = $"{BaseUrl}jeuRecherche.php?{BuildAuthQuery()}&systemeid={systemId}&recherche={Uri.EscapeDataString(romFileName)}";
@@ -271,26 +273,93 @@ namespace RetroScrap2000
 			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
 			if (!resp.IsSuccessStatusCode)
 			{
-				return (false, null, $"HTTP {(int)resp.StatusCode}: {body}");
+				retVal.HttpCode = (int)resp.StatusCode;
+				if (retVal.HttpCode == 404)
+					retVal.Error = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
+				else
+					retVal.Error = body;
+				return retVal;
 			}
 			// JSON?
 			var head = body.TrimStart();
 			if (!(head.StartsWith("{") || head.StartsWith("[")))
-				return (false, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
+			{
+				retVal.Error = $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}";
+				return retVal;
+			}
 
 			var root = System.Text.Json.JsonSerializer.Deserialize<GameRechercheRoot>(body, _jsonOpts);
 			// Aktualisieren der Scraper-Steuerung mit den NEUESTEN Werten
 			UpdateStateAndSsUser(root?.response?.ssuser);
 
 			var jeux = root?.response?.jeux;
-			if (jeux == null) return (false, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
-
-			return (ok: true, possibleGames: jeux.ToList(), null);
+			if (jeux == null)
+			{
+				retVal.HttpCode = 404;
+				retVal.Error = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
+				return retVal;
+			}
+				
+			var lst = jeux.ToList();
+			if (lst.Count == 1 && ( lst[0] == null || lst[0].noms == null))
+			{
+				retVal.HttpCode = 404;
+				retVal.Error = Properties.Resources.Txt_Msg_Scrap_NoDataFound;
+				return retVal;
+			}
+			else
+			{
+				retVal.Ok = true;
+				retVal.RechercheResult = lst;
+				return retVal;
+			}
 		}
 
 
-		// Dient dazu, Loops zu vermeiden
-		private static int _countScrapGame = 0;
+		public string? GetApiRomIDwhereMatch(string localFilePath, List<ApiRom> apiRoms)
+		{
+			// 1. Lokale Prüfsummen berechnen
+			var localHashes = FileTools.CalculateChecksums(localFilePath);
+
+			// Wenn die lokale Datei nicht gehasht werden konnte, brechen Sie ab.
+			if (string.IsNullOrEmpty(localHashes.MD5))
+			{
+				Log.Warning($"Could not calculate Hashes for \"{Path.GetFileName(localFilePath)}\".");
+				return null;
+			}
+
+			// 2. Abgleich mit dem 'roms'-Array der API
+			// Wir verwenden einen Fall-Through-Vergleich (MD5 > SHA1 > CRC), um die beste Übereinstimmung zu finden.
+
+			foreach (var apiRom in apiRoms)
+			{
+				// 2a. Vergleich über MD5 (höchste Priorität, da robust)
+				if (!string.IsNullOrEmpty(localHashes.MD5) &&
+						string.Equals(localHashes.MD5, apiRom.rommd5, StringComparison.OrdinalIgnoreCase))
+				{
+					Log.Information($"Perfect MD5-Match found for \"{Path.GetFileName(localFilePath)}\"." );
+					return apiRom.id; // Match gefunden
+				}
+
+				// 2b. Vergleich über SHA1 (gute Alternative)
+				if (!string.IsNullOrEmpty(localHashes.SHA1) &&
+						string.Equals(localHashes.SHA1, apiRom.romsha1, StringComparison.OrdinalIgnoreCase))
+				{
+					Log.Information($"SHA1-Match found for \"{Path.GetFileName(localFilePath)}\".");
+					return apiRom.id; // Match gefunden, Scraper kann fortfahren
+				}
+
+				// 2c. Vergleich über CRC32 (niedrigste Priorität, da Kollisionen möglich)
+				// Dies erfordert, dass wir lokale CRC32s berechnen und die API-Daten prüfen.
+				// if (localHashes.CRC32 == apiRom.rom_crc) { return true; } 
+			}
+
+			// 3. Kein Match gefunden
+			Log.Warning($"No Hash-Match found for \"{Path.GetFileName(localFilePath)}\"." );
+
+			return null;
+		}
+
 		/// <summary>
 		/// Scrapt ein Spiel
 		/// </summary>
@@ -298,131 +367,70 @@ namespace RetroScrap2000
 		/// <param name="systemId">Die Id des Systems</param>
 		/// <param name="ct"></param>
 		/// <returns></returns>
-		public async Task<(bool ok, ScrapeGame? data, 
-			List<GameDataRecherce>? gameRechercheList, string? error)> GetGameAsync(
-			string? romname, string? filename, int systemId, RetroScrapOptions opt, CancellationToken ct = default, bool UseRecherche = false)
+		public async Task<ScrapGameApiResponse> GetGameAsync(
+				FileInfo? romFile, int systemId, RetroScrapOptions opt, CancellationToken ct = default)
 		{
-			if (string.IsNullOrEmpty(romname))
+			ScrapGameApiResponse retVal = new ScrapGameApiResponse();
+
+			if (romFile == null)
 			{
-				_countScrapGame = 0;
-				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
+				retVal.Error = Properties.Resources.Txt_Log_Scrap_NoName;
+				return retVal;
 			}
 
-			// Der Suchstring wird angepasst
-			string seachstring = FileTools.CleanSearchName(romname);
-			if (string.IsNullOrEmpty(seachstring))
+			if (!romFile.Exists)
 			{
-				_countScrapGame = 0;
-				return (ok: false, data: null, gameRechercheList: null, error: Properties.Resources.Txt_Log_Scrap_NoName);
+				retVal.Error = Properties.Resources.Txt_Log_Scrap_FileNotExist;
+				return retVal;
 			}
 
-			if (UseRecherche)
-			{
-				_countScrapGame++;
-				var recherche = await GetGameRechercheListAsync(seachstring, systemId, opt, ct);
-				if (recherche.ok)
-				{
-					
-					if (recherche.possibleGames == null || recherche.possibleGames.Count == 0)
-					{
-						_countScrapGame = 0;
-						return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
-					}
-					// Es gab nur einen Treffer, den ziehen wir uns
-					if (recherche.possibleGames.Count == 1)
-					{
-						GameDataRecherce r = recherche.possibleGames[0];
-						string? name = r.GetName(opt);
-						if (string.IsNullOrEmpty(name))
-						{
-							_countScrapGame = 0;
-							return (false, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound);
-						}
-						else
-						{
-							// Aufruf 3 oder 4
-							///////////////////////////////////////////////////////////////////////
-							// Rekursiver Aufruf, aber nicht mehr als Recherche
-							return await GetGameAsync(name, filename, systemId, opt, ct, UseRecherche: false);
-						}
-					}
-					else
-					{
-						// Mehr als ein Treffer, wir liefern alle Treffer zurück
-						_countScrapGame = 0;
-						return ( ok: true, data: null, gameRechercheList: recherche.possibleGames, error: null);
-					}
-
-				}
-				else
-				{
-					_countScrapGame = 0;
-					return (ok: false, data: null, gameRechercheList: null, recherche.error);
-				}
-			}
-
-			_countScrapGame++;
-			
-			// Loop verhindern
-			if (_countScrapGame > 4) // Max. vier Aufrufe: 1: romName, 2: filename, 3: Recherche mit einem Treffer, 4: der eine Treffer
-			{
-				_countScrapGame = 0;
-				return (true, null, null, Properties.Resources.Txt_Msg_Scrap_NoDataFound); 
-			}
-
-			// Aufruf 1
+			// Aufruf - Hash
 			///////////////////////////////////////////////////////////////////////
-			Log.Information($"GetGameAsync(\"{Uri.EscapeDataString(seachstring)}\") {_countScrapGame}. Call Api {BaseUrl}jeuInfos.php?xxxxxxx");
-			var url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&romnom={Uri.EscapeDataString(seachstring)}";
-			Log.Debug(url);
-			await WaitForRateLimitAndAddRequestCounter();
-			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
-			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
 
-			if (!resp.IsSuccessStatusCode)
+			var hashes = FileTools.CalculateChecksums(romFile.FullName);
+			if (string.IsNullOrEmpty(hashes.MD5) || string.IsNullOrEmpty(hashes.SHA1))
 			{
-				// Nicht gefunden, wir versuchen den FileNamen, und dann rufen wir uns selbst als Recherche-Funktion auf.
-				if (((int)resp.StatusCode) == 404)
-				{
-					// Aufruf 2
-					///////////////////////////////////////////////////////////////////////
-					string seachfilestring = FileTools.CleanSearchName(filename);
-					if (string.Compare(seachstring, seachfilestring, StringComparison.OrdinalIgnoreCase) != 0)
-					{
-						Log.Information($"No game was found under the name \"{seachstring}\". Trying name \"{seachfilestring}\"...");
-						return await GetGameAsync(seachfilestring, filename, systemId, opt, ct);
-					}
-					else
-					{
-						// Aufruf 2 oder 3 für Recherche-Aufruf
-						///////////////////////////////////////////////////////////////////////
-						return await GetGameAsync(seachstring, seachfilestring, systemId, opt, ct, UseRecherche: true);
-					}
-				}
-				else
-				{
-					_countScrapGame = 0;
-					return (ok: false, data: null, gameRechercheList: null, $"HTTP {(int)resp.StatusCode}: {body}");
-				}
+				retVal.Error = Properties.Resources.Txt_Msg_Scrap_NoHashesFromFile;
+				return retVal;
 			}
+
+			ct.ThrowIfCancellationRequested();
+
+			Log.Information($"Call with Hashes, Size and Name of File: GetGameAsync() -> Call Api {BaseUrl}jeuInfos.php?xxxxxxx");
+			string url = $"{BaseUrl}jeuInfos.php?{BuildAuthQuery()}&systemeid={systemId}&" + 
+				$"md5={hashes.MD5}&sha1={hashes.SHA1}&romtaille={romFile.Length}&romnom={Uri.EscapeDataString(romFile.Name)}";
+			Log.Debug(url);
+			var resp = await GetResponseAsync(url, ct);
+			if (!resp.response.IsSuccessStatusCode)
+			{
+				retVal.HttpCode = (int)resp.response.StatusCode;
+				if (retVal.HttpCode == 404)
+					retVal.Error = Properties.Resources.Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually;
+				else
+					retVal.Error = resp.body;
+				return retVal;
+			} 
 
 			// JSON?
-			var head = body.TrimStart();
+			var head = resp.body!.TrimStart();
 			if (!(head.StartsWith("{") || head.StartsWith("[")))
 			{
-				_countScrapGame = 0;
-				return (false, null, null, $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}");
+				retVal.Error = $"{Properties.Resources.Txt_Log_Scrap_NoJson}: {head[..Math.Min(120, head.Length)]}";
+				return retVal;
 			}
-			var root = System.Text.Json.JsonSerializer.Deserialize<GameRoot>(body, _jsonOpts);
+
+			var root = System.Text.Json.JsonSerializer.Deserialize<GameRoot>(resp.body, _jsonOpts);
+			
 			// Aktualisieren der Scraper-Steuerung mit den NEUESTEN Werten
 			UpdateStateAndSsUser(root?.response?.ssuser);
 
 			var jeu = root?.response?.jeu;
 			if (jeu == null)
 			{
-				_countScrapGame = 0;
-				return (false, null, null, Properties.Resources.Txt_Log_Scrap_NoName);
+				retVal.Error = Properties.Resources.Txt_Log_Scrap_NoName;
+				return retVal;
 			}
+
 			var sg = new ScrapeGame();
 			sg.Id = jeu.romid;
 			
@@ -497,11 +505,227 @@ namespace RetroScrap2000
 			///////////////////////////////////////////////////////////////////////
 			foreach (var medium in sg.PossibleMedien)
 				medium.Url = GetMediumUrl(jeu.medias, medium.ApiKey, opt) ?? string.Empty;
-			_countScrapGame = 0;
-			return (ok: true, data: sg, gameRechercheList: null, null);
+
+			retVal.Ok = true;
+			retVal.ScrapGameResult = sg;
+			return retVal;
 		}
 
-		public string? GetMediumUrl(Medium[]? medias, string type, RetroScrapOptions opt)
+		/// <summary>
+		/// Scrapt mehrere Spiele automatisch über Hash. Eine verfeinerte Suche wird nicht angeboten.
+		/// da alle Roms automatisch durchlaufen werden sollen.
+		/// </summary>
+		/// <param name="gameList"></param>
+		/// <param name="onlyLocalMedias">Anhand des Namens der Rom-Datei werden lokale Medien gesucht und zugeordnet</param>
+		/// <param name="systemid"></param>
+		/// <param name="baseDir"></param>
+		/// <param name="progress"></param>
+		/// <param name="opt"></param>
+		/// <param name="ct"></param>
+		/// <returns></returns>
+		public async Task ScrapGamesAsync(GameList gameList, bool onlyLocalMedias, int systemid, string baseDir,
+			IProgress<ProgressObj> progress, RetroScrapOptions opt, CancellationToken ct = default)
+		{
+			int iGesamt = gameList.Games.Count;
+			gameList.Games.ForEach(g => g.State = eState.None);
+			int iPerc = 0;
+
+			// Schleife über alle Roms
+			// Hier werden wir die Anzahl der möglichen Threads berücksichten 
+			// des Users. Allerdings nicht für die Rom-Metadaten
+			// sondern für die Mediendateien.
+			/////////////////////////////////////////////////////////////////////
+			for (int i = 0; i < iGesamt; ++i)
+			{
+				GameEntry game = gameList.Games[i];
+				iPerc = Utils.CalculatePercentage(i + 1, iGesamt);
+
+				ct.ThrowIfCancellationRequested();
+				
+				progress.Report(new ProgressObj(iPerc, i + 1,
+						game.Name!, Properties.Resources.Txt_Status_Label_Scrap_Running));
+
+				try
+				{
+					// Rom scrappen
+					FileInfo romFile = new FileInfo(FileTools.ResolveMediaPath(baseDir, game.Path)!);
+					Log.Information($"--> await GetGameAsync \"{romFile.FullName}\"");
+					var result = await GetGameAsync(romFile, gameList.RetroSys.Id, opt, ct);
+					// Ergebnis prüfen
+					if (!result.Ok)
+					{
+						game.State = eState.Error;
+						ProgressObj error = new ProgressObj(iPerc, i + 1,
+							game.Name!, $"{result.Error ?? "Error"}");
+						error.Typ = ProgressObj.eTyp.Error;
+						progress.Report(error);
+						continue;
+					}
+
+					var scrapgame = result.ScrapGameResult;
+					if (scrapgame == null)
+					{
+						ProgressObj err = new ProgressObj(iPerc, i + 1,
+								game.Name!, Properties.Resources.Txt_Log_Scrap_NoDataFoundFor + game.Name!);
+						err.Typ = ProgressObj.eTyp.Error;
+						progress.Report(err);
+						continue;
+					}
+
+					progress.Report(new ProgressObj(iPerc, i + 1,
+						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
+					if (!string.IsNullOrEmpty(scrapgame.Id) && int.TryParse(scrapgame.Id, out int id) && id > 0)
+						game.Id = id;
+					game.Source = scrapgame.Source ?? "screenscraper.fr";
+					if (!string.IsNullOrEmpty(scrapgame.Description))
+						game.Description = Utils.DecodeTextFromApi(scrapgame.Description);
+					if (!string.IsNullOrEmpty(scrapgame.Developer))
+						game.Developer = scrapgame.Developer;
+					if (!string.IsNullOrEmpty(scrapgame.Genre))
+						game.Genre = scrapgame.Genre;
+					if (!string.IsNullOrEmpty(scrapgame.Name))
+						game.Name = scrapgame.Name;
+					if (!string.IsNullOrEmpty(scrapgame.Players))
+						game.Players = scrapgame.Players;
+					if (!string.IsNullOrEmpty(scrapgame.Publisher))
+						game.Publisher = scrapgame.Publisher;
+					if (scrapgame.RatingNormalized.HasValue && game.Rating <= 0)
+						game.Rating = scrapgame.RatingNormalized.Value;
+					if (scrapgame.ReleaseDate != null && scrapgame.ReleaseDate != DateTime.MinValue)
+						game.ReleaseDate = scrapgame.ReleaseDate;
+
+					game.State = eState.Scraped;
+
+					if (!onlyLocalMedias)
+					{
+						// ----------------------------------------------------------------------
+						// PARALLELER MEDIEN-DOWNLOAD (falls erlaubt)
+						// ----------------------------------------------------------------------
+
+						// maxthreads aus der Instanz-Variable des Managers holen
+						// Sicherstellen, dass das Limit mindestens 1 ist.
+						int maxConcurrentMediaDownloads = LatestSsUser?.maxthreads ?? 1;
+						if (maxConcurrentMediaDownloads < 1)
+							maxConcurrentMediaDownloads = 1;
+
+						// Semaphore zur Begrenzung der parallelen Downloads
+						var mediaSemaphore = new SemaphoreSlim(maxConcurrentMediaDownloads);
+						var downloadTasks = new List<Task>();
+
+						// Medien-URLs filtern und Tasks vorbereiten
+						var mediaToDownload = scrapgame.PossibleMedien
+								.Where(m => opt.IsMediaTypeEnabled(m) && !string.IsNullOrEmpty(m.Url))
+								.ToList();
+
+						// Starte die Tasks für alle zu ladenden Medien
+						for (int j = 0; j < mediaToDownload.Count; j++)
+						{
+							var medium = mediaToDownload[j];
+							int threadId = (j % maxConcurrentMediaDownloads) + 1; // Einfache, rotierende ID (1, 2, 3...)
+
+							// 1. Auf die Erlaubnis des Thread-Semaphores warten
+							await mediaSemaphore.WaitAsync(ct);
+
+							// 2. Erzeuge den Download-Task
+							downloadTasks.Add(Task.Run(async () =>
+							{
+								try
+								{
+									// 3. Globale Quota-Drosselung (maxrequestspermin) vor dem Aufruf
+									// Diese Methode muss die Pause und die interne/globale Zählung durchführen.
+									await WaitForRateLimitAndAddRequestCounter();
+
+									// Progress: Starte Download
+									progress.Report(new ProgressObj(iPerc, i + 1, game.Name!,
+											$"{Properties.Resources.Txt_Log_Scrap_Loading} {medium}... (Thread {threadId})")
+									{ ThreadId = threadId });
+
+									ct.ThrowIfCancellationRequested();
+
+									// 4. Medien laden (LoadMediaAsync muss die ThreadId annehmen)
+									var loadres = await LoadMediaAsync(medium.Type, medium.Url, baseDir, ct, false);
+
+									// 5. Daten übernehmen und speichern (KRITISCHER ABSCHNITT)
+									// Der Zugriff auf das 'game'-Objekt muss synchronisiert werden,
+									// da mehrere Threads gleichzeitig schreiben könnten.
+									lock (game)
+									{
+										if (!string.IsNullOrEmpty(loadres.absPath) && File.Exists(loadres.absPath))
+										{
+											// Die gesamte Logik zum Speichern/Vergleichen/Verschieben
+											// wird hier in einer neuen, synchronisierten Methode ausgeführt.
+											ProcessAndSaveMedia(game, medium.Type, loadres.absPath, baseDir, iPerc, i + 1, progress);
+										}
+										else
+										{
+											ProgressObj err = new ProgressObj(iPerc, i + 1,
+													game.Name!, $"File not found for {medium.Type.ToString()}. (Thread {threadId})");
+											err.Typ = ProgressObj.eTyp.Error;
+											progress.Report(err);
+										}
+									}
+								}
+								catch (OperationCanceledException)
+								{
+									// Wenn der Task abgebrochen wird (z.B. durch ct.ThrowIfCancellationRequested())
+									progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+											Properties.Resources.Txt_Log_Scrap_CancelRequest));
+								}
+								catch (Exception ex)
+								{
+									// Fehlerbehandlung für den Thread
+									ProgressObj err = new ProgressObj(iPerc, i + 1,
+											game.Name!, $"Error Thread {threadId} for {medium.Type.ToString()}: {Utils.GetExcMsg(ex)}");
+									err.Typ = ProgressObj.eTyp.Error;
+									progress.Report(err);
+								}
+								finally
+								{
+									// 6. Die Thread-Erlaubnis freigeben
+									mediaSemaphore.Release();
+								}
+							}, ct));
+						}
+
+						// 7. Auf das Ende ALLER Downloads für dieses Spiel warten
+						await Task.WhenAll(downloadTasks);
+
+						ct.ThrowIfCancellationRequested();
+					}
+					else
+					{
+						// Medien lokal suchen und zuordnen
+						var res = FileTools.SetLocalMediaFilesToGame(game, baseDir);
+					}
+				}
+				catch (OperationCanceledException)
+				{
+					progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
+							Properties.Resources.Txt_Log_Scrap_CancelRequest));
+					break;
+				}
+				catch (Exception e)
+				{
+					game.State = eState.Error;
+					ProgressObj err = new ProgressObj(iPerc, i + 1,
+						game.Name!, $"Error! {Utils.GetExcMsg(e)}");
+					err.Typ = ProgressObj.eTyp.Error;
+					progress.Report(err);
+					continue;
+				}
+			}
+			progress.Report(new ProgressObj(0, Properties.Resources.Txt_Log_Scrap_End));
+		}
+
+		private async Task<(HttpResponseMessage response, string? body)> GetResponseAsync(string url, CancellationToken ct)
+		{
+			await WaitForRateLimitAndAddRequestCounter();
+			using var resp = await _http.GetAsync(url, ct).ConfigureAwait(false);
+			var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
+			return (resp, body);
+		}
+
+		public static string? GetMediumUrl(Medium[]? medias, string type, RetroScrapOptions opt)
 		{
 			if (medias == null)
 				return string.Empty;
@@ -519,26 +743,6 @@ namespace RetroScrap2000
 					media = medien.FirstOrDefault();
 			}
 			return media?.url ?? string.Empty; 
-		}
-
-		public string CleanPrefix(string gameTitle)
-		{
-			// *** 1. Entferne führende Ziffern, Leerzeichen, Punkte und Bindestriche ***
-			// Muster: ^[\d\s\.\-–]+
-			// Erkl.: Startet am Stringanfang (^) und matcht eine oder mehrere (+) Ziffern (\d), 
-			//        Leerzeichen (\s), Punkte (\.), Bindestriche (\-) und Gedankenstriche (–).
-			string step1_NoPrefix = Regex.Replace(gameTitle, @"^[\d\s\.\-–]+", "");
-
-			// *** 2. Entferne alle Inhalte in runden, eckigen oder geschweiften Klammern ***
-			// Muster: [\(\[\{].*?[\)\]\}]
-			// Erkl.: Matcht alles, was zwischen Klammernpaaren liegt.
-			string step2_NoBrackets = Regex.Replace(step1_NoPrefix, @"[\(\[\{].*?[\)\]\}]", "");
-
-			// *** 3. Bereinige unnötige Leerzeichen ***
-			// Entferne doppelte Leerzeichen und trimme den String am Ende.
-			string step3_Final = Regex.Replace(step2_NoBrackets, @"\s+", " ").Trim();
-
-			return step3_Final;
 		}
 
 		public async Task<(System.Drawing.Image? img, string? absPath)> LoadMediaAsync(
@@ -613,214 +817,6 @@ namespace RetroScrap2000
 			}
 
 			return (img, absPath);
-		}
-
-		public async Task ScrapGamesAsync(GameList gameList, bool onlyLocalMedias, int systemid, string baseDir,
-			IProgress<ProgressObj> progress, RetroScrapOptions opt, CancellationToken ct = default)
-		{
-			int iGesamt = gameList.Games.Count;
-			gameList.Games.ForEach(g => g.State = eState.None);
-			int iPerc = 0;
-
-			// Schleife über alle Roms
-			// Hier werden wir die Anzahl der möglichen Threads berücksichten 
-			// des Users. Allerdings nicht für die Rom-Metadaten
-			// sondern für die Mediendateien.
-			/////////////////////////////////////////////////////////////////////
-			for( int i = 0; i < iGesamt; ++i)
-			{
-				GameEntry game = gameList.Games[i];
-				iPerc = Utils.CalculatePercentage(i + 1, iGesamt);
-
-				if (ct.IsCancellationRequested)
-				{
-					progress.Report(new ProgressObj( ProgressObj.eTyp.Warning, iPerc, 
-						Properties.Resources.Txt_Log_Scrap_CancelRequest));
-					break;
-				}
-
-				progress.Report(new ProgressObj(iPerc, i + 1,
-						game.Name!, Properties.Resources.Txt_Status_Label_Scrap_Running));
-
-				try
-				{
-					// Rom scrappen
-					Log.Information($"--> await GetGameAsync \"{game.Name}\"");
-					var result = await GetGameAsync(game.Name, game.FileName, gameList.RetroSys.Id, opt, ct);
-					// Ergebnis prüfen
-					if (!result.ok)
-					{
-						game.State = eState.Error;
-						ProgressObj error = new ProgressObj(iPerc, i + 1,
-							game.Name!, $"{result.error ?? "Error"} \"{game.Name}\".");
-						error.Typ = ProgressObj.eTyp.Error;
-						progress.Report(error);
-						continue;
-					}
-					// Mehrfach-Ergebnisse können wir nicht im Automatik-Modus anzeigen
-					if (result.gameRechercheList != null && result.gameRechercheList.Count > 1)
-					{
-						game.State = eState.NoData;
-						ProgressObj warning = new ProgressObj(iPerc, i + 1,
-								game.Name!, Properties.Resources.Txt_Log_Scrap_MoreThenOneMatch);
-						warning.Typ = ProgressObj.eTyp.Warning;
-						progress.Report(warning);
-						continue;
-					}
-					
-					var scrapgame = result.data;
-					if (scrapgame == null)
-					{
-						ProgressObj err = new ProgressObj(iPerc, i + 1,
-								game.Name!, Properties.Resources.Txt_Log_Scrap_NoGameFound);
-						err.Typ = ProgressObj.eTyp.Error;
-						progress.Report(err);
-						continue;
-					}
-
-					progress.Report(new ProgressObj(iPerc, i + 1,
-						game.Name!, $"{Properties.Resources.Txt_Log_Scrap_CheckDataFrom} \"{game.Name}\"."));
-					if (!string.IsNullOrEmpty(scrapgame.Id) && int.TryParse(scrapgame.Id, out int id) && id > 0)
-						game.Id = id;
-					game.Source = scrapgame.Source ?? "screenscraper.fr";
-					if (!string.IsNullOrEmpty(scrapgame.Description))
-						game.Description = Utils.DecodeTextFromApi(scrapgame.Description);
-					if (!string.IsNullOrEmpty(scrapgame.Developer))
-						game.Developer = scrapgame.Developer;
-					if (!string.IsNullOrEmpty(scrapgame.Genre))
-						game.Genre = scrapgame.Genre;
-					if (!string.IsNullOrEmpty(scrapgame.Name))
-						game.Name = scrapgame.Name;
-					if (!string.IsNullOrEmpty(scrapgame.Players))
-						game.Players = scrapgame.Players;
-					if (!string.IsNullOrEmpty(scrapgame.Publisher))
-						game.Publisher = scrapgame.Publisher;
-					if (scrapgame.RatingNormalized.HasValue && game.Rating <= 0)
-						game.Rating = scrapgame.RatingNormalized.Value;
-					if (scrapgame.ReleaseDate != null && scrapgame.ReleaseDate != DateTime.MinValue)
-						game.ReleaseDate = scrapgame.ReleaseDate;
-
-					game.State = eState.Scraped;
-
-					if (!onlyLocalMedias)
-					{
-						// ----------------------------------------------------------------------
-						// PARALLELER MEDIEN-DOWNLOAD (falls erlaubt)
-						// ----------------------------------------------------------------------
-
-						// maxthreads aus der Instanz-Variable des Managers holen
-						// Sicherstellen, dass das Limit mindestens 1 ist.
-						int maxConcurrentMediaDownloads = LatestSsUser?.maxthreads ?? 1;
-						if (maxConcurrentMediaDownloads < 1) 
-							maxConcurrentMediaDownloads = 1;
-
-						// Semaphore zur Begrenzung der parallelen Downloads
-						var mediaSemaphore = new SemaphoreSlim(maxConcurrentMediaDownloads);
-						var downloadTasks = new List<Task>();
-
-						// Medien-URLs filtern und Tasks vorbereiten
-						var mediaToDownload = scrapgame.PossibleMedien
-								.Where(m => opt.IsMediaTypeEnabled(m) && !string.IsNullOrEmpty(m.Url))
-								.ToList();
-
-						// Starte die Tasks für alle zu ladenden Medien
-						for (int j = 0; j < mediaToDownload.Count; j++)
-						{
-							var medium = mediaToDownload[j];
-							int threadId = (j % maxConcurrentMediaDownloads) + 1; // Einfache, rotierende ID (1, 2, 3...)
-
-							// 1. Auf die Erlaubnis des Thread-Semaphores warten
-							await mediaSemaphore.WaitAsync(ct);
-
-							// 2. Erzeuge den Download-Task
-							downloadTasks.Add(Task.Run(async () =>
-							{
-								try
-								{
-									// 3. Globale Quota-Drosselung (maxrequestspermin) vor dem Aufruf
-									// Diese Methode muss die Pause und die interne/globale Zählung durchführen.
-									await WaitForRateLimitAndAddRequestCounter();
-
-									// Progress: Starte Download
-									progress.Report(new ProgressObj(iPerc, i + 1, game.Name!,
-											$"{Properties.Resources.Txt_Log_Scrap_Loading} {medium}... (Thread {threadId})")
-									{ ThreadId = threadId });
-
-									ct.ThrowIfCancellationRequested();
-
-									// 4. Medien laden (LoadMediaAsync muss die ThreadId annehmen)
-									var loadres = await LoadMediaAsync(medium.Type, medium.Url, baseDir, ct, false);
-
-									// 5. Daten übernehmen und speichern (KRITISCHER ABSCHNITT)
-									// Der Zugriff auf das 'game'-Objekt muss synchronisiert werden,
-									// da mehrere Threads gleichzeitig schreiben könnten.
-									lock (game)
-									{
-										if ( !string.IsNullOrEmpty(loadres.absPath) && File.Exists(loadres.absPath))
-										{
-											// Die gesamte Logik zum Speichern/Vergleichen/Verschieben
-											// wird hier in einer neuen, synchronisierten Methode ausgeführt.
-											ProcessAndSaveMedia(game,medium.Type, loadres.absPath, baseDir, iPerc, i + 1, progress);
-										}
-										else
-										{
-											ProgressObj err = new ProgressObj(iPerc, i + 1,
-													game.Name!, $"File not found for {medium.Type.ToString()}. (Thread {threadId})");
-											err.Typ = ProgressObj.eTyp.Error;
-											progress.Report(err);
-										}
-									}
-								}
-								catch (OperationCanceledException)
-								{
-									// Wenn der Task abgebrochen wird (z.B. durch ct.ThrowIfCancellationRequested())
-									progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
-											Properties.Resources.Txt_Log_Scrap_CancelRequest));
-								}
-								catch (Exception ex)
-								{
-									// Fehlerbehandlung für den Thread
-									ProgressObj err = new ProgressObj(iPerc, i + 1,
-											game.Name!, $"Error Thread {threadId} for {medium.Type.ToString()}: {Utils.GetExcMsg(ex)}");
-									err.Typ = ProgressObj.eTyp.Error;
-									progress.Report(err);
-								}
-								finally
-								{
-									// 6. Die Thread-Erlaubnis freigeben
-									mediaSemaphore.Release();
-								}
-							}, ct));
-						}
-
-						// 7. Auf das Ende ALLER Downloads für dieses Spiel warten
-						await Task.WhenAll(downloadTasks);
-
-						if (ct.IsCancellationRequested)
-						{
-							// Melden Sie den Abbruch und brechen Sie dann die Hauptschleife ab
-							progress.Report(new ProgressObj(ProgressObj.eTyp.Warning, iPerc,
-									Properties.Resources.Txt_Log_Scrap_CancelRequest));
-							break; // Bricht die for-Schleife ab
-						}
-					}
-					else
-					{
-						// Medien lokal suchen und zuordnen
-						var res = FileTools.SetLocalMediaFilesToGame(game, baseDir);
-					}
-				}
-				catch (Exception e)
-				{
-					game.State = eState.Error;
-					ProgressObj err = new ProgressObj(iPerc, i + 1,
-						game.Name!, $"Error! {Utils.GetExcMsg(e)}");
-					err.Typ = ProgressObj.eTyp.Error;
-					progress.Report(err);
-					continue;
-				}
-			}
-			progress.Report(new ProgressObj(0, Properties.Resources.Txt_Log_Scrap_End));
 		}
 
 		/// <summary>
@@ -915,6 +911,24 @@ namespace RetroScrap2000
 				throw new ApplicationException("No Developer Login Data found.");
 			return (s1!, s2!);
 		}
+	}
+
+	public class ScrapGameApiResponse
+	{
+		public bool Ok { get; set; } = false;
+		public ScrapeGame? ScrapGameResult { get; set; }
+		public string? Error { get; set; }
+		public int? HttpCode { get; set; }
+
+	}
+
+	public class ScrapRechercheApiResponse
+	{
+		public bool Ok { get; set; } = false;
+		public List<GameDataRecherce> RechercheResult { get; set; } = new();
+		public string? Error { get; set; }
+		public int? HttpCode { get; set; }
+
 	}
 }
 
@@ -1256,6 +1270,29 @@ public sealed class ScrapeGame
 	{
 		PossibleMedien = [.. RetroScrapOptions.GetMediaSettingsList()];
 	}
+
+	public ScrapeGame CopyFrom(GameDataRecherce gameRecherche, RetroScrapOptions opt)
+	{
+		ScrapeGame g = new ScrapeGame()
+		{
+			Description = gameRecherche.GetDesc(opt),
+			Developer = gameRecherche.developpeur?.text,
+			Genre = gameRecherche.GetGenre(opt),
+			Id = gameRecherche.id,
+			Name = gameRecherche.GetName(opt),
+			Players = gameRecherche.joueurs?.text,
+			Publisher = gameRecherche.editeur?.text,
+			ReleaseDateRaw = gameRecherche.GetReleaseDate(opt),
+			RatingNormalized = this.RatingNormalized,
+			Source = this.Source,
+		};
+
+		foreach (var medium in g.PossibleMedien)
+			medium.Url = ScrapperManager.GetMediumUrl(gameRecherche.medias, medium.ApiKey, opt) ?? string.Empty;
+
+		return g;
+	}
+
 }
 
 public class GameRechercheRoot { public GameRechercheResponse? response { get; set; } }
@@ -1285,6 +1322,8 @@ public class GameData
 	public TxtObj? note { get; set; } 
 	public RegTxtObj[]? dates { get; set; } 
 	public Medium[]? medias { get; set; }
+	public ApiRom[]? roms { get; set; }
+	public ApiRom? rom { get; set; }
 }
 
 public class GameDataRecherce
@@ -1319,6 +1358,20 @@ public class GameDataRecherce
 		}
 
 		return null;
+	}
+
+	public string? GetReleaseDate(RetroScrapOptions opt)
+	{
+		if ( dates == null || dates.Count() <= 1 ) 
+			return null;
+		var date = dates.FirstOrDefault(x => x.region == opt.Region);
+		if (date == null)
+		{
+			date = dates.FirstOrDefault(x => x.region == "eu");
+			if (date == null)
+				return dates[0].text;
+		}
+		return date.text;
 	}
 
 	public string? GetDesc(RetroScrapOptions opt)
@@ -1370,5 +1423,41 @@ public class Medium { public string? type { get; set; } public string? url { get
 public class Family { public string? id { get; set; } public string? nomcourt { get; set; } public string? principale { get; set; } public string? parentid { get; set; } public List<RegTxtObj>? noms { get; set; } }
 public class LangTextObj { public string? langue { get; set; } public string? text { get; set; } }
 
+public class ApiRom
+{
+	public string? id { get; set; }
+	public string? romsize { get; set; }
+	public string? romfilename { get; set; }
+	public string? romnumsupport { get; set; }
+	public string? romtotalsupport { get; set; }
+	public string? romcloneof { get; set; }
+	public string? romcrc { get; set; }
+	public string? rommd5 { get; set; }
+	public string? romsha1 { get; set; }
+	public string? beta { get; set; }
+	public string? demo { get; set; }
+	public string? proto { get; set; }
+	public string? trad { get; set; }
+	public string? hack { get; set; }
+	public string? unl { get; set; }
+	public string? alt { get; set; }
+	public string? best { get; set; }
+	public string? netplay { get; set; }
+	public string? nbscrap { get; set; }
+	
+	[JsonIgnore]
+	public FileTools.Checksums CheckSums 
+	{
+		get
+		{
+			return new FileTools.Checksums()
+			{
+				SHA1 = this.romsha1,
+				MD5 = this.rommd5,
+				CRC32 = this.romcrc
+			};
+		}
+	}
 
+}
 

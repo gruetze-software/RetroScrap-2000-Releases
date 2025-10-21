@@ -125,6 +125,7 @@ namespace RetroScrap2000
 		None = 0,
 		NoData,
 		Scraped,
+		Ambiguous,
 		Error
 	};
 
@@ -170,7 +171,7 @@ namespace RetroScrap2000
 
 		[XmlElement("desc")]
 		public string? Description { get; set; }
-
+				
 		[XmlElement("rating")]
 		public double Rating { get; set; }
 
@@ -247,6 +248,26 @@ namespace RetroScrap2000
 		[XmlElement("map")]
 		public string? MediaMapPath { get; set; }
 
+		public GameEntry CopyFrom(GameDataRecherce gameRecherche, RetroScrapOptions opt)
+		{
+			GameEntry g = new GameEntry()
+			{
+				Description = gameRecherche.GetDesc(opt),
+				Developer = gameRecherche.developpeur?.text,
+				Favorite = this.Favorite,
+				Genre = gameRecherche.GetGenre(opt),
+				Id = int.TryParse(gameRecherche.id, out int id) ? id : 0, 
+				Name = gameRecherche.GetName(opt),
+				Players = gameRecherche.joueurs?.text,
+				Publisher = gameRecherche.editeur?.text,
+				ReleaseDateRaw = gameRecherche.GetReleaseDate(opt),
+				RetroSystemId = this.RetroSystemId,
+				Source = this.Source,
+				Rating = this.Rating				
+			};
+
+			return g;
+		}
 
 		public override string ToString()
 		{

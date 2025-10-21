@@ -157,31 +157,34 @@
     <value>Allgemein</value>
   </data>
   <data name="checkBoxMediaImageBox.Text" xml:space="preserve">
-    <value>Image (Box-Art Vorderseite)</value>
-  </data>
-  <data name="checkBoxMediaMap.Text" xml:space="preserve">
-    <value>Map (digitale Spielkarte)</value>
+    <value>Image</value>
   </data>
   <data name="checkBoxMediaVideo.Text" xml:space="preserve">
-    <value>Video (Gameplay-Vorschau)</value>
-  </data>
-  <data name="checkBoxMediaManual.Text" xml:space="preserve">
-    <value>Manual (digitale Spielanleitung)</value>
-  </data>
-  <data name="checkBoxMediaFanart.Text" xml:space="preserve">
-    <value>Fanart (Wallpaper)</value>
-  </data>
-  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
-    <value>Wheel / Logo (transparentes Logo)</value>
+    <value>Video</value>
   </data>
   <data name="checkBoxMediaMarquee.Text" xml:space="preserve">
-    <value>Marquee (Banner- oder Logobild)</value>
+    <value>Marquee</value>
+  </data>
+  <data name="checkBoxMediaFanart.Text" xml:space="preserve">
+    <value>Fanart</value>
   </data>
   <data name="checkBoxMediaScreenshot.Text" xml:space="preserve">
-    <value>Screenshot (Dedizierter Screenshot)</value>
+    <value>Screenshot Game</value>
   </data>
-  <data name="tabPageScrap.Text" xml:space="preserve">
-    <value>Scrap Nutzerdaten</value>
+  <data name="checkBoxMediaScreenshotTitle.Text" xml:space="preserve">
+    <value>Screenshot Title</value>
+  </data>
+  <data name="checkBoxMediaWheel.Text" xml:space="preserve">
+    <value>Wheel</value>
+  </data>
+  <data name="checkBoxMediaMap.Text" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="checkBoxMediaManual.Text" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="tabPageScrapData.Text" xml:space="preserve">
+    <value>Scrap Daten</value>
   </data>
   <data name="buttonOptMMScan.Text" xml:space="preserve">
     <value>Scan alle Roms und stelle die manuellen Medien ein...</value>
@@ -248,8 +251,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Optionen</value>
-  </data>
-  <data name="tabPageScrapData.Text" xml:space="preserve">
-    <value>Scrap Daten</value>
   </data>
 </root>
