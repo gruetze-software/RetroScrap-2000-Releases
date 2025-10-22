@@ -12,8 +12,8 @@
 With just a few clicks you can automatically enrich your retro game library with **covers, descriptions, and metadata** – perfect for Batocera, RetroPie, Recalbox or LaunchBox (all based on EmulationStation).
 
 ### ✨ Features
--   💾 Automatic metadata scraping for your ROM library
--   🖼️ Fetches high-quality box art and game information
+-   💾 Automatic metadata scraping for your ROM library and **gamelist.xml** generation.
+-   🖼️ Fetches game information and high-quality box art, video, wheel, marquee, screenshots, etc. 
 -   🧹 Keeps your digital collection clean and organized
 -   🔍 Easy search and filtering capabilities
 -   🕹️ Simple and intuitive user interface
