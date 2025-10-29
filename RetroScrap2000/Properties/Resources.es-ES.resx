@@ -375,4 +375,13 @@
   <data name="Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually" xml:space="preserve">
     <value>No se encontraron datos. Por favor, actualice esta entrada individualmente.</value>
   </data>
+  <data name="Txt_Splash_LoadingMedia" xml:space="preserve">
+    <value>Cargar medios...</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Research_TermMissing" xml:space="preserve">
+    <value>Falta el término de búsqueda.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Research_NoSuccess" xml:space="preserve">
+    <value>Desafortunadamente, no hubo éxito. Intenta con un término de búsqueda diferente.</value>
+  </data>
 </root>

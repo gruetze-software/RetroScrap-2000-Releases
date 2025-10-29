@@ -17,11 +17,13 @@ namespace RetroScrap2000.Tools
 		private static readonly ConcurrentDictionary<string, Image> _urlImageCache = new();
 		private static readonly ConcurrentDictionary<string, Image> _localImageCache = new();
 
+
 		/// <summary>
 		/// Lädt ein Bild von einer URL, cached es und liefert ein Image.
 		/// </summary>
 		public static async Task<Image?> LoadImageFromUrlCachedAsync(string? url, eMediaType type, CancellationToken ct)
 		{
+			
 			if (string.IsNullOrWhiteSpace(url))
 				return null;
 
@@ -140,7 +142,7 @@ namespace RetroScrap2000.Tools
 				return null;
 
 			var videoAbs = FileTools.ResolveMediaPath(baseDir, relPath);
-			if (!System.IO.File.Exists(videoAbs))
+			if (!System.IO.File.Exists(videoAbs) || Path.GetExtension(videoAbs).ToLower() != ".mp4" )
 				return null;
 
 			var previewImgRelPath = GameEntry.GetMediaVideoPreviewImagePath(relPath);

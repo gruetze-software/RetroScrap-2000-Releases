@@ -24,17 +24,17 @@ namespace RetroScrap2000
 	public partial class FormScrapRom : Form
 	{
 		private readonly GameEntry _current;
-		private readonly ScrapeGame _scraped;
+		private readonly GameScrap _scraped;
 		private readonly string _systemRomPath;
 		private readonly RetroScrapOptions _options;
-		private ScrapperManager _scraper;
+		private ScraperManager _scraper;
 		private CancellationTokenSource? _romCts;
 
 
 		public ScrapeSelection Selection { get; } = new();
 		public StarRatingControl starRatingControlRomOld { get; set; } = new StarRatingControl();
 		public StarRatingControl starRatingControlRomNew { get; set; } = new StarRatingControl();
-		public FormScrapRom(string systemRomPath, GameEntry current, ScrapeGame scraped, RetroScrapOptions options, ScrapperManager scraper	)
+		public FormScrapRom(string systemRomPath, GameEntry current, GameScrap scraped, RetroScrapOptions options, ScraperManager scraper	)
 		{
 			InitializeComponent();
 
@@ -123,7 +123,17 @@ namespace RetroScrap2000
 					if (string.IsNullOrEmpty(kvp.Value))
 						continue;
 
-					var control = await CreateMediaPreviewPanel(kvp.Key, kvp.Value, _systemRomPath, CancellationToken.None, false);
+					string? mediafile = FileTools.ResolveMediaPath(_systemRomPath, kvp.Value);
+					GameMediaSettings m = RetroScrapOptions.GetMediaSettings(kvp.Key)!;
+					m.FilePath = mediafile;
+					
+					if ( kvp.Key == eMediaType.Video && !FileTools.IsVideoFile(mediafile) )
+					{
+						Log.Warning($"Skip Video Media \"{mediafile}\", it's not a valid video file...");
+						continue; // kein Video
+					}
+
+					var control = await CreateMediaPreviewPanel(m, _systemRomPath, CancellationToken.None, false);
 					flowLayoutPanelMediaLeft.Controls.Add(control);
 				}
 				Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMediaLeft);
@@ -141,7 +151,10 @@ namespace RetroScrap2000
 				if (_scraped.RatingNormalized != null && _scraped.RatingNormalized.HasValue && _scraped.RatingNormalized.Value > 0)
 					starRatingControlRomNew.Rating = _scraped.RatingNormalized.Value * 5.0;
 
-				foreach (var medium in _scraped.PossibleMedien)
+				var medien = _scraped.PossibleMedien
+					.OrderBy(m => m.Type)
+					.ToList();
+				foreach (var medium in medien)
 				{
 					if (string.IsNullOrEmpty(medium.Url))
 						continue;
@@ -152,7 +165,7 @@ namespace RetroScrap2000
 						continue; // diese Media-Art ist nicht gewünscht
 					}
 
-					var control = await CreateMediaPreviewPanel(medium.Type, medium.Url, _systemRomPath, ct, true);
+					var control = await CreateMediaPreviewPanel(medium, _systemRomPath, ct, true);
 					if (ct.IsCancellationRequested)
 					{
 						return;
@@ -180,13 +193,7 @@ namespace RetroScrap2000
 						&& !string.IsNullOrEmpty(control.AbsolutPath)
 						&& File.Exists(control.AbsolutPath))
 					{
-						Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: false));
-						// Gibt es diese Media-Art in alt?
-						if (_current.MediaTypeDictionary.TryGetValue(control.MediaType, out var oldPath))
-						{
-							bool? identical = Utils.IsMediaIdentical(control.MediaType, control.AbsolutPath, oldPath, _systemRomPath);
-							control.CheckBox.Checked = identical == false; // nur wenn ungleich
-						}
+						Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: control.CheckBox.Checked));
 					}
 				} // Next control
 			}
@@ -252,12 +259,11 @@ namespace RetroScrap2000
 
 			foreach (MediaPreviewControl control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
 			{
-				if (control.CheckBox.Checked
-					&& !string.IsNullOrEmpty(control.AbsolutPath)
+				if ( !string.IsNullOrEmpty(control.AbsolutPath)
 					&& Selection.MediaTempPaths.ContainsKey(control.MediaType))
 				{
 					var tuple = Selection.MediaTempPaths[control.MediaType];
-					tuple.take = true;
+					tuple.take = control.CheckBox.Checked;
 					Selection.MediaTempPaths[control.MediaType] = tuple;
 				}
 			}
@@ -266,16 +272,15 @@ namespace RetroScrap2000
 			this.Close();
 		}
 
-		private async Task<MediaPreviewControl> CreateMediaPreviewPanel(eMediaType type, string? url, string baseDir, CancellationToken ct, bool checkboxen)
+		private async Task<MediaPreviewControl> CreateMediaPreviewPanel(GameMediaSettings media, string baseDir, CancellationToken ct, bool checkboxen)
 		{
 			var control = new MediaPreviewControl();
-			control.MediaType = type;
+			control.MediaType = media.Type;
 			control.DisplayMode = checkboxen ? MediaPreviewControl.ControlDisplayMode.Checkbox : MediaPreviewControl.ControlDisplayMode.None;
 
 			if (ct.IsCancellationRequested)
 				return control;
-
-			await control.LoadMediaAsync(url, baseDir, ct, _scraper, false);
+			await control.LoadMediaAsync(media.FilePath, baseDir, media.NewData, media.ContentType, ct, _scraper, false);
 			return control;
 		}
 
@@ -309,6 +314,6 @@ namespace RetroScrap2000
 		public bool TakeName, TakeDesc, TakeGenre, TakePlayers, TakeDev, TakePub, TakeRating, TakeRelease;
 		public bool TakeMediaBox, TakeMediaVideo, TakeMediaScreen;
 		public Dictionary<eMediaType, (string tempPath, bool take)> MediaTempPaths { get; set; } = new();
-		public ScrapeGame? NewData { get; set; }
+		public GameScrap? NewData { get; set; }
 	}
 }

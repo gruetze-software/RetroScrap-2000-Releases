@@ -26,10 +26,10 @@ namespace RetroScrap2000
         // Add more as needed
     ];
 
-		private readonly ScrapperManager? _manager;
+		private readonly ScraperManager? _manager;
 		public RetroScrapOptions Options { get; set; }
 		public List<RetroSystem> RetroSystemList { get; set; }
-		public FormOptions(RetroScrapOptions opt, ScrapperManager man, int tabpageindex, List<RetroSystem> retroSystemList)
+		public FormOptions(RetroScrapOptions opt, ScraperManager man, int tabpageindex, List<RetroSystem> retroSystemList)
 		{
 			InitializeComponent();
 			tabControlOptions.SelectedIndex = tabpageindex;
@@ -349,8 +349,7 @@ namespace RetroScrap2000
 
 		private void buttonInfoRetroPie_Click(object sender, EventArgs e)
 		{
-			MyMsgBox.Show(
-				Properties.Resources.Txt_Msg_Opt_RetroPie_Info1 + "\r\n\r\n" +
+			MyMsgBox.Show( Properties.Resources.Txt_Msg_Opt_RetroPie_Info1 + "\r\n\r\n" +
 				Properties.Resources.Txt_Msg_Opt_RetroPie_Info2 + "\r\n\r\n" +
 				Properties.Resources.Txt_Msg_Opt_RetroPie_Info3);
 		}

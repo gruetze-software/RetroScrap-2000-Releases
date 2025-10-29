@@ -358,7 +358,7 @@ namespace RetroScrap2000.Tools
 						Log.Information($"FileCopy: \"{sourcefile}\" -> \"{destfile}\"");
 						File.Copy(sourcefile, destfile, overwrite: true);
 					}
-						
+
 					return (true, Path.Combine(destrelpath, destfilename));
 				}
 			}
@@ -535,32 +535,93 @@ namespace RetroScrap2000.Tools
 		// Struktur, um die Prüfsummen zu speichern
 		public class Checksums
 		{
-			public string? CRC32 { get; set; }
-			public string? MD5 { get; set; }
-			public string? SHA1 { get; set; }
+			public string? File { get; set; }
+			public string CRC32 { get; set; } = "";
+			public string MD5 { get; set; } = "";
+			public string SHA1 { get; set; } = "";
+
+			public Checksums(string? file) { File = file; }
+		}
+
+		public static string GetTempPath()
+		{
+			return Path.Combine(Path.GetTempPath(), "RetroScrap2000", "scrape_media");
+		}
+
+		public static async Task<string?> CopyToTempAsync(byte[]? data, string? contentType)
+		{
+			if (data == null || data.Length <= 0)
+				return null;
+
+			// 1. Endung ableiten
+			string extension = GetExtensionFromMimeType(contentType);
+
+			var uniqueId = Guid.NewGuid().ToString("N");
+			var file = Path.Combine(GetTempPath(), $"{uniqueId}{extension}");
+			await System.IO.File.WriteAllBytesAsync(file, data);
+			return file;
+		}
+
+		private static string GetExtensionFromMimeType(string? contentType)
+		{
+			if (string.IsNullOrEmpty(contentType))
+				return string.Empty; // Keine Endung, wenn Typ unbekannt
+
+				if (contentType.StartsWith(".") )
+					return contentType; // Bereits eine Endung
+
+			// Bereinige den MIME-Typ (entferne z.B. "; charset=utf-8")
+			string cleanType = contentType.Split(';')[0].Trim().ToLowerInvariant();
+
+			switch (cleanType)
+			{
+				case "image/png":
+					return ".png";
+				case "image/jpeg":
+					return ".jpg";
+				case "video/mp4":
+					return ".mp4";
+				case "video/avi":
+					return ".avi";
+				case "application/octet-stream":
+					// Wenn der Server dies meldet, ist es oft ein Video oder ein Bild.
+					// Du müsstest hier raten oder den Body untersuchen, 
+					// aber für den Scraper ist es besser, eine zu bevorzugende Endung zu verwenden 
+					// oder leer zu lassen. Wir nehmen hier ein sicheres MP4 an, falls Videos unterstützt werden.
+					return ".bin";
+				default:
+					Debug.Assert(false, $"Unbekannter MIME-Typ: {cleanType}");	
+					return string.Empty; // Wenn der Typ unbekannt ist
+			}
 		}
 
 		/// <summary>
 		/// Berechnet MD5 und SHA1 der angegebenen Datei. CRC32 erfordert eine separate Bibliothek.
 		/// </summary>
-		public static Checksums CalculateChecksums(string filePath, bool withCRC32 = false)
+		public static Checksums CalculateChecksums(string? filePath, bool withCRC32 = false)
 		{
-			if (!File.Exists(filePath)) 
-				return new Checksums();
+			if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath)) 
+				return new Checksums(filePath);
 
+			Log.Information($"Starting CalculateChecksums for \"{Path.GetFileName(filePath)}\"...");
 			// Hinweis: Die Berechnung der CRC32 ist in .NET nicht nativ enthalten
 			// und erfordert eine Drittanbieterbibliothek (hier von Force.CRC32.NET).
-						
+
 			string crc32string = string.Empty;
-			if (withCRC32)
+			string md5string = string.Empty;
+			string sh1string = string.Empty;
+			FileInfo f = new FileInfo(filePath);
+			// ACHTUNG: Dies kann bei sehr großen Dateien Speicherprobleme verursachen
+			// Deshalb nur bei Dateien unter 200 MByte
+			if (withCRC32 && f.Length < 200000000)
 			{
-				// ACHTUNG: Dies kann bei sehr großen Dateien (z.B. > 500 MB) Speicherprobleme verursachen!
 				byte[] fileBytes = File.ReadAllBytes(filePath);
 				uint crc32Value = Crc32Algorithm.Compute(fileBytes);
 				// Konvertierung in Hex-String, oft 8 Zeichen lang (z.B. "A1B2C3D4")
-				crc32string = crc32Value.ToString("X8");
+				crc32string = crc32Value.ToString("X8").ToLowerInvariant();
 			}
 
+			// MD5 und SHA1
 			using (var stream = File.OpenRead(filePath))
 			{
 				using (var md5 = MD5.Create())
@@ -571,15 +632,31 @@ namespace RetroScrap2000.Tools
 					stream.Seek(0, SeekOrigin.Begin); // Stream zurücksetzen
 					var sha1Hash = sha1.ComputeHash(stream);
 
-					// Konvertieren der Hashes in Hex-Strings
-					return new Checksums
+					md5string = BitConverter.ToString(md5Hash).Replace("-", "").ToLowerInvariant();
+					sh1string = BitConverter.ToString(sha1Hash).Replace("-", "").ToLowerInvariant();
+					
+					Log.Information($"Checksums for \"{Path.GetFileName(filePath)}\": MD5={md5string}, SHA1={sh1string}, CRC32={crc32string}");
+					return new Checksums(filePath)
 					{
-						MD5 = BitConverter.ToString(md5Hash).Replace("-", "").ToLowerInvariant(),
-						SHA1 = BitConverter.ToString(sha1Hash).Replace("-", "").ToLowerInvariant(),
-						CRC32 = crc32string
+						MD5 = md5string,
+						SHA1 = sh1string,
+						CRC32 = crc32string,
+						File = filePath
 					};
 				}
 			}
+		}
+
+		internal static bool IsVideoFile(string? mediafile)
+		{
+			if ( string.IsNullOrEmpty(mediafile))
+				return false;
+			if ( !File.Exists(mediafile))
+				return false;
+			if ( mediafile.ToLower().EndsWith(".mp4"))
+				return true;
+
+			return false;
 		}
 	}
 }

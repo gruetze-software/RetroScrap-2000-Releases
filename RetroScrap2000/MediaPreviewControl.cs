@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace RetroScrap2000
 {
@@ -109,9 +110,10 @@ namespace RetroScrap2000
 			this.PerformLayout();
 		}
 
-		public async Task LoadMediaAsync(string? mediaPath, string baseDir, CancellationToken ct, ScrapperManager scraper, bool byPassCache)
+		public async Task LoadMediaAsync(string? mediapath, string baseDir, byte[]? newData, string? extorcontent, CancellationToken ct, ScraperManager scraper, bool byPassCache)
 		{
-			var result = await scraper.LoadMediaAsync(MediaType, mediaPath, baseDir, ct, true, byPassCache);
+
+			var result = await scraper.LoadMediaAsync(MediaType, mediapath, baseDir, newData, extorcontent, ct, true, byPassCache);
 			AbsolutPath = result.absPath;
 			// Aufräumen vorm Setzen
 			if (pictureBoxMedium.Image != null)
@@ -119,13 +121,15 @@ namespace RetroScrap2000
 				pictureBoxMedium.Image.Dispose();
 				pictureBoxMedium.Image = null;
 			}
-			pictureBoxMedium.Image = result.img;
+			pictureBoxMedium.Image = result.imgForShow;
 			pictureBoxMedium.Tag = AbsolutPath;
 			if (!string.IsNullOrEmpty(AbsolutPath))
 			{
 				pictureBoxMedium.Cursor = Cursors.Hand;
 				buttonDelete.Enabled = true;
 				buttonOpen.Enabled = true;
+				if (newData != null && newData.Any() )
+					checkBoxTakeOver.Checked = true;
 			}
 			else
 			{

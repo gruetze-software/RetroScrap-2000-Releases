@@ -489,4 +489,13 @@
   <data name="Txt_Msg_Scrap_NoDataFoundPleaseScrapIndividually" xml:space="preserve">
     <value>No data found. Please scrape this entry individually.</value>
   </data>
+  <data name="Txt_Splash_LoadingMedia" xml:space="preserve">
+    <value>Load media...</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Research_TermMissing" xml:space="preserve">
+    <value>The search term is missing.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_Research_NoSuccess" xml:space="preserve">
+    <value>Unfortunately, no success. Try a different search term.</value>
+  </data>
 </root>

@@ -13,14 +13,14 @@ namespace RetroScrap2000
 	public partial class FormScrapRomResearch : Form
 	{
 		private CancellationTokenSource? _scrapCts;
-		private ScrapperManager _scrapper;
+		private ScraperManager _scrapper;
 		private RetroScrapOptions _options;
 		private RetroSystem _system;
 		private string _romfile;
 		private bool _isrunning = false;
 		public GameDataRecherce? SelectedGame { get; set; }
 
-		public FormScrapRomResearch(string romfile, ScrapperManager man, RetroSystem sys,
+		public FormScrapRomResearch(string romfile, ScraperManager man, RetroSystem sys,
 			RetroScrapOptions opt)
 		{
 			InitializeComponent();
@@ -65,7 +65,7 @@ namespace RetroScrap2000
 
 			if (string.IsNullOrEmpty(textBoxSearchName.Text))
 			{
-				MyMsgBox.ShowWarn("The search term is missing.");
+				MyMsgBox.ShowWarn(Properties.Resources.Txt_Msg_Scrap_Research_TermMissing);
 				return;
 			}
 
@@ -85,7 +85,7 @@ namespace RetroScrap2000
 
 				if (result.HttpCode == 404)
 				{
-					MyMsgBox.Show("Unfortunately, no success. Try a different search term.");
+					MyMsgBox.Show(Properties.Resources.Txt_Msg_Scrap_Research_NoSuccess);
 					return;
 				}
 				if (!result.Ok)
@@ -112,7 +112,7 @@ namespace RetroScrap2000
 				}
 				else
 				{
-					MyMsgBox.Show("Unfortunately, no success. Try a different search term.");
+					MyMsgBox.Show(Properties.Resources.Txt_Msg_Scrap_Research_NoSuccess);
 					return;
 				}
 			}

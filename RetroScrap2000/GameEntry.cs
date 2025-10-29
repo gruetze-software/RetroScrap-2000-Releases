@@ -248,58 +248,6 @@ namespace RetroScrap2000
 		[XmlElement("map")]
 		public string? MediaMapPath { get; set; }
 
-		public GameEntry CopyFrom(GameDataRecherce gameRecherche, RetroScrapOptions opt)
-		{
-			GameEntry g = new GameEntry()
-			{
-				Description = gameRecherche.GetDesc(opt),
-				Developer = gameRecherche.developpeur?.text,
-				Favorite = this.Favorite,
-				Genre = gameRecherche.GetGenre(opt),
-				Id = int.TryParse(gameRecherche.id, out int id) ? id : 0, 
-				Name = gameRecherche.GetName(opt),
-				Players = gameRecherche.joueurs?.text,
-				Publisher = gameRecherche.editeur?.text,
-				ReleaseDateRaw = gameRecherche.GetReleaseDate(opt),
-				RetroSystemId = this.RetroSystemId,
-				Source = this.Source,
-				Rating = this.Rating				
-			};
-
-			return g;
-		}
-
-		public override string ToString()
-		{
-			return Name ?? FileName ?? "[Empty GameEntry]";
-		}
-
-		/// <summary>
-		/// Liefert den relativen Pfad zum Preview-JPG für ein Video. 
-		/// </summary>
-		/// <param name="relVideoPath"></param>
-		/// <returns></returns>
-		public static string? GetMediaVideoPreviewImagePath(string relVideoPath)
-		{
-			if (string.IsNullOrEmpty(relVideoPath))
-				return null;
-
-			// Absoluten Pfad zum Video bauen
-			var videoPath = relVideoPath.TrimStart('.', '/', '\\');
-
-			// Verzeichnis des Videos
-			var dir = System.IO.Path.GetDirectoryName(videoPath);
-			if (string.IsNullOrEmpty(dir))
-				return null;
-
-			// Dateiname ohne .mp4
-			var baseName = Utils.GetNameFromFile(videoPath);
-
-			// Vorschau-Dateiname anhängen
-			return System.IO.Path.Combine(dir, baseName + "_preview.jpg");
-		}
-
-
 		[XmlElement("genreid")]
 		public int GenreId { get; set; }
 
@@ -326,6 +274,53 @@ namespace RetroScrap2000
 			}
 		}
 
+		public GameEntry Copy()
+		{
+			GameEntry g = new GameEntry()
+			{
+				Description = this.Description,
+				Developer = this.Developer,
+				Favorite = this.Favorite,
+				Genre = this.Genre,
+				Id = this.Id, 
+				Name = this.Name,
+				Players = this.Players,
+				Publisher = this.Publisher,
+				ReleaseDateRaw = this.ReleaseDateRaw,
+				RetroSystemId = this.RetroSystemId,
+				Source = this.Source,
+				Rating = this.Rating,
+				Path = this.Path,
+			};
+
+			return g;
+		}
+
+		public override string ToString()
+		{
+			return Name ?? FileName ?? "[Empty GameEntry]";
+		}
+
+		public static string? GetMediaVideoPreviewImagePath(string relVideoPath)
+		{
+			if (string.IsNullOrEmpty(relVideoPath))
+				return null;
+
+			// Absoluten Pfad zum Video bauen
+			var videoPath = relVideoPath.TrimStart('.', '/', '\\');
+
+			// Verzeichnis des Videos
+			var dir = System.IO.Path.GetDirectoryName(videoPath);
+			if (string.IsNullOrEmpty(dir))
+				return null;
+
+			// Dateiname ohne .mp4
+			var baseName = Utils.GetNameFromFile(videoPath);
+
+			// Vorschau-Dateiname anhängen
+			return System.IO.Path.Combine(dir, baseName + "_preview.jpg");
+		}
+		
 		public void SetMediaPath(eMediaType type, string? path)
 		{
 			switch (type)

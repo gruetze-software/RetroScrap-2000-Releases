@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 
@@ -30,6 +31,18 @@ namespace RetroScrap2000
 		public string ApiKey { get; set; }
 		public string XmlFolderAndKey { get; set; }
 		public string Url { get; set; }
+		public string? FilePath { get; set; }
+		public byte[]? NewData { get; set; }
+		public string? ContentType { get; set; }
+		public bool IsUpToDate { get; set; } = false;
+		public List<string> KnowFileExtensions
+		{
+			get
+			{
+				return new List<string>() {
+					".jpg", ".jpeg", ".png", ".bmp", ".avi", ".mp4", ".mkv" };
+			}
+		}
 
 		public GameMediaSettings(eMediaType typ)
 		{
@@ -37,12 +50,20 @@ namespace RetroScrap2000
 			ApiKey = string.Empty;
 			Url = string.Empty;
 			XmlFolderAndKey = string.Empty;
+			NewData = null;
+			FilePath = null;
 		}
 
 		public GameMediaSettings(eMediaType typ, string apikey, string xmlFolderAndKey) : this(typ)
 		{
 			ApiKey = apikey;
 			XmlFolderAndKey = xmlFolderAndKey;
+		}
+
+		public GameMediaSettings(eMediaType typ, string apikey, string xmlFolderAndKey, string file) 
+			: this(typ, apikey, xmlFolderAndKey)
+		{
+			FilePath = file;
 		}
 
 		public override string ToString()

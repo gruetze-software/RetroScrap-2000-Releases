@@ -14,7 +14,7 @@ namespace RetroScrap2000
 	public partial class FormScrapAuto : Form
 	{
 		private CancellationTokenSource? _scrapCts;
-		private ScrapperManager _scrapper;
+		private ScraperManager _scrapper;
 		private RetroScrapOptions _options;
 		private RetroSystem _system = new();
 		private string _basedir;
@@ -22,7 +22,7 @@ namespace RetroScrap2000
 		public bool ScrapWasStarting { get; set; } = false;
 		private bool _isrunning = false;
 
-		public FormScrapAuto(GameList roms, ScrapperManager scrapper,
+		public FormScrapAuto(GameList roms, ScraperManager scrapper,
 			string basedir, RetroSystem system, RetroScrapOptions options)
 		{
 			InitializeComponent();

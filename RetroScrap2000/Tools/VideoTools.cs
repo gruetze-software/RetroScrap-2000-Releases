@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using static System.Net.WebRequestMethods;
 
 namespace RetroScrap2000.Tools
@@ -71,6 +72,16 @@ namespace RetroScrap2000.Tools
 			return (null, tempVideo, null);
 		}
 
+		public static (string video, string preview) GetTempVideoAndPreviewPaths(string file)
+		{
+			var hash = HashTools.GetHashCodeFile(file);
+			var tempBase = FileTools.GetTempPath();
+			var video = Path.Combine(tempBase, $"{hash}.mp4");          // Endung egal, nur konsistent
+			var preview = Path.Combine(tempBase, $"{hash}_preview.jpg");
+			_tempVideoByUrl.TryAdd(file, video);
+			return (video, preview);
+		}
+
 		/// <summary>
 		/// Räumt temporäre Downloads & Overlays auf (z. B. beim App-Exit).
 		/// </summary>
@@ -86,16 +97,6 @@ namespace RetroScrap2000.Tools
 			}
 
 			_tempVideoByUrl.Clear();
-		}
-
-		public static (string video, string preview) GetTempVideoAndPreviewPaths(string file)
-		{
-			var hash = HashTools.GetHashCodeFile(file);
-			var tempBase = Path.Combine(Path.GetTempPath(), "RetroScrap2000", "scrape_media");
-			var video = Path.Combine(tempBase, $"{hash}.mp4");          // Endung egal, nur konsistent
-			var preview = Path.Combine(tempBase, $"{hash}_preview.jpg");
-			_tempVideoByUrl.TryAdd(file, video);
-			return (video, preview);
 		}
 
 		public static async Task ExtractPreviewImage(string videoFile, string outputfile)

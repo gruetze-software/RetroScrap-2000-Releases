@@ -504,7 +504,7 @@ namespace RetroScrap2000
 				return sys.RomFolderName ?? "";
 		}
 
-		public async Task SetSystemsFromApiAsync(ScrapperManager _scrapper)
+		public async Task SetSystemsFromApiAsync(ScraperManager _scrapper)
 		{
 			SystemList = new List<RetroSystem>();
 			var (ok, data, error) = await _scrapper.GetSystemsAsync();

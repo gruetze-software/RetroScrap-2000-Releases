@@ -171,7 +171,6 @@
 		private Button buttonCancel;
 		private Button buttonOK;
 		private GroupBox groupBox2;
-		private CheckBox checkBoxUploadData;
 		private Button buttonStartStop;
 		private TextBox textBoxSearchName;
 		private Label label1;

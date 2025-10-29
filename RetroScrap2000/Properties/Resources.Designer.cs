@@ -983,6 +983,24 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unfortunately, no success. Try a different search term..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_Research_NoSuccess {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_Research_NoSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The search term is missing..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_Research_TermMissing {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_Research_TermMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The ROM file could not be determined..
         /// </summary>
         internal static string Txt_Msg_Scrap_WrongRomFile {
@@ -1051,6 +1069,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Splash_Loading {
             get {
                 return ResourceManager.GetString("Txt_Splash_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load media....
+        /// </summary>
+        internal static string Txt_Splash_LoadingMedia {
+            get {
+                return ResourceManager.GetString("Txt_Splash_LoadingMedia", resourceCulture);
             }
         }
         
