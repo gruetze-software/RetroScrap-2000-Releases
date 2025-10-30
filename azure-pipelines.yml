@@ -15,7 +15,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  zipFileName: 'RetroScrap2000-$(Build.SourceBranchName).zip'
+  zipFileName: 'RetroScrap2000-Latest.zip'
 
 stages:
 - stage: BuildAndRelease
