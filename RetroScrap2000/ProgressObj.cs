@@ -17,19 +17,16 @@ namespace RetroScrap2000
 
 		public eTyp Typ { get; set; } = eTyp.Info;
 
-		public int ProgressPerc { get; set; }
-		public string RomName { get; set; }
-		public int RomNumber { get; set; }
+		public int ProgressPerc { get; set; } = -1;
+		public string RomName { get; set; } = string.Empty;
+		public int RomNumber { get; set; } = 0;
 		public string? MessageText { get; set; }
 		public int ThreadId { get; set; } = 0;
+		public TimeSpan TimeElapsed { get; set; } = TimeSpan.Zero;
+		public TimeSpan TimeRemaining { get; set; } = TimeSpan.Zero;
+
 		public ProgressObj() 
-		{
-			Typ = eTyp.Info;
-			ProgressPerc = -1;
-			RomName = string.Empty;
-			RomNumber = 0;
-			MessageText = "";
-		}
+		{ }
 
 		public ProgressObj(eTyp typ, int perc, string messageText) : this()
 		{

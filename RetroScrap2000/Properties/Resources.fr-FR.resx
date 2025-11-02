@@ -384,4 +384,22 @@
   <data name="Txt_Msg_Scrap_Research_NoSuccess" xml:space="preserve">
     <value>Malheureusement, aucun résultat. Essayez un autre terme de recherche.</value>
   </data>
+  <data name="Txt_Log_Time_Elapsed" xml:space="preserve">
+    <value>Écoulé</value>
+  </data>
+  <data name="Txt_Log_Time_Remaining" xml:space="preserve">
+    <value>Temps restant</value>
+  </data>
+  <data name="Txt_Log_Time_RemainingCalc" xml:space="preserve">
+    <value>Temps restant : en cours de calcul...</value>
+  </data>
+  <data name="Txt_Status_Label_Scrap_LokalMedias" xml:space="preserve">
+    <value>Vérifiez et mettez à jour les références locales.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_CalculateHash" xml:space="preserve">
+    <value>Calculez les valeurs de hachage du fichier ROM.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_CallApi" xml:space="preserve">
+    <value>Utilisez des données de hachage pour la recherche en ligne.</value>
+  </data>
 </root>

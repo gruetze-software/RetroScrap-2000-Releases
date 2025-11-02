@@ -498,4 +498,22 @@
   <data name="Txt_Msg_Scrap_Research_NoSuccess" xml:space="preserve">
     <value>Unfortunately, no success. Try a different search term.</value>
   </data>
+  <data name="Txt_Log_Time_Elapsed" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
+  <data name="Txt_Log_Time_Remaining" xml:space="preserve">
+    <value>Remaining time</value>
+  </data>
+  <data name="Txt_Log_Time_RemainingCalc" xml:space="preserve">
+    <value>Remaining time: calculating...</value>
+  </data>
+  <data name="Txt_Status_Label_Scrap_LokalMedias" xml:space="preserve">
+    <value>Check and update local references.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_CalculateHash" xml:space="preserve">
+    <value>Calculate the hash values of the ROM file.</value>
+  </data>
+  <data name="Txt_Msg_Scrap_CallApi" xml:space="preserve">
+    <value>Use hash data for online search.</value>
+  </data>
 </root>

@@ -42,6 +42,7 @@
 			checkBoxOnlyLocal = new CheckBox();
 			statusStrip1 = new StatusStrip();
 			toolStripStatusLabelProgress = new ToolStripStatusLabel();
+			toolStripStatusLabelProgressTimer = new ToolStripStatusLabel();
 			groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBoxAniWait).BeginInit();
 			statusStrip1.SuspendLayout();
@@ -111,7 +112,7 @@
 			// 
 			// statusStrip1
 			// 
-			statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelProgress });
+			statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelProgress, toolStripStatusLabelProgressTimer });
 			resources.ApplyResources(statusStrip1, "statusStrip1");
 			statusStrip1.Name = "statusStrip1";
 			// 
@@ -119,6 +120,12 @@
 			// 
 			toolStripStatusLabelProgress.Name = "toolStripStatusLabelProgress";
 			resources.ApplyResources(toolStripStatusLabelProgress, "toolStripStatusLabelProgress");
+			// 
+			// toolStripStatusLabelProgressTimer
+			// 
+			toolStripStatusLabelProgressTimer.Name = "toolStripStatusLabelProgressTimer";
+			resources.ApplyResources(toolStripStatusLabelProgressTimer, "toolStripStatusLabelProgressTimer");
+			toolStripStatusLabelProgressTimer.Spring = true;
 			// 
 			// FormScrapAuto
 			// 
@@ -156,5 +163,6 @@
 		private CheckBox checkBoxOnlyLocal;
 		private StatusStrip statusStrip1;
 		private ToolStripStatusLabel toolStripStatusLabelProgress;
+		private ToolStripStatusLabel toolStripStatusLabelProgressTimer;
 	}
 }

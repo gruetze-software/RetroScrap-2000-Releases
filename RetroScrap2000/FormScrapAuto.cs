@@ -47,6 +47,7 @@ namespace RetroScrap2000
 			colTyp.Text = Properties.Resources.Txt_Column_ScrapAuto_Type;
 
 			toolStripStatusLabelProgress.Text = Properties.Resources.Txt_Status_Label_Ready;
+			toolStripStatusLabelProgressTimer.Text = string.Empty;
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e)
@@ -78,6 +79,16 @@ namespace RetroScrap2000
 					progressBarScrap.Value = report.ProgressPerc;
 				if (!string.IsNullOrEmpty(report.MessageText))
 					AddProtokollItem(report);
+				if (report.TimeElapsed != TimeSpan.Zero)
+				{
+					// (Beispiel) => "50% | Elapsed: 00:10:23 | Remaining: 00:10:23"
+					toolStripStatusLabelProgressTimer.Text =
+							$"{report.ProgressPerc}% | " +
+							$"{Properties.Resources.Txt_Log_Time_Elapsed}: {report.TimeElapsed.ToString(@"hh\:mm\:ss")} | " +
+							(report.TimeRemaining == TimeSpan.Zero ?
+									Properties.Resources.Txt_Log_Time_RemainingCalc :
+									Properties.Resources.Txt_Log_Time_Remaining + ": " + report.TimeRemaining.ToString(@"hh\:mm\:ss"));
+				}
 			});
 
 			try

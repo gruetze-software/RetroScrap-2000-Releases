@@ -311,12 +311,16 @@ namespace RetroScrap2000.Tools
 				var founddir = dirs.FirstOrDefault(x => x.Name.ToLower() == m.XmlFolderAndKey.ToLower());
 				if (founddir != null)
 				{
-					var foundgame = Directory.GetFiles(founddir.FullName, game.FileName! + "*", SearchOption.TopDirectoryOnly);
+					// Dateiname-Suche
+					var foundgame = Directory.GetFiles(founddir.FullName, Utils.GetNameFromFile(game.FileName!) + "*", SearchOption.TopDirectoryOnly);
 					if ( foundgame == null || foundgame.Length == 0 )
+						// Spielname-Suche
 						foundgame = Directory.GetFiles(founddir.FullName, game.Name + "*", SearchOption.TopDirectoryOnly);
 					if (foundgame == null || foundgame.Length == 0)
+						// Angepasster Spielname-Suche
 						foundgame = Directory.GetFiles(founddir.FullName, FileTools.MakeSafeFileName(game.Name!) + "*", SearchOption.TopDirectoryOnly);
 					if (foundgame == null || foundgame.Length == 0)
+						// Wir geben auf
 						continue;
 					else
 						game.SetMediaPath(m.Type, FileTools.GetRelativePath(foundgame[0], baseDir));

@@ -695,6 +695,33 @@ namespace RetroScrap2000.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elapsed.
+        /// </summary>
+        internal static string Txt_Log_Time_Elapsed {
+            get {
+                return ResourceManager.GetString("Txt_Log_Time_Elapsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining time.
+        /// </summary>
+        internal static string Txt_Log_Time_Remaining {
+            get {
+                return ResourceManager.GetString("Txt_Log_Time_Remaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining time: calculating....
+        /// </summary>
+        internal static string Txt_Log_Time_RemainingCalc {
+            get {
+                return ResourceManager.GetString("Txt_Log_Time_RemainingCalc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove the existing image or video..
         /// </summary>
         internal static string Txt_Media_ToolTip_Delete {
@@ -925,6 +952,24 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Msg_Rom_WrongPath {
             get {
                 return ResourceManager.GetString("Txt_Msg_Rom_WrongPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate the hash values of the ROM file..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_CalculateHash {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_CalculateHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use hash data for online search..
+        /// </summary>
+        internal static string Txt_Msg_Scrap_CallApi {
+            get {
+                return ResourceManager.GetString("Txt_Msg_Scrap_CallApi", resourceCulture);
             }
         }
         
@@ -1168,6 +1213,15 @@ namespace RetroScrap2000.Properties {
         internal static string Txt_Status_Label_RomSaving {
             get {
                 return ResourceManager.GetString("Txt_Status_Label_RomSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check and update local references..
+        /// </summary>
+        internal static string Txt_Status_Label_Scrap_LokalMedias {
+            get {
+                return ResourceManager.GetString("Txt_Status_Label_Scrap_LokalMedias", resourceCulture);
             }
         }
         

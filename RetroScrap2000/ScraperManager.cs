@@ -368,7 +368,7 @@ namespace RetroScrap2000
 		public async Task<(ScrapGameApiResponse resp, List<MediaDownloadJob>? mediaJobs)> GetGameAsync(GameEntry? game, int gameid, int systemid, 
 			FileInfo? romFile, RetroScrapOptions opt, CancellationToken ct = default)
 		{
-			return await GetGameAsync(game, romFile, systemid, opt, gameid, ct);
+			return await GetGameAsync(game, romFile, systemid, opt, null, 0, 0, gameid, ct);
 		}
 
 		/// <summary>
@@ -379,7 +379,8 @@ namespace RetroScrap2000
 		/// <param name="ct"></param>
 		/// <returns></returns>
 		public async Task<(ScrapGameApiResponse resp, List<MediaDownloadJob>? mediaJobs)> GetGameAsync(
-				GameEntry? game, FileInfo? romFile, int systemId, RetroScrapOptions opt, int gameid = 0, CancellationToken ct = default)
+				GameEntry? game, FileInfo? romFile, int systemId, RetroScrapOptions opt, IProgress<ProgressObj>? progress = null,
+			int iPerc = 0, int index = 0, int gameid = 0, CancellationToken ct = default)
 		{
 			(ScrapGameApiResponse resp, List<MediaDownloadJob>? mediaJobs) retVal = (new ScrapGameApiResponse(), null);
 			if ( (romFile == null || !romFile.Exists ) )
@@ -405,11 +406,34 @@ namespace RetroScrap2000
 			{
 				// Aufruf - Hash
 				///////////////////////////////////////////////////////////////////////
+				if (progress != null)
+				{
+					progress.Report(new ProgressObj()
+					{
+						MessageText = Properties.Resources.Txt_Msg_Scrap_CalculateHash,
+						ProgressPerc = iPerc,
+						RomNumber = index + 1,
+						Typ = ProgressObj.eTyp.Info,
+						RomName = game?.Name ?? romFile.Name						
+					});
+				}
 				var hashes = FileTools.CalculateChecksums(romFile.FullName);
 				if (string.IsNullOrEmpty(hashes.MD5) || string.IsNullOrEmpty(hashes.SHA1))
 				{
 					retVal.resp.Error = Properties.Resources.Txt_Msg_Scrap_NoHashesFromFile;
 					return retVal;
+				}
+
+				if (progress != null)
+				{
+					progress.Report(new ProgressObj()
+					{
+						MessageText = Properties.Resources.Txt_Msg_Scrap_CallApi,
+						ProgressPerc = iPerc,
+						RomNumber = index + 1,
+						Typ = ProgressObj.eTyp.Info,
+						RomName = game?.Name ?? romFile.Name
+					});
 				}
 
 				Log.Information($"Call with Hashes, Size and Name of File: GetGameAsync() -> Call Api {BaseUrl}jeuInfos.php?xxxxxxx");
@@ -541,6 +565,7 @@ namespace RetroScrap2000
 			Medium[]? medias, RetroScrapOptions opt, CancellationToken ct)
 		{
 			var medien = sg.PossibleMedien.Where(m => opt.IsMediaTypeEnabled(m));
+			
 			// Zunächst lokale Dateien prüfen und zuordnen
 			FileTools.SetLocalMediaFilesToGame(game, romFile.Directory!.FullName);
 			List<MediaDownloadJob> mediaJobs = new List<MediaDownloadJob>();
@@ -611,31 +636,62 @@ namespace RetroScrap2000
 		public async Task ScrapGamesAsync(GameList gameList, bool onlyLocalMedias, int systemid, string baseDir,
 			IProgress<ProgressObj> progress, RetroScrapOptions opt, CancellationToken ct = default)
 		{
+
+			// Stoppuhr starten
+			var stopwatch = Stopwatch.StartNew();
+
 			int iGesamt = gameList.Games.Count;
+			// Erstmal den Status aller Spiele auf "None" setzen
 			gameList.Games.ForEach(g => g.State = eState.None);
 			int iPerc = 0;
+			int i = 0;
 
 			// Schleife über alle Roms
 			// Hier werden wir die Anzahl der möglichen Threads berücksichten 
 			// des Users. Allerdings nicht für die Rom-Metadaten
 			// sondern für die Mediendateien.
 			/////////////////////////////////////////////////////////////////////
-			for (int i = 0; i < iGesamt; ++i)
+			for ( ; i < iGesamt; ++i)
 			{
 				GameEntry game = gameList.Games[i];
 				iPerc = Utils.CalculatePercentage(i + 1, iGesamt);
 
 				ct.ThrowIfCancellationRequested();
-				
-				progress.Report(new ProgressObj(iPerc, i + 1,
-						game.Name!, Properties.Resources.Txt_Status_Label_Scrap_Running));
+
+				// Vergangene Zeit
+				TimeSpan elapsed = stopwatch.Elapsed;
+
+				// Voraussichtliche Restzeit (Estimated Time Remaining, ETR)
+				TimeSpan remaining = TimeSpan.Zero;
+
+				// Berechne ETR nur, wenn mindestens ein Element bearbeitet wurde
+				if (i > 0 && elapsed.TotalSeconds > 0)
+				{
+					// Durchschnittliche Zeit pro Spiel (Sekunden pro Spiel)
+					double avgSecondsPerGame = elapsed.TotalSeconds / i;
+
+					// Verbleibende Spiele * Durchschnittszeit
+					int remainingGames = iGesamt - (i + 1);
+					double remainingSeconds = remainingGames * avgSecondsPerGame;
+
+					remaining = TimeSpan.FromSeconds(remainingSeconds);
+				}
+
+				progress.Report(new ProgressObj() {
+					ProgressPerc = iPerc,
+					RomNumber = i + 1,
+					RomName = game.Name!,
+					MessageText = Properties.Resources.Txt_Status_Label_Scrap_Running,
+					TimeElapsed = elapsed,
+					TimeRemaining = remaining	});
+					
 
 				try
 				{
 					// Rom scrappen
 					FileInfo romFile = new FileInfo(FileTools.ResolveMediaPath(baseDir, game.Path)!);
 					Log.Information($"--> await GetGameAsync \"{romFile.FullName}\"");
-					var result = await GetGameAsync(game, romFile, gameList.RetroSys.Id, opt, 0, ct);
+					var result = await GetGameAsync(game, romFile, gameList.RetroSys.Id, opt, progress, iPerc, i, 0, ct);
 					// Ergebnis prüfen
 					if (!result.resp.Ok)
 					{
@@ -733,6 +789,16 @@ namespace RetroScrap2000
 					else
 					{
 						// Nur Medien lokal suchen und zuordnen
+						progress.Report(new ProgressObj()
+						{
+							ProgressPerc = iPerc,
+							RomNumber = i + 1,
+							RomName = game.Name!,
+							MessageText = Properties.Resources.Txt_Status_Label_Scrap_LokalMedias,
+							TimeElapsed = elapsed,
+							TimeRemaining = remaining
+						});
+
 						var res = FileTools.SetLocalMediaFilesToGame(game, baseDir);
 					}
 				}
