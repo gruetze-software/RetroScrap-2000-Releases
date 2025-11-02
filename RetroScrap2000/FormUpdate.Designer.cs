@@ -38,9 +38,10 @@
 			// 
 			buttonOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 			buttonOK.DialogResult = DialogResult.OK;
-			buttonOK.Location = new Point(321, 167);
+			buttonOK.Location = new Point(281, 125);
+			buttonOK.Margin = new Padding(3, 2, 3, 2);
 			buttonOK.Name = "buttonOK";
-			buttonOK.Size = new Size(94, 36);
+			buttonOK.Size = new Size(82, 27);
 			buttonOK.TabIndex = 1;
 			buttonOK.Text = "OK";
 			buttonOK.UseVisualStyleBackColor = true;
@@ -48,33 +49,37 @@
 			// linkLabelDownload
 			// 
 			linkLabelDownload.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			linkLabelDownload.Location = new Point(39, 84);
+			linkLabelDownload.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			linkLabelDownload.Location = new Point(12, 51);
 			linkLabelDownload.Name = "linkLabelDownload";
-			linkLabelDownload.Size = new Size(341, 54);
+			linkLabelDownload.Size = new Size(350, 61);
 			linkLabelDownload.TabIndex = 2;
 			linkLabelDownload.TabStop = true;
-			linkLabelDownload.Text = "linkLabelDownload";
+			linkLabelDownload.Text = "https://bit.ly/RetroScrap2000-Latest";
+			linkLabelDownload.TextAlign = ContentAlignment.MiddleCenter;
 			// 
 			// labelUpdateText
 			// 
 			labelUpdateText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			labelUpdateText.Location = new Point(12, 21);
+			labelUpdateText.Location = new Point(10, 9);
 			labelUpdateText.Name = "labelUpdateText";
-			labelUpdateText.Size = new Size(407, 63);
+			labelUpdateText.Size = new Size(356, 42);
 			labelUpdateText.TabIndex = 3;
 			labelUpdateText.Text = "A newer version is available. Update your old version {0} to the new version {1}. Use the Link for the download.";
+			labelUpdateText.TextAlign = ContentAlignment.MiddleCenter;
 			// 
 			// FormUpdate
 			// 
 			AcceptButton = buttonOK;
-			AutoScaleDimensions = new SizeF(8F, 20F);
+			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(427, 219);
+			ClientSize = new Size(374, 164);
 			Controls.Add(labelUpdateText);
 			Controls.Add(linkLabelDownload);
 			Controls.Add(buttonOK);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
+			Margin = new Padding(3, 2, 3, 2);
 			MaximizeBox = false;
 			MinimizeBox = false;
 			Name = "FormUpdate";

@@ -158,8 +158,7 @@ namespace RetroScrap2000
 			{
 				FormUpdate frm = new FormUpdate(
 					checkUpd.newversion!,
-					Utils.GetAppInfo().ProductVersion,
-					check.DownloadUrl!);
+					Utils.GetAppInfo().ProductVersion);
 				frm.ShowDialog();
 			}
 		}
