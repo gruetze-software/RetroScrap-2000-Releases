@@ -16,12 +16,12 @@ namespace RetroScrap2000
 		private string _newversion;
 		private string _oldversion;
 		private string _url;
-		public FormUpdate(string newv, string oldv)
+		public FormUpdate(string newv, string oldv, string url)
 		{
 			InitializeComponent();
 			_newversion = newv;
 			_oldversion = oldv;
-			_url = "https://bit.ly/RetroScrap2000-Latest";
+			_url = url;
 		}
 
 		private void FormUpdate_Load(object sender, EventArgs e)
