@@ -754,6 +754,111 @@
   <data name="flowLayoutPanelMedia.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
   </data>
+  <metadata name="contextMenuStripMedia.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>150, 17</value>
+  </metadata>
+  <data name="MediaviewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="MediaviewToolStripMenuItem.Text" xml:space="preserve">
+    <value>View...</value>
+  </data>
+  <data name="MedianewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="MedianewToolStripMenuItem.Text" xml:space="preserve">
+    <value>New...</value>
+  </data>
+  <data name="MediadeleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="MediadeleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MediatoolStripSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 6</value>
+  </data>
+  <data name="addType1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType1ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 1</value>
+  </data>
+  <data name="addType2ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType2ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 2</value>
+  </data>
+  <data name="addType3ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType3ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 3</value>
+  </data>
+  <data name="addType4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType4ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 4</value>
+  </data>
+  <data name="addType5ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType5ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 5</value>
+  </data>
+  <data name="addType6ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType6ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 6</value>
+  </data>
+  <data name="addType7ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType7ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 7</value>
+  </data>
+  <data name="addType8ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType8ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 8</value>
+  </data>
+  <data name="addType9ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType9ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 9</value>
+  </data>
+  <data name="addType10ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType10ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 10</value>
+  </data>
+  <data name="addType11ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType11ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 11</value>
+  </data>
+  <data name="addType12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 22</value>
+  </data>
+  <data name="addType12ToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add type 12</value>
+  </data>
+  <data name="contextMenuStripMedia.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 340</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStripMedia.Name" xml:space="preserve">
+    <value>contextMenuStripMedia</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStripMedia.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="flowLayoutPanelMedia.Location" type="System.Drawing.Point, System.Drawing">
     <value>-2, 0</value>
   </data>
@@ -1395,111 +1500,6 @@
   </data>
   <data name="&gt;&gt;statusStripMain.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <metadata name="contextMenuStripMedia.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>150, 17</value>
-  </metadata>
-  <data name="MediaviewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="MediaviewToolStripMenuItem.Text" xml:space="preserve">
-    <value>View...</value>
-  </data>
-  <data name="MedianewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="MedianewToolStripMenuItem.Text" xml:space="preserve">
-    <value>New...</value>
-  </data>
-  <data name="MediadeleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="MediadeleteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 6</value>
-  </data>
-  <data name="addType1ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType1ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 1</value>
-  </data>
-  <data name="addType2ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType2ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 2</value>
-  </data>
-  <data name="addType3ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType3ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 3</value>
-  </data>
-  <data name="addType4ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType4ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 4</value>
-  </data>
-  <data name="addType5ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType5ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 5</value>
-  </data>
-  <data name="addType6ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType6ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 6</value>
-  </data>
-  <data name="addType7ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType7ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 7</value>
-  </data>
-  <data name="addType8ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType8ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 8</value>
-  </data>
-  <data name="addType9ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType9ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 9</value>
-  </data>
-  <data name="addType10ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType10ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 10</value>
-  </data>
-  <data name="addType11ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType11ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 11</value>
-  </data>
-  <data name="addType12ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 22</value>
-  </data>
-  <data name="addType12ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add type 12</value>
-  </data>
-  <data name="contextMenuStripMedia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 340</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStripMedia.Name" xml:space="preserve">
-    <value>contextMenuStripMedia</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStripMedia.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2820,12 +2820,6 @@
   <data name="&gt;&gt;RomDeleteToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabelMain.Name" xml:space="preserve">
-    <value>toolStripStatusLabelMain</value>
-  </data>
-  <data name="&gt;&gt;toolStripStatusLabelMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;MediaviewToolStripMenuItem.Name" xml:space="preserve">
     <value>MediaviewToolStripMenuItem</value>
   </data>
@@ -2844,10 +2838,10 @@
   <data name="&gt;&gt;MediadeleteToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
+  <data name="&gt;&gt;MediatoolStripSeparator.Name" xml:space="preserve">
+    <value>MediatoolStripSeparator</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+  <data name="&gt;&gt;MediatoolStripSeparator.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;addType1ToolStripMenuItem.Name" xml:space="preserve">
@@ -2921,6 +2915,12 @@
   </data>
   <data name="&gt;&gt;addType12ToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabelMain.Name" xml:space="preserve">
+    <value>toolStripStatusLabelMain</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabelMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormMain</value>
