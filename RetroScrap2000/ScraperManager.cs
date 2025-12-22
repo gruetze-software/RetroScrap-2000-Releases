@@ -1296,171 +1296,175 @@ namespace RetroScrap2000
 
 	public static class BatoceraFolders
 	{
-		// Quelle: https://wiki.batocera.org/systems (System shortname == ROM-Ordner, "meistens")
-		// Stand: 2025-07-07
-		public static readonly HashSet<string> All = new(StringComparer.OrdinalIgnoreCase)
-		{
-			// Arcade
-			"mame","fbneo","dice","daphne","singe","model2","model3","naomi","naomi2",
-			"namco2x6","triforce","atomiswave","lindbergh","model1", // model1 existiert als eigenes System
+  // Quelle: https://wiki.batocera.org/systems (System shortname == ROM-Ordner)
+  // Stand: 2025 (inkl. Korrekturen für Model 2/3/Chihiro)
+  public static readonly HashSet<string> All = new(StringComparer.OrdinalIgnoreCase)
+    {
+        // Arcade
+        "mame","fbneo","dice","daphne","singe","model2","model3","naomi","naomi2",
+        "namco2x6","triforce","atomiswave","lindbergh","model1","chihiro","hikaru",
 
-			// Home console – 1./2. Gen
-			"channelf","atari2600","odyssey2","astrocde","apfm1000","vc4000",
-			"intellivision","atari5200","colecovision","advision","vectrex","crvision","arcadia",
-			// 3. Gen
-			"nes","sg1000","multivision","videopacplus","pv1000","scv","mastersystem",
-			"fds","atari7800","socrates","snes_msu-1",
-			// 4. Gen
-			"pcengine","megadrive","pcenginecd","supergrafx","snes","neogeo","cdi","amigacdtv",
-			"gx4000","segacd","snes_msu-1","pico","sgb","supracan",
-			// 5. Gen
-			"jaguar","3do","amigacd32","sega32x","psx","pcfx","neogeocd","saturn",
-			"virtualboy","satellaview","jaguarcd","sufami","n64",
-			// 6. Gen
-			"dreamcast","n64dd","ps2","gamecube","xbox","vsmile",
-			// 7. Gen
-			"xbox360","wii","ps3",
-			// 8. Gen
-			"wiiu","ps4",
+        // Home console
+        "channelf","atari2600","odyssey2","astrocde","apfm1000","vc4000",
+        "intellivision","atari5200","colecovision","advision","vectrex","crvision","arcadia",
+        "nes","sg1000","multivision","videopacplus","pv1000","scv","mastersystem",
+        "fds","atari7800","socrates","snes_msu-1","pcengine","megadrive","pcenginecd",
+        "supergrafx","snes","neogeo","cdi","amigacdtv","gx4000","segacd","megacd","pico","sgb","supracan",
+        "jaguar","3do","amigacd32","sega32x","psx","pcfx","neogeocd","saturn",
+        "virtualboy","satellaview","jaguarcd","sufami","n64","dreamcast","n64dd","ps2",
+        "gamecube","xbox","vsmile","xbox360","wii","ps3","wiiu","ps4",
 
-			// Fantasy consoles (home console Abschnitt)
-			"uzebox","voxatron","pico8","tic80","lowresnx","wasm4","pyxel","vircon32",
+        // Portable
+        "gameandwatch","lcdgames","gamepock","gb","gb2players","lynx","gamegear",
+        "gamate","gmaster","supervision","megaduck","gamecom","gbc","gbc2players",
+        "ngp","ngpc","wswan","wswanc","gba","pokemini","gp32","nds","psp","3ds","psvita",
 
-			// Portable game console
-			// Handheld LCD
-			"gameandwatch","lcdgames","gamepock",
-			// 4. Gen Handheld
-			"gb","gb2players","lynx","gamegear","gamate","gmaster","supervision","megaduck",
-			// 5. Gen Handheld
-			"gamecom","gbc","gbc2players","ngp","ngpc","wswan","wswanc",
-			// 6. Gen Handheld
-			"gba","pokemini","gp32",
-			// 7. Gen Handheld
-			"nds","psp",
-			// 8. Gen Handheld
-			"3ds","psvita",
-			// Fantasy console (portable)
-			"arduboy",
+        // Fantasy & Computer
+        "uzebox","voxatron","pico8","tic80","lowresnx","wasm4","pyxel","vircon32","arduboy",
+        "apple2","atari800","c64","msx1","msx2","msx2+","msxturbor","amiga500","amiga1200",
+        "atarist","x68000","pc98","pc88","zxspectrum","dos","windows"
+    };
 
-			// Home computer
-			"pdp1","apple2","pet","atari800","atom","ti99","c20","coco","pc88","zx81","bbc","x1",
-			"zxspectrum","c64","pc98","fm7","tutor","electron","camplynx","msx1","adam",
-			"spectravideo","amstradcpc","macintosh","thomson","cplus4","laser310","oricatmos",
-			"atarist","msx2","c128","apple2gs","archimedes","xegs","amiga500","x68000","msx2+",
-			"fmtowns","samcoupe","amiga1200","vis","msxturbor",
+  // Bekannte Alias-Korrekturen/Fallspezifika zwischen Ökosystemen:
+  private static readonly Dictionary<string, string> Aliases = new(StringComparer.OrdinalIgnoreCase)
+	{
+		// Nintendo
+		["Nintendo 3DS"] = "3ds",
+		["3DS"] = "3ds",
+		["Super Nintendo MSU-1"] = "snes_msu-1",
+    ["Nintendo Entertainment System"] = "nes",
+    ["Super Nintendo Entertainment System"] = "snes",
+    ["Nintendo GameCube"] = "gamecube",
+    ["Nintendo Wii"] = "wii",
 
-			// Ports (eigene Systeme/Ordner)
-			"ports","abuse","cannonball","cavestory","cdogs","devilutionx","dxx-rebirth","easyrpg",
-			"ecwolf","eduke32","fallout1-ce","fallout2-ce","fpinball","fury","gzdoom","hcl",
-			"hurrican","ikemen","lutro","mrboom","mugen","openbor","openjazz","prboom","pygame",
-			"raze","scummvm","sdlpop","solarus","sonicretro","superbroswar","tyrquake","vpinball",
-			"xash3d_fwgs","xrick",
+    // Bally
+    ["Astrocade"] = "astrocde",
+		["Bally Astrocade"] = "astrocde",
+		["Bally Professional Arcade"] = "astrocde",
 
-			// Flatpak
-			"flatpak","steam",
+		// BBC
+		["BBC Micro"] = "bbc",
 
-			// Miscellaneous
-			"dos","flash","moonlight","plugnplay","vgmplay","windows","windows_installers"
-		};
+		// Bandai
+		["WonderSwan"] = "wswan",
+		["WonderSwan Color"] = "wswanc",
 
-		// Bekannte Alias-Korrekturen/Fallspezifika zwischen Ökosystemen:
-		private static readonly Dictionary<string, string> Aliases = new(StringComparer.OrdinalIgnoreCase)
-		{
-			// Nintendo
-			["Nintendo 3DS"] = "3ds",
-			["3DS"] = "3ds",
-			["Super Nintendo MSU-1"] = "snes_msu-1",
-			
-			// Bally
-			["Astrocade"] = "astrocde",
-			["Bally Astrocade"] = "astrocde",
-			["Bally Professional Arcade"] = "astrocde",
+		["Camputers Lynx"] = "camplynx",
+		["Mega Duck"] = "megaduck",
+		["Arcadia 2001"] = "arcadia",
+		["Game Pocket Computer"] = "gamepock",
+		["FM-7"] = "fm7",
+		["Super A'can"] = "supracan",
+		["Game Master"] = "gmaster",
+		["V.Smile"] = "vsmile",
+		["Game.com"] = "gamecom",
+		["Oric 1 / Atmos"] = "oricatmos",
+		["CD-i"] = "cdi",
+		["Thomson MO/TO"] = "thomson",
+		["Linux"] = "flatpak",
+		["Visual Pinball"] = "vpinball",
+		["Future Pinball"] = "fpinball",
+		["Watara Supervision"] = "supervision",
+		["FM Towns"] = "fmtowns",
+		["WASM-4"] = "wasm4",
+		["VC 4000"] = "vc4000",
 
-			// BBC
-			["BBC Micro"] = "bbc",
+		// Sony
+		["PlayStation 4"] = "ps4",
+		["PS4"] = "ps4",
+		["PS Vita"] = "psvita",
+		["PlayStation Vita"] = "psvita",
 
-			// Bandai
-			["WonderSwan"] = "wswan",
-			["WonderSwan Color"] = "wswanc",
+		// Atari
+		["Atari ST"] = "atarist",
+		["Atari STE"] = "atarist",
+		["Atari 2600 Supercharger"] = "atari2600",
+		["Jaguar CD"] = "jaguarcd",
 
-			["Camputers Lynx"] = "camplynx",
-			["Mega Duck"] = "megaduck",
-			["Arcadia 2001"] = "arcadia",
-			["Game Pocket Computer"] = "gamepock",
-			["FM-7"] = "fm7",
-			["Super A'can"] = "supracan",
-			["Game Master"] = "gmaster",
-			["V.Smile"] = "vsmile",
-			["Game.com"] = "gamecom",
-			["Oric 1 / Atmos"] = "oricatmos",
-			["CD-i"] = "cdi",
-			["Thomson MO/TO"] = "thomson",
-			["Linux"] = "flatpak",
-			["Visual Pinball"] = "vpinball",
-			["Future Pinball"] = "fpinball",
-			["Watara Supervision"] = "supervision",
-			["FM Towns"] = "fmtowns",
-			["WASM-4"] = "wasm4",
-			["VC 4000"] = "vc4000",
+		// --- AMIGA ZUORDNUNG 
+		["Amiga"] = "amiga500",                         // Standard-Fallback
+		["Commodore Amiga"] = "amiga500",               // Häufigster ScreenScraper-Name
+		["Amiga 500"] = "amiga500",
+		["Amiga 500/600"] = "amiga500",
+		["Amiga 600"] = "amiga500",
+		["Amiga 1200"] = "amiga1200",
+		["Amiga 4000"] = "amiga1200",
+		["Commodore Amiga 1200"] = "amiga1200",
+		["Amiga CD32"] = "amigacd32",
+		["Commodore Amiga CD32"] = "amigacd32",
+		["Amiga CDTV"] = "amigacdtv",
+		["Commodore Amiga CDTV"] = "amigacdtv",
+		["Plus/4"] = "cplus4",
 
-			// Sony
-			["PlayStation 4"] = "ps4",
-			["PS4"] = "ps4",
-			["PS Vita"] = "psvita",
-			["PlayStation Vita"] = "psvita",
+		["Commodore 64"] = "c64",
+		["C64"] = "c64",
+		["Commodore 128"] = "c128",
 
-			// Atari
-			["Atari 2600 Supercharger"] = "atari2600",
-			["Jaguar CD"] = "jaguarcd",
+		// Batocera 42+ nutzt "megacd" als Ordner für Sega CD; Systeme-Seite führt "segacd".
+		// Wir mappen "segacd" -> "megacd" UND erlauben beide in All.
+		["segacd"] = "megacd",
+		["Mega-CD"] = "megacd",
+		["Sega Pico"] = "pico",
 
-			// Commodore Amiga – getrennte Systeme
-			["Amiga"] = "amiga500",
-			["Amiga 500"] = "amiga500",
-			["Amiga 1200"] = "amiga1200",
-			["Amiga CD32"] = "amigacd32",
-			["Amiga CDTV"] = "amigacdtv",
-			["Plus/4"] = "cplus4",
+		// --- SEGA ARCADE ---
+		["Sega Model 2"] = "model2",
+		["Model 2"] = "model2",
+		["Sega Model 3"] = "model3",
+		["Model 3"] = "model3",
+		["Sega Chihiro"] = "chihiro",
+		["Sega Naomi"] = "naomi",
+		["Sega Naomi 2"] = "naomi2",
+    ["Sega Master System"] = "mastersystem",
+    ["Sega Mega Drive"] = "megadrive",
+    ["Sega Genesis"] = "megadrive",
+    ["Sega Saturn"] = "saturn",
 
-			// Batocera 42+ nutzt "megacd" als Ordner für Sega CD; Systeme-Seite führt "segacd".
-			// Wir mappen "segacd" -> "megacd" UND erlauben beide in All.
-			["segacd"] = "megacd",
-			["megacd"] = "megacd",
-			["Mega-CD"] = "megacd",
-			["Mega CD"] = "megacd",
-			["Sega CD"] = "megacd", 
-			["Sega Pico"] = "pico",
-			
-			// Manche Auflistungen nennen "mame/model1" – Ordner heißt "model1".
-			["mame/model1"] = "model1",
+    // Manche Auflistungen nennen "mame/model1" – Ordner heißt "model1".
+    ["mame/model1"] = "model1",
 
-			// NEO GEO
-			["Neo-Geo MVS"] = "neogeo",
+		// RetroPie nennt teils "genesis" – in Batocera heißt das "megadrive".
+		["genesis"] = "megadrive",
 
-			// RetroPie nennt teils "genesis" – in Batocera heißt das "megadrive".
-			["genesis"] = "megadrive",
+		// Häufige Schreibvarianten:
+		["ZX Spectrum"] = "zxspectrum",
+		["Sinclair ZX Spectrum"] = "zxspectrum",
+		["Amstrad CPC"] = "amstradcpc",
+		["Schneider CPC"] = "amstradcpc",
+		["pc-engine"] = "pcengine",
+		["PC Engine"] = "pcengine",
+		["TurboGrafx-16"] = "pcengine",
+		["TurboGrafx16"] = "pcengine",
+		["pcengine-cd"] = "pcenginecd",
+		["super-grafx"] = "supergrafx",
+		["supergrafx"] = "supergrafx",
 
-			// Häufige Schreibvarianten:
-			["pc-engine"] = "pcengine",
-			["PC Engine"] = "pcengine",
-			["TurboGrafx-16"] = "pcengine",
-			["TurboGrafx16"] = "pcengine",
-			["pcengine-cd"] = "pcenginecd",
-			["super-grafx"] = "supergrafx",
-			["supergrafx"] = "supergrafx",
+		// Epoch / Casio / SNK / Entex
+		["Super Cassette Vision"] = "scv",
+		["PV-1000"] = "pv1000",
+		["Neo-Geo"] = "neogeo",
+		["Neo-Geo MVS"] = "neogeo",
+		["Adventure Vision"] = "advision",
 
-			// Epoch / Casio / SNK / Entex
-			["Super Cassette Vision"] = "scv",
-			["PV-1000"] = "pv1000",
-			["Neo-Geo MVS"] = "neogeo", 
-			["Adventure Vision"] = "advision",
+		// Microsoft
+		["Xbox 360"] = "xbox360",
+    ["Microsoft Xbox"] = "xbox",
+    ["PC Dos"] = "dos",
+		["PC Win3.xx"] = "windows",
+		["PC Win9X"] = "windows",
+		["PC Windows"] = "windows",
 
-			// Microsoft
-			["Xbox 360"] = "xbox360",
-			["PC Dos"] = "dos",
-			["PC Win3.xx"] = "windows",
-			["PC Win9X"] = "windows",
-			["PC Windows"] = "windows",
-		};
+		// Apple
+		["Apple II"] = "apple2",
+		["Apple IIgs"] = "apple2gs",
+
+    ["MSX"] = "msx1",
+    ["MSX 2"] = "msx2",
+    ["MSX 2+"] = "msx2+",
+    ["MSX Turbo R"] = "msxturbor",
+    ["NEC PC-9801"] = "pc98",
+    ["NEC PC-8801"] = "pc88",
+    ["Sharp X68000"] = "x68000",
+  };
 
 		/// <summary>
 		/// Wählt den passenden Batocera-ROM-Ordner (Shortname) basierend auf ScreenScraper-Namen.
