@@ -116,7 +116,7 @@ namespace RetroScrap2000
 			checkBoxMediaBoxSide.Checked = Options.MediaBoxSide == true;
 			checkBoxMediaBoxTexture.Checked = Options.MediaBoxTextures == true;
 
-			// TODO:
+			checkBoxMediaMap.Checked = Options.MediaMap == true;
 			checkBoxMediaManual.Checked = false;
 			checkBoxMediaMap.Checked = false;
 			checkBoxMediaManual.Enabled = false;
