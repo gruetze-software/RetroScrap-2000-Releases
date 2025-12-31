@@ -115,13 +115,17 @@ namespace RetroScrap2000
 
           _systems = new RetroSystems();
           _systems.Load();
+          bool saveopt = false;
           if (_systems.SystemList.Count == 0 || _systems.IsTooOld)
           {
             await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_Initializing, 100);
             await _systems.SetSystemsFromApiAsync(_scraper);
             _systems.Save();
+            saveopt = true;
           }
           _options.Systems = _systems;
+          if (saveopt)
+            _options.Save();
 
           // Statusmeldungen mit Wartezeit
           await Splash.ShowStatusWithDelayAsync(Properties.Resources.Txt_Splash_LoadingSettings, 500);
@@ -1085,7 +1089,7 @@ namespace RetroScrap2000
           banner = await Task.Run(() =>
           {
             ct.ThrowIfCancellationRequested();
-            var bmp = ImageTools.LoadBitmapNoLock(system.FileBanner);
+            var bmp = ImageTools.LoadBitmapNoLock(system.FileBanner, "System-Banner");
             return (Image?)bmp;
           }, ct);
         }

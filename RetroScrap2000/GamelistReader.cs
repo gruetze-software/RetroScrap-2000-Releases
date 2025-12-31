@@ -88,8 +88,36 @@ public class GameManager
 				RetroSystem? system = systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == key.ToLower());
 				if (system == null)
 				{
-					Log.Warning($"No system found for the folder '{key}'. Skipping...");
-					continue;
+          Log.Warning($"No system found for the folder '{key}'. try mapping...");
+          var batfolder = BatoceraFolders.MapToBatoceraFolder(new SystemNoms() { nom_eu = key, nom_us = key });
+					if ( string.IsNullOrWhiteSpace(batfolder) )
+					{
+						Log.Warning($"No mapping found for the folder '{key}'. skip loading gamelist.xml.");
+						continue;
+					}
+					system = systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == batfolder.ToLower());
+					if (system == null)
+					{
+						Log.Warning($"No system found with the mapped folder '{batfolder}'. try searching over names....");
+            system = systems.SystemList.FirstOrDefault(x => x.Name_eu?.Replace(" ", "").ToLower() == batfolder.ToLower());
+						if ( system == null)
+              system = systems.SystemList.FirstOrDefault(x => x.Name_us?.Replace(" ", "").ToLower() == batfolder.ToLower());
+						if (system != null)
+						{
+              Log.Information($"Mapped folder '{key}' to system '{system}'.");
+              system.RomFolderName = key; // setze den originalen Ordnernamen
+						}
+						else
+						{
+							Log.Warning($"No system found with the mapped name '{batfolder}'. skip loading gamelist.xml.");
+							continue;
+            }
+          }
+					else
+					{
+						Log.Information($"Mapped folder '{key}' to system '{system}'.");
+						system.RomFolderName = key; // setze den originalen Ordnernamen
+          }
 				}
 				var xmlfile = Path.Combine(RomPath, sysDir, "gamelist.xml");
 				LoadSystem(xmlfile, system);

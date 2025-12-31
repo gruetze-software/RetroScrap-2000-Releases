@@ -489,7 +489,7 @@ namespace RetroScrap2000
 		public RetroSystems() 
 		{
 			IsTooOld = false;
-			SystemListAktVersion = 1;
+			SystemListAktVersion = 2;
 		}
 
 		public string GetRomFolder(int systemid)

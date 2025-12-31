@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -95,36 +96,23 @@ namespace RetroScrap2000
 			return filename.Substring(0, index).Trim(); // Name ohne Erweiterung
 		}
 
-		public static bool? IsMediaIdentical(eMediaType typ, string? absPathNew, string? relPathOld, string systemRomPath )
-		{
-			if (typ == eMediaType.Unknown
-					|| string.IsNullOrEmpty(absPathNew)
-					|| !File.Exists(absPathNew))
-				return null;
+    public static string? GetFileNameFromContentDisposition(ContentDispositionHeaderValue? cp)
+    {
+      if (cp == null) return null;
 
-			if (string.IsNullOrEmpty(relPathOld))
-				return false; // kein altes Medium, also nicht identisch
-		
-			// Altes Medium nicht mehr da
-			var oldMedia = FileTools.ResolveMediaPath(systemRomPath, relPathOld);
-			if (string.IsNullOrEmpty(oldMedia) || !File.Exists(oldMedia))
-				return false;
-			
-			// Filegröße unterschiedlich?
-			FileInfo old = new FileInfo(oldMedia);
-			FileInfo neu = new FileInfo(absPathNew);
-			if (old.Length != neu.Length)
-				return false; // unterschiedliche Filegröße
+      // Der Dateiname kann in 'FileName' oder 'FileNameStar' (für UTF-8) stehen
+      string? fileName = cp.FileNameStar ?? cp.FileName;
 
-			// Letzte Prüfung: Bilder unterschiedlich?
-			if (typ != eMediaType.Video && typ != eMediaType.Manual
-				&& ImageTools.ImagesAreDifferent(oldMedia, absPathNew))
-				return false;
+      if (!string.IsNullOrEmpty(fileName))
+      {
+        // Anführungszeichen entfernen, falls vorhanden
+        return fileName.Trim('"');
+      }
 
-			return true;
-		}
+      return null;
+    }
 
-		public static void ForceHorizontalScrollForMediaPreviewControls(FlowLayoutPanel flowLayoutPanel)
+    public static void ForceHorizontalScrollForMediaPreviewControls(FlowLayoutPanel flowLayoutPanel)
 		{
 			if (flowLayoutPanel.Controls.Count == 0)
 			{

@@ -940,9 +940,10 @@ namespace RetroScrap2000
 				return (status: eMediaCheckStatus.NotFound_NoMedia, mediadata: null, contentype: null);
 
 			if (!url.ToLower().Contains("mediaJeu.php?".ToLower()) 
-			 && !url.ToLower().Contains("mediaVideoJeu.php?".ToLower()))
+			 && !url.ToLower().Contains("mediaVideoJeu.php?".ToLower())
+			 && !url.ToLower().Contains("mediaManuelJeu.php?".ToLower()))
 			{
-				//Debug.Assert(false, $"condition is mediaxxx.php Call");
+				Debug.Assert(false, $"condition is mediaxxx.php Call");
 				return (status: eMediaCheckStatus.NotFound_NoMedia, mediadata: null, contentype: null);
 			}
 
@@ -950,14 +951,15 @@ namespace RetroScrap2000
 			// In dem Fall bekommen wir auf jeden Fall Daten zurück, falls es welche gibt
 			var mediaFileHashes = FileTools.CalculateChecksums(mediaFile);
 			string urllogstring = url.Substring(0, url.IndexOf("?") + 1) + "xxxxxx";
-			Log.Information($"[Check and Get Medium {type}]: \"{urllogstring}\"");
+			Log.Information($"[Check and Get Medium \"{type}\"]: \"{urllogstring}\"");
 			url += $"&md5={mediaFileHashes.MD5}&sha1={mediaFileHashes.SHA1}"; //&crc={mediaFileHashes.CRC32}";
 			Log.Debug(url);
 
 			await WaitForRateLimitAndAddRequestCounter();
 			string? body = null;
 			string? contentType = null;
-			using (var httpResponse = await _http.GetAsync(url, ct).ConfigureAwait(false))
+      string? extension = null;
+      using (var httpResponse = await _http.GetAsync(url, ct).ConfigureAwait(false))
 			{
 				body = await httpResponse.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
 				if (!httpResponse.IsSuccessStatusCode)
@@ -967,16 +969,38 @@ namespace RetroScrap2000
 					return (status: eMediaCheckStatus.Error_ApiFailure, mediadata: null, contentype: contentType);
 				}
 
-				// 2. Prüfen des Content-Types zur Unterscheidung zwischen Bild und Status-Text
-				// 1. Content-Type prüfen, BEVOR der Body gelesen wird
-				contentType = httpResponse.Content.Headers.ContentType?.MediaType;
+        var contentDisposition = httpResponse.Content.Headers.ContentDisposition;
+				string? fileName = null;
+        if (contentDisposition != null)
+        {
+          // Nutzt die Hilfsmethode von vorhin, um den Namen zu extrahieren
+          fileName = Utils.GetFileNameFromContentDisposition(contentDisposition);
+          if (!string.IsNullOrEmpty(fileName))
+          {
+            extension = Path.GetExtension(fileName);
+          }
+        }
+
+        // 2. Prüfen des Content-Types zur Unterscheidung zwischen Bild und Status-Text
+        contentType = httpResponse.Content.Headers.ContentType?.MediaType;
+        if (string.IsNullOrEmpty(extension))
+        {
+          extension = FileTools.GetExtensionFromMimeType(contentType);
+        }
+
+        if (string.IsNullOrEmpty(extension) || extension == ".bin")
+        {
+          if (url.Contains("manual.php")) extension = ".pdf";
+          else if (url.Contains("map.php")) extension = ".png";
+        }
+
 				var isBinaryMedia = contentType != null &&
 														(contentType.StartsWith("image/") ||
 														 contentType.StartsWith("video/") ||
-														 contentType.StartsWith("application/octet-stream"));
+														 contentType.StartsWith("application/"));
 
-				// 2. Body-Daten einmal als Byte-Array lesen
-				var bodyBytes = await httpResponse.Content.ReadAsByteArrayAsync();
+        // 2. Body-Daten einmal als Byte-Array lesen
+        var bodyBytes = await httpResponse.Content.ReadAsByteArrayAsync();
 
 				if (isBinaryMedia )
 				{
@@ -990,6 +1014,9 @@ namespace RetroScrap2000
 					else
 					{
 						// Den Body als Byte-Array zurückgeben, damit er gespeichert werden kann.
+						if ((contentType!.Contains("forcedownload") || contentType.Contains("force-download"))
+							&& !string.IsNullOrEmpty(extension))
+							contentType = extension;
 						return (status: eMediaCheckStatus.Success_Updated, mediadata: bodyBytes, contentype: contentType);
 					}
 				}
@@ -1063,12 +1090,6 @@ namespace RetroScrap2000
 			if ( type == eMediaType.Unknown ) 
 				return (null, null);
 
-			if (type == eMediaType.Manual || type == eMediaType.Map )
-			{
-				// TODO: Under Construction …
-				return (null, null);
-			}
-
 			//////////////////////////////////////////////////////////////////////////////////
 			// Fall 1: byte[] Array umwandeln und im Temp-Ordner erzeugen
 
@@ -1081,7 +1102,7 @@ namespace RetroScrap2000
 					{
 						if (videoWithPreviewImage)
 						{
-							var preview = await ImageTools.LoadVideoPreviewAsync(baseDir, tempfile, ct, byPassCache);
+							var preview = await ImageTools.LoadVideoPreviewAsync(type, baseDir, tempfile, ct, byPassCache);
 							if ( preview == null )
 								return (null, tempfile);
 							else if (preview.HasValue)
@@ -1099,7 +1120,7 @@ namespace RetroScrap2000
 				{
 					var tempfile = await FileTools.CopyToTempAsync(mediadata, contentType);
 					if (tempfile != null)
-						return (ImageTools.LoadBitmapNoLock(tempfile), tempfile);
+						return (ImageTools.LoadBitmapNoLock(tempfile, type.ToString()), tempfile);
 				}
 
 				return (null, null);
@@ -1121,7 +1142,7 @@ namespace RetroScrap2000
 				{
 					if (videoWithPreviewImage)
 					{
-						var preview = await ImageTools.LoadVideoPreviewAsync(baseDir, localfile, ct, byPassCache);
+						var preview = await ImageTools.LoadVideoPreviewAsync(type,baseDir, localfile, ct, byPassCache);
 						if (preview == null )
 							return (null, localfile);
 						else if (preview.HasValue)
@@ -1136,7 +1157,7 @@ namespace RetroScrap2000
 				}
 				else
 				{
-					var img = await ImageTools.LoadImageCachedAsync(baseDir, localfile, ct, byPassCache);
+					var img = await ImageTools.LoadImageCachedAsync(type, baseDir, localfile, ct, byPassCache );
 					return (img, localfile);
 				}
 			}
@@ -1332,6 +1353,7 @@ namespace RetroScrap2000
 		["Nintendo 3DS"] = "3ds",
 		["3DS"] = "3ds",
 		["Super Nintendo MSU-1"] = "snes_msu-1",
+    ["famicom"] = "nes",
     ["Nintendo Entertainment System"] = "nes",
     ["Super Nintendo Entertainment System"] = "snes",
     ["Nintendo GameCube"] = "gamecube",
@@ -1378,7 +1400,9 @@ namespace RetroScrap2000
 		// Atari
 		["Atari ST"] = "atarist",
 		["Atari STE"] = "atarist",
-		["Atari 2600 Supercharger"] = "atari2600",
+		["Atari Lynx"] = "lynx",
+    ["AtariLynx"] = "lynx",
+    ["Atari 2600 Supercharger"] = "atari2600",
 		["Jaguar CD"] = "jaguarcd",
 
 		// --- AMIGA ZUORDNUNG 

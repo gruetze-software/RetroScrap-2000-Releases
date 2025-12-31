@@ -47,10 +47,10 @@ namespace RetroScrap2000
 			switch (MediaType)
 			{
 				case eMediaType.Unknown: return "???";
-				case eMediaType.Map: return "Map";
 				case eMediaType.Fanart: return "Fanart";
 				case eMediaType.Manual: return "Manual";
-				case eMediaType.BoxImageFront: return "Box Front";
+        case eMediaType.Map: return "Map";
+        case eMediaType.BoxImageFront: return "Box Front";
 				case eMediaType.BoxImageBack: return "Box Back";
 				case eMediaType.BoxImageSide: return "Box Side";
 				case eMediaType.BoxImageTexture: return "Box Texture";

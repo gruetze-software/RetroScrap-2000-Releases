@@ -566,7 +566,7 @@ namespace RetroScrap2000.Tools
 			return file;
 		}
 
-		private static string GetExtensionFromMimeType(string? contentType)
+		public static string GetExtensionFromMimeType(string? contentType)
 		{
 			if (string.IsNullOrEmpty(contentType))
 				return string.Empty; // Keine Endung, wenn Typ unbekannt
@@ -579,7 +579,19 @@ namespace RetroScrap2000.Tools
 
 			switch (cleanType)
 			{
-				case "image/png":
+        case "application/force-download":
+        case "application/forcedownload":
+        case "forcedownload":
+          // Hier meldet der Server: "Ich schicke eine Datei, weiß aber nicht was es ist"
+          // Wir geben leer zurück, damit die aufrufende Logik ggf. 
+          // auf den Dateinamen oder den Kontext (Manual/Map) prüfen kann.
+          return string.Empty;
+
+        case "application/pdf":
+          return ".pdf";
+        case "text/plain":
+          return ".txt";
+        case "image/png":
 					return ".png";
 				case "image/jpeg":
 					return ".jpg";
@@ -587,14 +599,18 @@ namespace RetroScrap2000.Tools
 					return ".mp4";
 				case "video/avi":
 					return ".avi";
-				case "application/octet-stream":
+        case "image/gif":
+          return ".gif";
+        case "image/webp":
+          return ".webp";
+        case "application/octet-stream":
 					// Wenn der Server dies meldet, ist es oft ein Video oder ein Bild.
 					// Du müsstest hier raten oder den Body untersuchen, 
 					// aber für den Scraper ist es besser, eine zu bevorzugende Endung zu verwenden 
 					// oder leer zu lassen. Wir nehmen hier ein sicheres MP4 an, falls Videos unterstützt werden.
 					return ".bin";
 				default:
-					Debug.Assert(false, $"Unbekannter MIME-Typ: {cleanType}");	
+					Trace.WriteLine($"Unbekannter MIME-Typ: {cleanType}");
 					return string.Empty; // Wenn der Typ unbekannt ist
 			}
 		}

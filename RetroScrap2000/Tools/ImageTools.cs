@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -60,7 +61,7 @@ namespace RetroScrap2000.Tools
 		/// und cached es.
 		/// baseDir + relPath werden mit ResolveMediaPath kombiniert.
 		/// </summary>
-		public static async Task<Image?> LoadImageCachedAsync(
+		public static async Task<Image?> LoadImageCachedAsync(eMediaType type,
 				string baseDir, string? relOrAbsPath, CancellationToken ct, bool bypassCache = false)
 		{
 			if (string.IsNullOrWhiteSpace(relOrAbsPath))
@@ -79,13 +80,33 @@ namespace RetroScrap2000.Tools
 				return null;
 			}
 
-			return await LoadAbsoluteImageCachedAsync(abs, ct, bypassCache);
-		}
+			try
+			{
+				// Versuche das Bild normal aus dem Cache oder der Datei zu laden
+				var img = await LoadAbsoluteImageCachedAsync(type.ToString(), abs, ct, bypassCache);
+
+				// Falls LoadAbsoluteImageCachedAsync intern null bei Fehlern liefert (z.B. bei PDFs),
+				// generieren wir hier den Platzhalter.
+				if (img == null)
+				{
+					Log.Debug($"[LoadImageCachedAsync]: Konnte Bild nicht laden (evtl. PDF/Manual), erstelle Platzhalter.");
+					return CreatePlaceholderImage(Path.GetFileName(abs), type.ToString());
+				}
+
+				return img;
+      }
+      catch (Exception ex)
+      {
+        Log.Debug($"[LoadImageCachedAsync]: Fehler beim Laden von {abs}: {Utils.GetExcMsg(ex)}");
+        // Rückfallebene: Platzhalter für Dokumente/Nicht-Bilder
+        return CreatePlaceholderImage(Path.GetFileName(abs), type.ToString());
+      }
+    }
 
 		/// <summary>
 		/// Lädt ein Bild von einem absoluten Pfad, und cached es.
 		/// </summary>
-		public static async Task<Image?> LoadAbsoluteImageCachedAsync(
+		public static async Task<Image?> LoadAbsoluteImageCachedAsync( string displayname,
 				string absolutePath, CancellationToken ct, bool byPassCache = false)
 		{
 			if (string.IsNullOrWhiteSpace(absolutePath) || !System.IO.File.Exists(absolutePath))
@@ -103,7 +124,7 @@ namespace RetroScrap2000.Tools
 			{
 				ct.ThrowIfCancellationRequested();
 
-				using var raw = LoadBitmapNoLock(absolutePath);
+				using var raw = LoadBitmapNoLock(absolutePath, displayname);
 				if (raw == null) return null;
 
 				var w = Math.Max(1, raw.Width);
@@ -135,7 +156,7 @@ namespace RetroScrap2000.Tools
 		/// <param name="relPath">Der relative Pfad zur Videodatei</param>
 		/// <param name="ct">Cancel-Token</param>
 		/// <returns>Overlay-Image und Absolut-Pfad zur Videodatei</returns>
-		public static async Task<(Image overlay, string videoAbsPath)?> LoadVideoPreviewAsync(string baseDir,
+		public static async Task<(Image overlay, string videoAbsPath)?> LoadVideoPreviewAsync(eMediaType type, string baseDir,
 			string? relPath, CancellationToken ct, bool byPassCache = false)
 		{
 			if (string.IsNullOrEmpty(relPath))
@@ -155,7 +176,7 @@ namespace RetroScrap2000.Tools
 
 			ct.ThrowIfCancellationRequested();
 
-			var img = await LoadImageCachedAsync(baseDir, previewImgRelPath, ct, byPassCache);
+			var img = await LoadImageCachedAsync(type, baseDir, previewImgRelPath, ct, byPassCache);
 			if (img == null)
 				return null;
 
@@ -257,7 +278,7 @@ namespace RetroScrap2000.Tools
 			return bitmap;
 		}
 
-		public static Image? LoadBitmapNoLock(string? absolutePath)
+		public static Image? LoadBitmapNoLock(string? absolutePath, string displayname)
 		{
 			if (string.IsNullOrWhiteSpace(absolutePath) || !System.IO.File.Exists(absolutePath))
 				return null;
@@ -271,12 +292,52 @@ namespace RetroScrap2000.Tools
 			}
 			catch (Exception ex)
 			{
-				Log.Debug(Utils.GetExcMsg(ex));
-				return null;
-			}
+        Log.Debug($"Nicht-Bild oder Fehler erkannt, erstelle Platzhalter: {Utils.GetExcMsg(ex)}");
+        return CreatePlaceholderImage(Path.GetFileName(absolutePath), displayname);
+      }
 		}
 
-		public static Image? GetSystemImage(string? systemKey)
+    private static Bitmap CreatePlaceholderImage(string fileName, string displayname)
+    {
+      // Größe des Platzhalters
+      int width = 144;
+      int height = 154;
+
+      Bitmap bmp = new Bitmap(width, height);
+      using (Graphics g = Graphics.FromImage(bmp))
+      {
+				// Hintergrund (Dunkelgrau für Dokumente/PDFs)
+				g.Clear(Color.FromKnownColor(KnownColor.ControlLight));
+
+        // Rahmen
+        using (Pen pen = new Pen(Color.DarkBlue, 2))
+        {
+          g.DrawRectangle(pen, 10, 10, width - 15, height - 15);
+        }
+
+        // Text-Formatierung
+        string extension = Path.GetExtension(fileName).ToUpper();
+				string displayName = displayname;
+        if ( string.IsNullOrEmpty(displayName))
+          displayName = fileName.Length > 20 ? fileName.Substring(0, 19) + "..." : fileName;
+
+        using (Font fontLabel = new Font("Arial", 8))
+        using (Font fontExt = new Font("Arial", 20, FontStyle.Bold))
+        using (Brush brush = new SolidBrush(Color.DarkBlue))
+        {
+          StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+
+          // Dateiendung groß in die Mitte (z.B. PDF)
+          g.DrawString(extension, fontExt, brush, new RectangleF(0, 40, width, 60), sf);
+
+          // displayname klein darunter
+          g.DrawString(displayName, fontLabel, brush, new RectangleF(10, 100, width - 20, 40), sf);
+        }
+      }
+      return bmp;
+    }
+
+    public static Image? GetSystemImage(string? systemKey)
 		{
 			if (systemKey == null)
 				return null;
@@ -285,7 +346,7 @@ namespace RetroScrap2000.Tools
 			var img = Path.Combine(baseDir, systemKey.Trim() + ".png");
 
 			if (System.IO.File.Exists(img))
-				return LoadBitmapNoLock(img);
+				return LoadBitmapNoLock(img, systemKey);
 			else
 				return null;
 		}

@@ -40,7 +40,7 @@ namespace RetroScrap2000
 			get
 			{
 				return new List<string>() {
-					".jpg", ".jpeg", ".png", ".bmp", ".avi", ".mp4", ".mkv" };
+					".jpg", ".jpeg", ".png", ".bmp", ".avi", ".mp4", ".mkv", ".pdf", ".txt", ".gif", ".webp" };
 			}
 		}
 
@@ -81,7 +81,8 @@ namespace RetroScrap2000
 				case eMediaType.BoxImageSide:	return "Box Side";
 				case eMediaType.BoxImageTexture: return "Box Texture";
 				case eMediaType.Manual: return "Manual";
-				case eMediaType.ScreenshotGame: return "Screenshot";
+        case eMediaType.Map: return "Map";
+        case eMediaType.ScreenshotGame: return "Screenshot";
 				case eMediaType.ScreenshotTitle: return "Screenshot Title";
 				case eMediaType.Wheel: return "Wheel";
 				default: return this.Type.ToString();

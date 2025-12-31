@@ -516,4 +516,7 @@
   <data name="Txt_Msg_Scrap_CallApi" xml:space="preserve">
     <value>Use hash data for online search.</value>
   </data>
+  <data name="pdficon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pdficon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

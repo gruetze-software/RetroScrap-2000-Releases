@@ -55,7 +55,7 @@ namespace RetroScrap2000.Tools
 			// 4) Preview laden & skalieren (nutze deinen lokalen Loader)
 			if (withPreview)
 			{
-				var img = await ImageTools.LoadAbsoluteImageCachedAsync(tempPreview, ct);
+				var img = await ImageTools.LoadAbsoluteImageCachedAsync("Video Preview", tempPreview, ct);
 				if (img == null) return null;
 
 				// 5) Overlay aus Cache oder neu bauen
