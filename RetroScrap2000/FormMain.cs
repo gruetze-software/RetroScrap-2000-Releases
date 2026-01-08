@@ -951,7 +951,7 @@ namespace RetroScrap2000
     {
       if (!Directory.Exists(_options.RomPath))
         return;
-      Log.Information("LoadRomsAsync()");
+      Log.Information($"LoadRomsAsync() {_options.RomPath}");
       SetStatusToolStripLabel(Properties.Resources.Txt_Status_Label_ReadRoms);
       listViewSystems.BeginUpdate();
       listViewRoms.BeginUpdate();
@@ -1358,7 +1358,9 @@ namespace RetroScrap2000
 
     private async Task SetRomOnGuiAsync(GameEntry? rom, CancellationToken ct)
     {
-      Log.Information($"SetRomOnGuiAsync: \"{rom?.FileName ?? "Null"}\"");
+      if ( rom != null )
+        Log.Information($"SetRomOnGuiAsync: \"{rom.FileName}\"");
+
       if (rom == null)
       {
         flowLayoutPanelMedia.Controls.Clear();

@@ -75,7 +75,7 @@ public class GameManager
 
 		SystemList.Clear();
 		RomPath = rompath;
-		if (!rompath.ToLower().EndsWith("roms"))
+		if (!rompath.ToLower().EndsWith("roms") && !rompath.ToLower().EndsWith("\\") )
 		{
 			LoadSystem(Path.Combine(RomPath, "gamelist.xml"),
 				systems.SystemList.FirstOrDefault(x => x.RomFolderName?.ToLower() == Path.GetFileName(RomPath).ToLower())!);
