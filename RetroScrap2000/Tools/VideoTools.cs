@@ -92,8 +92,8 @@ namespace RetroScrap2000.Tools
 
 			if (deleteFiles)
 			{
-				var dir = Path.Combine(Path.GetTempPath(), "RetroScrap2000", "scrape_media");
-				try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { }
+				string temp = FileTools.GetTempPath();
+				try { if (Directory.Exists(temp)) Directory.Delete(temp, true); } catch { }
 			}
 
 			_tempVideoByUrl.Clear();

@@ -523,8 +523,8 @@ namespace RetroScrap2000
         catch (Exception ex)
         {
           Splash.CloseSplashScreen();
-          Log.Error(Utils.GetExcMsg(ex));
-          MyMsgBox.ShowErr(Utils.GetExcMsg(ex));
+          Log.Error(Properties.Resources.Txt_Msg_Scrap_Fail + ". " + Utils.GetExcMsg(ex));
+          MyMsgBox.ShowErr(Properties.Resources.Txt_Msg_Scrap_Fail + ". " + Utils.GetExcMsg(ex));
           SetStatusToolStripLabel(Properties.Resources.Txt_Msg_Scrap_Fail);
           return false;
         }

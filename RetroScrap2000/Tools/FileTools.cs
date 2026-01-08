@@ -549,8 +549,10 @@ namespace RetroScrap2000.Tools
 
 		public static string GetTempPath()
 		{
-			return Path.Combine(Path.GetTempPath(), "RetroScrap2000", "scrape_media");
-		}
+			string path = Path.Combine(Path.GetTempPath(), "RetroScrap2000", "scrape_media");
+      Directory.CreateDirectory(path); // <- macht nichts kaputt, wenn er schon existiert
+			return path;
+    }
 
 		public static async Task<string?> CopyToTempAsync(byte[]? data, string? contentType)
 		{

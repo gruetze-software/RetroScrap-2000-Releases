@@ -97,6 +97,7 @@ namespace RetroScrap2000
 			this.Cursor = Cursors.WaitCursor;
 			Cursor.Current = Cursors.WaitCursor;
 
+			Log.Information("FormScrapRom_Load: Filling existing data...");
 			// Links füllen (current)
 			//////////////////////////////////////////////////////////////////////////
 			textBoxRomOldName.Text = _current.Name ?? "";
@@ -126,21 +127,25 @@ namespace RetroScrap2000
 					string? mediafile = FileTools.ResolveMediaPath(_systemRomPath, kvp.Value);
 					GameMediaSettings m = RetroScrapOptions.GetMediaSettings(kvp.Key)!;
 					m.FilePath = mediafile;
-					
-					if ( kvp.Key == eMediaType.Video && !FileTools.IsVideoFile(mediafile) )
+
+					if (kvp.Key == eMediaType.Video && !FileTools.IsVideoFile(mediafile))
 					{
 						Log.Warning($"Skip Video Media \"{mediafile}\", it's not a valid video file...");
 						continue; // kein Video
 					}
-
+					else
+					{
+						Log.Information($"Load Current Media \"{mediafile}\"...");
+          }
 					var control = await CreateMediaPreviewPanel(m, _systemRomPath, CancellationToken.None, false);
 					flowLayoutPanelMediaLeft.Controls.Add(control);
 				}
 				Utils.ForceHorizontalScrollForMediaPreviewControls(flowLayoutPanelMediaLeft);
 
-				// Rechts füllen (scraped)
-				/////////////////////////////////////////////////////////////////////
-				textBoxRomNewName.Text = _scraped.Name ?? "";
+        // Rechts füllen (scraped)
+        /////////////////////////////////////////////////////////////////////
+        Log.Information("FormScrapRom_Load: Filling scraped data...");
+        textBoxRomNewName.Text = _scraped.Name ?? "";
 				_scraped.Description = Utils.DecodeTextFromApi(_scraped.Description);
 				textBoxRomNewDesc.Text = _scraped.Description ?? "";
 				textBoxRomNewGenre.Text = _scraped.Genre ?? "";
@@ -164,8 +169,12 @@ namespace RetroScrap2000
 						Log.Information($"Skip Download \"{medium}\", it's not checked in Options...");
 						continue; // diese Media-Art ist nicht gewünscht
 					}
+					else
+					{
+            Log.Information($"Load Scraped Media \"{medium}\"...");
+          }  
 
-					var control = await CreateMediaPreviewPanel(medium, _systemRomPath, ct, true);
+          var control = await CreateMediaPreviewPanel(medium, _systemRomPath, ct, true);
 					if (ct.IsCancellationRequested)
 					{
 						return;
@@ -188,14 +197,22 @@ namespace RetroScrap2000
 				// Media-Checkboxen: nur wenn rechts was da ist UND es ist anders als links
 				foreach (var control in flowLayoutPanelMediaRight.Controls.OfType<MediaPreviewControl>())
 				{
-					if (control != null
-						&& control.MediaType != eMediaType.Unknown
-						&& !string.IsNullOrEmpty(control.AbsolutPath)
-						&& File.Exists(control.AbsolutPath))
+					try
 					{
-						Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: control.CheckBox.Checked));
+						if (control != null
+							&& control.MediaType != eMediaType.Unknown
+							&& !string.IsNullOrEmpty(control.AbsolutPath)
+							&& File.Exists(control.AbsolutPath))
+						{
+							Selection.MediaTempPaths.Add(control.MediaType, (tempPath: control.AbsolutPath, take: control.CheckBox.Checked));
+						}
 					}
-				} // Next control
+					catch ( Exception ex)
+					{
+						Log.Error($"Error setting MediaTempPaths for MediaType {control?.MediaType}: {Utils.GetExcMsg(ex)}");
+						continue;
+          }
+        } // Next control
 			}
 			catch (Exception ex)
 			{
